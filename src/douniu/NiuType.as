@@ -34,12 +34,11 @@ package douniu
 				return NIU_ERROR;
 			}
 
-			for (var c:NiuCard in cards)
+			if (cards.every(function (item:NiuCard, idx:int, ar:Vector.<NiuCard>) : Boolean {
+				return !!item;
+				}))
 			{
-				if (!c)
-				{
-					return NIU_ERROR;
-				}
+				return NIU_ERROR;
 			}
 	
 			var result:int = cards[0].value + cards[1].value + cards[2].value;
@@ -65,12 +64,11 @@ package douniu
 				return NIU_ERROR;
 			}
 
-			for (var ck:NiuCard in cards)
+			if (cards.every(function (item:NiuCard, idx:int, ar:Vector.<NiuCard>) : Boolean {
+				return !!item;
+				}))
 			{
-				if (!ck)
-				{
-					return NIU_ERROR;
-				}
+				return NIU_ERROR;
 			}
 
 			var isSilver:Boolean = true;
