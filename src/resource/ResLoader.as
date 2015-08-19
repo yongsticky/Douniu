@@ -1,15 +1,12 @@
 package resource
-{
-	import flash.events.Event;
+{		
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	
-	import camu.loader.ILoaderEventHandler;
-	import camu.loader.LoaderTask;
-	import camu.loader.MultiLoader;
-
-
-	public class ResLoader extends EventDispatcher implements ILoaderEventHandler
+	import br.com.stimuli.loading.BulkLoader;
+	import br.com.stimuli.loading.BulkProgressEvent;
+	
+	public class ResLoader extends EventDispatcher
 	{		
 		private var _dictSceneResources:Dictionary = null;		
 		
@@ -18,109 +15,95 @@ package resource
 			_dictSceneResources = new Dictionary();
 		}
 
-		public function loadFromJson(text:String) : Boolean
+		public function loadFromJson(text:String) : void
 		{
 			var rootObj:Object = JSON.parse(text);
 			if (!!rootObj)
 			{
 				for (var sceneId:String in rootObj)
 				{
-					_dictSceneResources[sceneId] = new ResInfo(sceneId, rootObj[sceneId]);
+					var task:BulkLoaderTask = new BulkLoaderTask(sceneId);
+					task.loadTaskData(rootObj[sceneId]);
+					
+					var taskLoader:BulkLoader = task.loader;
+					
+					taskLoader.addEventListener(BulkLoader.COMPLETE, onComplete);
+					taskLoader.addEventListener(BulkLoader.PROGRESS, onProgress);
+					taskLoader.addEventListener(BulkLoader.ERROR, onError);
+					
+					
+					_dictSceneResources[sceneId] = task;
+					
 				}
+				
+				preloadResource();
+			}	
+		}	
+		
+		protected function onComplete(event:BulkProgressEvent):void
+		{
+			var taskLoader:BulkLoader = event.target as BulkLoader;
+			if (!!taskLoader)
+			{
+				taskLoader.removeEventListener(BulkLoader.COMPLETE, onComplete);			
+				taskLoader.removeEventListener(BulkLoader.PROGRESS, onProgress);
+				taskLoader.removeEventListener(BulkLoader.ERROR, onError);
 			}
 			
-			return false;
+			dispatchEvent(new ResLoaderEvent(event.type));
 		}
-
-		public function getUniqueResource(sceneId:String, resId:String) : *
+		
+		protected function onProgress(event:BulkProgressEvent):void
+		{			
+			dispatchEvent(new ResLoaderEvent(event.type));
+		}
+		
+		protected function onError(event:BulkProgressEvent):void
+		{			
+			dispatchEvent(new ResLoaderEvent(event.type));
+		}
+		
+		public function getResource(sceneId:String, resId:String) : *
 		{
 			if (_dictSceneResources.hasOwnProperty(sceneId))
 			{
-				var resInfo:ResInfo = _dictSceneResources[sceneId];
-				if (!!resInfo)
+				var task:BulkLoaderTask = _dictSceneResources[sceneId];
+				if (!!task && task.loaderStatus == BulkLoaderTask.LS_RAN)
 				{
-					if (resInfo.isComplete())
+					var loader:BulkLoader = task.loader;
+					if (!!loader)
 					{
-						var task:LoaderTask = resInfo.getUniqueLoaderTask(resId);
-						if (!!task)
-						{
-							return task.content;
-						}							
+						return loader.getContent(resId);
 					}
 				}
+				
 			}
 
 			return null;
 		}
 
-		public function loadSceneResources(sceneId:String) : void
+		public function loadeResources(sceneId:String) : void
 		{
 			if (_dictSceneResources.hasOwnProperty(sceneId))
 			{
-				var resInfo:ResInfo = _dictSceneResources[sceneId];
-				if (!!resInfo)
+				var task:BulkLoaderTask = _dictSceneResources[sceneId];
+				if (!!task && task.loaderStatus == ResInfo.LS_READY)
 				{
-					if (resInfo.isComplete())
-					{
-						dispatchEvent(new ResLoaderEvent(ResLoaderEvent.COMPLETE));
-						return;
-					}
-					else if (resInfo.isRunning())
-					{
-						return;
-					}
-					
-					var loader:MultiLoader = new MultiLoader(resInfo.sceneId, resInfo.loaderTasks, this);
-					loader.start();					
+					task.loader.start();
 				}
 			}
 		}
 		
-		public function loadUniqueResource(sceneId:String, resId:String) : void
+		protected function preloadResource() : void
 		{
-			
+			for each(var task:BulkLoaderTask in _dictSceneResources)
+			{
+				if (task.preload)
+				{
+					task.loader.start();
+				}
+			}
 		}
 		
-		public function onProgress(event:Event) : void
-		{
-			var loader:MultiLoader = event.target as MultiLoader;
-			if (!!loader)
-			{
-				if (_dictSceneResources.hasOwnProperty(loader.name))
-				{
-					var resInfo:ResInfo = _dictSceneResources[loader.name];
-					
-					resInfo.updateProgress();
-				}				
-			}				
-		}
-		
-		public function onComplete(event:Event) : void
-		{
-			var loader:MultiLoader = event.target as MultiLoader;
-			if (!!loader)
-			{
-				if (_dictSceneResources.hasOwnProperty(loader.name))
-				{
-					var resInfo:ResInfo = _dictSceneResources[loader.name];
-					
-					resInfo.updateComplete();
-				}				
-			}				
-		}
-		
-		public function onError(event:Event) : void
-		{
-			var loader:MultiLoader = event.target as MultiLoader;
-			if (!!loader)
-			{
-				if (_dictSceneResources.hasOwnProperty(loader.name))
-				{
-					var resInfo:ResInfo = _dictSceneResources[loader.name];
-					
-					resInfo.updateFailed();
-				}				
-			}				
-		}
 	}
 }

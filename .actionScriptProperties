@@ -31,6 +31,7 @@
       <libraryPathEntry kind="3" linkType="1" path="D:/work/as3_code/Gamua-Starling-Framework-v1.3-0-g0ac3592/Gamua-Starling-Framework-0ac3592/starling/bin-debug/Starling.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="D:/work/as3_code/feathers-2.1.1/swc/feathers.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/Camu/bin/Camu.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="D:/work/as3_code/BulkLoader-master/swc/bulk_loader.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -42,4 +43,3 @@
   <buildCSSFiles/>
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
 </actionScriptProperties>
-
