@@ -88,7 +88,7 @@ package douniu
 
 		public static function getNiuTypeFromSuggestObject(obj:Object) : int
 		{
-			if (!!obj)
+			if (obj)
 			{
 				return obj.niuType;
 			}
@@ -101,7 +101,7 @@ package douniu
 
 		public static function getCardSequenceFormSuggestObject(obj:Object) : Vector.<int>
 		{
-			if (!!obj)
+			if (obj)
 			{
 				return obj.cardSequence;
 			}

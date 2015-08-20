@@ -1,6 +1,10 @@
 package resource
 {
 	import flash.utils.Dictionary;
+	
+	import camu.loader.IResourceHolder;
+	import camu.loader.ResourceLoader;
+	import camu.loader.ResourceLoaderEvent;
 
 	public class ResManager implements IResourceHolder
 	{

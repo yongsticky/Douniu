@@ -35,7 +35,7 @@ package douniu
 			}
 
 			if (cards.every(function (item:NiuCard, idx:int, ar:Vector.<NiuCard>) : Boolean {
-				return !!item;
+				return item;
 				}))
 			{
 				return NIU_ERROR;
@@ -65,7 +65,7 @@ package douniu
 			}
 
 			if (cards.every(function (item:NiuCard, idx:int, ar:Vector.<NiuCard>) : Boolean {
-				return !!item;
+				return item;
 				}))
 			{
 				return NIU_ERROR;
