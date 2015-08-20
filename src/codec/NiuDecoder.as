@@ -9,8 +9,7 @@ package codec
 	{
 		public function NiuDecoder()
 		{
-		}
-		
+		}		
 		
 		public function decode(bytes:ByteArray) : IPacket
 		{
