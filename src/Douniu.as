@@ -2,6 +2,8 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+		
+	import camu.util.Logger.Logger;
 	
 	import starling.core.Starling;
 	
@@ -24,6 +26,8 @@ package
 		
 		private function initialize() : void
 		{
+			Logger.setOff(false);
+			
 			_starling = new Starling(NiuDirector, stage);
 			_starling.start();
 			
