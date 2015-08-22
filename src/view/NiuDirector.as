@@ -2,9 +2,9 @@ package view
 {
 	import flash.utils.getQualifiedClassName;
 	
-	import camu.util.Logger.ILogger;
-	import camu.util.Logger.LogLevel;
-	import camu.util.Logger.Logger;
+	import camu.util.log.ILogger;
+	import camu.util.log.LogLevel;
+	import camu.util.log.Logger;
 	import camu.view.starling.ExDirector;
 	
 	

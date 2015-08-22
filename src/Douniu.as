@@ -3,7 +3,7 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 		
-	import camu.util.Logger.Logger;
+	import camu.util.log.Logger;
 	
 	import starling.core.Starling;
 	
