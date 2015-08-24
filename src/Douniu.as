@@ -2,8 +2,13 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
-		
+	
+	import camu.design_pattern.Singleton;
 	import camu.util.log.Logger;
+	
+	import resource.ResManager;
+	
+	import server.NiuServerConnection;
 	
 	import starling.core.Starling;
 	
@@ -27,6 +32,9 @@ package
 		private function initialize() : void
 		{
 			Logger.setOff(false);
+			
+			Singleton.init([new ResManager(), new NiuServerConnection()]);	
+			
 			
 			_starling = new Starling(NiuDirector, stage);
 			_starling.start();
