@@ -13,7 +13,7 @@ package packet.protocol
 		public var opt_len:uint;		// unsigned char(1)
 		public var opt:ByteArray;		// unsigned char[]
 		
-		private const BASE_LENGTH:int = 16;
+		public static const BASE_LENGTH:int = 16;
 		
 		public function CSHeader()
 		{			

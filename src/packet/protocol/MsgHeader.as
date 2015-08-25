@@ -11,7 +11,7 @@ package packet.protocol
 		public var dest_id:int;	// short(2)
 		
 		
-		private const BASE_LENGTH:int = 14;
+		public static const BASE_LENGTH:int = 14;
 		
 		public function MsgHeader()
 		{			;

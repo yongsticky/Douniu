@@ -6,6 +6,7 @@ package packet.protocol
 	import camu.net.Packet;
 	
 	import packet.NiuPacketFactory;
+	import packet.util.ShortIntUtil;
 
 	public class NiuDecoder implements IDecoder
 	{
@@ -18,7 +19,32 @@ package packet.protocol
 		
 		public function decode(bytes:ByteArray) : Packet
 		{
-			return null;
+			var msgId:int = peekMsgId(bytes);
+			var newPacket:Packet = _packetFactory.createPacketInstance(msgId);
+			
+			return newPacket;
+		}
+		
+		private function peekMsgId(bytes:ByteArray) : int
+		{
+			var backupPos:uint = bytes.position;
+			var msgId:int = -1;
+			
+			if (bytes.bytesAvailable > CSHeader.BASE_LENGTH)
+			{
+				bytes.position = CSHeader.BASE_LENGTH-1;
+				var optLen:int = bytes.readByte();
+				if (bytes.bytesAvailable > optLen+2)
+				{
+					bytes.position = CSHeader.BASE_LENGTH + optLen;
+					
+					msgId = ShortIntUtil.readShortInt(bytes);
+				}				
+			}
+		
+			bytes.position = backupPos;
+			
+			return msgId;
 		}
 	}
 }
