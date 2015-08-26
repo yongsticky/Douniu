@@ -6,7 +6,7 @@ package packet.protocol
 	import camu.net.Packet;
 	
 	import packet.NiuPacketFactory;
-	import packet.util.ShortIntUtil;
+	import camu.util.ShortIntUtil;
 
 	public class NiuDecoder implements IDecoder
 	{

@@ -5,13 +5,15 @@ package view
 	import camu.util.log.ILogger;
 	import camu.util.log.LogLevel;
 	import camu.util.log.Logger;
-	import camu.view.starling.ExDirector;
+	import view.framework.ExDirector;
 	
 	import packet.game.Request_Login;
 	
 	import server.NiuServerConnection;
 	
+
 	import starling.events.EnterFrameEvent;
+
 	
 	public class NiuDirector extends ExDirector
 	{
@@ -31,21 +33,19 @@ package view
 			
 			super.initialize();	
 			
-			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);		
+			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
 			
-			var conn:NiuServerConnection = Singleton.instanceOf(NiuServerConnection) as NiuServerConnection;
-									
-			conn.setTargetAddress("182.254.40.11", 8000);
 			
+			var conn:NiuServerConnection = Singleton.instanceOf(NiuServerConnection) as NiuServerConnection;									
+			conn.setTargetAddress("182.254.40.11", 8000);			
+			conn.addEventListener(ConnectionEvent.CONNECTED, onConnect);
 			conn.connect();
 			
-			conn.addEventListener(ConnectionEvent.CONNECTED, onConnect);
-		}
+		}		
+
 		
 		private function onEnterFrame(event:EnterFrameEvent):void
-		{
-			//_logger.log("onEnterFrame.", LogLevel.DEBUG);
-			
+		{			
 			var conn:NiuServerConnection = Singleton.instanceOf(NiuServerConnection) as NiuServerConnection;
 			conn.onTickElapse();
 		}

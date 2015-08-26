@@ -10,8 +10,8 @@ package packet.protocol
 	import camu.util.log.Logger;
 	
 	import packet.NiuPacketFactory;
-	import packet.util.Bytes2Hex;
-	import packet.util.ShortIntUtil;
+	import camu.util.Bytes2Hex;
+	import camu.util.ShortIntUtil;
 	
 	
 
