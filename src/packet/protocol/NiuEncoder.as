@@ -5,9 +5,9 @@ package packet.protocol
 	
 	import camu.net.IEncoder;
 	import camu.net.Packet;
-	import camu.util.log.ILogger;
-	import camu.util.log.LogLevel;
-	import camu.util.log.Logger;
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	import camu.logger.Logger;
 	
 	import packet.NiuPacketFactory;
 	import camu.util.Bytes2Hex;
@@ -23,14 +23,14 @@ package packet.protocol
 		
 		public function NiuEncoder(packetFactory:NiuPacketFactory)
 		{
-			_logger = Logger.createLogger(NiuEncoder, LogLevel.DEBUG);
+			_logger = Logger.createLogger(NiuEncoder, LEVEL.DEBUG);
 			
 			_packetFactory = packetFactory;
 		}	
 		
 		public function encode(packet:Packet) : ByteArray
 		{
-			_logger.log("encode Enter", LogLevel.DEBUG);
+			_logger.log("encode Enter", LEVEL.DEBUG);
 			
 			var niuPacket:NiuPacket = packet as NiuPacket;
 			if (niuPacket)
@@ -85,7 +85,7 @@ package packet.protocol
 				}
 				
 				bytes.position = 0;
-				_logger.log("after encode, length=", bytes.bytesAvailable, LogLevel.DEBUG);				
+				_logger.log("after encode, length=", bytes.bytesAvailable, LEVEL.DEBUG);				
 				
 				Bytes2Hex.Trace(bytes);
 				

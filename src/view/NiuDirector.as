@@ -2,9 +2,9 @@ package view
 {
 	import camu.design_pattern.Singleton;
 	import camu.net.ConnectionEvent;
-	import camu.util.log.ILogger;
-	import camu.util.log.LogLevel;
-	import camu.util.log.Logger;
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	import camu.logger.Logger;
 	import view.framework.ExDirector;
 	
 	import packet.game.Request_Login;
@@ -23,13 +23,13 @@ package view
 		{
 			super();
 			
-			_logger = Logger.createLogger(NiuDirector, LogLevel.DEBUG);		
+			_logger = Logger.createLogger(NiuDirector, LEVEL.DEBUG);		
 			
 		}
 		
 		override protected function initialize():void
 		{
-			_logger.log("initialize called.", LogLevel.INFO);
+			_logger.log("initialize called.", LEVEL.INFO);
 			
 			super.initialize();	
 			
@@ -52,13 +52,13 @@ package view
 		
 		protected function onConnect(event:ConnectionEvent):void
 		{
-			_logger.log("Connect Server Succ.", LogLevel.INFO);
+			_logger.log("Connect Server Succ.", LEVEL.INFO);
 			
 			var conn:NiuServerConnection = event.target as NiuServerConnection;
 			
 			var packet:Request_Login = conn.objectNew(Request_Login);
 			
-			_logger.log("Send Request_Login.", LogLevel.INFO);
+			_logger.log("Send Request_Login.", LEVEL.INFO);
 			conn.send(packet);
 		}
 	}
