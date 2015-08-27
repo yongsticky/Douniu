@@ -4,10 +4,11 @@ package server
 	
 	import camu.net.BaseConnection;
 	import camu.net.Packet;
+	import camu.util.ShortIntUtil;
 	
+	import packet.NiuPacketFactory;	
 	import packet.protocol.NiuDecoder;
 	import packet.protocol.NiuEncoder;
-	import packet.NiuPacketFactory;	
 	
 	public final class NiuServerConnection extends BaseConnection
 	{
@@ -52,6 +53,23 @@ package server
 		override public function objectDelete(obj:*) : void
 		{
 			_packetFactory.destroyInstance(obj);
+		}
+		
+		override public function getPacketHeaderLength() : int
+		{
+			return 2;
+		}
+		
+		override public function resolvePacketBodyLength(bytes:ByteArray) : int
+		{
+			var backupPos:uint = bytes.position;
+			
+			bytes.position = 0;
+			var bodyLen:int = ShortIntUtil.readShortInt(bytes) - 2;		// 要除去包头
+			
+			bytes.position = backupPos;
+			
+			return bodyLen;
 		}
 	}
 }

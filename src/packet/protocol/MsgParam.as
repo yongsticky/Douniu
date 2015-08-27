@@ -4,7 +4,7 @@ package packet.protocol
 
 	public class MsgParam
 	{
-		public var param_len:uint;
+		public var param_len:int;
 		public var param_bytes:ByteArray;
 		
 		public static const BASE_LENGTH:int = 4;

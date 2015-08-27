@@ -3,15 +3,15 @@ package packet.protocol
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	
-	import camu.net.IEncoder;
-	import camu.net.Packet;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
-	
-	import packet.NiuPacketFactory;
+	import camu.net.IEncoder;
+	import camu.net.Packet;
 	import camu.util.Bytes2Hex;
 	import camu.util.ShortIntUtil;
+	
+	import packet.NiuPacketFactory;
 	
 	
 
@@ -35,13 +35,17 @@ package packet.protocol
 			var niuPacket:NiuPacket = packet as NiuPacket;
 			if (niuPacket)
 			{
+				niuPacket.packMsgParam();
+				
 				var csh:CSHeader = niuPacket.csHeader;
 				var msgh:MsgHeader = niuPacket.msgHeader;
 				var msgp:MsgParam = niuPacket.msgParam;
 								
 				csh.total_len = msgp.getLength() + msgh.getLength() + csh.getLength();
+				
+				_logger.log("encode, total_len=", csh.total_len, LEVEL.DEBUG);
 								
-				//var bytes:ByteArray = new ByteArray();
+				
 				var bytes:ByteArray = _packetFactory.createInstance(ByteArray);
 				bytes.endian = Endian.BIG_ENDIAN;
 				bytes.length = csh.total_len;
@@ -77,15 +81,17 @@ package packet.protocol
 				ShortIntUtil.writeShortInt(bytes, msgh.dest_id);
 				
 				
-				// MsgParam
-				bytes.writeUnsignedInt(msgp.param_len);
+				// MsgParam	
+				_logger.log("encode, parm_len=", msgp.param_len, LEVEL.DEBUG);
+				ShortIntUtil.writeShortInt(bytes, msgp.param_len);
 				if (msgp.param_len > 0)
-				{
-					bytes.writeBytes(msgp.param_bytes, msgp.param_len);
+				{					
+					bytes.writeBytes(msgp.param_bytes, 0, msgp.param_len);
 				}
 				
 				bytes.position = 0;
-				_logger.log("after encode, length=", bytes.bytesAvailable, LEVEL.DEBUG);				
+				
+				_logger.log("after encode, bytes.length=", bytes.length, LEVEL.DEBUG);			
 				
 				Bytes2Hex.Trace(bytes);
 				

@@ -7,7 +7,7 @@ package view
 	import camu.logger.Logger;
 	import view.framework.ExDirector;
 	
-	import packet.game.Request_Login;
+	import packet.game.Login.Request_Login;
 	
 	import server.NiuServerConnection;
 	
@@ -28,13 +28,12 @@ package view
 		}
 		
 		override protected function initialize():void
-		{
+		{	
 			_logger.log("initialize called.", LEVEL.INFO);
 			
-			super.initialize();	
+			super.initialize();
 			
-			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
-			
+			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);			
 			
 			var conn:NiuServerConnection = Singleton.instanceOf(NiuServerConnection) as NiuServerConnection;									
 			conn.setTargetAddress("182.254.40.11", 8000);			
@@ -52,8 +51,7 @@ package view
 		
 		protected function onConnect(event:ConnectionEvent):void
 		{
-			_logger.log("Connect Server Succ.", LEVEL.INFO);
-			
+			_logger.log("Connect Server Succ.", LEVEL.INFO);			
 			var conn:NiuServerConnection = event.target as NiuServerConnection;
 			
 			var packet:Request_Login = conn.objectNew(Request_Login);

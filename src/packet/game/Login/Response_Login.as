@@ -1,4 +1,4 @@
-package packet.game
+package packet.game.Login
 {
 	import packet.protocol.NiuPacket;
 	
