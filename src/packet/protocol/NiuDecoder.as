@@ -4,15 +4,14 @@ package packet.protocol
 	
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
-	import camu.logger.Logger;
-	import camu.net.IDecoder;
+	import camu.logger.Logger;	
 	import camu.net.Packet;
 	import camu.util.Bytes2Hex;
 	import camu.util.ShortIntUtil;
 	
 	import packet.NiuPacketFactory;
 
-	public class NiuDecoder implements IDecoder
+	public class NiuDecoder
 	{
 		private var _packetFactory:NiuPacketFactory = null;
 		

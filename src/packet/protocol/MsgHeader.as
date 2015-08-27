@@ -14,7 +14,7 @@ package packet.protocol
 		public static const BASE_LENGTH:int = 14;
 		
 		public function MsgHeader()
-		{			;
+		{
 		}
 		
 		public function getLength() : int

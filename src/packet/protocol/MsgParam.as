@@ -7,7 +7,7 @@ package packet.protocol
 		public var param_len:int;
 		public var param_bytes:ByteArray;
 		
-		public static const BASE_LENGTH:int = 4;
+		public static const BASE_LENGTH:int = 2;	// short(2)
 		
 		public function MsgParam()
 		{

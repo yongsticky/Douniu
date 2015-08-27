@@ -1,10 +1,11 @@
 package packet
 {
-	import camu.net.Packet;
+	import camu.net.Packet;	
 	import camu.object.BaseObjectFactory;
 	import camu.object.IObjectCache;
 	
 	import packet.game.Login.Request_Login;
+	import packet.game.WrapperMessage.Response_WrapperMessage;
 	
 	public class NiuPacketFactory extends BaseObjectFactory
 	{
@@ -13,17 +14,25 @@ package packet
 			super(objCache);			
 			
 			registerClass(Request_Login);
+			registerClass(Response_WrapperMessage);
 		}
 		
 		public function createPacketInstance(msgId:int) : Packet
 		{
 			var cls:Class = getPacketClass(msgId);
+			
 			return super.createInstance(cls) as Packet;
 		}
 		
 		protected function getPacketClass(msgId:int) : Class
 		{
-			return Request_Login;
+			switch(msgId)
+			{
+				case 15814:
+					return Response_WrapperMessage;
+				default:
+					return null;
+			}
 		}
 	}
 }

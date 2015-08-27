@@ -4,9 +4,11 @@ package server
 	
 	import camu.net.BaseConnection;
 	import camu.net.Packet;
+	import camu.net.PacketEvent;
+	import camu.net.PacketEventCreator;
 	import camu.util.ShortIntUtil;
 	
-	import packet.NiuPacketFactory;	
+	import packet.NiuPacketFactory;
 	import packet.protocol.NiuDecoder;
 	import packet.protocol.NiuEncoder;
 	
@@ -23,6 +25,8 @@ package server
 			
 			_packetFactory = new NiuPacketFactory();
 			
+			_packetFactory.registerClass(PacketEvent, new PacketEventCreator());
+			
 			_encoder = new NiuEncoder(_packetFactory);
 			_decoder = new NiuDecoder(_packetFactory);			
 									
@@ -38,7 +42,7 @@ package server
 			return _decoder.decode(bytes);
 		}
 		
-		override public function objectNew(cls:Class, ...args) : *
+		override public function newObject(cls:Class, ...args): *
 		{
 			if (args.length == 0)
 			{
@@ -50,7 +54,7 @@ package server
 			}
 		}
 		
-		override public function objectDelete(obj:*) : void
+		override public function deleteObject(obj:*) : void
 		{
 			_packetFactory.destroyInstance(obj);
 		}

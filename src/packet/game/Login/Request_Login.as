@@ -28,28 +28,22 @@ package packet.game.Login
 		{
 			super();
 			
-			initCSHeader();
-			
+			initCSHeader();			
 			initMsgHeader();
 			
-			_msgHeader.msg_id = REQ_LOGIN;
-			
+			_msgHeader.msg_id = REQ_LOGIN;				
 			tc_client_info = new TClientInfo();
-			
-			_csHeader.uin = uin = 700033;			
+			_csHeader.uin = uin = 700033;
 			request_src = 0;
 			login_life_style = 0;
 			room_id = 82;
 			tlv_num = 0;
-			imei_len = 0;			
+			imei_len = 0;
 		}
 		
 		
-		override public function packMsgParam():void
-		{
-			var bytes:ByteArray = new ByteArray();			
-			bytes.endian = Endian.BIG_ENDIAN;
-			
+		override public function packMsgParam(bytes:ByteArray):void
+		{			
 			bytes.writeUnsignedInt(uin);
 			ShortIntUtil.writeShortInt(bytes, request_src);
 			bytes.writeInt(login_life_style);
@@ -64,12 +58,7 @@ package packet.game.Login
 			ShortIntUtil.writeShortInt(bytes, imei_len);
 			if(imei_len > 0)
 			{				
-			}
-						
-			bytes.position = 0;
-			_msgParam.param_bytes = bytes;			
-			
-			_msgParam.param_len = bytes.length;
+			}		
 		}
 	}
 }

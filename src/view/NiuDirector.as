@@ -54,7 +54,7 @@ package view
 			_logger.log("Connect Server Succ.", LEVEL.INFO);			
 			var conn:NiuServerConnection = event.target as NiuServerConnection;
 			
-			var packet:Request_Login = conn.objectNew(Request_Login);
+			var packet:Request_Login = conn.newObject(Request_Login);
 			
 			_logger.log("Send Request_Login.", LEVEL.INFO);
 			conn.send(packet);

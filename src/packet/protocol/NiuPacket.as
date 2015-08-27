@@ -1,22 +1,31 @@
 package packet.protocol
 {
+	import flash.utils.ByteArray;
+	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	import camu.logger.Logger;
 	import camu.net.Packet;
+	import camu.util.ShortIntUtil;
 	
 	
 	public class NiuPacket extends Packet
 	{
+		private var _logger:ILogger;
+		
 		protected var _csHeader:CSHeader;
 		protected var _msgHeader:MsgHeader;
-		protected var _msgParam:MsgParam;
 		
+		protected static const MSGPARAM_BASELENGTH:int = 2;
 		
 		public function NiuPacket()
 		{
 			super();
 			
+			_logger = Logger.createLogger(NiuPacket, LEVEL.DEBUG);
+			
 			_csHeader = new CSHeader();
-			_msgHeader = new MsgHeader();
-			_msgParam = new MsgParam();
+			_msgHeader = new MsgHeader();			
 		}		
 		
 		public function get csHeader() : CSHeader
@@ -27,12 +36,8 @@ package packet.protocol
 		public function get msgHeader() : MsgHeader
 		{
 			return _msgHeader;
-		}
-		
-		public function get msgParam() : MsgParam
-		{
-			return _msgParam;
-		}
+		}	
+
 		
 		public function initCSHeader() : void
 		{
@@ -52,8 +57,59 @@ package packet.protocol
 			_msgHeader.src_id = 0;
 			_msgHeader.dest_id = 0;
 		}
+
+		public function pack(bytes:ByteArray) : void
+		{
+
+			// 先pack msgparam的数据段，这里会调用具体实现类function
+			bytes.position = _csHeader.getLength() + _msgHeader.getLength() + MSGPARAM_BASELENGTH;
+			var posBefore:int = bytes.position;
+			packMsgParam(bytes);
+			var posAfter:int = bytes.position;
+
+			// 回填msgparam数据长度
+			var paramLen:int = posAfter-posBefore;
+			bytes.position = _csHeader.getLength() + _msgHeader.getLength();
+			ShortIntUtil.writeShortInt(bytes, paramLen);
+			paramLen += MSGPARAM_BASELENGTH;
+
+			// pack msgheader
+			bytes.position = _csHeader.getLength();
+			packMsgHeader(bytes);
+
+			// pack csheader
+			_csHeader.total_len = _csHeader.getLength() + _msgHeader.getLength() + paramLen;
+			bytes.position = 0;
+			packCSHeader(bytes);
+		}
 		
-		public function packMsgParam() : void
+		public function packCSHeader(bytes:ByteArray) : void
+		{			
+			ShortIntUtil.writeShortInt(bytes, _csHeader.total_len);			
+			ShortIntUtil.writeShortInt(bytes, _csHeader.ver);			
+			ShortIntUtil.writeShortInt(bytes, _csHeader.seq);				
+			bytes.writeInt(_csHeader.dialog_id);
+			bytes.writeUnsignedInt(_csHeader.uin);
+			bytes.writeByte(_csHeader.body_flag);
+			bytes.writeByte(_csHeader.opt_len);
+			if (_csHeader.opt_len > 0)
+			{
+				bytes.writeBytes(_csHeader.opt, _csHeader.opt_len);
+			}			
+		}
+		
+		public function packMsgHeader(bytes:ByteArray) : void
+		{			
+			ShortIntUtil.writeShortInt(bytes, _msgHeader.msg_id);
+			ShortIntUtil.writeShortInt(bytes, _msgHeader.msg_type);				
+			bytes.writeInt(_msgHeader.msg_seq);
+			bytes.writeByte(_msgHeader.src_fe);
+			bytes.writeByte(_msgHeader.dest_fe);			
+			ShortIntUtil.writeShortInt(bytes, _msgHeader.src_id);			
+			ShortIntUtil.writeShortInt(bytes, _msgHeader.dest_id);
+		}
+		
+		public function packMsgParam(bytes:ByteArray) : void
 		{
 			throw new Error("Abstract function!");
 		}
