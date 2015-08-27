@@ -9,26 +9,26 @@ package packet.protocol
 	import camu.util.ShortIntUtil;
 	
 	
-	public class NiuPacket extends Packet
+	public class NiuRequestPacket extends Packet
 	{
 		private var _logger:ILogger;
 		
-		protected var _csHeader:CSHeader;
+		protected var _csHeader:CsHeader;		
 		protected var _msgHeader:MsgHeader;
-		
+	
 		protected static const MSGPARAM_BASELENGTH:int = 2;
 		
-		public function NiuPacket()
+		public function NiuRequestPacket()
 		{
 			super();
 			
-			_logger = Logger.createLogger(NiuPacket, LEVEL.DEBUG);
+			_logger = Logger.createLogger(NiuRequestPacket, LEVEL.DEBUG);
 			
-			_csHeader = new CSHeader();
-			_msgHeader = new MsgHeader();			
+			_csHeader = new CsHeader();
+			_msgHeader = new MsgHeader();
 		}		
 		
-		public function get csHeader() : CSHeader
+		public function get csHeader() : CsHeader
 		{
 			return _csHeader;
 		}
@@ -39,7 +39,7 @@ package packet.protocol
 		}	
 
 		
-		public function initCSHeader() : void
+		public function initCsHeader() : void
 		{
 			_csHeader.ver = 0;
 			_csHeader.dialog_id = -1;
@@ -60,7 +60,6 @@ package packet.protocol
 
 		public function pack(bytes:ByteArray) : void
 		{
-
 			// 先pack msgparam的数据段，这里会调用具体实现类function
 			bytes.position = _csHeader.getLength() + _msgHeader.getLength() + MSGPARAM_BASELENGTH;
 			var posBefore:int = bytes.position;
@@ -76,11 +75,14 @@ package packet.protocol
 			// pack msgheader
 			bytes.position = _csHeader.getLength();
 			packMsgHeader(bytes);
-
+			
 			// pack csheader
 			_csHeader.total_len = _csHeader.getLength() + _msgHeader.getLength() + paramLen;
 			bytes.position = 0;
 			packCSHeader(bytes);
+			
+			// 输出前复位到0
+			bytes.position = 0;
 		}
 		
 		public function packCSHeader(bytes:ByteArray) : void

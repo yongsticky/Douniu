@@ -45,13 +45,13 @@ package packet.protocol
 			
 			var msgId:int = -1;
 			
-			if (bytes.bytesAvailable > CSHeader.BASE_LENGTH)
+			if (bytes.bytesAvailable > CsHeader.BASE_LENGTH)
 			{
-				bytes.position = CSHeader.BASE_LENGTH-1;
+				bytes.position = CsHeader.BASE_LENGTH-1;
 				var optLen:uint = bytes.readByte();				
 				if (bytes.bytesAvailable > optLen+2)
 				{
-					bytes.position = CSHeader.BASE_LENGTH + optLen;
+					bytes.position = CsHeader.BASE_LENGTH + optLen;
 					
 					msgId = ShortIntUtil.readShortInt(bytes);
 				}				

@@ -1,16 +1,13 @@
 package packet.game.Login
 {
-	import flash.utils.ByteArray;
-	import flash.utils.Endian;
-		
-	import camu.util.ShortIntUtil;
+	import flash.utils.ByteArray;	
+	import packet.game.MSGID;
 	
-	import packet.protocol.NiuPacket;
+	import camu.util.ShortIntUtil;	
+	import packet.protocol.NiuRequestPacket;
 
-	public class Request_Login extends NiuPacket
-	{
-		public static const REQ_LOGIN:int = 15801;
-		
+	public class Request_Login extends NiuRequestPacket
+	{		
 		public var uin:uint;					// unsigned int(4)
 		public var request_src:int;			// short(2)
 		public var login_life_style:int;		// unsigned int(4)
@@ -22,16 +19,14 @@ package packet.game.Login
 		public var imei:String;				// char[]		
 		
 		
-		
-		
 		public function Request_Login()
 		{
 			super();
 			
-			initCSHeader();			
+			initCsHeader();
 			initMsgHeader();
 			
-			_msgHeader.msg_id = REQ_LOGIN;				
+			_msgHeader.msg_id = MSGID.REQUEST_LOGIN;				
 			tc_client_info = new TClientInfo();
 			_csHeader.uin = uin = 700033;
 			request_src = 0;

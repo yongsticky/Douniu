@@ -1,9 +1,12 @@
 package packet.game.WrapperMessage
 {
-	public class Response_WrapperMessage
+	import packet.protocol.NiuResponsePacket;
+
+	public class Response_WrapperMessage extends NiuResponsePacket
 	{
 		public function Response_WrapperMessage()
 		{
+			super();
 		}
 	}
 }

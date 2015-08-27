@@ -42,16 +42,9 @@ package server
 			return _decoder.decode(bytes);
 		}
 		
-		override public function newObject(cls:Class, ...args): *
+		override public function newObject(cls:Class, data:* = null): *
 		{
-			if (args.length == 0)
-			{
-				return _packetFactory.createInstance(cls)
-			}
-			else
-			{
-				return _packetFactory.createInstance(cls, args);
-			}
+			return _packetFactory.createInstance(cls, data)
 		}
 		
 		override public function deleteObject(obj:*) : void

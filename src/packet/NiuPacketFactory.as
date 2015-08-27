@@ -20,8 +20,14 @@ package packet
 		public function createPacketInstance(msgId:int) : Packet
 		{
 			var cls:Class = getPacketClass(msgId);
-			
-			return super.createInstance(cls) as Packet;
+			if (cls)
+			{
+				return createInstance(cls) as Packet;
+			}
+			else
+			{
+				return null;
+			}
 		}
 		
 		protected function getPacketClass(msgId:int) : Class

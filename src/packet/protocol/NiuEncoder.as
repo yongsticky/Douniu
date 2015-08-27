@@ -30,7 +30,7 @@ package packet.protocol
 		{
 			_logger.log("encode Enter", LEVEL.DEBUG);
 			
-			var niuPacket:NiuPacket = packet as NiuPacket;
+			var niuPacket:NiuRequestPacket = packet as NiuRequestPacket;
 			if (niuPacket)
 			{
 				var bytes:ByteArray = _packetFactory.createInstance(ByteArray);
@@ -40,9 +40,8 @@ package packet.protocol
 				niuPacket.pack(bytes);
 				
 				_logger.log("encode, pack length=", bytes.length, LEVEL.DEBUG);
-				Bytes2Hex.Trace(bytes);
+				Bytes2Hex.Trace(bytes);				
 				
-				bytes.position = 0;
 				return bytes;
 			}
 			

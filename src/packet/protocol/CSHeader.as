@@ -2,7 +2,7 @@ package packet.protocol
 {
 	import flash.utils.ByteArray;
 
-	public class CSHeader
+	public class CsHeader
 	{		
 		public var total_len:int;		// short(2)
 		public var ver:int;			// short(2)
@@ -15,7 +15,7 @@ package packet.protocol
 		
 		public static const BASE_LENGTH:int = 16;
 		
-		public function CSHeader()
+		public function CsHeader()
 		{			
 		}
 		

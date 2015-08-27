@@ -1,8 +1,8 @@
 package packet.game.Login
 {
-	import packet.protocol.NiuPacket;
+	import packet.protocol.NiuResponsePacket;
 	
-	public class Response_Login extends NiuPacket
+	public class Response_Login extends NiuResponsePacket
 	{
 		public function Response_Login()
 		{
