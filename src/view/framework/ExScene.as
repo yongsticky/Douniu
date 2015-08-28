@@ -10,6 +10,22 @@ package view.framework
 		protected var _id:String;
 		protected static var _dictScene:Dictionary = new Dictionary(); 
 
+		
+		public function ExScene(id:String)
+		{
+			if (getScene(id))
+			{
+				throw new Error("Scene(" + id + ") already exist.");
+			}
+
+			_dictScene[id] = this;
+		}
+
+		override protected function initialize() : void
+		{
+			super.initialize();
+		}
+
 		public static function getScene(id:String) : ExScene
 		{
 			if (_dictScene.hasOwnProperty(id))
@@ -32,26 +48,11 @@ package view.framework
 			}
 		}
 
-		public function ExScene(id:String)
-		{
-			if (getScene(id))
-			{
-				throw new Error("Scene(" + id + ") already exist.");
-			}
-
-			_dictScene[id] = this;
-		}
-
-		override protected function initialize() : void
-		{
-			super.initialize();
-		}
-
 		public function get id() : String
 		{
 			return _id;
 		}
-
+		
 		public function addLayer(name:String, layer:ExLayer) : ExLayer
 		{
 			if (layer)

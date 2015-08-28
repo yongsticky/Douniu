@@ -46,8 +46,7 @@ package packet.protocol
 			}
 			
 			if (_isOK)
-			{
-				
+			{				
 				if (bytes.bytesAvailable < _msgHeader.param_len - 2)
 				{
 					_isOK = false;

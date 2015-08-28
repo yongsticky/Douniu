@@ -1,18 +1,19 @@
 package view
 {
 	import camu.design_pattern.Singleton;
-	import camu.net.ConnectionEvent;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
-	import view.framework.ExDirector;
+	import camu.net.ConnectionEvent;
 	
-	import packet.game.Login.Request_Login;
+	import packet.game.message.Login.Request_Login;
 	
 	import server.NiuServerConnection;
 	
-
 	import starling.events.EnterFrameEvent;
+	
+	import view.framework.ExDirector;
+	import view.scene.hall.SceneHall;
 
 	
 	public class NiuDirector extends ExDirector
@@ -27,18 +28,28 @@ package view
 			
 		}
 		
-		override protected function initialize():void
+		override protected function initialize() : void
 		{	
 			_logger.log("initialize called.", LEVEL.INFO);
 			
 			super.initialize();
 			
+			
+			/*
+			var _sceneHall:SceneHall = new SceneHall();
+			this.switchToScene(_sceneHall);
+			*/
+			
+			
+			
 			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);			
+			
 			
 			var conn:NiuServerConnection = Singleton.instanceOf(NiuServerConnection) as NiuServerConnection;									
 			conn.setTargetAddress("182.254.40.11", 8000);			
 			conn.addEventListener(ConnectionEvent.CONNECTED, onConnect);
 			conn.connect();
+			
 			
 		}		
 

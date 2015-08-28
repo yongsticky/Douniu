@@ -6,9 +6,9 @@ package packet
 	import camu.net.PacketEventCreator;
 	import camu.net.PacketEvent;
 	
-	import packet.game.Login.Response_Login;
-	import packet.game.Login.Request_Login;
-	import packet.game.WrapperMessage.Response_WrapperMessage;	
+	import packet.game.message.Login.Response_Login;
+	import packet.game.message.Login.Request_Login;
+	import packet.game.message.WrapperMessage.Response_WrapperMessage;	
 	
 	
 	public class NiuPacketFactory extends BaseObjectFactory

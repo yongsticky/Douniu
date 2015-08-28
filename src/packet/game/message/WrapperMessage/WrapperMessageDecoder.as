@@ -1,4 +1,4 @@
-package packet.game.WrapperMessage
+package packet.game.message.WrapperMessage
 {
 	import flash.utils.ByteArray;
 	
@@ -48,8 +48,9 @@ package packet.game.WrapperMessage
 		{
 			var msgId:int = -1;
 			if (bytes.bytesAvailable >= MsgHeader.BASE_LENGTH)			
-			{
+			{				
 				msgId = bytes.readShort();
+				bytes.position -= 2;	
 			}
 
 			_logger.log("PeekMsgId, msgId:", msgId, LEVEL.INFO);

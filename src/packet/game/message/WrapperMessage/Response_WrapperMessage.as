@@ -1,4 +1,4 @@
-package packet.game.WrapperMessage
+package packet.game.message.WrapperMessage
 {
 	import flash.utils.ByteArray;
 	

@@ -8,8 +8,8 @@ package packet
 	import camu.net.Packet;
 	import camu.util.Bytes2Hex;
 	
-	import packet.game.WrapperMessage.Response_WrapperMessage;
-	import packet.game.WrapperMessage.WrapperMessageDecoder;
+	import packet.game.message.WrapperMessage.Response_WrapperMessage;
+	import packet.game.message.WrapperMessage.WrapperMessageDecoder;
 	import packet.protocol.CsHeader;
 	import packet.protocol.NiuResponsePacket;
 

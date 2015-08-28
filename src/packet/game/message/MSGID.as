@@ -1,4 +1,4 @@
-package packet.game
+package packet.game.message
 {
 	public final class MSGID
 	{
