@@ -1,9 +1,8 @@
 package packet.game.Login
 {
 	import flash.utils.ByteArray;	
-	import packet.game.MSGID;
 	
-	import camu.util.ShortIntUtil;	
+	import packet.game.MSGID;
 	import packet.protocol.NiuRequestPacket;
 
 	public class Request_Login extends NiuRequestPacket
@@ -39,18 +38,16 @@ package packet.game.Login
 		
 		override public function packMsgParam(bytes:ByteArray):void
 		{			
-			bytes.writeUnsignedInt(uin);
-			ShortIntUtil.writeShortInt(bytes, request_src);
+			bytes.writeUnsignedInt(uin);			
+			bytes.writeShort(request_src);
 			bytes.writeInt(login_life_style);
-			bytes.writeInt(room_id);
-			
-			tc_client_info.pack(bytes);
-			
-			ShortIntUtil.writeShortInt(bytes, tlv_num);
+			bytes.writeInt(room_id);			
+			tc_client_info.pack(bytes);			
+			bytes.writeShort(tlv_num);
 			if (tlv_num > 0)
 			{				
-			}
-			ShortIntUtil.writeShortInt(bytes, imei_len);
+			}			
+			bytes.writeShort(imei_len);
 			if(imei_len > 0)
 			{				
 			}		

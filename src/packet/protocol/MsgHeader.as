@@ -10,8 +10,10 @@ package packet.protocol
 		public var src_id:int;		// short(2)
 		public var dest_id:int;	// short(2)
 		
+		public var param_len:int;	// short(2)
 		
-		public static const BASE_LENGTH:int = 14;
+		
+		public static const BASE_LENGTH:int = 16;
 		
 		public function MsgHeader()
 		{

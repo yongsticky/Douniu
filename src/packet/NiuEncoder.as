@@ -1,15 +1,15 @@
-package packet.protocol
+package packet
 {
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
-	
+		
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	import camu.net.Packet;
 	import camu.util.Bytes2Hex;
 	
-	import packet.NiuPacketFactory;
+	import packet.protocol.NiuRequestPacket;
 	
 	
 
@@ -17,13 +17,13 @@ package packet.protocol
 	{
 		private var _logger:ILogger;
 		
-		private var _packetFactory:NiuPacketFactory = null;
+		private var _packetFactory:NiuPacketFactory;
 		
-		public function NiuEncoder(packetFactory:NiuPacketFactory)
+		public function NiuEncoder(factory:NiuPacketFactory)
 		{
 			_logger = Logger.createLogger(NiuEncoder, LEVEL.DEBUG);
 			
-			_packetFactory = packetFactory;
+			_packetFactory = factory;
 		}	
 		
 		public function encode(packet:Packet) : ByteArray

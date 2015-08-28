@@ -2,8 +2,7 @@ package packet.game.Login
 {	
 	import flash.utils.ByteArray;
 	
-	import camu.util.BigIntUtil;
-	import camu.util.ShortIntUtil;
+	import camu.util.BigIntUtil;	
 
 	public class TClientInfo
 	{
@@ -51,32 +50,41 @@ package packet.game.Login
 		
 		public function pack(bytes:ByteArray) : void
 		{					
-			ShortIntUtil.writeShortInt(bytes, nick_len);
+			//ShortIntUtil.writeShortInt(bytes, nick_len);
+			bytes.writeShort(nick_len);
 			if (nick_len > 0)
 			{				
 			}
 			bytes.writeByte(age);
 			bytes.writeByte(gender);
-			ShortIntUtil.writeShortInt(bytes, account_type);
-			ShortIntUtil.writeShortInt(bytes, client_type);
+			//ShortIntUtil.writeShortInt(bytes, account_type);
+			bytes.writeShort(account_type);
+			//ShortIntUtil.writeShortInt(bytes, client_type);
+			bytes.writeShort(client_type);
 			BigIntUtil.writeBigInt(bytes, pf_key_l, pf_key_h);
-			ShortIntUtil.writeShortInt(bytes, network_type);
-			ShortIntUtil.writeShortInt(bytes, operator);
+			//ShortIntUtil.writeShortInt(bytes, network_type);
+			bytes.writeShort(network_type);
+			//ShortIntUtil.writeShortInt(bytes, operator);
+			bytes.writeShort(operator);
 			bytes.writeInt(channel);
 			bytes.writeUnsignedInt(client_version);
-			ShortIntUtil.writeShortInt(bytes, os_version_len);
+			//ShortIntUtil.writeShortInt(bytes, os_version_len);
+			bytes.writeShort(os_version_len);
 			if (os_version_len > 0)
 			{				
 			}
-			ShortIntUtil.writeShortInt(bytes, terminal_len);
+			//ShortIntUtil.writeShortInt(bytes, terminal_len);
+			bytes.writeShort(terminal_len);
 			if (terminal_len > 0)
 			{				
 			}
-			ShortIntUtil.writeShortInt(bytes, open_id_len);
+			//ShortIntUtil.writeShortInt(bytes, open_id_len);
+			bytes.writeShort(open_id_len);
 			if (open_id_len > 0)
 			{				
 			}
-			ShortIntUtil.writeShortInt(bytes, head_url_len);
+			//ShortIntUtil.writeShortInt(bytes, head_url_len);
+			bytes.writeShort(head_url_len);
 			if (head_url_len > 0)
 			{				
 			}					

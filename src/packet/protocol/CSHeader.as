@@ -16,7 +16,8 @@ package packet.protocol
 		public static const BASE_LENGTH:int = 16;
 		
 		public function CsHeader()
-		{			
+		{
+			opt = new ByteArray();
 		}
 		
 		public function getLength() : int

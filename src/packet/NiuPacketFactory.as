@@ -3,17 +3,24 @@ package packet
 	import camu.net.Packet;	
 	import camu.object.BaseObjectFactory;
 	import camu.object.IObjectCache;
+	import camu.net.PacketEventCreator;
+	import camu.net.PacketEvent;
 	
+	import packet.game.Login.Response_Login;
 	import packet.game.Login.Request_Login;
-	import packet.game.WrapperMessage.Response_WrapperMessage;
+	import packet.game.WrapperMessage.Response_WrapperMessage;	
+	
 	
 	public class NiuPacketFactory extends BaseObjectFactory
 	{
 		public function NiuPacketFactory(objCache:IObjectCache = null)
 		{
-			super(objCache);			
+			super(objCache);		
+			
+			registerClass(PacketEvent, new PacketEventCreator());
 			
 			registerClass(Request_Login);
+			registerClass(Response_Login);
 			registerClass(Response_WrapperMessage);
 		}
 		
@@ -36,6 +43,8 @@ package packet
 			{
 				case 15814:
 					return Response_WrapperMessage;
+				case 15801:
+					return Response_Login;
 				default:
 					return null;
 			}

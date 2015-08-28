@@ -6,11 +6,11 @@ package server
 	import camu.net.Packet;
 	import camu.net.PacketEvent;
 	import camu.net.PacketEventCreator;
-	import camu.util.ShortIntUtil;
 	
+	import packet.NiuDecoder;
+	import packet.NiuEncoder;
 	import packet.NiuPacketFactory;
-	import packet.protocol.NiuDecoder;
-	import packet.protocol.NiuEncoder;
+	import packet.protocol.NiuResponsePacket;
 	
 	public final class NiuServerConnection extends BaseConnection
 	{
@@ -19,17 +19,26 @@ package server
 		
 		private var _packetFactory:NiuPacketFactory;
 		
+		
 		public function NiuServerConnection()
 		{
-			super();
+			super();			
 			
-			_packetFactory = new NiuPacketFactory();
-			
-			_packetFactory.registerClass(PacketEvent, new PacketEventCreator());
+			_packetFactory = new NiuPacketFactory();			
 			
 			_encoder = new NiuEncoder(_packetFactory);
-			_decoder = new NiuDecoder(_packetFactory);			
+			_decoder = new NiuDecoder(_packetFactory);
 									
+		}
+		
+		public function dispatchWarpperMessagePacket(packet:NiuResponsePacket) : void
+		{
+			if (packet)
+			{
+				dispatchPacketEvent(packet);
+				
+				deleteObject(packet);
+			}
 		}
 		
 		override public function encode(packet:Packet) : ByteArray
@@ -43,12 +52,12 @@ package server
 		}
 		
 		override public function newObject(cls:Class, data:* = null): *
-		{
+		{			
 			return _packetFactory.createInstance(cls, data)
 		}
 		
 		override public function deleteObject(obj:*) : void
-		{
+		{			
 			_packetFactory.destroyInstance(obj);
 		}
 		
@@ -61,8 +70,9 @@ package server
 		{
 			var backupPos:uint = bytes.position;
 			
+			
 			bytes.position = 0;
-			var bodyLen:int = ShortIntUtil.readShortInt(bytes) - 2;		// 要除去包头
+			var bodyLen:int = bytes.readShort() - 2;	// 要除去包头
 			
 			bytes.position = backupPos;
 			

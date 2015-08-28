@@ -4,7 +4,7 @@ package
 	import flash.events.Event;
 	
 	import camu.design_pattern.Singleton;
-	import camu.logger.Logger;
+	import camu.logger.Logger;	
 	
 	import resource.ResManager;
 	

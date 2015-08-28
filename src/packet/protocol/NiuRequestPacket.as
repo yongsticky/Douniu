@@ -1,28 +1,17 @@
 package packet.protocol
 {
-	import flash.utils.ByteArray;
-	
-	import camu.logger.ILogger;
-	import camu.logger.LEVEL;
-	import camu.logger.Logger;
+	import flash.utils.ByteArray;	
 	import camu.net.Packet;
-	import camu.util.ShortIntUtil;
 	
 	
 	public class NiuRequestPacket extends Packet
-	{
-		private var _logger:ILogger;
-		
-		protected var _csHeader:CsHeader;		
-		protected var _msgHeader:MsgHeader;
-	
-		protected static const MSGPARAM_BASELENGTH:int = 2;
+	{		
+		protected var _csHeader:CsHeader;
+		protected var _msgHeader:MsgHeader;	
 		
 		public function NiuRequestPacket()
 		{
-			super();
-			
-			_logger = Logger.createLogger(NiuRequestPacket, LEVEL.DEBUG);
+			super();			
 			
 			_csHeader = new CsHeader();
 			_msgHeader = new MsgHeader();
@@ -61,23 +50,20 @@ package packet.protocol
 		public function pack(bytes:ByteArray) : void
 		{
 			// 先pack msgparam的数据段，这里会调用具体实现类function
-			bytes.position = _csHeader.getLength() + _msgHeader.getLength() + MSGPARAM_BASELENGTH;
+			bytes.position = _csHeader.getLength() + _msgHeader.getLength();
 			var posBefore:int = bytes.position;
 			packMsgParam(bytes);
 			var posAfter:int = bytes.position;
 
-			// 回填msgparam数据长度
-			var paramLen:int = posAfter-posBefore;
-			bytes.position = _csHeader.getLength() + _msgHeader.getLength();
-			ShortIntUtil.writeShortInt(bytes, paramLen);
-			paramLen += MSGPARAM_BASELENGTH;
+			// 回填msgparam数据长度段
+			_msgHeader.param_len = posAfter-posBefore;	
 
 			// pack msgheader
 			bytes.position = _csHeader.getLength();
 			packMsgHeader(bytes);
 			
 			// pack csheader
-			_csHeader.total_len = _csHeader.getLength() + _msgHeader.getLength() + paramLen;
+			_csHeader.total_len = _csHeader.getLength() + _msgHeader.getLength() + _msgHeader.param_len;
 			bytes.position = 0;
 			packCSHeader(bytes);
 			
@@ -86,10 +72,10 @@ package packet.protocol
 		}
 		
 		public function packCSHeader(bytes:ByteArray) : void
-		{			
-			ShortIntUtil.writeShortInt(bytes, _csHeader.total_len);			
-			ShortIntUtil.writeShortInt(bytes, _csHeader.ver);			
-			ShortIntUtil.writeShortInt(bytes, _csHeader.seq);				
+		{						
+			bytes.writeShort(_csHeader.total_len);			
+			bytes.writeShort(_csHeader.ver);			
+			bytes.writeShort(_csHeader.seq);
 			bytes.writeInt(_csHeader.dialog_id);
 			bytes.writeUnsignedInt(_csHeader.uin);
 			bytes.writeByte(_csHeader.body_flag);
@@ -101,14 +87,16 @@ package packet.protocol
 		}
 		
 		public function packMsgHeader(bytes:ByteArray) : void
-		{			
-			ShortIntUtil.writeShortInt(bytes, _msgHeader.msg_id);
-			ShortIntUtil.writeShortInt(bytes, _msgHeader.msg_type);				
+		{				
+			bytes.writeShort(_msgHeader.msg_id);			
+			bytes.writeShort(_msgHeader.msg_type);
 			bytes.writeInt(_msgHeader.msg_seq);
 			bytes.writeByte(_msgHeader.src_fe);
 			bytes.writeByte(_msgHeader.dest_fe);			
-			ShortIntUtil.writeShortInt(bytes, _msgHeader.src_id);			
-			ShortIntUtil.writeShortInt(bytes, _msgHeader.dest_id);
+			bytes.writeShort(_msgHeader.src_id);			
+			bytes.writeShort(_msgHeader.dest_id);
+			
+			bytes.writeShort(_msgHeader.param_len);
 		}
 		
 		public function packMsgParam(bytes:ByteArray) : void
