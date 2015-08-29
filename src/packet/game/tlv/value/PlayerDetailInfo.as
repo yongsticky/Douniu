@@ -48,6 +48,50 @@ package packet.game.tlv.value
 		override public function pack(bytes:ByteArray):void
 		{
 			super.pack(bytes);
+
+			bytes.writeInt(player_id);
+			bytes.writeInt(player_uin);
+			bytes.writeShort(player_status);
+			bytes.writeShort(table_id);
+			bytes.writeShort(seat_id);
+			bytes.writeShort(nick_len);
+			if (nick_len > 0)
+			{
+				bytes.writeUTFBytes(nick)
+			}
+			bytes.writeByte(age);
+			bytes.writeByte(gender);			
+			bytes.writeShort(level);			
+			bytes.writeUnsignedInt(experience);
+			money.writeToBytes(bytes);
+			bytes.writeShort(heart_count);
+			bytes.writeShort(open_id_len);
+			if (open_id_len > 0)
+			{
+				bytes.writeUTFBytes(open_id);
+			}
+			bytes.writeInt(avatar_id);
+			bytes.writeInt(avatar_level);
+			bytes.writeInt(avatar_skill_num);
+			for (var i:int = 0; i < avatar_skill_num; i++)
+			{
+				bytes.writeInt(avatar_skill_id[i]);
+			}
+			bytes.writeInt(client_type);
+			bytes.writeInt(account_type);			
+			bytes.writeShort(head_url_len);
+			if (head_url_len > 0)
+			{
+				bytes.writeUTFBytes(head_url);
+			}
+			score.writeToBytes(bytes);
+			bytes.writeShort(ident_len);
+			if (ident_len > 0)
+			{
+				bytes.writeUTFBytes(ident_info);
+			}
+			bytes.writeInt(using_face_item_id);
+			player_detail_tlv.pack(bytes);
 		}
 		
 		override public function unpack(bytes:ByteArray):void
