@@ -2,8 +2,11 @@ package packet.game.message.Login
 {
 	import flash.utils.ByteArray;
 	
+	import camu.design_pattern.Singleton;
+	
+	import packet.game.tlv.UnionTLV;
+	import packet.game.tlv.UnionTLVDecoder;
 	import packet.protocol.NiuResponsePacket;
-	import packet.game.tlv.UTLV;
 	
 	public class Response_Login extends NiuResponsePacket
 	{
@@ -19,7 +22,7 @@ package packet.game.message.Login
 		public var player_id:int;			// unsigned int(4)
 		public var trigger_present_beans:int;	// unsigned int(4)
 		public var tlv_num:int;			// short(2)
-		public var tlv_vec:Vector.<UTLV>;	// TTLVUINT[]
+		public var tlv_vec:Vector.<UnionTLV>;	// TTLVUINT[]
 		public var control_flag:int;		// unsigned int(4)
 		public var talk_switch:int;		// unsigned int(4)
 		
@@ -28,7 +31,7 @@ package packet.game.message.Login
 		{
 			super();
 			
-			tlv_vec = new Vector.<UTLV>();
+			tlv_vec = new Vector.<UnionTLV>();
 		}
 		
 		override public function unpackMsgParam(bytes:ByteArray):void
@@ -50,16 +53,16 @@ package packet.game.message.Login
 			trigger_present_beans = bytes.readUnsignedInt();
 			tlv_num = bytes.readShort();
 			if (tlv_num > 0)
-			{				
+			{
+				var _uTLVDecoder:UnionTLVDecoder = Singleton.instanceOf(UnionTLVDecoder);
 				for (var i:int = 0; i < tlv_num; i++)
 				{
-					var tlvInfo:UTLV = new UTLV();
-					tlvInfo.unpack(bytes);
-					tlv_vec.push(tlvInfo);
+					var utlv:UnionTLV = _uTLVDecoder.decode(bytes);
+					tlv_vec.push(utlv);
 				}
 			}
 			control_flag = bytes.readUnsignedInt();
-			talk_switch = bytes.readUnsignedInt();			
+			talk_switch = bytes.readUnsignedInt();
 		}
 	}
 }

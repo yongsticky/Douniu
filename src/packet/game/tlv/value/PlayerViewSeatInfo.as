@@ -1,4 +1,4 @@
-package packet.game.tlv
+package packet.game.tlv.value
 {
 	public class PlayerViewSeatInfo
 	{

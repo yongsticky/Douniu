@@ -4,7 +4,12 @@ package
 	import flash.events.Event;
 	
 	import camu.design_pattern.Singleton;
-	import camu.logger.Logger;	
+	import camu.logger.Logger;
+	
+	import factory.NiuObjectFactory;
+	
+	import packet.game.message.WrapperMessage.WrapperMessageDecoder;
+	import packet.game.tlv.UnionTLVDecoder;
 	
 	import resource.ResManager;
 	
@@ -33,7 +38,11 @@ package
 		{
 			Logger.setOff(false);
 			
-			Singleton.init([new ResManager(), new NiuServerConnection()]);	
+			Singleton.init([new ResManager(), 
+				new NiuObjectFactory(), 
+				new NiuServerConnection(), 
+				new WrapperMessageDecoder(), 
+				new UnionTLVDecoder()]);	
 			
 			
 			_starling = new Starling(NiuDirector, stage);

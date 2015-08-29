@@ -2,30 +2,24 @@ package packet
 {
 	import flash.utils.ByteArray;
 	
+	import camu.design_pattern.Singleton;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	import camu.net.Packet;
 	import camu.util.Bytes2Hex;
 	
-	import packet.game.message.WrapperMessage.Response_WrapperMessage;
-	import packet.game.message.WrapperMessage.WrapperMessageDecoder;
+	import factory.NiuObjectFactory;
 	import packet.protocol.CsHeader;
 	import packet.protocol.NiuResponsePacket;
 
 	public class NiuDecoder
 	{
 		private var _logger:ILogger;
-
-		private var _packetFactory:NiuPacketFactory;
-		private var _wrapperMessageDecoder:WrapperMessageDecoder;		
 		
-		public function NiuDecoder(factory:NiuPacketFactory)
+		public function NiuDecoder()
 		{ 		
 			_logger = Logger.createLogger(NiuDecoder, LEVEL.DEBUG);
-			
-			_packetFactory = factory;
-			_wrapperMessageDecoder = new WrapperMessageDecoder(_packetFactory);
 		}
 		
 		public function decode(bytes:ByteArray) : Packet
@@ -33,20 +27,24 @@ package packet
 			_logger.log("decode Enter, bytes.length=", bytes.length, LEVEL.DEBUG);
 			Bytes2Hex.Trace(bytes);
 			
+			var _factory:NiuObjectFactory = Singleton.instanceOf(NiuObjectFactory);
+			
 			var msgId:int = peekMsgId(bytes);			
-			var responsePacket:NiuResponsePacket  = _packetFactory.createPacketInstance(msgId) as NiuResponsePacket;
-			if (responsePacket is Response_WrapperMessage)
+			var responsePacket:NiuResponsePacket  = _factory.createPacketInstance(msgId) as NiuResponsePacket;
+			if (responsePacket)
 			{
-				(responsePacket as Response_WrapperMessage).wrapperDecoder = _wrapperMessageDecoder;
+				if (!responsePacket.unpack(bytes))
+				{
+					_factory.destroyInstance(responsePacket);
+					responsePacket = null;
+				}
+				
+				return responsePacket;
 			}
-						
-			if (!responsePacket.unpack(bytes))
+			else
 			{
-				_packetFactory.destroyInstance(responsePacket);
-				responsePacket = null;
+				throw new Error("Not ResponsePacket Class.");
 			}			
-
-			return responsePacket;
 		}
 		
 		private function peekMsgId(bytes:ByteArray) : int
@@ -68,7 +66,6 @@ package packet
 			}
 		
 			bytes.position = backupPos;
-
 
 			_logger.log("PeekMsgId, msgId:", msgId, LEVEL.INFO);
 			

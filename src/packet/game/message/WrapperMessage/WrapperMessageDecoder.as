@@ -2,27 +2,25 @@ package packet.game.message.WrapperMessage
 {
 	import flash.utils.ByteArray;
 	
+	import camu.design_pattern.Singleton;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	import camu.net.Packet;
 	
-	import packet.NiuPacketFactory;
+	import factory.NiuObjectFactory;
+	
 	import packet.protocol.MsgHeader;
 	import packet.protocol.NiuResponsePacket;
 		
 
 	public class WrapperMessageDecoder
 	{
-		private var _logger:ILogger;
+		private var _logger:ILogger;		
 		
-		private var _packetFactory:NiuPacketFactory;
-		
-		public function WrapperMessageDecoder(factory:NiuPacketFactory)
+		public function WrapperMessageDecoder()
 		{
-			_logger = Logger.createLogger(WrapperMessageDecoder, LEVEL.DEBUG);
-			
-			_packetFactory = factory;
+			_logger = Logger.createLogger(WrapperMessageDecoder, LEVEL.DEBUG);			
 		}
 
 		public function decode(bytes:ByteArray, bytesLen:int) : Packet
@@ -31,11 +29,12 @@ package packet.game.message.WrapperMessage
 
 			_logger.log("decode, bytes length=", bytesLen, LEVEL.DEBUG)
 			
+			var _factory:NiuObjectFactory = Singleton.instanceOf(NiuObjectFactory);
 			var msgId:int = peekMsgId(bytes);			
-			var responsePacket:NiuResponsePacket  = _packetFactory.createPacketInstance(msgId) as NiuResponsePacket;
+			var responsePacket:NiuResponsePacket  = _factory.createPacketInstance(msgId) as NiuResponsePacket;
 			if (responsePacket)	
 			{
-				responsePacket.isInWrapperMessage = true;			
+				responsePacket.isWrapperedMessage = true;
 				responsePacket.unpack(bytes);
 
 				return responsePacket;

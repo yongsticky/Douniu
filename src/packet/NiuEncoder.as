@@ -2,12 +2,15 @@ package packet
 {
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
-		
+	
+	import camu.design_pattern.Singleton;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	import camu.net.Packet;
 	import camu.util.Bytes2Hex;
+	
+	import factory.NiuObjectFactory;
 	
 	import packet.protocol.NiuRequestPacket;
 	
@@ -17,13 +20,9 @@ package packet
 	{
 		private var _logger:ILogger;
 		
-		private var _packetFactory:NiuPacketFactory;
-		
-		public function NiuEncoder(factory:NiuPacketFactory)
+		public function NiuEncoder()
 		{
 			_logger = Logger.createLogger(NiuEncoder, LEVEL.DEBUG);
-			
-			_packetFactory = factory;
 		}	
 		
 		public function encode(packet:Packet) : ByteArray
@@ -33,7 +32,8 @@ package packet
 			var niuPacket:NiuRequestPacket = packet as NiuRequestPacket;
 			if (niuPacket)
 			{
-				var bytes:ByteArray = _packetFactory.createInstance(ByteArray);
+				var _factory:NiuObjectFactory = Singleton.instanceOf(NiuObjectFactory);
+				var bytes:ByteArray = _factory.createInstance(ByteArray);
 				
 				bytes.endian = Endian.BIG_ENDIAN;
 

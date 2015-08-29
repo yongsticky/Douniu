@@ -7,10 +7,12 @@ package packet.protocol
 	public class NiuResponsePacket extends Packet
 	{		
 		protected var _csHeader:CsHeader;
-		protected var _msgHeader:MsgHeader;
-		protected var _isInWrapperMessage:Boolean;
+		protected var _msgHeader:MsgHeader;				
 
+		protected var _isWrapperedMessage:Boolean;
+		
 		protected var _isOK:Boolean;
+		
 		
 		
 		public function NiuResponsePacket()
@@ -18,24 +20,21 @@ package packet.protocol
 			super();
 			
 			_csHeader = new CsHeader();
-			_msgHeader = new MsgHeader();
-			_isInWrapperMessage = false;
+			_msgHeader = new MsgHeader();			
+
+			_isWrapperedMessage = false;
+			
 			_isOK = true;
 		}
-
-		public function set isInWrapperMessage(inWrapperMessage:Boolean) : void
+		
+		public function set isWrapperedMessage(wrappered:Boolean) : void
 		{
-			_isInWrapperMessage = inWrapperMessage;
-		}
-
-		public function get isInWrapperMessage() : Boolean
-		{
-			return _isInWrapperMessage;
-		}
-
+			_isWrapperedMessage = wrappered;
+		}	
+		
 		public function unpack(bytes:ByteArray) : Boolean
-		{			
-			if (!_isInWrapperMessage)
+		{
+			if (!_isWrapperedMessage)
 			{
 				unpackCsHeader(bytes);
 			}

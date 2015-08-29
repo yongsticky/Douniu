@@ -3,8 +3,8 @@ package packet.game.message.Login
 	import flash.utils.ByteArray;
 	
 	import packet.game.message.MSGID;
-	import packet.game.tlv.TClientInfo;
-	import packet.game.tlv.TLVValue;
+	import packet.game.tlv.value.TClientInfo;
+	import packet.game.tlv.value.TLVValue;
 	import packet.protocol.NiuRequestPacket;
 
 	public class Request_Login extends NiuRequestPacket

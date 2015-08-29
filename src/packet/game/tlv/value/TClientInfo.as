@@ -1,7 +1,6 @@
-package packet.game.tlv
+package packet.game.tlv.value
 {	
-	import flash.utils.ByteArray;
-	
+	import flash.utils.ByteArray;	
 	import packet.util.Int64;
 
 	public class TClientInfo extends TLVValue
@@ -51,7 +50,9 @@ package packet.game.tlv
 		}
 		
 		override public function pack(bytes:ByteArray) : void
-		{			
+		{
+			super.pack(bytes);
+			
 			bytes.writeShort(nick_len);
 			if (nick_len > 0)
 			{
@@ -90,6 +91,8 @@ package packet.game.tlv
 		
 		override public function unpack(bytes:ByteArray) : void
 		{
+			super.unpack(bytes);
+			
 			nick_len = bytes.readShort();
 			if (nick_len > 0)
 			{

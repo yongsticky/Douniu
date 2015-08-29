@@ -2,32 +2,27 @@ package server
 {
 	import flash.utils.ByteArray;
 	
+	import camu.design_pattern.Singleton;
 	import camu.net.BaseConnection;
 	import camu.net.Packet;
-	import camu.net.PacketEvent;
-	import camu.net.PacketEventCreator;
+	
+	import factory.NiuObjectFactory;
 	
 	import packet.NiuDecoder;
 	import packet.NiuEncoder;
-	import packet.NiuPacketFactory;
 	import packet.protocol.NiuResponsePacket;
 	
 	public final class NiuServerConnection extends BaseConnection
 	{
 		private var _encoder:NiuEncoder;
-		private var _decoder:NiuDecoder;
-		
-		private var _packetFactory:NiuPacketFactory;
-		
+		private var _decoder:NiuDecoder;		
 		
 		public function NiuServerConnection()
 		{
-			super();			
+			super();	
 			
-			_packetFactory = new NiuPacketFactory();			
-			
-			_encoder = new NiuEncoder(_packetFactory);
-			_decoder = new NiuDecoder(_packetFactory);
+			_encoder = new NiuEncoder();
+			_decoder = new NiuDecoder();
 									
 		}
 		
@@ -52,13 +47,15 @@ package server
 		}
 		
 		override public function newObject(cls:Class, data:* = null): *
-		{			
-			return _packetFactory.createInstance(cls, data)
+		{
+			var _factory:NiuObjectFactory = Singleton.instanceOf(NiuObjectFactory);
+			return _factory.createInstance(cls, data)
 		}
 		
 		override public function deleteObject(obj:*) : void
-		{			
-			_packetFactory.destroyInstance(obj);
+		{
+			var _factory:NiuObjectFactory = Singleton.instanceOf(NiuObjectFactory);
+			_factory.destroyInstance(obj);
 		}
 		
 		override public function getPacketHeaderLength() : int

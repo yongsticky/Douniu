@@ -12,7 +12,7 @@ package packet.game.tlv
 		public static const DN_TLV_BASE_GAME_CFG:int = 10010;
 		public static const DN_TLV_PLAYER_CAPABILITY:int = 10012;
 		public static const DN_TLV_EXIT_PLAYER_INFO:int = 10013;
-		public static const DN_TLV_GAME_SOCORE_MSG:int = 10015;
+		public static const DN_TLV_GAME_SCORE_MSG:int = 10015;
 		
 		public function TLVType()
 		{
