@@ -1,6 +1,6 @@
 package packet.game.tlv.value
 {
-	import flash.utils.ByteArray;	
+	import flash.utils.ByteArray;
 	
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.UnionTLVDecoder;
@@ -40,7 +40,11 @@ package packet.game.tlv.value
 		public function PlayerDetailInfo()
 		{
 			super();
+			
+			money = new Int64();
+			score = new Int64();
 			avatar_skill_id = new Vector.<int>();
+			
 		}
 		
 		override public function pack(bytes:ByteArray):void
@@ -90,11 +94,15 @@ package packet.game.tlv.value
 			}
 			bytes.writeInt(using_face_item_id);
 			player_detail_tlv.pack(bytes);
+			
+			super.adjustPosition(bytes);
 		}
 		
 		override public function unpack(bytes:ByteArray):void
 		{
 			super.unpack(bytes);
+			
+			var posIn:int = bytes.position;
 			
 			player_id = bytes.readInt();
 			player_uin = bytes.readUnsignedInt();
@@ -138,9 +146,21 @@ package packet.game.tlv.value
 			{
 				ident_info = bytes.readUTFBytes(ident_len);
 			}
-			using_face_item_id = bytes.readInt();			
-			
+			using_face_item_id = bytes.readInt();
 			player_detail_tlv = UnionTLVDecoder.instance().decode(bytes);
+			bytes.position = posIn + value_len;	
+			
+			super.adjustPosition(bytes);
+		}
+		
+		override public function dispose() : void
+		{
+			super.dispose();
+			
+			avatar_skill_id.length = 0;
+			
+			player_detail_tlv.dispose();
+			player_detail_tlv = null;
 		}
 	}
 }

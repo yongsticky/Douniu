@@ -2,6 +2,7 @@ package packet.game.tlv
 {
 	public final class TLVType
 	{
+		public static const UP_TLV_APPOINTMENT_KEY:int =1;
 		public static const UP_TLV_CLIENT_INFO:int = 3;
 		public static const DN_TLV_PLAYERDETAIL:int = 10001;
 		public static const DN_TLV_VIEW_SEAT_INFO:int = 10003;

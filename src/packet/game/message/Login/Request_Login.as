@@ -2,9 +2,11 @@ package packet.game.message.Login
 {
 	import flash.utils.ByteArray;
 	
+	import factory.NiuObjectFactory;
+	
 	import packet.game.message.MSGID;
-	import packet.game.tlv.value.TClientInfo;
 	import packet.game.tlv.UnionTLV;
+	import packet.game.tlv.value.TClientInfo;
 	import packet.protocol.NiuRequestPacket;
 
 	public class Request_Login extends NiuRequestPacket
@@ -31,13 +33,6 @@ package packet.game.message.Login
 		override protected function initData() : void
 		{
 			msgHeader.msg_id = MSGID.REQUEST_LOGIN;
-			csHeader.uin = 700033;
-
-			request_src = 0;
-			login_life_style = 0;
-			room_id = 0;
-			tlv_num = 0;
-			imei_len = 0;
 		}
 				
 		
@@ -61,6 +56,20 @@ package packet.game.message.Login
 			{
 				bytes.writeUTFBytes(imei);
 			}		
+		}
+		
+		override public function dispose() : void
+		{
+			super.dispose();
+			
+			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
+			for each(var tlv:UnionTLV in tlv_vec)
+			{
+				_factory.destroyInstance(tlv);
+			}
+			
+			tlv_num = 0;
+			tlv_vec.length = 0;
 		}
 	}
 }

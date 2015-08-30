@@ -2,13 +2,22 @@ package factory
 {
 	import camu.design_pattern.Singleton;
 	import camu.net.Packet;
-	import camu.net.PacketEvent;
-	import camu.net.PacketEventCreator;
 	import camu.object.DefaultObjectFactory;
 	import camu.object.IObjectContainer;
 	
+	import packet.game.message.MSGID;
 	import packet.game.message.Login.Request_Login;
 	import packet.game.message.Login.Response_Login;
+	import packet.game.message.Logout.Request_Logout;
+	import packet.game.message.Logout.Response_Logout;
+	import packet.game.message.Notify.Response_GameNotify;
+	import packet.game.message.Notify.TGameEvent;
+	import packet.game.message.Ready.Request_Ready;
+	import packet.game.message.Ready.Response_Ready;
+	import packet.game.message.Sitdown.Request_Sitdown;
+	import packet.game.message.Sitdown.Response_Sitdown;
+	import packet.game.message.Standup.Request_Standup;
+	import packet.game.message.Standup.Response_Standup;
 	import packet.game.message.WrapperMessage.Response_WrapperMessage;
 	import packet.game.tlv.TLVType;
 	import packet.game.tlv.UnionTLV;
@@ -23,23 +32,33 @@ package factory
 	import packet.game.tlv.value.PlayerMoneyChangeInfo;
 	import packet.game.tlv.value.PlayerViewSeatInfo;
 	import packet.game.tlv.value.T3DMJPlayInfo;
+	import packet.game.tlv.value.TAppointmentKey;
 	import packet.game.tlv.value.TClientInfo;
 	import packet.game.tlv.value.TDNPlayInfo;
 	import packet.game.tlv.value.TableSimpleInfo;
-	
-	
+	import packet.protocol.NiuPacket;
+		
+		
 	public class NiuObjectFactory extends DefaultObjectFactory
-	{
+	{		
 		public function NiuObjectFactory(objCache:IObjectContainer = null)
 		{
-			super(objCache);
-			
-			registerClass(PacketEvent, {"objectCreator":new PacketEventCreator()});
+			super(objCache);		
 			
 			registerClass(Request_Login);
 			registerClass(Response_Login);
-			registerClass(Response_WrapperMessage);			
+			registerClass(Response_WrapperMessage);	
+			registerClass(Request_Sitdown);
+			registerClass(Response_Sitdown);
+			registerClass(Request_Logout);
+			registerClass(Response_Logout);
+			registerClass(Request_Ready);
+			registerClass(Response_Ready);
+			registerClass(Request_Standup);
+			registerClass(Response_Standup);
+			registerClass(Response_GameNotify);
 			
+			registerClass(TAppointmentKey);
 			registerClass(BaseGameCfgData);
 			registerClass(ExitPlayerInfo);
 			registerClass(GameMsgInfo);
@@ -52,9 +71,11 @@ package factory
 			registerClass(T3DMJPlayInfo);
 			registerClass(TableSimpleInfo);
 			registerClass(TClientInfo);
-			registerClass(TDNPlayInfo);
+			registerClass(TDNPlayInfo);		
 			
 			registerClass(UnionTLV, {"objectCreator":new UnionTLVCreator()});
+			
+			registerClass(TGameEvent);
 		}
 		
 		public static function instance() : NiuObjectFactory
@@ -73,6 +94,16 @@ package factory
 			{
 				return null;
 			}
+		}
+		
+		override public function destroyInstance(obj:*) : void
+		{			
+			if (obj is NiuPacket)
+			{
+				(obj as NiuPacket).dispose();
+			}
+			
+			super.destroyInstance(obj);
 		}
 
 		public function createUnionTLVInstance(typeTLV:int) : UnionTLV
@@ -93,12 +124,22 @@ package factory
 		{
 			switch(msgId)
 			{
-				case 15814:
+				case MSGID.RESPONSE_WRAPPER_MESSAGE:
 					return Response_WrapperMessage;
-				case 15801:
+				case MSGID.RESPONSE_LOGIN:
 					return Response_Login;
+				case MSGID.RESPONSE_LOGOUT:
+					return Response_Logout; 
+				case MSGID.RESPONSE_SITDOWN:
+					return Response_Sitdown;
+				case MSGID.RESPONSE_STANDUP:
+					return Response_Standup;
+				case MSGID.RESPONSE_READY:
+					return Response_Ready;	
+				case MSGID.RESPONSE_GAMEEVENT:
+					return Response_GameNotify;
 				default:
-					return null;
+					throw new Error("msgId ["+ msgId+"] NOT Match any Response.");					
 			}
 		}
 
@@ -106,6 +147,8 @@ package factory
 		{
 			switch(typeTLV)
 			{
+				case TLVType.UP_TLV_APPOINTMENT_KEY:
+					return TAppointmentKey;
 				case TLVType.UP_TLV_CLIENT_INFO:
 					return TClientInfo;
 				case TLVType.DN_TLV_PLAYERDETAIL:
@@ -129,7 +172,7 @@ package factory
 				case TLVType.DN_TLV_GAME_SCORE_MSG:
 					return GameScoreValue;
 				default:
-					throw new Error("no match TLVType.");
+					throw new Error("typeTLV [" + typeTLV + "] NOT Match any TLVValue.");
 			}
 		}
 	}

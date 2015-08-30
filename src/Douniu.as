@@ -8,12 +8,16 @@ package
 	
 	import factory.NiuObjectFactory;
 	
+	import packet.game.message.Notify.TGameEvent;
+	import packet.game.message.Notify.TGameEventDecoder;
 	import packet.game.message.WrapperMessage.WrapperMessageDecoder;
 	import packet.game.tlv.UnionTLVDecoder;
 	
 	import resource.ResManager;
 	
-	import server.NiuServerConnection;
+	import server.NiuServerConnector;
+	import server.NiuServerRequestSender;
+	import server.NiuServerResponseReceiver;
 	
 	import starling.core.Starling;
 	
@@ -40,9 +44,12 @@ package
 			
 			Singleton.init([new ResManager(), 
 				new NiuObjectFactory(), 
-				new NiuServerConnection(), 
+				new NiuServerConnector(), 
 				new WrapperMessageDecoder(), 
-				new UnionTLVDecoder()]);	
+				new UnionTLVDecoder(),
+				new TGameEventDecoder(),
+				new NiuServerResponseReceiver(),
+				new NiuServerRequestSender()]);	
 			
 			
 			_starling = new Starling(NiuDirector, stage);

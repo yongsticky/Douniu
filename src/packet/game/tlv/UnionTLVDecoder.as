@@ -31,6 +31,10 @@ package packet.game.tlv
 					uTLV = null;
 				}
 			}
+			else
+			{
+				throw new Error("Not UnionTLV Class.");
+			}
 			
 			return uTLV;
 		}

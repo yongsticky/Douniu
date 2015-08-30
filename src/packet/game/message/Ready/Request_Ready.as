@@ -1,9 +1,13 @@
 package packet.game.message.Ready
 {
 	import flash.utils.ByteArray;
-
-	import packet.protocol.NiuRequestPacket;
+	
+	import factory.NiuObjectFactory;
+	
+	import packet.game.message.MSGID;
+	import packet.game.message.Notify.TGameEvent;
 	import packet.game.tlv.UnionTLV;
+	import packet.protocol.NiuRequestPacket;
 	
 	public class Request_Ready extends NiuRequestPacket
 	{
@@ -19,6 +23,11 @@ package packet.game.message.Ready
 			
 			tlv_vec = new Vector.<UnionTLV>();
 		}
+		
+		override protected function initData():void
+		{
+			msgHeader.msg_id = MSGID.REQUEST_READY;
+		}
 
 		override public function packMsgParam(bytes:ByteArray) : void
 		{
@@ -30,6 +39,21 @@ package packet.game.message.Ready
 			{
 				tlv_vec[i].pack(bytes);
 			}
+		}
+		
+		override public function dispose() : void
+		{
+			super.dispose();
+			
+			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
+			for each(var item:UnionTLV in tlv_vec)
+			{
+				item.dispose();
+				_factory.destroyInstance(item);
+			}
+			
+			tlv_num = 0;
+			tlv_vec.length = 0;
 		}
 	}
 }

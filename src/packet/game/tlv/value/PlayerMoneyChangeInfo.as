@@ -1,7 +1,8 @@
 package packet.game.tlv.value
 {
-	import packet.util.Int64;
 	import flash.utils.ByteArray;
+	
+	import packet.util.Int64;
 
 	public class PlayerMoneyChangeInfo extends TLVValue
 	{
@@ -12,24 +13,31 @@ package packet.game.tlv.value
 		public function PlayerMoneyChangeInfo()
 		{
 			super();
+			
+			money_change_value = new Int64();
+			money_cur_value = new Int64();
 		}
 
 		override public function pack(bytes:ByteArray) : void
 		{
-			super.pack();
+			super.pack(bytes);
 
 			bytes.writeShort(money_change_reason);
 			money_change_value.writeToBytes(bytes);
-			money_cur_value.writeToBytes(bytes);		
+			money_cur_value.writeToBytes(bytes);	
+			
+			super.adjustPosition(bytes);
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
 		{
-			super.unpack();
+			super.unpack(bytes);
 
 			money_change_reason = bytes.readShort();
 			money_change_value.readFromBytes(bytes);
-			money_cur_value.readFromBytes(bytes);			
+			money_cur_value.readFromBytes(bytes);	
+			
+			super.adjustPosition(bytes);
 		}
 	}
 }

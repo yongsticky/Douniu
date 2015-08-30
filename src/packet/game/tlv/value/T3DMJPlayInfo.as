@@ -5,31 +5,36 @@ package packet.game.tlv.value
 
 	public class T3DMJPlayInfo extends TLVValue
 	{
-
 		public var gender:int;				// char(1)
 		public var avatar_num:int;			// short(2)
-		public var avata_list:Vector.<int>;	// int[]
+		public var avata_vec:Vector.<int>;	// int[]
 
 
 		public function T3DMJPlayInfo()
 		{
 			super();
 
-			avata_list = new Vector.<int>();
+			avata_vec = new Vector.<int>();
 		}
 
 		override public function pack(bytes:ByteArray) : void
 		{
+			super.pack(bytes);
+			
 			bytes.writeByte(gender);
 			bytes.writeShort(avatar_num);
 			for (var i:int = 0; i < avatar_num; i++)
 			{
-				bytes.writeInt(avata_list[i]);
+				bytes.writeInt(avata_vec[i]);
 			}
+			
+			super.adjustPosition(bytes);
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
 		{
+			super.unpack(bytes);
+			
 			gender = bytes.readByte();
 			avatar_num = bytes.readShort();
 			if (avatar_num > 0)
@@ -37,9 +42,19 @@ package packet.game.tlv.value
 				for (var i:int = 0; i < avatar_num; i++)
 				{
 					var value:int = bytes.readInt();
-					avata_list.push(value);
+					avata_vec.push(value);
 				}
-			}			
+			}	
+			
+			adjustPosition(bytes);
+		}
+		
+		override public function dispose() : void
+		{
+			super.dispose();
+			
+			avatar_num = 0;
+			avata_vec.length = 0;
 		}
 	}
 }

@@ -4,22 +4,31 @@ package packet.game.tlv
 	
 	import factory.NiuObjectFactory;
 	
-	import packet.game.tlv.value.TLVValue;
-	
 	public class UnionTLVCreator implements IObjectCreator
 	{
 		public function UnionTLVCreator()
 		{
 		}
 		
+		// data = TLVValue Class
 		public function createObject(cls:Class, data:*):*
 		{
-			return null;
+			return new UnionTLV();
 		}
 		
+		// data = TLVValue Class
+		
 		public function onCreated(obj:*, data:*):void
-		{
-			(obj as UnionTLV).value = data as  TLVValue;						
+		{	
+			var uTLV:UnionTLV = obj as UnionTLV;
+			if (uTLV)
+			{
+				uTLV.value = NiuObjectFactory.instance().createInstance(data as Class);
+			}
+			else
+			{
+				throw new Error("NOT UnionTLV Class!");
+			}							 		
 		}
 		
 		public function destoryObject(obj:*):void
@@ -27,8 +36,20 @@ package packet.game.tlv
 		}
 		
 		public function onDestroy(obj:*):void
-		{			
-			NiuObjectFactory.instance().destroyInstance((obj as UnionTLV).value);			
+		{	
+			var uTLV:UnionTLV = obj as UnionTLV;
+			if (uTLV)
+			{
+				NiuObjectFactory.instance().destroyInstance(uTLV.value);
+				uTLV.value = null;
+				uTLV.valueType = 0;
+			}
+			else
+			{
+				throw new Error("NOT UnionTLV Class!");
+			}
+			
+			
 		}
 	}
 }

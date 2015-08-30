@@ -12,6 +12,13 @@ package packet.game.message
 
 
 		// Server -> Client
+		public static const RESPONSE_LOGIN:int = 15801;
+		public static const RESPONSE_LOGOUT:int = 15802;
+		public static const RESPONSE_SITDOWN:int = 15803;
+		public static const RESPONSE_STANDUP:int = 15804;
+		public static const RESPONSE_GAMEEVENT:int = 15809;
+		public static const RESPONSE_READY:int = 15810;
+
 		public static const RESPONSE_WRAPPER_MESSAGE:int = 15814;
 		public static const RESPONSE_SITDOWN_FROM_VIEW:int = 15816;
 		public static const RESPONSE_VIEW_FROM_SITDOWN:int = 15817;

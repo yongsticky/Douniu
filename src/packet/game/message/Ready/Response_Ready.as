@@ -1,11 +1,13 @@
 package packet.game.message.Ready
 {
 	import flash.utils.ByteArray;
-		
-	import packet.protocol.NiuResponsePacket;
-	import packet.game.tlv.UnionTLV;	
-	import packet.game.tlv.UnionTLVDecoder;
+	
+	import factory.NiuObjectFactory;
+	
 	import packet.game.message.ResponseResult;
+	import packet.game.tlv.UnionTLV;
+	import packet.game.tlv.UnionTLVDecoder;
+	import packet.protocol.NiuResponsePacket;
 	
 	public class Response_Ready extends NiuResponsePacket
 	{
@@ -35,6 +37,21 @@ package packet.game.message.Ready
 					tlv_vec.push(utlv);						
 				}
 			}
+		}
+		
+		override public function dispose() : void
+		{
+			super.dispose();
+			
+			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
+			for each(var item:UnionTLV in tlv_vec)
+			{
+				item.dispose();
+				_factory.destroyInstance(item);
+			}
+			
+			tlv_num = 0;
+			tlv_vec.length = 0;
 		}
 
 	}

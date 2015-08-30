@@ -14,24 +14,28 @@ package packet.game.tlv.value
 
 		override public function pack(bytes:ByteArray) : void
 		{
-			super.pack();
+			super.pack(bytes);
 
 			bytes.writeShort(game_msg_info_len);
 			if (game_msg_info_len > 0)
 			{
 				bytes.writeUTFBytes(game_msg_info);
 			}
+			
+			super.adjustPosition(bytes);
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
 		{
-			super.unpack();
+			super.unpack(bytes);
 
 			game_msg_info_len = bytes.readShort();
 			if (game_msg_info_len > 0)
 			{
 				bytes.readUTFBytes(game_msg_info_len);
 			}
+			
+			super.adjustPosition(bytes);
 		}
 	}
 }

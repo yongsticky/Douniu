@@ -2,13 +2,9 @@ package packet.game.tlv
 {	
 	import flash.utils.ByteArray;
 	
-	import avmplus.getQualifiedClassName;
-			
-	import camu.object.IObjectWithQualifiedSubclassNameMethod;
-	
 	import packet.game.tlv.value.TLVValue;
 
-	public class UnionTLV implements IObjectWithQualifiedSubclassNameMethod
+	public class UnionTLV
 	{
 		protected var value_type:int;				// short(2)
 		protected var tlv_value:TLVValue;				// TLVValue		
@@ -26,7 +22,7 @@ package packet.game.tlv
 		
 		public function set valueType(type_:int) : void
 		{
-			valueType = type_;
+			value_type = type_;
 		}
 		
 		public function get value() : TLVValue
@@ -53,15 +49,11 @@ package packet.game.tlv
 			value.pack(bytes);
 
 		}		
-
-		// IObjectWithQualifiedSubclassNameMethod		
-		public function getQualifiedSubclassName() : String
+		
+		public function dispose() : void
 		{
-			var clsName:String = getQualifiedClassName(UnionTLV);
-			clsName += ".";
-			clsName + getQualifiedClassName(tlv_value);
-			
-			return clsName;
+			tlv_value.dispose();
+			tlv_value = null;
 		}
 	}
 }

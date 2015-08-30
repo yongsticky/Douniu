@@ -1,6 +1,7 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
+	
 	import packet.util.Int64;
 
 	public class PlayerViewSeatInfo extends TLVValue
@@ -28,11 +29,14 @@ package packet.game.tlv.value
 		public function PlayerViewSeatInfo()
 		{
 			super();
+			
+			money = new Int64();
+			score = new Int64();
 		}
 
 		override public function pack(bytes:ByteArray) : void
 		{
-			super.pack();
+			super.pack(bytes);
 
 			bytes.writeInt(player_id);
 			bytes.writeInt(player_uin);
@@ -63,11 +67,12 @@ package packet.game.tlv.value
 			}
 			score.writeToBytes(bytes);
 			
+			super.adjustPosition(bytes);			
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
 		{
-			super.unpack();
+			super.unpack(bytes);
 
 			player_id = bytes.readInt();
 			player_uin = bytes.readUnsignedInt();			
@@ -96,7 +101,9 @@ package packet.game.tlv.value
 			{
 				head_url = bytes.readUTFBytes(head_url_len);
 			}
-			score.readFromBytes(bytes);			
+			score.readFromBytes(bytes);	
+			
+			super.adjustPosition(bytes);
 		}
 	}
 }

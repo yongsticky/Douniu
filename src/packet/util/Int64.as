@@ -54,9 +54,6 @@ package packet.util
 		{
 			if (bytes.bytesAvailable >= 8)
 			{
-				var low:int = bytes.readInt();
-				var high:int = bytes.readInt();
-				
 				if (bytes.endian == Endian.BIG_ENDIAN)
 				{	
 					// 先读的是低位

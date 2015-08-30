@@ -10,7 +10,6 @@ package packet.game.message.Standup
 		public var rresult:ResponseResult;		// ?
 		public var standup_reason:int;			// short(2)
 
-
 		public function Response_Standup()
 		{
 			super();

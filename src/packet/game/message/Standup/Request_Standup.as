@@ -1,6 +1,8 @@
 package packet.game.message.Standup
 {
 	import flash.utils.ByteArray;
+	
+	import packet.game.message.MSGID;
 
 	import packet.protocol.NiuRequestPacket;
 	
@@ -12,6 +14,11 @@ package packet.game.message.Standup
 		public function Request_Standup()
 		{			
 			super();
+		}
+		
+		override protected function initData() : void
+		{
+			msgHeader.msg_id = MSGID.REQUEST_STANDUP;
 		}
 
 		override public function packMsgParam(bytes:ByteArray) : void

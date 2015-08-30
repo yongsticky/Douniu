@@ -1,15 +1,20 @@
 package view
 {
-	import starling.events.EnterFrameEvent;
-	
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
-	import camu.net.ConnectionEvent;
+	import camu.net.ConnectorEvent;
 	
-	import factory.NiuObjectFactory;	
-	import packet.game.message.Login.Request_Login;	
-	import server.NiuServerConnection;	
+	import factory.NiuObjectFactory;
+	
+	import packet.game.message.Login.Request_Login;
+	
+	import server.NiuServerConnector;
+	import server.NiuServerRequestSender;
+	import server.NiuServerResponseReceiver;
+	
+	import starling.events.EnterFrameEvent;
+	
 	import view.framework.ExDirector;
 
 	
@@ -29,29 +34,46 @@ package view
 		{	
 			_logger.log("initialize called.", LEVEL.INFO);
 			
-			super.initialize();			
+			super.initialize();
+						
+			//switchToScene(new SceneHall());
 			
-			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);			
+			connectGameServer();
 			
-			var connector:NiuServerConnection = NiuServerConnection.instance();	
+			NiuServerResponseReceiver.instance().initReceiver();
+		}
+		
+		private function connectGameServer() : void
+		{
+			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
+			
+			var connector:NiuServerConnector = NiuServerConnector.instance();	
 			connector.setTargetAddress("182.254.40.11", 8000);			
-			connector.addEventListener(ConnectionEvent.CONNECTED, onConnect);
+			connector.addEventListener(ConnectorEvent.CONNECTED, onConnect);
 			connector.connect();
 		}
-
 		
 		private function onEnterFrame(event:EnterFrameEvent):void
 		{			
-			NiuServerConnection.instance().onTickElapse();
+			NiuServerConnector.instance().onTickElapse();
 		}
 		
-		protected function onConnect(event:ConnectionEvent):void
+		protected function onConnect(event:ConnectorEvent):void
 		{
-			_logger.log("Connect Server Succ.", LEVEL.INFO);			
-			var packet:Request_Login = NiuObjectFactory.instance().createInstance(Request_Login);
+			_logger.log("Connect Server Succ.", LEVEL.INFO);	
 			
-			_logger.log("Send Request_Login.", LEVEL.INFO);			
-			NiuServerConnection.instance().send(packet);
+			
+			var loginRequest:Request_Login = NiuObjectFactory.instance().createInstance(Request_Login);			
+
+			loginRequest.room_id = 76;
+			loginRequest.uin = loginRequest.csHeader.uin = 700033;
+			loginRequest.request_src = 0;
+			loginRequest.login_life_style = 0;
+			loginRequest.room_id = 76;
+			loginRequest.tlv_num = 0;
+			loginRequest.imei_len = 0;
+			
+			NiuServerRequestSender.instance().sendRequest(loginRequest);
 		}
 	}
 }

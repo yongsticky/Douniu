@@ -2,36 +2,24 @@ package packet.protocol
 {
 	import flash.utils.ByteArray;
 	
-	import camu.net.Packet;
-	
-	public class NiuResponsePacket extends Packet
-	{		
-		protected var _csHeader:CsHeader;
-		protected var _msgHeader:MsgHeader;				
-
-		protected var _isWrapperedMessage:Boolean;
-		
-		protected var _isOK:Boolean;
-		
-		
+	public class NiuResponsePacket extends NiuPacket
+	{	
+		protected var _isWrapperedMessage:Boolean;		
+		protected var _isOK:Boolean;		
 		
 		public function NiuResponsePacket()
 		{
-			super();
+			super();			
 			
-			_csHeader = new CsHeader();
-			_msgHeader = new MsgHeader();			
-
-			_isWrapperedMessage = false;
-			
+			_isWrapperedMessage = false;			
 			_isOK = true;
 		}
 		
 		public function set isWrapperedMessage(wrappered:Boolean) : void
 		{
 			_isWrapperedMessage = wrappered;
-		}	
-		
+		}
+				
 		public function unpack(bytes:ByteArray) : Boolean
 		{
 			if (!_isWrapperedMessage)
@@ -107,6 +95,14 @@ package packet.protocol
 		public function unpackMsgParam(bytes:ByteArray) : void
 		{				
 			throw new Error("Abstract function!");
+		}
+		
+		override public function dispose() : void
+		{			
+			super.dispose();
+			
+			_isWrapperedMessage = false;			
+			_isOK = true;
 		}
 	}
 }

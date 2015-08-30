@@ -13,16 +13,20 @@ package packet.game.tlv.value
 
 		override public function pack(bytes:ByteArray) : void
 		{
-			super.pack();
+			super.pack(bytes);
 
 			bytes.writeShort(standup_reason);
+			
+			super.adjustPosition(bytes);
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
 		{
-			super.unpack();
+			super.unpack(bytes);
 
 			standup_reason = bytes.readShort();
+			
+			super.adjustPosition(bytes);
 		}
 	}
 }

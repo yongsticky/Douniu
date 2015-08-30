@@ -1,6 +1,7 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
+	
 	import packet.util.Int64;
 
 	public class PlayerCapability extends TLVValue
@@ -10,20 +11,26 @@ package packet.game.tlv.value
 		public function PlayerCapability()
 		{
 			super();
+			
+			client_capability = new Int64();
 		}
 
 		override public function pack(bytes:ByteArray) : void
 		{
-			super.pack();
+			super.pack(bytes);
 
-			client_capability.writeToBytes(bytes);		
+			client_capability.writeToBytes(bytes);	
+			
+			super.adjustPosition(bytes);
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
 		{
-			super.unpack();
+			super.unpack(bytes);
 
 			client_capability.readFromBytes(bytes);
+			
+			super.adjustPosition(bytes);
 		}
 	}
 }

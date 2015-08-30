@@ -17,22 +17,33 @@ package packet.game.tlv.value
 
 		override public function pack(bytes:ByteArray) : void
 		{
-			super.pack();
+			super.pack(bytes);
 
 			for (var i:int = 0; i < MAX_GAME_SCORE_NUM; i++)
 			{
 				game_score_vec[i].writeToBytes(bytes);
 			}
+			
+			super.adjustPosition(bytes);
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
 		{
-			super.unpack();
+			super.unpack(bytes);
 
 			for (var i:int = 0; i < MAX_GAME_SCORE_NUM; i++)
 			{
 				game_score_vec[i].readFromBytes(bytes);
 			}
+			
+			super.adjustPosition(bytes);
+		}
+		
+		override public function dispose() : void
+		{
+			super.dispose();
+			
+			game_score_vec.length = 0;
 		}
 	}
 }

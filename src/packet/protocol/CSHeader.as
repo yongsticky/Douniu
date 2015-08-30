@@ -24,5 +24,24 @@ package packet.protocol
 		{
 			return BASE_LENGTH + opt_len;
 		}
+		
+		public function copy(header:CsHeader) : void
+		{
+			total_len = header.total_len;
+			ver = header.ver;
+			seq = header.seq;
+			dialog_id = header.dialog_id;
+			uin = header.uin;
+			body_flag = header.body_flag;
+			opt_len = header.opt_len;
+			if (opt_len > 0)
+			{				
+				var p1:int = header.opt.position;
+				
+				opt.clear();
+				opt.readBytes(header.opt, 0, opt_len);				
+			}
+			
+		}
 	}
 }

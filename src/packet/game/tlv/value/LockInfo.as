@@ -17,7 +17,7 @@ package packet.game.tlv.value
 
 		override public function pack(bytes:ByteArray) : void
 		{
-			super.pack();
+			super.pack(bytes);
 
 			bytes.writeShort(lock_type);
 			bytes.writeShort(locked_server_id);
@@ -27,11 +27,13 @@ package packet.game.tlv.value
 			{
 				bytes.writeUTFBytes(extend_buf);
 			}
+			
+			super.adjustPosition(bytes);
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
 		{
-			super.unpack();
+			super.unpack(bytes);
 
 			lock_type = bytes.readShort();
 			locked_server_id = bytes.readShort();
@@ -41,6 +43,8 @@ package packet.game.tlv.value
 			{
 				extend_buf = bytes.readUTFBytes(extend_buf_len);
 			}
+			
+			super.adjustPosition(bytes);
 		}
 	}
 }

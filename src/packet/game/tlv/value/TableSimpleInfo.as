@@ -16,22 +16,26 @@ package packet.game.tlv.value
 
 		override public function pack(bytes:ByteArray) : void
 		{
-			super.pack();
+			super.pack(bytes);
 
 			bytes.writeShort(table_status);
 			bytes.writeShort(table_seat_num);
 			bytes.writeShort(cur_player_num);
 			bytes.writeShort(cur_viewer_num);
+			
+			super.adjustPosition(bytes);
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
 		{
-			super.unpack();
+			super.unpack(bytes);
 
 			table_status = bytes.readShort();
 			table_seat_num = bytes.readShort();
 			cur_player_num = bytes.readShort();
 			cur_viewer_num = bytes.readShort();
+			
+			super.adjustPosition(bytes);
 		}
 	}
 }

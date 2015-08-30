@@ -51,7 +51,7 @@ package packet.game.tlv.value
 		
 		override public function pack(bytes:ByteArray) : void
 		{
-			super.pack(bytes);
+			//super.pack(bytes);
 			
 			bytes.writeShort(nick_len);
 			if (nick_len > 0)

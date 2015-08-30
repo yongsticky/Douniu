@@ -1,13 +1,12 @@
 package view.scene.hall
 {
-	import resource.ResManager;	
 	import view.framework.ExLayer;
 	import view.framework.ExScene;
 	import view.scene.hall.layer.LayerBackground;
 	import view.scene.hall.layer.LayerContent;
 
 	public final class SceneHall extends ExScene
-	{
+	{		
 		private var _layerBackground:ExLayer;		// 背景层
 		private var _layerContent:ExLayer;			// 内容层
 		//private var _layerAniEffect:ExLayer;		// 动画效果层
@@ -23,9 +22,7 @@ package view.scene.hall
 		override protected function initialize() : void
 		{
 			super.initialize();
-			
-			ResManager.instance().initialize();
-			
+						
 			createAllLayers();
 		} 
 
