@@ -3,19 +3,15 @@ package packet.game.tlv
 	import flash.utils.ByteArray;
 	
 	import avmplus.getQualifiedClassName;
-	
-	import camu.object.BaseObjectFactory;
-	import camu.object.IObjectInit;
+			
 	import camu.object.IObjectWithQualifiedSubclassNameMethod;
 	
 	import packet.game.tlv.value.TLVValue;
 
-	public class UnionTLV implements IObjectWithQualifiedSubclassNameMethod, IObjectInit
+	public class UnionTLV implements IObjectWithQualifiedSubclassNameMethod
 	{
 		protected var value_type:int;				// short(2)
-		protected var tlv_value:TLVValue;				// TLVValue
-		
-		private var _packetFactory:BaseObjectFactory;
+		protected var tlv_value:TLVValue;				// TLVValue		
 		
 		public function UnionTLV(value:TLVValue = null)
 		{
@@ -56,24 +52,9 @@ package packet.game.tlv
 			bytes.writeShort(value_type);
 			value.pack(bytes);
 
-		}
-		
-		public function onObjectCreated(factory:BaseObjectFactory) : void
-		{
-			_packetFactory = factory;
-		}
-		
-		public function onObjectDestroy() : void
-		{
-			if (value)
-			{
-				_packetFactory.destroyInstance(value);
-				value = null;
-			}
-			
-			value_type = 0;
-		}
-		
+		}		
+
+		// IObjectWithQualifiedSubclassNameMethod		
 		public function getQualifiedSubclassName() : String
 		{
 			var clsName:String = getQualifiedClassName(UnionTLV);

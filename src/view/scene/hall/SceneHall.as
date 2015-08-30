@@ -1,9 +1,6 @@
 package view.scene.hall
 {
-	import camu.design_pattern.Singleton;
-	
-	import resource.ResManager;
-	
+	import resource.ResManager;	
 	import view.framework.ExLayer;
 	import view.framework.ExScene;
 	import view.scene.hall.layer.LayerBackground;
@@ -26,9 +23,8 @@ package view.scene.hall
 		override protected function initialize() : void
 		{
 			super.initialize();
-
-			var resManager:ResManager = Singleton.instanceOf(ResManager);
-			resManager.initialize();
+			
+			ResManager.instance().initialize();
 			
 			createAllLayers();
 		} 

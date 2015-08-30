@@ -15,6 +15,11 @@ package packet.protocol
 			
 			_csHeader = new CsHeader();
 			_msgHeader = new MsgHeader();
+
+			deafualtCsHeader();
+			defaultMsgHeader();
+			
+			initData();
 		}		
 		
 		public function get csHeader() : CsHeader
@@ -28,7 +33,7 @@ package packet.protocol
 		}	
 
 		
-		public function initCsHeader() : void
+		protected function deafualtCsHeader() : void
 		{
 			_csHeader.ver = 0;
 			_csHeader.dialog_id = -1;
@@ -37,7 +42,7 @@ package packet.protocol
 			_csHeader.seq = SeqUtil.getNextSeq();		
 		}
 		
-		public function initMsgHeader() : void
+		protected function defaultMsgHeader() : void
 		{			
 			_msgHeader.msg_type = 0;
 			_msgHeader.msg_seq = SeqUtil.getNextSeq();
@@ -45,6 +50,11 @@ package packet.protocol
 			_msgHeader.dest_fe = 158;	
 			_msgHeader.src_id = 0;
 			_msgHeader.dest_id = 0;
+		}
+
+		protected function initData() : void
+		{
+			throw new Error("Abstract function!");
 		}
 
 		public function pack(bytes:ByteArray) : void

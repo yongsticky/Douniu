@@ -22,6 +22,11 @@ package packet.game.message.WrapperMessage
 		{
 			_logger = Logger.createLogger(WrapperMessageDecoder, LEVEL.DEBUG);			
 		}
+		
+		public static function instance() : WrapperMessageDecoder
+		{
+			return Singleton.instanceOf(WrapperMessageDecoder);
+		}
 
 		public function decode(bytes:ByteArray, bytesLen:int) : Packet
 		{	

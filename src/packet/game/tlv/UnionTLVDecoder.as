@@ -12,18 +12,22 @@ package packet.game.tlv
 		public function UnionTLVDecoder()
 		{
 		}
+		
+		public static function instance() : UnionTLVDecoder
+		{
+			return Singleton.instanceOf(UnionTLVDecoder);
+		}
 
 		public function decode(bytes:ByteArray) : UnionTLV
 		{
 			var typeTLV:int = peekTLVType(bytes);
-			
-			var _factory:NiuObjectFactory = Singleton.instanceOf(NiuObjectFactory);
-			var uTLV:UnionTLV = _factory.createUnionTLVInstance(typeTLV);
+						
+			var uTLV:UnionTLV = NiuObjectFactory.instance().createUnionTLVInstance(typeTLV);
 			if (uTLV)
 			{
 				if (!uTLV.unpack(bytes))
 				{					
-					_factory.destroyInstance(uTLV);
+					NiuObjectFactory.instance().destroyInstance(uTLV);
 					uTLV = null;
 				}
 			}

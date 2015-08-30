@@ -26,6 +26,11 @@ package server
 									
 		}
 		
+		public static function instance() : NiuServerConnection
+		{
+			return Singleton.instanceOf(NiuServerConnection);
+		}
+		
 		public function dispatchWarpperMessagePacket(packet:NiuResponsePacket) : void
 		{
 			if (packet)
@@ -36,34 +41,32 @@ package server
 			}
 		}
 		
-		override public function encode(packet:Packet) : ByteArray
+		override protected function encode(packet:Packet) : ByteArray
 		{
 			return _encoder.encode(packet);			
 		}
 		
-		override public function decode(bytes:ByteArray) : Packet
+		override protected function decode(bytes:ByteArray) : Packet
 		{
 			return _decoder.decode(bytes);
 		}
 		
-		override public function newObject(cls:Class, data:* = null): *
-		{
-			var _factory:NiuObjectFactory = Singleton.instanceOf(NiuObjectFactory);
-			return _factory.createInstance(cls, data)
+		override protected function newObject(cls:Class, data:* = null): *
+		{			
+			return NiuObjectFactory.instance().createInstance(cls, data)
 		}
 		
-		override public function deleteObject(obj:*) : void
-		{
-			var _factory:NiuObjectFactory = Singleton.instanceOf(NiuObjectFactory);
-			_factory.destroyInstance(obj);
+		override protected function deleteObject(obj:*) : void
+		{			
+			NiuObjectFactory.instance().destroyInstance(obj);
 		}
 		
-		override public function getPacketHeaderLength() : int
+		override protected function getPacketHeaderLength() : int
 		{
 			return 2;
 		}
 		
-		override public function resolvePacketBodyLength(bytes:ByteArray) : int
+		override protected function resolvePacketBodyLength(bytes:ByteArray) : int
 		{
 			var backupPos:uint = bytes.position;
 			

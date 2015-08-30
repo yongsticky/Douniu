@@ -1,16 +1,18 @@
 package factory
 {
+	import camu.design_pattern.Singleton;
 	import camu.net.Packet;
 	import camu.net.PacketEvent;
 	import camu.net.PacketEventCreator;
-	import camu.object.BaseObjectFactory;
-	import camu.object.IObjectCache;
+	import camu.object.DefaultObjectFactory;
+	import camu.object.IObjectContainer;
 	
 	import packet.game.message.Login.Request_Login;
 	import packet.game.message.Login.Response_Login;
 	import packet.game.message.WrapperMessage.Response_WrapperMessage;
 	import packet.game.tlv.TLVType;
 	import packet.game.tlv.UnionTLV;
+	import packet.game.tlv.UnionTLVCreator;
 	import packet.game.tlv.value.BaseGameCfgData;
 	import packet.game.tlv.value.ExitPlayerInfo;
 	import packet.game.tlv.value.GameMsgInfo;
@@ -26,13 +28,13 @@ package factory
 	import packet.game.tlv.value.TableSimpleInfo;
 	
 	
-	public class NiuObjectFactory extends BaseObjectFactory
+	public class NiuObjectFactory extends DefaultObjectFactory
 	{
-		public function NiuObjectFactory(objCache:IObjectCache = null)
+		public function NiuObjectFactory(objCache:IObjectContainer = null)
 		{
 			super(objCache);
 			
-			registerClass(PacketEvent, new PacketEventCreator());
+			registerClass(PacketEvent, {"objectCreator":new PacketEventCreator()});
 			
 			registerClass(Request_Login);
 			registerClass(Response_Login);
@@ -52,12 +54,12 @@ package factory
 			registerClass(TClientInfo);
 			registerClass(TDNPlayInfo);
 			
-			registerClass(UnionTLV);
+			registerClass(UnionTLV, {"objectCreator":new UnionTLVCreator()});
 		}
 		
-		override public function destroyInstance(obj:*):void
+		public static function instance() : NiuObjectFactory
 		{
-			
+			return Singleton.instanceOf(NiuObjectFactory);
 		}
 		
 		public function createPacketInstance(msgId:int) : Packet
@@ -79,10 +81,7 @@ package factory
 			var valueCls:Class = getTLVValueClass(typeTLV);
 			if (valueCls)
 			{
-				newUTLV = createInstance(UnionTLV) as UnionTLV;
-				newUTLV.value = createInstance(valueCls) as valueCls;
-				
-				return newUTLV;
+				return createInstance(UnionTLV, valueCls) as UnionTLV;			
 			}
 			else
 			{

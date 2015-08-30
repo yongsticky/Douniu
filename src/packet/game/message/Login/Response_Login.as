@@ -2,18 +2,14 @@ package packet.game.message.Login
 {
 	import flash.utils.ByteArray;
 	
-	import camu.design_pattern.Singleton;
-	
+	import packet.game.message.ResponseResult;
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.UnionTLVDecoder;
 	import packet.protocol.NiuResponsePacket;
 	
 	public class Response_Login extends NiuResponsePacket
-	{
-		
-		public var result_id:int;			// unsigned int(4）
-		public var result_str_len:int;		// short(2)
-		public var result_str:String;		// char[]
+	{	
+		public var rresult:ResponseResult;	// ?
 		public var recommend_scene_id:int;	// unsigned int(4)
 		public var room_id:int;			// short(2)
 		public var room_table_num:int;		// unsigned int(4)
@@ -31,19 +27,13 @@ package packet.game.message.Login
 		{
 			super();
 			
+			rresult = new ResponseResult();
 			tlv_vec = new Vector.<UnionTLV>();
 		}
 		
 		override public function unpackMsgParam(bytes:ByteArray):void
-		{
-			trace("Response_Login::unpackMsgParam bytes.positon=", bytes.position, ", bytesAvailable=", bytes.bytesAvailable);
-			
-			result_id = bytes.readUnsignedInt();
-			result_str_len = bytes.readShort();
-			if (result_str_len > 0)
-			{
-				result_str = bytes.readUTFBytes(result_str_len);
-			}
+		{	
+			rresult.unpack(bytes);
 			recommend_scene_id = bytes.readUnsignedInt();
 			room_id = bytes.readShort();
 			room_table_num = bytes.readUnsignedInt();
@@ -54,7 +44,7 @@ package packet.game.message.Login
 			tlv_num = bytes.readShort();
 			if (tlv_num > 0)
 			{
-				var _uTLVDecoder:UnionTLVDecoder = Singleton.instanceOf(UnionTLVDecoder);
+				var _uTLVDecoder:UnionTLVDecoder = UnionTLVDecoder.instance();
 				for (var i:int = 0; i < tlv_num; i++)
 				{
 					var utlv:UnionTLV = _uTLVDecoder.decode(bytes);

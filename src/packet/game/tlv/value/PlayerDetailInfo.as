@@ -1,8 +1,6 @@
 package packet.game.tlv.value
 {
-	import flash.utils.ByteArray;
-	
-	import camu.design_pattern.Singleton;
+	import flash.utils.ByteArray;	
 	
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.UnionTLVDecoder;
@@ -140,10 +138,9 @@ package packet.game.tlv.value
 			{
 				ident_info = bytes.readUTFBytes(ident_len);
 			}
-			using_face_item_id = bytes.readInt();
+			using_face_item_id = bytes.readInt();			
 			
-			var _uTLVDecoder:UnionTLVDecoder = Singleton.instanceOf(UnionTLVDecoder);
-			player_detail_tlv = _uTLVDecoder.decode(bytes);
+			player_detail_tlv = UnionTLVDecoder.instance().decode(bytes);
 		}
 	}
 }

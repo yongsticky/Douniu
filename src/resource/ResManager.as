@@ -1,12 +1,11 @@
 package resource
-{
-	import flash.display.Loader;
-	import flash.display.LoaderInfo;
+{	
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
 	
+	import camu.design_pattern.Singleton;
 	import camu.loader.IResourceHolder;
 	import camu.loader.ResourceLoader;
 	import camu.loader.ResourceLoaderEvent;
@@ -26,6 +25,11 @@ package resource
 			_loader = new ResourceLoader(this);
 			
 			_loader.addEventListener(ResourceLoaderEvent.SCENE_COMPLETE, onSecneComplete);
+		}
+		
+		public static function instance() : ResManager
+		{
+			return Singleton.instanceOf(ResManager);
 		}
 		
 		protected function onSecneComplete(event:ResourceLoaderEvent):void

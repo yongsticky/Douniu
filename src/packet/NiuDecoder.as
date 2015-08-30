@@ -1,8 +1,7 @@
 package packet
 {
 	import flash.utils.ByteArray;
-	
-	import camu.design_pattern.Singleton;
+		
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
@@ -25,17 +24,15 @@ package packet
 		public function decode(bytes:ByteArray) : Packet
 		{			
 			_logger.log("decode Enter, bytes.length=", bytes.length, LEVEL.DEBUG);
-			Bytes2Hex.Trace(bytes);
-			
-			var _factory:NiuObjectFactory = Singleton.instanceOf(NiuObjectFactory);
+			Bytes2Hex.Trace(bytes);			
 			
 			var msgId:int = peekMsgId(bytes);			
-			var responsePacket:NiuResponsePacket  = _factory.createPacketInstance(msgId) as NiuResponsePacket;
+			var responsePacket:NiuResponsePacket  = NiuObjectFactory.instance().createPacketInstance(msgId) as NiuResponsePacket;
 			if (responsePacket)
 			{
 				if (!responsePacket.unpack(bytes))
 				{
-					_factory.destroyInstance(responsePacket);
+					NiuObjectFactory.instance().destroyInstance(responsePacket);
 					responsePacket = null;
 				}
 				

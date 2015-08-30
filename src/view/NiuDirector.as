@@ -1,19 +1,16 @@
 package view
 {
-	import camu.design_pattern.Singleton;
+	import starling.events.EnterFrameEvent;
+	
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	import camu.net.ConnectionEvent;
 	
-	import packet.game.message.Login.Request_Login;
-	
-	import server.NiuServerConnection;
-	
-	import starling.events.EnterFrameEvent;
-	
+	import factory.NiuObjectFactory;	
+	import packet.game.message.Login.Request_Login;	
+	import server.NiuServerConnection;	
 	import view.framework.ExDirector;
-	import view.scene.hall.SceneHall;
 
 	
 	public class NiuDirector extends ExDirector
@@ -32,43 +29,29 @@ package view
 		{	
 			_logger.log("initialize called.", LEVEL.INFO);
 			
-			super.initialize();
-			
-			
-			/*
-			var _sceneHall:SceneHall = new SceneHall();
-			this.switchToScene(_sceneHall);
-			*/
-			
-			
+			super.initialize();			
 			
 			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);			
 			
-			
-			var conn:NiuServerConnection = Singleton.instanceOf(NiuServerConnection) as NiuServerConnection;									
-			conn.setTargetAddress("182.254.40.11", 8000);			
-			conn.addEventListener(ConnectionEvent.CONNECTED, onConnect);
-			conn.connect();
-			
-			
-		}		
+			var connector:NiuServerConnection = NiuServerConnection.instance();	
+			connector.setTargetAddress("182.254.40.11", 8000);			
+			connector.addEventListener(ConnectionEvent.CONNECTED, onConnect);
+			connector.connect();
+		}
 
 		
 		private function onEnterFrame(event:EnterFrameEvent):void
 		{			
-			var conn:NiuServerConnection = Singleton.instanceOf(NiuServerConnection) as NiuServerConnection;
-			conn.onTickElapse();
+			NiuServerConnection.instance().onTickElapse();
 		}
 		
 		protected function onConnect(event:ConnectionEvent):void
 		{
 			_logger.log("Connect Server Succ.", LEVEL.INFO);			
-			var conn:NiuServerConnection = event.target as NiuServerConnection;
+			var packet:Request_Login = NiuObjectFactory.instance().createInstance(Request_Login);
 			
-			var packet:Request_Login = conn.newObject(Request_Login);
-			
-			_logger.log("Send Request_Login.", LEVEL.INFO);
-			conn.send(packet);
+			_logger.log("Send Request_Login.", LEVEL.INFO);			
+			NiuServerConnection.instance().send(packet);
 		}
 	}
 }

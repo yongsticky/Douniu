@@ -2,16 +2,14 @@ package packet
 {
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
-	
-	import camu.design_pattern.Singleton;
+		
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	import camu.net.Packet;
 	import camu.util.Bytes2Hex;
 	
-	import factory.NiuObjectFactory;
-	
+	import factory.NiuObjectFactory;	
 	import packet.protocol.NiuRequestPacket;
 	
 	
@@ -31,10 +29,10 @@ package packet
 			
 			var niuPacket:NiuRequestPacket = packet as NiuRequestPacket;
 			if (niuPacket)
-			{
-				var _factory:NiuObjectFactory = Singleton.instanceOf(NiuObjectFactory);
-				var bytes:ByteArray = _factory.createInstance(ByteArray);
+			{				
+				var bytes:ByteArray = NiuObjectFactory.instance().createInstance(ByteArray);
 				
+				bytes.clear();
 				bytes.endian = Endian.BIG_ENDIAN;
 
 				niuPacket.pack(bytes);
