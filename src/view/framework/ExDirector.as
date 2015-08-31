@@ -7,12 +7,8 @@ package view.framework
 	public class ExDirector extends ExSprite
 	{			
 		public function ExDirector()
-		{			
-		}
-		
-		override protected function initialize() : void
-		{
-			super.initialize();			
+		{	
+			super();
 		}
 		
 		override public function dispose() : void
@@ -28,11 +24,11 @@ package view.framework
 				return;
 			}
 
-			setSceneFadeInOut(scene, 0, 255, 1, Transitions.LINEAR, function () : void {
-				removeChildren(0, numChildren-2, true);	
-				});
-			
 			addChild(scene);
+			
+			setSceneFadeInOut(scene, 0, 255, 100, Transitions.LINEAR, function () : void {
+					while (numChildren > 1)	{ removeChildren(0, numChildren-2, true); }
+				});						
 		}
 
 		
@@ -90,7 +86,7 @@ package view.framework
 			if (completeHandler)
 			{
 				tn.onComplete = completeHandler;
-			}			
+			}
 		}
 		
 	}

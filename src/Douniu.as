@@ -23,7 +23,8 @@ package
 	
 	import view.NiuDirector;
 	
-	[SWF(width="1120", height="800", frameRate="60", backgroundColor="#ffffff")]
+	//[SWF(width="1120", height="800", frameRate="60", backgroundColor="#ffffff")]
+	[SWF(width="640", height="480", frameRate="60", backgroundColor="#ffffff")]
 	public class Douniu extends Sprite
 	{
 		

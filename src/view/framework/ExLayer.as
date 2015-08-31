@@ -10,16 +10,16 @@ package view.framework
 
 		public function ExLayer()
 		{
+			super();
 		}
 
 		override protected function initialize() : void
-		{
-			super.initialize();
-
+		{			
 			_juggler = new Juggler();
 			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame)
 			
-		}
+			super.initialize();
+		}		
 
 		public function get juggler() : Juggler
 		{

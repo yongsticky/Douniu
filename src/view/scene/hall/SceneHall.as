@@ -21,13 +21,12 @@ package view.scene.hall
 
 		override protected function initialize() : void
 		{
-			super.initialize();
-						
-			createAllLayers();
+			super.initialize();	
+			
 		} 
 
 
-		private function createAllLayers() : void
+		override protected function createChildren() : void 
 		{
 			_layerBackground = new LayerBackground();
 			_layerContent = new LayerContent();

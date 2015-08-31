@@ -1,7 +1,7 @@
 package factory
 {
 	import camu.design_pattern.Singleton;
-	import camu.net.Packet;
+	import camu.net.Packet;	
 	import camu.object.DefaultObjectFactory;
 	import camu.object.IObjectContainer;
 	
@@ -43,7 +43,8 @@ package factory
 	{		
 		public function NiuObjectFactory(objCache:IObjectContainer = null)
 		{
-			super(objCache);		
+			super(objCache);	
+				
 			
 			registerClass(Request_Login);
 			registerClass(Response_Login);

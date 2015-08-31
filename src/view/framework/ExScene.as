@@ -13,17 +13,14 @@ package view.framework
 		
 		public function ExScene(id:String)
 		{
+			super();
+			
 			if (getScene(id))
 			{
 				throw new Error("Scene(" + id + ") already exist.");
 			}
 
 			_dictScene[id] = this;
-		}
-
-		override protected function initialize() : void
-		{
-			super.initialize();
 		}
 
 		public static function getScene(id:String) : ExScene

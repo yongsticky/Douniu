@@ -13,7 +13,10 @@ package packet.game.tlv
 		// data = TLVValue Class
 		public function createObject(cls:Class, data:*):*
 		{
-			return new UnionTLV();
+			var uTLV:UnionTLV = new UnionTLV();
+			uTLV.value = NiuObjectFactory.instance().createInstance(data as Class);
+			
+			return uTLV;
 		}
 		
 		// data = TLVValue Class

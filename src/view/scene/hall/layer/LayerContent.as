@@ -1,5 +1,5 @@
 package view.scene.hall.layer
-{
+{	
 	import view.framework.ExLayer;
 	
 	public class LayerContent extends ExLayer
@@ -7,13 +7,10 @@ package view.scene.hall.layer
 		public function LayerContent()
 		{
 			super();
-		}
+		}		
 		
-		override protected function initialize() : void
-		{
-			super.initialize();
-			
-			
+		override protected function createChildren() : void
+		{			
 		}
 	}
 }

@@ -16,6 +16,7 @@ package view
 	import starling.events.EnterFrameEvent;
 	
 	import view.framework.ExDirector;
+	import view.scene.hall.SceneHall;
 
 	
 	public class NiuDirector extends ExDirector
@@ -32,16 +33,22 @@ package view
 		
 		override protected function initialize() : void
 		{	
-			_logger.log("initialize called.", LEVEL.INFO);
-			
 			super.initialize();
-						
-			//switchToScene(new SceneHall());
 			
-			connectGameServer();
+			_logger.log("initialize called.", LEVEL.INFO);					
 			
-			NiuServerResponseReceiver.instance().initReceiver();
+			
+		//	connectGameServer();
+			
+		//	NiuServerResponseReceiver.instance().initReceiver();
 		}
+		
+		override protected function createChildren() : void
+		{
+			switchToScene(new SceneHall());	
+		}
+		
+		
 		
 		private function connectGameServer() : void
 		{
