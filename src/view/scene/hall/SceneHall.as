@@ -21,8 +21,7 @@ package view.scene.hall
 
 		override protected function initialize() : void
 		{
-			super.initialize();	
-			
+			super.initialize();			
 		} 
 
 

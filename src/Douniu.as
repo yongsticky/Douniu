@@ -3,28 +3,23 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import starling.core.Starling;
+	
 	import camu.design_pattern.Singleton;
 	import camu.logger.Logger;
 	
-	import factory.NiuObjectFactory;
-	
-	import packet.game.message.Notify.TGameEvent;
+	import factory.NiuObjectFactory;		
 	import packet.game.message.Notify.TGameEventDecoder;
 	import packet.game.message.WrapperMessage.WrapperMessageDecoder;
-	import packet.game.tlv.UnionTLVDecoder;
-	
-	import resource.ResManager;
-	
+	import packet.game.tlv.UnionTLVDecoder;	
+	import resource.ResManager;	
 	import server.NiuServerConnector;
 	import server.NiuServerRequestSender;
-	import server.NiuServerResponseReceiver;
-	
-	import starling.core.Starling;
-	
+	import server.NiuServerResponseReceiver;	
 	import view.NiuDirector;
 	
-	//[SWF(width="1120", height="800", frameRate="60", backgroundColor="#ffffff")]
-	[SWF(width="640", height="480", frameRate="60", backgroundColor="#ffffff")]
+	[SWF(width="1120", height="640", frameRate="60", backgroundColor="#ffffff")]
+	//[SWF(width="640", height="480", frameRate="60", backgroundColor="#ffffff")]
 	public class Douniu extends Sprite
 	{
 		
