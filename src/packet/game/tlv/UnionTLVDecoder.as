@@ -2,15 +2,21 @@ package packet.game.tlv
 {
 	import flash.utils.ByteArray;
 	
-	import camu.design_pattern.Singleton;
+	import camu.logger.ILogger;
+	import camu.logger.Logger;
+	import camu.logger.LEVEL;	
+	import camu.singleton.Singleton;
 	
 	import factory.NiuObjectFactory;
 
 
 	public final class UnionTLVDecoder
 	{
+		private var _logger:ILogger;
+		
 		public function UnionTLVDecoder()
 		{
+			_logger = Logger.createLogger(UnionTLVDecoder, LEVEL.INFO);
 		}
 		
 		public static function instance() : UnionTLVDecoder
@@ -41,10 +47,12 @@ package packet.game.tlv
 
 		public function peekTLVType(bytes:ByteArray) : int
 		{
-			var typeTLV:int = bytes.readShort();
+			var tlvType:int = bytes.readShort();
 			bytes.position -= 2;
+			
+			_logger.log("peekTLVType, TLV Type = ", tlvType, LEVEL.INFO);
 
-			return typeTLV;
+			return tlvType;
 		}
 	}
 }

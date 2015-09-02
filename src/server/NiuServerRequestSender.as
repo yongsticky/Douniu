@@ -1,6 +1,6 @@
 package server
 {
-	import camu.design_pattern.Singleton;
+	import camu.singleton.Singleton;
 	import camu.logger.ILogger;
 	import camu.logger.Logger;
 	import camu.logger.LEVEL;

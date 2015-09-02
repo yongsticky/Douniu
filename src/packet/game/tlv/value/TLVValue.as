@@ -36,6 +36,7 @@ package packet.game.tlv.value
 		
 		protected function adjustPosition(bytes:ByteArray) : void
 		{
+			/*
 			if (bytes.position <= end_pos)
 			{
 				bytes.position = end_pos;	
@@ -44,6 +45,7 @@ package packet.game.tlv.value
 			{
 				throw new Error("ByteArray position Overflow.");
 			}
+			*/
 		}
 		
 		public function dispose() : void

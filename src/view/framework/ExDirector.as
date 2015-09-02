@@ -1,14 +1,40 @@
 package view.framework
 {		
+	import camu.singleton.Singleton;
+	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;
+	import starling.events.Event;
+	import starling.events.ResizeEvent;
 
 	public class ExDirector extends ExSprite
 	{			
 		public function ExDirector()
 		{	
 			super();
+			
+			Singleton.add(this);
+		}
+		
+		public static function getDirector() : ExDirector
+		{
+			return Singleton.instanceOf(ExDirector);
+		}
+
+		override protected function initialize() : void
+		{
+			super.initialize();
+
+			stage.addEventListener(Event.RESIZE, function(event:ResizeEvent):void {
+				stage.stageWidth = event.width;
+				stage.stageHeight = event.height;
+				
+				var topScene:ExScene = topScene;
+				if (topScene) {
+					topScene.onStageResize();
+				}				
+			});
 		}
 		
 		override public function dispose() : void

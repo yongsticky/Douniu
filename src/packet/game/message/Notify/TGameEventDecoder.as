@@ -2,7 +2,7 @@ package packet.game.message.Notify
 {
 	import flash.utils.ByteArray;
 	
-	import camu.design_pattern.Singleton;
+	import camu.singleton.Singleton;
 	
 	import factory.NiuObjectFactory;
 

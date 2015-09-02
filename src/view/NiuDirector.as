@@ -1,33 +1,32 @@
 package view
 {
+	import starling.events.EnterFrameEvent;
+
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
-	import camu.net.ConnectorEvent;
-	
-	import factory.NiuObjectFactory;
-	
-	import packet.game.message.Login.Request_Login;
-	
+	import camu.net.ConnectorEvent;	
+
+	import factory.NiuObjectFactory;	
+	import packet.game.message.Login.Request_Login;	
 	import server.NiuServerConnector;
 	import server.NiuServerRequestSender;
 	import server.NiuServerResponseReceiver;
-	
-	import starling.events.EnterFrameEvent;
-	
 	import view.framework.ExDirector;
 	import view.scene.hall.SceneHall;
+
 
 	
 	public class NiuDirector extends ExDirector
 	{
+
 		private var _logger:ILogger = null;
 		
 		public function NiuDirector()
 		{
 			super();
 			
-			_logger = Logger.createLogger(NiuDirector, LEVEL.DEBUG);		
+			_logger = Logger.createLogger(NiuDirector, LEVEL.DEBUG);
 			
 		}
 		
@@ -36,19 +35,16 @@ package view
 			super.initialize();
 			
 			_logger.log("initialize called.", LEVEL.INFO);					
+						
+			connectGameServer();
 			
-			
-		//	connectGameServer();
-			
-		//	NiuServerResponseReceiver.instance().initReceiver();
+			NiuServerResponseReceiver.instance().initReceiver();
 		}
 		
 		override protected function createChildren() : void
 		{
-			switchToScene(new SceneHall());	
-		}
-		
-		
+			//switchToScene(new SceneHall());	
+		}		
 		
 		private function connectGameServer() : void
 		{

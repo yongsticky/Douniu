@@ -1,5 +1,7 @@
 package resource
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -9,11 +11,13 @@ package resource
 	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
 	
-	import camu.design_pattern.Singleton;
+	import camu.singleton.Singleton;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
+	
 	import resource.dev.HallSceneRes;
+	import resource.dev.PokerCardRes;
 		
 
 	public class ResManager extends EventDispatcher
@@ -23,7 +27,9 @@ package resource
 		private var _loaders:Vector.<Loader>;
 		private var _res:Dictionary;
 
+		// dev
 		private var _resHallScene:HallSceneRes;
+		private var _resPokerCard:PokerCardRes;
 
 		public static const ID:String = "id";						// 资源的id，存取的唯一标识
 		public static const URL:String = "url";						// 资源的下载地址
@@ -53,6 +59,7 @@ package resource
 			_loaders = new Vector.<Loader>();
 
 			_resHallScene = new HallSceneRes();
+			_resPokerCard = new PokerCardRes();
 		}
 		
 		
@@ -90,14 +97,31 @@ package resource
 			}
 		}
 
-		public function getResource(id:String) : *
+		public function getResource(id:String) : BitmapData
 		{
 			return null;
 		}
 
-		public function getResourceDev(id:String) : *
+		public function getResourceDev(id:String) : BitmapData
 		{
-			return _resHallScene.getResource(id);
+			var res:* = _resHallScene.getResource(id);
+			if (!res)
+			{
+				res = _resPokerCard.getResource(id);				
+			}
+			
+			if (res is Bitmap)
+			{
+				return Bitmap(res).bitmapData;
+			}
+			else if (res is BitmapData)
+			{
+				return res;
+			}
+			else
+			{
+				throw new Error("No Found Resource!");
+			}			
 		}
 
 

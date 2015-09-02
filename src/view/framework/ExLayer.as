@@ -1,7 +1,7 @@
 package view.framework
 {
 	import starling.animation.Juggler;
-	import starling.events.EnterFrameEvent;
+	import starling.events.EnterFrameEvent;	
 
 	public class ExLayer extends ExSprite
 	{
@@ -19,7 +19,12 @@ package view.framework
 			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame)
 			
 			super.initialize();
-		}		
+		}
+		
+		public function onStageResize() : void
+		{
+			
+		}
 
 		public function get juggler() : Juggler
 		{
@@ -33,7 +38,7 @@ package view.framework
 				_juggler.advanceTime(event.passedTime);
 			}
 		}
-
+		
 		override public function dispose() : void
 		{
 			_juggler.purge();

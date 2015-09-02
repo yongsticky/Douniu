@@ -5,7 +5,7 @@ package
 	
 	import starling.core.Starling;
 	
-	import camu.design_pattern.Singleton;
+	import camu.singleton.Singleton;
 	import camu.logger.Logger;
 	
 	import factory.NiuObjectFactory;		

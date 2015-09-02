@@ -1,14 +1,16 @@
 package view.framework
 {	
 	import flash.utils.Dictionary;
-
+	
 	import starling.display.DisplayObject;
+	import starling.events.Event;
+	import starling.events.ResizeEvent;
 
 
 	public class ExScene extends ExSprite
 	{		
 		protected var _id:String;
-		protected static var _dictScene:Dictionary = new Dictionary(); 
+		protected static var _scenes:Dictionary = new Dictionary(); 
 
 		
 		public function ExScene(id:String)
@@ -20,14 +22,33 @@ package view.framework
 				throw new Error("Scene(" + id + ") already exist.");
 			}
 
-			_dictScene[id] = this;
+			_scenes[id] = this;
+		}
+		
+		override protected function initialize() : void
+		{
+			super.initialize();
+			
+			
+		}
+		
+		public function onStageResize() : void
+		{			
+			for (var i:int = 0; i < numChildren; i++)
+			{
+				var layer:ExLayer = getChildAt(i) as ExLayer;
+				if (layer)
+				{
+					layer.onStageResize();
+				}
+			}			
 		}
 
 		public static function getScene(id:String) : ExScene
 		{
-			if (_dictScene.hasOwnProperty(id))
+			if (_scenes.hasOwnProperty(id))
 			{
-				return _dictScene[id];
+				return _scenes[id];
 			}
 			else
 			{
@@ -41,13 +62,18 @@ package view.framework
 			if (scene)
 			{
 				scene.dispose();
-				delete _dictScene[id];
+				delete _scenes[id];
 			}
 		}
 
 		public function get id() : String
 		{
 			return _id;
+		}
+
+		public function get isOnTop() : Boolean
+		{
+			return (ExDirector(parent).topScene.id == this.id);
 		}
 		
 		public function addLayer(name:String, layer:ExLayer) : ExLayer

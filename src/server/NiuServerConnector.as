@@ -2,7 +2,7 @@ package server
 {
 	import flash.utils.ByteArray;
 	
-	import camu.design_pattern.Singleton;
+	import camu.singleton.Singleton;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;

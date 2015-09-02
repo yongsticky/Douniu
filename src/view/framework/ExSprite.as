@@ -2,6 +2,7 @@ package view.framework
 {
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.events.ResizeEvent;
 
 	public class ExSprite extends Sprite
 	{
@@ -18,7 +19,7 @@ package view.framework
 		protected function initialize() : void
 		{
 			createChildren();
-		}
+		}				
 		
 		protected function createChildren() : void
 		{
