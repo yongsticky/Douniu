@@ -1,4 +1,4 @@
-package view.scene.table.control
+package view.scene.table.widget
 {
 	import douniu.NiuCard;
 	
@@ -9,11 +9,11 @@ package view.scene.table.control
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
-	public class Control_OtherPlayerCards extends ExSprite
+	public class Widget_OtherPlayerCards extends ExSprite
 	{		
 		private static const MAX_CARDS_NUM:int = 5;
 		
-		public function Control_OtherPlayerCards()
+		public function Widget_OtherPlayerCards()
 		{
 			super();			
 		}

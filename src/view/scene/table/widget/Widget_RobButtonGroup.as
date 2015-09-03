@@ -1,10 +1,10 @@
-package view.scene.table.control
+package view.scene.table.widget
 {
 	import view.framework.ExSprite;
 
-	public class Control_RobButtonGroup extends ExSprite
+	public class Widget_RobButtonGroup extends ExSprite
 	{		
-		public function Control_RobButtonGroup()
+		public function Widget_RobButtonGroup()
 		{
 			super();
 		}

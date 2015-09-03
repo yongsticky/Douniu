@@ -1,18 +1,18 @@
-package view.scene.table.control
+package view.scene.table.widget
 {
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
-	public class Control_OtherPlayer extends ExSprite
+	public class Widget_OtherPlayer extends ExSprite
 	{		
-		private var _playerInfo:Control_PlayerInfo;
+		private var _playerInfo:Widget_PlayerInfo;
 		
-		private var _cards:Control_OtherPlayerCards;
+		private var _cards:Widget_OtherPlayerCards;
 		private var _robStatus:ExImage;
 		private var _robMultiple:ExImage;
 		
 		
-		public function Control_OtherPlayer()
+		public function Widget_OtherPlayer()
 		{
 			super();
 			
@@ -21,12 +21,12 @@ package view.scene.table.control
 		
 		override protected function createChildren() : void
 		{	
-			_cards = new Control_OtherPlayerCards();		
+			_cards = new Widget_OtherPlayerCards();		
 			_cards.x = 120;
 			_cards.y = 30;
 			addChild(_cards);
 			
-			_playerInfo = new Control_PlayerInfo();
+			_playerInfo = new Widget_PlayerInfo();
 			addChild(_playerInfo);
 		}
 

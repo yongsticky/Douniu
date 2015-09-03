@@ -1,15 +1,15 @@
-package view.scene.table.control
+package view.scene.table.widget
 {
 	import resource.ResManager;
 	
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
-	public class Control_PlayerCards extends ExSprite
+	public class Widget_PlayerCards extends ExSprite
 	{		
 		private static const MAX_CARDS_NUM:int = 5;
 		
-		public function Control_PlayerCards()
+		public function Widget_PlayerCards()
 		{
 			super();
 		}

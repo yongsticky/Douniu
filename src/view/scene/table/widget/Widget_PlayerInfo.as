@@ -1,4 +1,4 @@
-package view.scene.table.control
+package view.scene.table.widget
 {
 	import resource.ResManager;
 	
@@ -7,14 +7,14 @@ package view.scene.table.control
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
-	public class Control_PlayerInfo extends ExSprite
+	public class Widget_PlayerInfo extends ExSprite
 	{
 		private var _playerName:TextField;
 		private var _playerIcon:ExImage;
 		private var _chips:TextField;
 		
 		
-		public function Control_PlayerInfo()
+		public function Widget_PlayerInfo()
 		{
 			super();			
 		}

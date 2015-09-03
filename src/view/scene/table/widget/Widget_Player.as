@@ -1,24 +1,24 @@
-package view.scene.table.control
+package view.scene.table.widget
 {
 	import view.framework.ExSprite;
 	
-	public class Control_Player extends ExSprite
+	public class Widget_Player extends ExSprite
 	{
-		private var _playerInfo:Control_PlayerInfo;
-		private var _playerCards:Control_PlayerCards;
+		private var _playerInfo:Widget_PlayerInfo;
+		private var _playerCards:Widget_PlayerCards;
 		
 		
-		public function Control_Player()
+		public function Widget_Player()
 		{
 			super();
 		}
 		
 		override protected function createChildren() : void
 		{
-			_playerInfo = new Control_PlayerInfo();
+			_playerInfo = new Widget_PlayerInfo();
 			addChild(_playerInfo);
 			
-			_playerCards = new Control_PlayerCards();
+			_playerCards = new Widget_PlayerCards();
 			_playerCards.x = 220;
 			_playerCards.y = 20;
 			addChild(_playerCards);

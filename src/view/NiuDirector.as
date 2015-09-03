@@ -57,7 +57,7 @@ package view
 		override protected function createChildren() : void
 		{
 			switchToScene(new Scene_Hall());
-		}		
+		}
 		
 		private function connectGameServer() : void
 		{

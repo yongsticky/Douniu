@@ -94,9 +94,9 @@ package view.framework
 		{
 			scene.alpha = alphaFrom;
 
-			var tn:Tween = new Tween(scene, time);
+			var tn:Tween = new Tween(scene, time, transition);
 			tn.fadeTo(alphaTo);
-			tn.transition = transition; 
+			
 			Starling.juggler.add(tn);
 			tn.onComplete = completeHandler;		
 		}		

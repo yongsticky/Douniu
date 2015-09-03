@@ -1,7 +1,10 @@
 package view.framework
 {
 		
+	
+	
 	import starling.display.DisplayObject;
+	import starling.display.DisplayObjectContainer;
 	import starling.display.Sprite;
 	import starling.events.Event;
 
@@ -38,6 +41,24 @@ package view.framework
 					ExSprite(child).layoutChildren();
 				}
 			}
+		}
+		
+		public function getOwnerLayer() : ExLayer
+		{
+			var p:DisplayObjectContainer = parent;
+			while(p)
+			{
+				if (p is ExLayer)
+				{
+					return (p as ExLayer);
+				}
+				else
+				{
+					p = parent;
+				}			
+			}
+			
+			throw new Error("Class NOT Layer's child.");
 		}
 	}
 }
