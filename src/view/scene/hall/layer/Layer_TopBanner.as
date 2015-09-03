@@ -1,17 +1,23 @@
 package view.scene.hall.layer
 {	
 	
+	import packet.NiuDecoder;
+	
 	import resource.ResManager;
 	
 	import starling.display.Button;
 	import starling.display.Quad;
+	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.textures.Texture;
 	
+	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExLayer;
+	import view.scene.mall.Scene_Mall;
+	import view.scene.setting.Scene_Setting;
 	
-	public class LayerBanner extends ExLayer
+	public class Layer_TopBanner extends ExLayer
 	{
 		private var _userIcon:ExImage;
 				
@@ -31,10 +37,10 @@ package view.scene.hall.layer
 		
 		
 		
-		public function LayerBanner()
+		public function Layer_TopBanner()
 		{
 			super();
-		}		
+		}
 		
 		override protected function createChildren() : void
 		{
@@ -98,12 +104,29 @@ package view.scene.hall.layer
 			_settingBtn.x = stage.stageWidth - _settingBtn.width - 50;
 			_settingBtn.y = _nameText.y + 6;
 			addChild(_settingBtn);
+			_settingBtn.addEventListener(Event.TRIGGERED, onSettingTriggered);
 			
 			_vipMallBtn = new Button(Texture.fromBitmapData(resManager.getResourceDev("hall.vipMall")), 
 									"", null, Texture.fromBitmapData(resManager.getResourceDev("hall.vipMall_h")));
 			_vipMallBtn.x = stage.stageWidth - _vipMallBtn.width - 20;
 			_vipMallBtn.y = this.height + 10;
-			addChild(_vipMallBtn);			
+			addChild(_vipMallBtn);
+			_vipMallBtn.addEventListener(Event.TRIGGERED, onVipMallTriggered);
+		}
+		
+		override protected function layoutChildren() : void
+		{
+			super.layoutChildren();
+		}
+		
+		protected function onSettingTriggered(event:Event) : void
+		{		
+			NiuDirector.instance().pushScene(new Scene_Setting());			
+		}
+		
+		protected function onVipMallTriggered(event:Event) : void
+		{	
+			NiuDirector.instance().pushScene(new Scene_Mall());
 		}
 	}
 }

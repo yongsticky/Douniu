@@ -21,10 +21,6 @@ package view.framework
 			super.initialize();
 		}
 		
-		public function onStageResize() : void
-		{
-			
-		}
 
 		public function get juggler() : Juggler
 		{

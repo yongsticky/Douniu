@@ -22,6 +22,11 @@ package view.framework
 			{
 				texture = Texture.fromBitmapData(res);
 			}
+			else if (res is Texture)
+			{
+				texture = res;
+			}
+				
 			
 			if (texture)
 			{

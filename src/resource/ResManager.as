@@ -18,6 +18,7 @@ package resource
 	
 	import resource.dev.HallSceneRes;
 	import resource.dev.PokerCardRes;
+	import resource.dev.TableSceneRes;
 		
 
 	public class ResManager extends EventDispatcher
@@ -30,6 +31,7 @@ package resource
 		// dev
 		private var _resHallScene:HallSceneRes;
 		private var _resPokerCard:PokerCardRes;
+		private var _resGameScene:TableSceneRes;
 
 		public static const ID:String = "id";						// 资源的id，存取的唯一标识
 		public static const URL:String = "url";						// 资源的下载地址
@@ -60,6 +62,7 @@ package resource
 
 			_resHallScene = new HallSceneRes();
 			_resPokerCard = new PokerCardRes();
+			_resGameScene = new TableSceneRes();
 		}
 		
 		
@@ -107,7 +110,11 @@ package resource
 			var res:* = _resHallScene.getResource(id);
 			if (!res)
 			{
-				res = _resPokerCard.getResource(id);				
+				res = _resPokerCard.getResource(id);
+				if (!res)
+				{
+					res = _resGameScene.getResource(id);
+				}
 			}
 			
 			if (res is Bitmap)

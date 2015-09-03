@@ -5,13 +5,16 @@ package view.scene.hall.layer
 	import resource.ResManager;
 	
 	import starling.display.Button;
+	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.textures.Texture;
 	
+	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExLayer;
+	import view.scene.table.Scene_Table;
 	
-	public class LayerRoomList extends ExLayer
+	public class Layer_RoomList extends ExLayer
 	{
 		private var _room1Icon:ExImage;
 		private var _room1List:Vector.<Button>;
@@ -19,12 +22,11 @@ package view.scene.hall.layer
 		private var _room2Icon:ExImage;
 		private var _room2List:Vector.<Button>;
 		
-		public function LayerRoomList()
+		private static const MAX_ROOM_NUM_PER_TYPE:int = 4;
+		
+		public function Layer_RoomList()
 		{
-			super();
-			
-			_room1List = new Vector.<Button>(4);
-			_room2List = new Vector.<Button>(4);
+			super();			
 		}
 		
 		override protected function createChildren() : void
@@ -42,9 +44,12 @@ package view.scene.hall.layer
 			addChild(_room2Icon);
 			
 			var buttonBGTexture:Texture = Texture.fromBitmapData(resManager.getResourceDev("hall.room"));
+			
+			_room1List = new Vector.<Button>();
+			_room2List = new Vector.<Button>();
 
 			var xStart:int = 120;			
-			for (var i:int = 0; i < 4; i++)
+			for (var i:int = 0; i < MAX_ROOM_NUM_PER_TYPE; i++)
 			{
 				var btn1:Button = new Button(buttonBGTexture);
 				btn1.x = xStart;
@@ -56,6 +61,7 @@ package view.scene.hall.layer
 				btn1.addChild(roomNameText);
 				addChild(btn1);				
 				_room1List.push(btn1);	
+				btn1.addEventListener(Event.TRIGGERED, onRoomTriggered);
 				
 				
 				var btn2:Button = new Button(buttonBGTexture);
@@ -64,10 +70,20 @@ package view.scene.hall.layer
 				
 				addChild(btn2);
 				_room2List.push(btn2);
+				btn2.addEventListener(Event.TRIGGERED, onRoomTriggered);
 				
 				xStart += btn1.width + 40;
-			}		
-
+			}
+		}
+		
+		override protected function layoutChildren() : void
+		{
+			super.layoutChildren();
+		}
+		
+		private function onRoomTriggered(event:Event) : void
+		{
+			NiuDirector.instance().switchToScene(new Scene_Table("scene.game"));		
 		}
 	}
 }

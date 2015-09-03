@@ -18,7 +18,7 @@ package
 	import server.NiuServerResponseReceiver;	
 	import view.NiuDirector;
 	
-	[SWF(width="1120", height="640", frameRate="60", backgroundColor="#ffffff")]
+	[SWF(width="1120", height="780", frameRate="60", backgroundColor="#ffffff")]
 	//[SWF(width="640", height="480", frameRate="60", backgroundColor="#ffffff")]
 	public class Douniu extends Sprite
 	{

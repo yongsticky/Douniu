@@ -6,114 +6,117 @@ package resource.dev
 	{
 
 
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_1.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_1.png")]
 		private static const Hei1PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_2.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_2.png")]
 		private static const Hei2PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_3.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_3.png")]
 		private static const Hei3PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_4.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_4.png")]
 		private static const Hei4PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_5.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_5.png")]
 		private static const Hei5PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_6.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_6.png")]
 		private static const Hei6PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_7.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_7.png")]
 		private static const Hei7PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_8.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_8.png")]
 		private static const Hei8PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_9.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_9.png")]
 		private static const Hei9PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_10.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_10.png")]
 		private static const Hei10PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_11.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_11.png")]
 		private static const Hei11PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_12.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_12.png")]
 		private static const Hei12PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hei_13.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hei_13.png")]
 		private static const Hei13PNG:Class;
 
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_1.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_1.png")]
 		private static const Hong1PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_2.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_2.png")]
 		private static const Hong2PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_3.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_3.png")]
 		private static const Hong3PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_4.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_4.png")]
 		private static const Hong4PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_5.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_5.png")]
 		private static const Hong5PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_6.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_6.png")]
 		private static const Hong6PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_7.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_7.png")]
 		private static const Hong7PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_8.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_8.png")]
 		private static const Hong8PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_9.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_9.png")]
 		private static const Hong9PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_10.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_10.png")]
 		private static const Hong10PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_11.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_11.png")]
 		private static const Hong11PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_12.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_12.png")]
 		private static const Hong12PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#hong_13.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#hong_13.png")]
 		private static const Hong13PNG:Class;
 
 
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_1.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_1.png")]
 		private static const Mei1PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_2.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_2.png")]
 		private static const Mei2PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_3.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_3.png")]
 		private static const Mei3PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_4.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_4.png")]
 		private static const Mei4PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_5.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_5.png")]
 		private static const Mei5PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_6.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_6.png")]
 		private static const Mei6PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_7.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_7.png")]
 		private static const Mei7PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_8.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_8.png")]
 		private static const Mei8PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_9.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_9.png")]
 		private static const Mei9PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_10.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_10.png")]
 		private static const Mei10PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_11.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_11.png")]
 		private static const Mei11PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_12.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_12.png")]
 		private static const Mei12PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#mei_13.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#mei_13.png")]
 		private static const Mei13PNG:Class;
 
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_1.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_1.png")]
 		private static const Fang1PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_2.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_2.png")]
 		private static const Fang2PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_3.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_3.png")]
 		private static const Fang3PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_4.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_4.png")]
 		private static const Fang4PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_5.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_5.png")]
 		private static const Fang5PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_6.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_6.png")]
 		private static const Fang6PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_7.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_7.png")]
 		private static const Fang7PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_8.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_8.png")]
 		private static const Fang8PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_9.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_9.png")]
 		private static const Fang9PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_10.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_10.png")]
 		private static const Fang10PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_11.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_11.png")]
 		private static const Fang11PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_12.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_12.png")]
 		private static const Fang12PNG:Class;
-		[Embed(source="../../../resource/hall/pokerres.swf#fang_13.png")]
+		[Embed(source="../../../resource/poker/res_poker.swf#fang_13.png")]
 		private static const Fang13PNG:Class;
+
+		[Embed(source="../../../resource/poker/res_poker.swf#bei.png")]
+		private static const BeiPNG:Class;
 
 		private var _res:Dictionary;
 
@@ -179,6 +182,8 @@ package resource.dev
 			_res["poker.fang.11"] = new Fang11PNG();
 			_res["poker.fang.12"] = new Fang12PNG();
 			_res["poker.fang.13"] = new Fang13PNG();
+
+			_res["poker.bei"] = new BeiPNG();
 		}
 
 		public function getResource(id:String) : *

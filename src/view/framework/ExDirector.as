@@ -1,7 +1,5 @@
 package view.framework
-{		
-	import camu.singleton.Singleton;
-	
+{	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;
@@ -12,15 +10,8 @@ package view.framework
 	{			
 		public function ExDirector()
 		{	
-			super();
-			
-			Singleton.add(this);
-		}
-		
-		public static function getDirector() : ExDirector
-		{
-			return Singleton.instanceOf(ExDirector);
-		}
+			super();		
+		}		
 
 		override protected function initialize() : void
 		{
@@ -52,11 +43,11 @@ package view.framework
 
 			addChild(scene);
 			
-			setSceneFadeInOut(scene, 0, 255, 100, Transitions.LINEAR, function () : void {
-					while (numChildren > 1)	{ removeChildren(0, numChildren-2, true); }
-				});						
+			setSceneFadeInOut(scene, 0, 1, 0.3, Transitions.EASE_IN, function () : void {
+					while(numChildren > 1){removeChildren(0, numChildren-2);}					
+				});	
+			
 		}
-
 		
 		public function pushScene(scene:ExScene) : void
 		{
@@ -65,7 +56,7 @@ package view.framework
 				return;
 			}
 
-			setSceneFadeInOut(scene, 0, 255, 1);
+			setSceneFadeInOut(scene, 0, 1, 0.3, Transitions.EASE_IN);
 
 			addChild(scene);		
 		}
@@ -79,16 +70,15 @@ package view.framework
 				var newTopScene:ExScene = getChildAt(numChildren-2) as ExScene;
 				if (newTopScene)
 				{
-					setSceneFadeInOut(newTopScene, 0, 255, 1, Transitions.LINEAR, function() : void {
-						removeChildAt(numChildren-2);
+					setSceneFadeInOut(popScene, 1, 0, 0.3, Transitions.EASE_IN, function() : void {
+						swapChildrenAt(numChildren-1, numChildren-2);
+						removeChildAt(numChildren-2, false);
 						});
-				}
-
-				swapChildrenAt(numChildren-1, numChildren-2);
+				}				
 			}
 			else
 			{
-				removeChildAt(numChildren-1);
+				removeChildAt(numChildren-1, true);
 			}
 
 			return popScene;
@@ -100,8 +90,7 @@ package view.framework
 			return scene;			
 		}
 
-		private function setSceneFadeInOut(scene:ExScene, alphaFrom:Number, alphaTo:Number, time:Number, 
-			transition:String = Transitions.LINEAR, completeHandler:Function = null) : void
+		private function setSceneFadeInOut(scene:ExScene, alphaFrom:Number, alphaTo:Number, time:Number, transition:String = Transitions.LINEAR, completeHandler:Function = null) : void
 		{
 			scene.alpha = alphaFrom;
 
@@ -109,11 +98,7 @@ package view.framework
 			tn.fadeTo(alphaTo);
 			tn.transition = transition; 
 			Starling.juggler.add(tn);
-			if (completeHandler)
-			{
-				tn.onComplete = completeHandler;
-			}
-		}
-		
+			tn.onComplete = completeHandler;		
+		}		
 	}
 }

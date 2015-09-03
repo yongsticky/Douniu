@@ -6,12 +6,12 @@ package view.scene.hall.layer
 	import view.framework.ExImage;
 	import view.framework.ExLayer;
 
-	public class LayerBackground extends ExLayer
+	public class Layer_Background extends ExLayer
 	{				
 		private var _bg:ExImage;
 		private var _banner:ExImage;
 		
-		public function LayerBackground()
+		public function Layer_Background()
 		{
 			super();
 		}
@@ -25,6 +25,11 @@ package view.scene.hall.layer
 			
 			addChild(_bg);
 			addChild(_banner);
+		}
+		
+		override protected function layoutChildren() : void
+		{
+			super.layoutChildren();
 		}
 	}
 }

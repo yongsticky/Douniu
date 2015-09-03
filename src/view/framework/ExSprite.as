@@ -1,8 +1,9 @@
 package view.framework
 {
+		
+	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 	import starling.events.Event;
-	import starling.events.ResizeEvent;
 
 	public class ExSprite extends Sprite
 	{
@@ -18,12 +19,25 @@ package view.framework
 
 		protected function initialize() : void
 		{
-			createChildren();
+			createChildren();			
+			layoutChildren();
 		}				
 		
 		protected function createChildren() : void
 		{
 			throw new Error("Abstract Function.");	
+		}
+
+		protected function layoutChildren() : void
+		{
+			for (var i:int; i < numChildren; i++)
+			{				
+				var child:DisplayObject = getChildAt(i);
+				if (child is ExSprite)
+				{
+					ExSprite(child).layoutChildren();
+				}
+			}
 		}
 	}
 }

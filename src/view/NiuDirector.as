@@ -1,19 +1,24 @@
 package view
 {
-	import starling.events.EnterFrameEvent;
-
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
-	import camu.net.ConnectorEvent;	
-
-	import factory.NiuObjectFactory;	
-	import packet.game.message.Login.Request_Login;	
+	import camu.net.ConnectorEvent;
+	import camu.singleton.Singleton;
+	
+	import factory.NiuObjectFactory;
+	
+	import packet.game.message.Login.Request_Login;
+	
 	import server.NiuServerConnector;
 	import server.NiuServerRequestSender;
 	import server.NiuServerResponseReceiver;
+	
+	import starling.events.EnterFrameEvent;
+	
 	import view.framework.ExDirector;
-	import view.scene.hall.SceneHall;
+	import view.scene.hall.Scene_Hall;
+	import view.scene.setting.Scene_Setting;
 
 
 	
@@ -28,7 +33,15 @@ package view
 			
 			_logger = Logger.createLogger(NiuDirector, LEVEL.DEBUG);
 			
+			Singleton.add(this);
+			
 		}
+		
+		public static function instance() : ExDirector
+		{
+			return Singleton.instanceOf(NiuDirector);
+		}		
+		
 		
 		override protected function initialize() : void
 		{	
@@ -36,14 +49,14 @@ package view
 			
 			_logger.log("initialize called.", LEVEL.INFO);					
 						
-			connectGameServer();
+			//connectGameServer();
 			
-			NiuServerResponseReceiver.instance().initReceiver();
+			//NiuServerResponseReceiver.instance().initReceiver();
 		}
 		
 		override protected function createChildren() : void
 		{
-			//switchToScene(new SceneHall());	
+			switchToScene(new Scene_Hall());
 		}		
 		
 		private function connectGameServer() : void
@@ -77,6 +90,11 @@ package view
 			loginRequest.imei_len = 0;
 			
 			NiuServerRequestSender.instance().sendRequest(loginRequest);
+		}
+
+		override protected function layoutChildren() : void
+		{
+			
 		}
 	}
 }

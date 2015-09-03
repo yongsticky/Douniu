@@ -4,46 +4,46 @@ package resource.dev
 
 	public class HallSceneRes
 	{
-		[Embed(source="../../../resource/hall/hallres.swf#bg.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#bg.png")]
 		private static const BgPNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#banner.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#banner.png")]
 		private static const BannerPNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#coin.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#coin.png")]
 		private static const CoinPNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#name.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#name.png")]
 		private static const NamePNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#room.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#room.png")]
 		private static const RoomPNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#roomType_1.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#roomType_1.png")]
 		private static const RoomType1PNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#roomType_2.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#roomType_2.png")]
 		private static const RoomType2PNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#roomType_3.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#roomType_3.png")]
 		private static const RoomType3PNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#setting.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#setting.png")]
 		private static const SettingPNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#ticket.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#ticket.png")]
 		private static const TicketPNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#tip.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#tip.png")]
 		private static const TipPNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#user.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#user.png")]
 		private static const UserPNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#vipMall.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#vipMall.png")]
 		private static const VipMallPNG:Class;
 
-		[Embed(source="../../../resource/hall/hallres.swf#vipMall_h.png")]
+		[Embed(source="../../../resource/hall/res_hall.swf#vipMall_h.png")]
 		private static const VipMallHPNG:Class;
 		
 		private var _res:Dictionary;
