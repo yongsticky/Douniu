@@ -1,8 +1,5 @@
 package view.scene.hall.layer
-{	
-	
-	import packet.NiuDecoder;
-	
+{			
 	import resource.ResManager;
 	
 	import starling.display.Button;
@@ -16,6 +13,7 @@ package view.scene.hall.layer
 	import view.framework.ExLayer;
 	import view.scene.mall.Scene_Mall;
 	import view.scene.setting.Scene_Setting;
+	import view.widget.Widget_TextMarquee;
 	
 	public class Layer_TopBanner extends ExLayer
 	{
@@ -33,8 +31,9 @@ package view.scene.hall.layer
 		private var _notifyText:TextField;
 		
 		private var _settingBtn:Button;
-		private var _vipMallBtn:Button;
+		private var _vipMallBtn:Button;	
 		
+		private var _marquee:Widget_TextMarquee;
 		
 		
 		public function Layer_TopBanner()
@@ -64,7 +63,7 @@ package view.scene.hall.layer
 			_nameText.addChild(new Quad(160, 24, 0xCC6A29));
 			addChild(_nameText);
 			
-			_coinIcon = new ExImage(resManager.getResourceDev("hall.coin"));
+			_coinIcon = new ExImage(resManager.getResourceDev("hall.chips"));
 			_coinIcon.x = _nameIcon.x;
 			_coinIcon.y = _nameIcon.y + _nameIcon.height + 16;			
 			addChild(_coinIcon);
@@ -92,12 +91,24 @@ package view.scene.hall.layer
 			addChild(_ticketText);	
 			
 					
+			/*
 			_notifyText = new TextField(340, 34, "通知：你的好友XXXXXX在欢乐牛牛中的排名超过了你。", "", 12, 0xFFFFFF, false);
 			_notifyText.hAlign = "left";
 			_notifyText.x = _nameText.x + _nameText.width + 60;
 			_notifyText.y = _nameText.y + 15;			
 			_notifyText.addChild(new Quad(340, 34, 0xB37D57));
-			addChild(_notifyText);
+			addChild(_notifyText);			
+			*/
+			
+			
+			_marquee = new Widget_TextMarquee(340, 34);
+			_marquee.x = _nameText.x + _nameText.width + 60;
+			_marquee.y = _nameText.y + 15;
+			addChild(_marquee);
+			
+			_marquee.add("通知：Lisa生日快乐！！。");
+			_marquee.add("通知：Lisa Lisa Lisa！");
+			_marquee.add("通知：Lisa和我的年龄差距最小的时刻！");
 			
 			
 			_settingBtn = new Button(Texture.fromBitmapData(resManager.getResourceDev("hall.setting")));
@@ -106,8 +117,8 @@ package view.scene.hall.layer
 			addChild(_settingBtn);
 			_settingBtn.addEventListener(Event.TRIGGERED, onSettingTriggered);
 			
-			_vipMallBtn = new Button(Texture.fromBitmapData(resManager.getResourceDev("hall.vipMall")), 
-									"", null, Texture.fromBitmapData(resManager.getResourceDev("hall.vipMall_h")));
+			_vipMallBtn = new Button(Texture.fromBitmapData(resManager.getResourceDev("hall.vip_mall")), 
+									"", null, Texture.fromBitmapData(resManager.getResourceDev("hall.vip_mall_hover")));
 			_vipMallBtn.x = stage.stageWidth - _vipMallBtn.width - 20;
 			_vipMallBtn.y = this.height + 10;
 			addChild(_vipMallBtn);
@@ -117,7 +128,7 @@ package view.scene.hall.layer
 		override protected function layoutChildren() : void
 		{
 			super.layoutChildren();
-		}
+		}		
 		
 		protected function onSettingTriggered(event:Event) : void
 		{		

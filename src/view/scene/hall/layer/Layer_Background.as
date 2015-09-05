@@ -21,7 +21,7 @@ package view.scene.hall.layer
 			var resManager:ResManager = ResManager.instance();
 			
 			_bg = new ExImage(resManager.getResourceDev("hall.bg"));
-			_banner = new ExImage(resManager.getResourceDev("hall.banner"));
+			_banner = new ExImage(resManager.getResourceDev("hall.top_banner"));
 			
 			addChild(_bg);
 			addChild(_banner);

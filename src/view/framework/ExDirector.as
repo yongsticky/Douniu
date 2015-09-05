@@ -44,7 +44,7 @@ package view.framework
 			addChild(scene);
 			
 			setSceneFadeInOut(scene, 0, 1, 0.3, Transitions.EASE_IN, function () : void {
-					while(numChildren > 1){removeChildren(0, numChildren-2);}					
+					while(numChildren > 1){removeChildren(0, numChildren-2, true);}					
 				});	
 			
 		}

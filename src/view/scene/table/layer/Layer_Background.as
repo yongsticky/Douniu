@@ -23,7 +23,7 @@ package view.scene.table.layer
 			addChild(_bg);
 			
 			
-			_logo = new ExImage(resManager.getResourceDev("table.bg_text"));
+			_logo = new ExImage(resManager.getResourceDev("table.bg_logo"));
 			_logo.x = (stage.stageWidth - _logo.width) >> 1;
 			_logo.y = (stage.stageHeight - _logo.height) >> 1;
 			_logo.alpha = 0.1;

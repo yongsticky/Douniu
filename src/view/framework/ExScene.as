@@ -93,7 +93,8 @@ package view.framework
 
 		public function pauseAnimation() : void
 		{
-			for (var i:int = 0; i < this.numChildren; i++)
+			var maxCount:int = numChildren;
+			for (var i:int = 0; i < maxCount; i++)
 			{
 				var layer:ExLayer = getChildAt(i) as ExLayer;
 				if (layer)
@@ -105,7 +106,8 @@ package view.framework
 
 		public function resumeAnimation() : void
 		{
-			for (var i:int = 0; i < this.numChildren; i++)
+			var maxCount:int = numChildren;
+			for (var i:int = 0; i < maxCount; i++)
 			{
 				var layer:ExLayer = getChildAt(i) as ExLayer;
 				if (layer)

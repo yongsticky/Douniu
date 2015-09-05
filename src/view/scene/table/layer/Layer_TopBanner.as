@@ -27,7 +27,7 @@ package view.scene.table.layer
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_bg = new ExImage(resManager.getResourceDev("table.banner"));
+			_bg = new ExImage(resManager.getResourceDev("table.top_banner"));
 			_bg.x = _bg.y = 0;
 			addChild(_bg);
 			

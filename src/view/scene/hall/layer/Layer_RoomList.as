@@ -33,17 +33,17 @@ package view.scene.hall.layer
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_room1Icon = new ExImage(resManager.getResourceDev("hall.roomType_1"));
+			_room1Icon = new ExImage(resManager.getResourceDev("hall.type1_room"));
 			_room1Icon.x = (stage.stageWidth - _room1Icon.width)/2 - 20;
 			_room1Icon.y = 200;
 			addChild(_room1Icon);
 			
-			_room2Icon = new ExImage(resManager.getResourceDev("hall.roomType_2"));
+			_room2Icon = new ExImage(resManager.getResourceDev("hall.type2_room"));
 			_room2Icon.x = (stage.stageWidth - _room1Icon.width)/2 - 20;
 			_room2Icon.y = 400;
 			addChild(_room2Icon);
 			
-			var buttonBGTexture:Texture = Texture.fromBitmapData(resManager.getResourceDev("hall.room"));
+			var buttonBGTexture:Texture = Texture.fromBitmapData(resManager.getResourceDev("hall.room_bg"));
 			
 			_room1List = new Vector.<Button>();
 			_room2List = new Vector.<Button>();

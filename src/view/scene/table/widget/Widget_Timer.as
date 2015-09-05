@@ -47,7 +47,7 @@ package view.scene.table.widget
 		public function startTimer() : void
 		{				
 			var tn:Tween = new Tween(_num, 1, Transitions.EASE_IN);
-			tn.scaleTo(0.8);
+			tn.scaleTo(0.8);			
 			tn.onComplete = onCountdownAnimationComplete;
 			
 			getOwnerLayer().juggler.add(tn);			
