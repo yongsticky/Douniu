@@ -1,30 +1,25 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-
+	
 	import packet.game.tlv.TLVValue;
-
-	public class ExitPlayerInfo extends TLVValue
+	
+	public class TTimeInfo extends TLVValue
 	{
-		public var standup_reason:int;		// short(2)
-
-		public function ExitPlayerInfo() 
-		{
-			super();			
-		}
+		public var type_:int;			// char(1)
+		public var time_:int;			// char(1)
 		
-		/*
-		override public function getValueType() : int
+		public function TTimeInfo()
 		{
-			return TLVType.DN_TLV_EXIT_PLAYER_INFO;
+			super();
 		}
-		*/
 		
 		override public function pack(bytes:ByteArray) : void
 		{
 			super.pack(bytes);
-
-			bytes.writeShort(standup_reason);
+			
+			bytes.writeByte(type_);
+			bytes.writeByte(time_);
 			
 			super.adjustPosition(bytes);
 		}
@@ -32,8 +27,9 @@ package packet.game.tlv.value
 		override public function unpack(bytes:ByteArray) : void
 		{
 			super.unpack(bytes);
-
-			standup_reason = bytes.readShort();
+			
+			type_ = bytes.readByte();
+			time_ = bytes.readByte();
 			
 			super.adjustPosition(bytes);
 		}

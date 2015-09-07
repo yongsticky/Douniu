@@ -1,6 +1,8 @@
 package packet.game.tlv.value
 {	
-	import flash.utils.ByteArray;	
+	import flash.utils.ByteArray;
+		
+	import packet.game.tlv.TLVValue;
 	import packet.util.Int64;
 
 	public class TClientInfo extends TLVValue
@@ -48,6 +50,13 @@ package packet.game.tlv.value
 			open_id_len = 0;
 			head_url_len = 0;
 		}
+		
+		/*
+		override public function getValueType() : int
+		{
+			return TLVType.UP_TLV_CLIENT_INFO;
+		}
+		*/
 		
 		override public function pack(bytes:ByteArray) : void
 		{

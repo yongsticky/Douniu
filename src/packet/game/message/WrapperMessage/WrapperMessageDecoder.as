@@ -8,7 +8,7 @@ package packet.game.message.WrapperMessage
 	import camu.logger.Logger;
 	
 	import factory.NiuObjectFactory;
-	
+	import packet.game.message.MSGID;
 	import packet.protocol.MsgHeader;
 	import packet.protocol.NiuResponsePacket;
 		
@@ -34,7 +34,7 @@ package packet.game.message.WrapperMessage
 			_logger.log("decode, bytes length=", bytesLen, LEVEL.DEBUG)
 						
 			var msgId:int = peekMsgId(bytes);			
-			var responsePacket:NiuResponsePacket  = NiuObjectFactory.instance().createPacketInstance(msgId) as NiuResponsePacket;
+			var responsePacket:NiuResponsePacket  = NiuObjectFactory.instance().createInstance(MSGID.MSGID_TO_CLASS(msgId)) as NiuResponsePacket;
 			if (responsePacket)	
 			{
 				responsePacket.isWrapperedMessage = true;

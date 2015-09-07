@@ -12,7 +12,7 @@ package packet.protocol
 			deafualtCsHeader();
 			defaultMsgHeader();
 			
-			initData();		
+			initData();
 		}		
 				
 
@@ -51,12 +51,12 @@ package packet.protocol
 			bytes.writeByte(_csHeader.opt_len);
 			if (_csHeader.opt_len > 0)
 			{
-				bytes.writeBytes(_csHeader.opt, _csHeader.opt_len);
+				bytes.writeBytes(_csHeader.opt, _csHeader.opt_len);							
 			}			
 		}
 		
 		public function packMsgHeader(bytes:ByteArray) : void
-		{				
+		{			
 			bytes.writeShort(_msgHeader.msg_id);			
 			bytes.writeShort(_msgHeader.msg_type);
 			bytes.writeInt(_msgHeader.msg_seq);

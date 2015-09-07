@@ -1,7 +1,8 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-	
+		
+	import packet.game.tlv.TLVValue;
 	import packet.util.Int64;
 
 	public class BaseGameCfgData extends TLVValue
@@ -20,6 +21,13 @@ package packet.game.tlv.value
 			
 			max_money_limit = new Int64();
 		}
+		
+		/*
+		override public function getValueType() : int
+		{
+			return TLVType.DN_TLV_BASE_GAME_CFG;
+		}
+		*/
 
 
 		override public function pack(bytes:ByteArray) : void

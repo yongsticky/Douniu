@@ -1,7 +1,8 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-	
+		
+	import packet.game.tlv.TLVValue;
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.UnionTLVDecoder;
 	import packet.util.Int64;
@@ -46,6 +47,13 @@ package packet.game.tlv.value
 			avatar_skill_id = new Vector.<int>();
 			
 		}
+		
+		/*
+		override public function getValueType() : int
+		{
+			return TLVType.DN_TLV_PLAYERDETAIL;
+		}
+		*/
 		
 		override public function pack(bytes:ByteArray):void
 		{

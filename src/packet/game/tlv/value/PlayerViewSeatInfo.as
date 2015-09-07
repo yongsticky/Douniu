@@ -1,7 +1,8 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-	
+		
+	import packet.game.tlv.TLVValue;
 	import packet.util.Int64;
 
 	public class PlayerViewSeatInfo extends TLVValue
@@ -33,6 +34,13 @@ package packet.game.tlv.value
 			money = new Int64();
 			score = new Int64();
 		}
+		
+		/*
+		override public function getValueType() : int
+		{
+			return TLVType.DN_TLV_VIEW_SEAT_INFO;
+		}
+		*/
 
 		override public function pack(bytes:ByteArray) : void
 		{

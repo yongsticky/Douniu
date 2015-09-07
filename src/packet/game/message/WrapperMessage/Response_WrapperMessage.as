@@ -5,8 +5,7 @@ package packet.game.message.WrapperMessage
 	import camu.net.Packet;
 	
 	import factory.NiuObjectFactory;
-	
-	import packet.game.tlv.UnionTLV;
+		
 	import packet.protocol.NiuResponsePacket;
 		
 
@@ -49,8 +48,7 @@ package packet.game.message.WrapperMessage
 			
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
 			for each(var item:NiuResponsePacket in packet_vec)
-			{
-				item.dispose();
+			{				
 				_factory.destroyInstance(item);
 			}
 			

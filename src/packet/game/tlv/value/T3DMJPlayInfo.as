@@ -1,7 +1,8 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-	import packet.game.tlv.value.TLVValue;
+		
+	import packet.game.tlv.TLVValue;
 
 	public class T3DMJPlayInfo extends TLVValue
 	{
@@ -16,7 +17,7 @@ package packet.game.tlv.value
 
 			avata_vec = new Vector.<int>();
 		}
-
+		
 		override public function pack(bytes:ByteArray) : void
 		{
 			super.pack(bytes);

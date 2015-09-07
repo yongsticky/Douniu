@@ -1,7 +1,8 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-	
+		
+	import packet.game.tlv.TLVValue;
 	import packet.util.Int64;
 
 	public class PlayerCapability extends TLVValue
@@ -14,6 +15,13 @@ package packet.game.tlv.value
 			
 			client_capability = new Int64();
 		}
+		
+		/*
+		override public function getValueType() : int
+		{
+			return TLVType.DN_TLV_PLAYER_CAPABILITY;
+		}
+		*/
 
 		override public function pack(bytes:ByteArray) : void
 		{

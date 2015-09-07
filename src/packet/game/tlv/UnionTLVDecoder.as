@@ -3,8 +3,8 @@ package packet.game.tlv
 	import flash.utils.ByteArray;
 	
 	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
 	import camu.logger.Logger;
-	import camu.logger.LEVEL;	
 	import camu.singleton.Singleton;
 	
 	import factory.NiuObjectFactory;
@@ -26,23 +26,28 @@ package packet.game.tlv
 
 		public function decode(bytes:ByteArray) : UnionTLV
 		{
-			var typeTLV:int = peekTLVType(bytes);
-						
-			var uTLV:UnionTLV = NiuObjectFactory.instance().createUnionTLVInstance(typeTLV);
-			if (uTLV)
-			{
-				if (!uTLV.unpack(bytes))
-				{					
-					NiuObjectFactory.instance().destroyInstance(uTLV);
-					uTLV = null;
-				}
-			}
-			else
-			{
-				throw new Error("Not UnionTLV Class.");
-			}
+			var _factory:NiuObjectFactory = NiuObjectFactory.instance();			
 			
-			return uTLV;
+			var tlvType:int = peekTLVType(bytes);
+			var tlvValue:TLVValue = _factory.createInstance(TLVType.TLVTypeToClass(tlvType));
+			if (tlvValue)
+			{
+				var uTLV:UnionTLV = _factory.createInstance(UnionTLV) as UnionTLV;
+				if (uTLV)
+				{
+					uTLV.value = tlvValue;
+					
+					uTLV.unpack(bytes);						
+				}
+				else
+				{
+					throw new Error("Not UnionTLV Class.");	
+				}
+				
+				return uTLV;
+			}					
+			
+			throw new Error("TLV [type=" + tlvType + "] NOT EXIST!");
 		}
 
 		public function peekTLVType(bytes:ByteArray) : int

@@ -1,6 +1,8 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
+		
+	import packet.game.tlv.TLVValue;
 
 	public class TCompeteBuffer extends TLVValue
 	{
@@ -11,6 +13,7 @@ package packet.game.tlv.value
 		{
 			super();
 		}
+		
 		
 		override public function pack(bytes:ByteArray) : void
 		{

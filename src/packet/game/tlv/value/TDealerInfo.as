@@ -1,23 +1,25 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-	import packet.game.tlv.TLVValue;
-	import packet.game.tlv.TLVValue;
 	
-	public class TDNPlayInfo extends TLVValue
+	import packet.game.tlv.TLVValue;	
+	
+	public class TDealerInfo extends TLVValue
 	{
-		public var vip_level:int;		// Byte(1)
-
-		public function TDNPlayInfo()
+		public var dealer:int;			// char(1)
+		
+		public function TDealerInfo()
 		{
 			super();
 		}
-
+		
+		
+		
 		override public function pack(bytes:ByteArray) : void
 		{
 			super.pack(bytes);
 			
-			bytes.writeByte(vip_level);
+			bytes.writeByte(dealer);
 			
 			super.adjustPosition(bytes);
 		}
@@ -25,8 +27,8 @@ package packet.game.tlv.value
 		override public function unpack(bytes:ByteArray) : void
 		{
 			super.unpack(bytes);
-			
-			vip_level = bytes.readByte();
+						
+			dealer = bytes.readByte();
 			
 			super.adjustPosition(bytes);
 		}

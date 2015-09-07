@@ -1,7 +1,9 @@
 package packet.game.tlv.value
 {
-	import packet.util.Int64;
 	import flash.utils.ByteArray;
+		
+	import packet.game.tlv.TLVValue;
+	import packet.util.Int64;
 
 	public class GameScoreValue extends TLVValue
 	{
@@ -14,6 +16,13 @@ package packet.game.tlv.value
 
 			game_score_vec = new Vector.<Int64>(MAX_GAME_SCORE_NUM);
 		}
+		
+		/*
+		override public function getValueType() : int
+		{
+			return TLVType.DN_TLV_GAME_SCORE_MSG;
+		}
+		*/
 
 		override public function pack(bytes:ByteArray) : void
 		{

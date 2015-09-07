@@ -5,14 +5,12 @@ package packet.protocol
 	public class NiuResponsePacket extends NiuPacket
 	{	
 		protected var _isWrapperedMessage:Boolean;		
-		protected var _isOK:Boolean;		
 		
 		public function NiuResponsePacket()
 		{
 			super();			
 			
-			_isWrapperedMessage = false;			
-			_isOK = true;
+			_isWrapperedMessage = false;		
 		}
 		
 		public function set isWrapperedMessage(wrappered:Boolean) : void
@@ -20,31 +18,15 @@ package packet.protocol
 			_isWrapperedMessage = wrappered;
 		}
 				
-		public function unpack(bytes:ByteArray) : Boolean
+		public function unpack(bytes:ByteArray) : void
 		{
 			if (!_isWrapperedMessage)
 			{
 				unpackCsHeader(bytes);
 			}
 			
-			if (_isOK)
-			{
-				unpackMsgHeader(bytes);
-			}
-			
-			if (_isOK)
-			{				
-				if (bytes.bytesAvailable < _msgHeader.param_len - 2)
-				{
-					_isOK = false;
-				}				
-				else
-				{
-					unpackMsgParam(bytes);	
-				}
-			}
-		
-			return _isOK;
+			unpackMsgHeader(bytes);			
+			unpackMsgParam(bytes);		
 		}
 		
 		
@@ -52,8 +34,7 @@ package packet.protocol
 		{
 			if (bytes.bytesAvailable < CsHeader.BASE_LENGTH)
 			{
-				_isOK = false;
-				return;
+				throw new Error("ByteArray Length Error(BASE_LENGTH).");				
 			}
 
 			_csHeader.total_len = bytes.readShort();
@@ -67,8 +48,7 @@ package packet.protocol
 			{
 				if (bytes.bytesAvailable < _csHeader.opt_len)
 				{
-					_isOK = false;
-					return;
+					throw new Error("ByteArray Length Error(opt_len).");					
 				}
 
 				bytes.readBytes(_csHeader.opt, 0, _csHeader.opt_len);
@@ -79,7 +59,7 @@ package packet.protocol
 		{
 			if (bytes.bytesAvailable < MsgHeader.BASE_LENGTH)
 			{
-				_isOK = false;
+				throw new Error("ByteArray Length Error(BASE_LENGTH).");
 			}
 
 			_msgHeader.msg_id = bytes.readShort();
@@ -89,7 +69,14 @@ package packet.protocol
 			_msgHeader.dest_fe = bytes.readByte();
 			_msgHeader.src_id = bytes.readShort();
 			_msgHeader.dest_id = bytes.readShort();
+			
 			_msgHeader.param_len = bytes.readShort();
+			
+			if (bytes.bytesAvailable < _msgHeader.param_len - 2)
+			{
+				throw new Error("ByteArray Length Error(param_len).");
+			}
+			
 		}
 		
 		public function unpackMsgParam(bytes:ByteArray) : void
@@ -101,8 +88,7 @@ package packet.protocol
 		{			
 			super.dispose();
 			
-			_isWrapperedMessage = false;			
-			_isOK = true;
+			_isWrapperedMessage = false;		
 		}
 	}
 }

@@ -1,6 +1,8 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
+		
+	import packet.game.tlv.TLVValue;
 
 	public class TAppointmentKey extends TLVValue
 	{
@@ -11,6 +13,13 @@ package packet.game.tlv.value
 		{
 			super();
 		}
+		
+		/*
+		override public function getValueType() : int
+		{
+			return TLVType.UP_TLV_APPOINTMENT_KEY;
+		}
+		*/
 		
 		override public function pack(bytes:ByteArray) : void
 		{

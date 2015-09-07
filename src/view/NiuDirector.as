@@ -7,7 +7,7 @@ package view
 	import camu.singleton.Singleton;
 	
 	import factory.NiuObjectFactory;
-	
+		
 	import packet.game.message.Login.Request_Login;
 	
 	import server.NiuServerConnector;
@@ -49,14 +49,14 @@ package view
 			
 			_logger.log("initialize called.", LEVEL.INFO);					
 						
-			//connectGameServer();
+			connectGameServer();
 			
-			//NiuServerResponseReceiver.instance().initReceiver();
+			NiuServerResponseReceiver.instance().initReceiver();
 		}
 		
 		override protected function createChildren() : void
 		{
-			switchToScene(new Scene_Hall());
+			//switchToScene(new Scene_Hall());
 		}
 		
 		private function connectGameServer() : void

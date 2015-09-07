@@ -1,6 +1,8 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
+		
+	import packet.game.tlv.TLVValue;
 
 	public class TableSimpleInfo extends TLVValue
 	{
@@ -13,6 +15,13 @@ package packet.game.tlv.value
 		{
 			super();
 		}
+		
+		/*
+		override public function getValueType() : int
+		{
+			return TLVType.DN_TLV_TABLE_SIMPLE_INFO;
+		}
+		*/
 
 		override public function pack(bytes:ByteArray) : void
 		{

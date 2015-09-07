@@ -1,6 +1,7 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
+	import packet.game.tlv.TLVValue;
 
 	public class TGameLogicMsgValue extends TLVValue
 	{

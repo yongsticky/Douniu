@@ -1,14 +1,15 @@
 package packet
 {
 	import flash.utils.ByteArray;
-		
+	
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	import camu.net.Packet;
 	import camu.util.Bytes2Hex;
 	
-	import factory.NiuObjectFactory;
+	import factory.NiuObjectFactory;	
+	import packet.game.message.MSGID;
 	import packet.protocol.CsHeader;
 	import packet.protocol.NiuResponsePacket;
 
@@ -26,15 +27,11 @@ package packet
 			_logger.log("decode Enter, bytes.length=", bytes.length, LEVEL.DEBUG);
 			Bytes2Hex.Trace(bytes);			
 			
-			var msgId:int = peekMsgId(bytes);			
-			var responsePacket:NiuResponsePacket  = NiuObjectFactory.instance().createPacketInstance(msgId) as NiuResponsePacket;
+			var msgId:int = peekMsgId(bytes);		
+			var responsePacket:NiuResponsePacket  = NiuObjectFactory.instance().createInstance(MSGID.MSGID_TO_CLASS(msgId)) as NiuResponsePacket;
 			if (responsePacket)
 			{
-				if (!responsePacket.unpack(bytes))
-				{
-					NiuObjectFactory.instance().destroyInstance(responsePacket);
-					responsePacket = null;
-				}
+				responsePacket.unpack(bytes);				
 				
 				return responsePacket;
 			}

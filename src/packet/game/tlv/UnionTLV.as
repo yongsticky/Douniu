@@ -2,7 +2,8 @@ package packet.game.tlv
 {	
 	import flash.utils.ByteArray;
 	
-	import packet.game.tlv.value.TLVValue;
+	import factory.NiuObjectFactory;
+	
 
 	public class UnionTLV
 	{
@@ -35,17 +36,21 @@ package packet.game.tlv
 			tlv_value = v;
 		}
 		
-		public function unpack(bytes:ByteArray) : Boolean
+		public function unpack(bytes:ByteArray) : void
 		{
-			value_type = bytes.readShort();
-			value.unpack(bytes);
+			if (bytes.bytesAvailable < 2)
+			{
+				throw new Error("ByteArray Length Error.");
+			}
 			
-			return value.isOK;
+			value_type = bytes.readShort();		
+			
+			value.unpack(bytes);			
 		}
 
 		public function pack(bytes:ByteArray) : void
 		{
-			bytes.writeShort(value_type);
+			bytes.writeShort(value_type);		
 			value.pack(bytes);
 
 		}		
@@ -53,6 +58,8 @@ package packet.game.tlv
 		public function dispose() : void
 		{
 			tlv_value.dispose();
+			NiuObjectFactory.instance().destroyInstance(tlv_value);
+				
 			tlv_value = null;
 		}
 	}

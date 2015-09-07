@@ -62,9 +62,9 @@ package packet.game.message.Login
 			super.dispose();
 			
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
-			for each(var tlv:UnionTLV in tlv_vec)
-			{
-				_factory.destroyInstance(tlv);
+			for each(var item:UnionTLV in tlv_vec)
+			{				
+				_factory.destroyInstance(item);
 			}
 			
 			tlv_num = 0;
