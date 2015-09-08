@@ -42,8 +42,6 @@ package factory
 	import packet.game.tlv.value.TTimesInfo;
 	import packet.game.tlv.value.TableSimpleInfo;
 	import packet.game.tv.UnionTV;
-	import packet.protocol.NiuPacket;
-	
 		
 		
 	public class NiuObjectFactory extends DefaultObjectFactory
@@ -97,26 +95,6 @@ package factory
 		public static function instance() : NiuObjectFactory
 		{
 			return Singleton.instanceOf(NiuObjectFactory);
-		}		
-		
-		override public function destroyInstance(obj:*) : void
-		{			
-			if (obj is NiuPacket)
-			{
-				(obj as NiuPacket).dispose();
-			}
-			
-			if (obj is UnionTLV)
-			{
-				(obj as UnionTLV).dispose();
-			}
-			
-			if (obj is UnionTV)
-			{
-				(obj as UnionTV).reset();
-			}
-			
-			super.destroyInstance(obj);
-		}		
+		}
 	}
 }

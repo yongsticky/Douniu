@@ -58,10 +58,12 @@ package packet.game.tv
 			
 		}
 		
-		public function reset() : void
+		public function dispose() : void
 		{
-			tv_value.reset();
+			tv_value.dispose();
+			
 			NiuObjectFactory.instance().destroyInstance(tv_value);
+			
 			tv_value = null;
 			
 			value_type = 0;

@@ -4,6 +4,8 @@ package packet.game.tv.value
 
 	public class ReqeustDealer extends TVValue
 	{
+		public var times:int;				// Byte(1)
+				
 		public function ReqeustDealer()
 		{
 			super();

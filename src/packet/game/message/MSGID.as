@@ -1,15 +1,11 @@
 package packet.game.message
 {
-	import packet.game.message.Login.Request_Login;
-	import packet.game.message.Login.Response_Login;
-	import packet.game.message.Logout.Request_Logout;
+	
+	import packet.game.message.Login.Response_Login;	
 	import packet.game.message.Logout.Response_Logout;
-	import packet.game.message.Notify.Response_GameNotify;
-	import packet.game.message.Ready.Request_Ready;
-	import packet.game.message.Ready.Response_Ready;
-	import packet.game.message.Sitdown.Request_Sitdown;
-	import packet.game.message.Sitdown.Response_Sitdown;
-	import packet.game.message.Standup.Request_Standup;
+	import packet.game.message.Notify.Response_GameNotify;	
+	import packet.game.message.Ready.Response_Ready;	
+	import packet.game.message.Sitdown.Response_Sitdown;	
 	import packet.game.message.Standup.Response_Standup;
 	import packet.game.message.WrapperMessage.Response_WrapperMessage;
 
@@ -22,6 +18,7 @@ package packet.game.message
 		public static const REQUEST_SITDOWN:int = 15803;
 		public static const REQUEST_STANDUP:int = 15804;
 		public static const REQUEST_READY:int = 15810;
+		public static const REQUEST_PLAY:int = 15813;
 
 
 		// Server -> Client

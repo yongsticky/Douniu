@@ -13,6 +13,13 @@ package packet.protocol
 			_isWrapperedMessage = false;		
 		}
 		
+		override public function dispose() : void
+		{			
+			super.dispose();
+			
+			_isWrapperedMessage = false;		
+		}
+		
 		public function set isWrapperedMessage(wrappered:Boolean) : void
 		{
 			_isWrapperedMessage = wrappered;
@@ -27,8 +34,7 @@ package packet.protocol
 			
 			unpackMsgHeader(bytes);			
 			unpackMsgParam(bytes);		
-		}
-		
+		}		
 		
 		public function unpackCsHeader(bytes:ByteArray) : void
 		{
@@ -84,11 +90,6 @@ package packet.protocol
 			throw new Error("Abstract function!");
 		}
 		
-		override public function dispose() : void
-		{			
-			super.dispose();
-			
-			_isWrapperedMessage = false;		
-		}
+		
 	}
 }

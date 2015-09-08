@@ -37,7 +37,8 @@ package packet.game.message.Notify
 			
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
 			for each(var item:TGameEvent in game_event_vec)
-			{				
+			{
+				item.dispose();
 				_factory.destroyInstance(item);
 			}
 			

@@ -15,6 +15,15 @@ package packet.protocol
 			_msgHeader = new MsgHeader();
 		}
 		
+		protected function initData() : void
+		{
+			throw new Error("Abstract function!");
+		}
+		
+		public function dispose() : void
+		{
+		}
+		
 		public function get csHeader() : CsHeader
 		{
 			return _csHeader;
@@ -44,13 +53,6 @@ package packet.protocol
 			_msgHeader.dest_id = 0;
 		}
 		
-		protected function initData() : void
-		{
-			throw new Error("Abstract function!");
-		}
 		
-		public function dispose() : void
-		{
-		}
 	}
 }

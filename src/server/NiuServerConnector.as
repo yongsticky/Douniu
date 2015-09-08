@@ -2,17 +2,18 @@ package server
 {
 	import flash.utils.ByteArray;
 	
-	import camu.singleton.Singleton;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	import camu.net.BaseConnector;
 	import camu.net.Packet;
+	import camu.singleton.Singleton;
 	
 	import factory.NiuObjectFactory;
 	
 	import packet.NiuDecoder;
 	import packet.NiuEncoder;
+	import packet.protocol.NiuPacket;
 	import packet.protocol.NiuResponsePacket;
 	
 	public final class NiuServerConnector extends BaseConnector
@@ -66,7 +67,12 @@ package server
 		}
 		
 		override protected function deleteObject(obj:*) : void
-		{			
+		{		
+			if (obj is NiuPacket)
+			{
+				(obj as NiuPacket).dispose();
+			}
+			
 			NiuObjectFactory.instance().destroyInstance(obj);
 		}
 		

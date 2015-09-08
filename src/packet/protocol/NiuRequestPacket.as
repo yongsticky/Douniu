@@ -13,8 +13,7 @@ package packet.protocol
 			defaultMsgHeader();
 			
 			initData();
-		}		
-				
+		}				
 
 		public function pack(bytes:ByteArray) : void
 		{
