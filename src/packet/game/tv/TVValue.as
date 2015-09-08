@@ -18,7 +18,14 @@ package packet.game.tv
 		
 		public function pack(bytes:ByteArray) : void
 		{
-			
+			bytes.writeShort(tlv_num);
+			if (tlv_num > 0)
+			{
+				for (var i:int = 0; i < tlv_num; i++)
+				{
+					tlv_vec[i].pack(bytes);
+				}
+			}
 		}
 		
 		public function unpack(bytes:ByteArray) : void

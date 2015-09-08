@@ -13,5 +13,28 @@ package packet.game.tv.value
 		{
 			super();
 		}
+
+
+		override public function pack(bytes:ByteArray) : void
+		{
+			bytes.writeShort(niu_tiles_num);
+			if (niu_tiles_num > 0)
+			{
+				bytes.writeUTFBytes(niu_tiles);
+			}
+
+			bytes.writeShort(niu_x_tiles_num);
+			if (niu_x_tiles_num > 0)
+			{
+				bytes.writeUTFBytes(niu_x_tiles);
+			}
+
+			super.pack(bytes);
+		}
+
+		override public function unpack(bytes:ByteArray) : void
+		{
+			
+		}
 	}
 }

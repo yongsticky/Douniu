@@ -18,7 +18,9 @@ package packet.game.message.Play
 		
 		public function Request_Play()
 		{
-			super();			
+			super();
+
+			tv_data = NiuObjectFactory.instance().createInstance(UnionTV);
 		}
 		
 		override protected function initData() : void
@@ -31,7 +33,7 @@ package packet.game.message.Play
 			bytes.writeUnsignedInt(uin);
 			bytes.writeInt(time);
 			
-			// 空一格short出来，存储长度
+			// 空1个short出来，存储长度
 			bytes.position += 2;
 			
 			// 编码data

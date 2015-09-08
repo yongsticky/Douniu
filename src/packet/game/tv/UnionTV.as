@@ -50,7 +50,9 @@ package packet.game.tv
 		
 		public function pack(bytes:ByteArray) : void
 		{
-			
+			bytes.writeInt(value_type);
+			bytes.writeInt(error_no);
+			tv_value.pack(bytes);
 		}
 		
 		public function unpack(bytes:ByteArray) : void

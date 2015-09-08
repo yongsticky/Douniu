@@ -10,5 +10,17 @@ package packet.game.tv.value
 		{
 			super();
 		}
+
+		override public function pack(bytes:ByteArray) : void
+		{
+			bytes.writeByte(times);
+
+			super.pack(bytes);
+		}
+
+		override public function unpack(bytes:ByteArray) : void
+		{
+			
+		}
 	}
 }
