@@ -5,7 +5,7 @@ package packet.game.tlv
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
-	import camu.singleton.Singleton;
+	
 	
 	import factory.NiuObjectFactory;
 
@@ -14,14 +14,20 @@ package packet.game.tlv
 	{
 		private var _logger:ILogger;
 		
-		public function UnionTLVDecoder()
+		public function UnionTLVDecoder(inner:PrivateInner)
 		{
 			_logger = Logger.createLogger(UnionTLVDecoder, LEVEL.INFO);
 		}
 		
+		private static var _instance:UnionTLVDecoder = null;
 		public static function instance() : UnionTLVDecoder
 		{
-			return Singleton.instanceOf(UnionTLVDecoder);
+			if (!_instance)
+			{
+				_instance = new UnionTLVDecoder(new PrivateInner());
+			}
+			
+			return _instance;
 		}
 
 		public function decode(bytes:ByteArray) : UnionTLV
@@ -60,4 +66,9 @@ package packet.game.tlv
 			return tlvType;
 		}
 	}
+}
+
+class PrivateInner
+{
+	
 }

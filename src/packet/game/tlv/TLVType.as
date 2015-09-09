@@ -43,7 +43,7 @@ package packet.game.tlv
 		
 		public function TLVType()
 		{
-			throw new Error("Abstract class.");
+			throw new Error("Abstract class, you must extend it.");
 		}
 		
 		public static function TLVTypeToClass(typeTLV:int) : Class

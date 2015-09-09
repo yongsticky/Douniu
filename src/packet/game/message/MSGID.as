@@ -36,7 +36,7 @@ package packet.game.message
 		
 		public function MSGID()
 		{
-			throw new Error("Abstract Class.");
+			throw new Error("Abstract class, you must extend it.");
 		}
 		
 		public static function MSGID_TO_CLASS(msgId:int) : Class

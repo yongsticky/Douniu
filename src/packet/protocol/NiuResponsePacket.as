@@ -13,9 +13,9 @@ package packet.protocol
 			_isWrapperedMessage = false;		
 		}
 		
-		override public function dispose() : void
+		override public function onObjectRecycled() : void
 		{			
-			super.dispose();
+			super.onObjectRecycled();
 			
 			_isWrapperedMessage = false;		
 		}
@@ -87,7 +87,7 @@ package packet.protocol
 		
 		public function unpackMsgParam(bytes:ByteArray) : void
 		{				
-			throw new Error("Abstract function!");
+			throw new Error("Abstract function, you must override it.");
 		}
 		
 		

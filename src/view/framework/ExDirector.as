@@ -17,15 +17,19 @@ package view.framework
 		{
 			super.initialize();
 
-			stage.addEventListener(Event.RESIZE, function(event:ResizeEvent):void {
-				stage.stageWidth = event.width;
-				stage.stageHeight = event.height;
-				
-				var topScene:ExScene = topScene;
-				if (topScene) {
-					topScene.onStageResize();
-				}				
-			});
+			//stage.addEventListener(Event.RESIZE, onWindowResize);				
+		}
+		
+		protected function onWindowResize(event:ResizeEvent) : void
+		{
+			stage.stageWidth = event.width;
+			stage.stageHeight = event.height;
+			
+			var topScene:ExScene = this.topScene;
+			if (topScene) 
+			{
+				topScene.onStageResize();
+			}				
 		}
 		
 		override public function dispose() : void

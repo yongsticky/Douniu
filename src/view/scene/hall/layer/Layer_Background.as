@@ -29,6 +29,19 @@ package view.scene.hall.layer
 		
 		override protected function layoutChildren() : void
 		{
+			
+			
+			/*
+			_bg.width = stage.stageWidth;
+			_bg.height = stage.stageHeight;
+			addChild(_bg);
+			
+			
+			_banner.width = stage.stageWidth;
+			addChild(_banner);
+			*/
+			
+			
 			super.layoutChildren();
 		}
 	}

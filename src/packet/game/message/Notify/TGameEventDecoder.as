@@ -2,21 +2,25 @@ package packet.game.message.Notify
 {
 	import flash.utils.ByteArray;
 	
-	import camu.singleton.Singleton;
-	
 	import factory.NiuObjectFactory;
-
+	
 	public class TGameEventDecoder
 	{
-		public function TGameEventDecoder()
+		public function TGameEventDecoder(inner:PrivateInner)
 		{
 		}
 		
+		private static var _instance:TGameEventDecoder = null;
 		public static function instance() : TGameEventDecoder
 		{
-			return Singleton.instanceOf(TGameEventDecoder);
+			if (!_instance)
+			{
+				_instance = new TGameEventDecoder(new PrivateInner());
+			}
+			
+			return _instance;
 		}
-		
+
 		public function decode(bytes:ByteArray) : TGameEvent
 		{
 			var gameEvent:TGameEvent = NiuObjectFactory.instance().createInstance(TGameEvent);
@@ -36,4 +40,9 @@ package packet.game.message.Notify
 			return gameEvent;
 		}
 	}
+}
+
+class PrivateInner
+{
+	
 }

@@ -83,7 +83,7 @@ package view.scene.hall.layer
 		
 		private function onRoomTriggered(event:Event) : void
 		{
-			NiuDirector.instance().switchToScene(new Scene_Table("scene.game"));		
+			NiuDirector.instance().switchToScene(new Scene_Table("scene.game"));	
 		}
 	}
 }

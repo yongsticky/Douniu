@@ -2,31 +2,37 @@ package packet.game.message.WrapperMessage
 {
 	import flash.utils.ByteArray;
 	
-	import camu.singleton.Singleton;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
-	
-	import factory.NiuObjectFactory;
+		
+	import factory.NiuObjectFactory;	
 	import packet.game.message.MSGID;
 	import packet.protocol.MsgHeader;
-	import packet.protocol.NiuResponsePacket;
+	import packet.protocol.NiuResponsePacket;	
 		
 
 	public class WrapperMessageDecoder
 	{
 		private var _logger:ILogger;		
 		
-		public function WrapperMessageDecoder()
+		public function WrapperMessageDecoder(inner:PrivateInner)
 		{
 			_logger = Logger.createLogger(WrapperMessageDecoder, LEVEL.DEBUG);			
 		}
 		
+		private static var _instance:WrapperMessageDecoder = null;
 		public static function instance() : WrapperMessageDecoder
 		{
-			return Singleton.instanceOf(WrapperMessageDecoder);
+			if (!_instance)
+			{
+				_instance = new WrapperMessageDecoder(new PrivateInner());
+			}
+			
+			return _instance;
 		}
-
+		
+		
 		public function decode(bytes:ByteArray, bytesLen:int) : NiuResponsePacket
 		{	
 			_logger.log("decode Enter", LEVEL.DEBUG);
@@ -60,4 +66,9 @@ package packet.game.message.WrapperMessage
 			return msgId;		
 		}
 	}
+}
+
+class PrivateInner
+{
+	
 }

@@ -28,7 +28,7 @@ package view.framework
 		
 		protected function createChildren() : void
 		{
-			throw new Error("Abstract Function.");	
+			throw new Error("Abstract function, you must override it.");	
 		}
 
 		protected function layoutChildren() : void

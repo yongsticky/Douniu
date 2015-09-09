@@ -1,8 +1,10 @@
 package packet.game.tlv
 {
 	import flash.utils.ByteArray;
+	
+	import camu.object.interfaces.IObjectRecycled;
 
-	public class TLVValue
+	public class TLVValue implements IObjectRecycled
 	{
 		public var value_len:int;		
 		
@@ -51,8 +53,9 @@ package packet.game.tlv
 			*/
 		}
 		
-		public function dispose() : void
+		public function onObjectRecycled() : void
 		{
+			
 		}
 		 
 	}

@@ -5,25 +5,23 @@ package server
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
-	import camu.net.BaseConnector;
-	import camu.net.Packet;
-	import camu.singleton.Singleton;
+	import camu.net.Connector;
+	import camu.net.Packet;	
 	
-	import factory.NiuObjectFactory;
-	
+	import factory.NiuObjectFactory;	
 	import packet.NiuDecoder;
 	import packet.NiuEncoder;
 	import packet.protocol.NiuPacket;
 	import packet.protocol.NiuResponsePacket;
 	
-	public final class NiuServerConnector extends BaseConnector
+	public final class NiuServerConnector extends Connector
 	{
 		private var _logger:ILogger;
 		
 		private var _encoder:NiuEncoder;
 		private var _decoder:NiuDecoder;		
 		
-		public function NiuServerConnector()
+		public function NiuServerConnector(inner:PrivateInner)
 		{
 			super();
 			
@@ -34,9 +32,15 @@ package server
 									
 		}
 		
+		private static var _instance:NiuServerConnector = null;
 		public static function instance() : NiuServerConnector
 		{
-			return Singleton.instanceOf(NiuServerConnector);
+			if (!_instance)
+			{
+				_instance = new NiuServerConnector(new PrivateInner());
+			}
+			
+			return _instance;
 		}
 		
 		public function dispatchWarpperMessagePacket(responsePacket:NiuResponsePacket) : void
@@ -63,16 +67,11 @@ package server
 		
 		override protected function newObject(cls:Class, data:* = null): *
 		{			
-			return NiuObjectFactory.instance().createInstance(cls, data)
+			return NiuObjectFactory.instance().createInstance(cls)
 		}
 		
 		override protected function deleteObject(obj:*) : void
-		{		
-			if (obj is NiuPacket)
-			{
-				(obj as NiuPacket).dispose();
-			}
-			
+		{				
 			NiuObjectFactory.instance().destroyInstance(obj);
 		}
 		
@@ -94,4 +93,9 @@ package server
 			return bodyLen;
 		}
 	}
+}
+
+class PrivateInner
+{
+	
 }

@@ -8,7 +8,7 @@ package packet.game.tv
 		
 		public function TVType()
 		{
-			throw new Error("Abstract class.");
+			throw new Error("Abstract class, you must extend it.");
 		}
 	}
 }

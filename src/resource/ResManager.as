@@ -11,7 +11,6 @@ package resource
 	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
 	
-	import camu.singleton.Singleton;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
@@ -51,7 +50,7 @@ package resource
 		private static const S_COMPLETE:int = 2;
 		private static const S_FAILED:int = 3;
 
-		public function ResManager()
+		public function ResManager(inner:PrivateInner)
 		{
 			super();
 			
@@ -66,9 +65,15 @@ package resource
 		}
 		
 		
+		private static var _instance:ResManager = null;
 		public static function instance() : ResManager
 		{
-			return Singleton.instanceOf(ResManager);
+			if (!_instance)
+			{
+				_instance = new ResManager(new PrivateInner());
+			}
+			
+			return _instance;
 		}
 
 		public function registerResource(id:String, props:Object) : void
@@ -197,4 +202,9 @@ package resource
 			_logger.log("onProgress Enter.", LEVEL.INFO);
 		}
 	}
+}
+
+class PrivateInner
+{
+	
 }

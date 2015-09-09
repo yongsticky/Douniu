@@ -31,14 +31,13 @@ package packet.game.message.Notify
 			}
 		}
 		
-		override public function dispose() : void
+		override public function onObjectRecycled() : void
 		{
-			super.dispose();
+			super.onObjectRecycled();
 			
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
 			for each(var item:TGameEvent in game_event_vec)
-			{
-				item.dispose();
+			{				
 				_factory.destroyInstance(item);
 			}
 			

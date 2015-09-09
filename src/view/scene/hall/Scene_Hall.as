@@ -2,8 +2,8 @@ package view.scene.hall
 {	
 	import view.framework.ExScene;
 	import view.scene.hall.layer.Layer_Background;
-	import view.scene.hall.layer.Layer_TopBanner;
 	import view.scene.hall.layer.Layer_RoomList;
+	import view.scene.hall.layer.Layer_TopBanner;
 
 	public final class Scene_Hall extends ExScene
 	{			
@@ -23,5 +23,4 @@ package view.scene.hall
 			addLayer(ROOMLIST, new Layer_RoomList());
 		}		
 	}
-
 }

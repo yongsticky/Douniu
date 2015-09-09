@@ -48,9 +48,9 @@ package packet.game.tlv.value
 			super.adjustPosition(bytes);
 		}
 		
-		override public function dispose() : void
+		override public function onObjectRecycled() : void
 		{
-			super.dispose();
+			super.onObjectRecycled();
 			
 			game_score_vec.length = 0;
 		}

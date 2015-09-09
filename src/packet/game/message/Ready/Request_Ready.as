@@ -4,8 +4,7 @@ package packet.game.message.Ready
 	
 	import factory.NiuObjectFactory;
 	
-	import packet.game.message.MSGID;
-	import packet.game.message.Notify.TGameEvent;
+	import packet.game.message.MSGID;	
 	import packet.game.tlv.UnionTLV;
 	import packet.protocol.NiuRequestPacket;
 	
@@ -41,14 +40,13 @@ package packet.game.message.Ready
 			}
 		}
 		
-		override public function dispose() : void
+		override public function onObjectRecycled() : void
 		{
-			super.dispose();
+			super.onObjectRecycled();
 			
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
 			for each(var item:UnionTLV in tlv_vec)
-			{
-				item.dispose();
+			{				
 				_factory.destroyInstance(item);
 			}
 			

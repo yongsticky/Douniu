@@ -50,12 +50,12 @@ package packet.game.tlv.value
 			adjustPosition(bytes);
 		}
 		
-		override public function dispose() : void
+		override public function onObjectRecycled() : void
 		{
-			super.dispose();
+			super.onObjectRecycled();
 			
 			avatar_num = 0;
-			avata_vec.length = 0;
+			avata_vec.length = 0;			
 		}
 	}
 }

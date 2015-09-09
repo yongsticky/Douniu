@@ -69,7 +69,7 @@ package packet.protocol
 		
 		public function packMsgParam(bytes:ByteArray) : void
 		{
-			throw new Error("Abstract function!");
+			throw new Error("Abstract function, you must override it.");
 		}
 	}
 }

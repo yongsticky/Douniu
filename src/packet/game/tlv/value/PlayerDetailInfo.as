@@ -1,7 +1,9 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-		
+	
+	import factory.NiuObjectFactory;
+	
 	import packet.game.tlv.TLVValue;
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.UnionTLVDecoder;
@@ -161,13 +163,13 @@ package packet.game.tlv.value
 			super.adjustPosition(bytes);
 		}
 		
-		override public function dispose() : void
+		override public function onObjectRecycled() : void
 		{
-			super.dispose();
+			super.onObjectRecycled();
 			
 			avatar_skill_id.length = 0;
 			
-			player_detail_tlv.dispose();
+			NiuObjectFactory.instance().destroyInstance(player_detail_tlv);			
 			player_detail_tlv = null;
 		}
 	}

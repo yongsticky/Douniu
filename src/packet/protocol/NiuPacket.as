@@ -1,8 +1,9 @@
 package packet.protocol
 {
 	import camu.net.Packet;
+	import camu.object.interfaces.IObjectRecycled;
 	
-	public class NiuPacket extends Packet
+	public class NiuPacket extends Packet implements IObjectRecycled
 	{
 		protected var _csHeader:CsHeader;
 		protected var _msgHeader:MsgHeader;
@@ -17,11 +18,12 @@ package packet.protocol
 		
 		protected function initData() : void
 		{
-			throw new Error("Abstract function!");
+			throw new Error("Abstract function, you must override it.");
 		}
-		
-		public function dispose() : void
+	
+		public function onObjectRecycled() : void
 		{
+			
 		}
 		
 		public function get csHeader() : CsHeader

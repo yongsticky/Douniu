@@ -2,10 +2,12 @@ package packet.game.tlv
 {	
 	import flash.utils.ByteArray;
 	
+	import camu.object.interfaces.IObjectRecycled;
+	
 	import factory.NiuObjectFactory;
 	
 
-	public class UnionTLV
+	public class UnionTLV implements IObjectRecycled
 	{
 		protected var value_type:int;				// short(2)
 		protected var tlv_value:TLVValue;				// TLVValue		
@@ -53,14 +55,13 @@ package packet.game.tlv
 			bytes.writeShort(value_type);		
 			value.pack(bytes);
 
-		}		
-		
-		public function dispose() : void
-		{
-			tlv_value.dispose();
-			NiuObjectFactory.instance().destroyInstance(tlv_value);
-				
-			tlv_value = null;
 		}
+		
+		public function onObjectRecycled() : void
+		{			
+			NiuObjectFactory.instance().destroyInstance(tlv_value);
+			
+			tlv_value = null;
+		}		
 	}
 }

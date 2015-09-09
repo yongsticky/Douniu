@@ -2,12 +2,13 @@ package packet.game.message.Notify
 {
 	import flash.utils.ByteArray;
 	
-	import factory.NiuObjectFactory;
+	import camu.object.interfaces.IObjectRecycled;
 	
+	import factory.NiuObjectFactory;	
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.UnionTLVDecoder;
 
-	public class TGameEvent
+	public class TGameEvent implements IObjectRecycled
 	{
 	
 		public var event_id:int;						// int(4)
@@ -44,12 +45,11 @@ package packet.game.message.Notify
 			return true;
 		}
 		
-		public function dispose() : void
+		public function onObjectRecycled() : void
 		{
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
 			for each(var item:UnionTLV in other_info_vec)
-			{
-				item.dispose();
+			{				
 				_factory.destroyInstance(item);
 			}
 			

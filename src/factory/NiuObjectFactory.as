@@ -1,8 +1,8 @@
 package factory
 {	
-	import camu.object.DefaultObjectFactory;
-	import camu.object.IObjectContainer;
-	import camu.singleton.Singleton;
+	import camu.object.ObjectFactory;
+	
+	import notification.NiuNotification;
 	
 	import packet.game.message.Login.Request_Login;
 	import packet.game.message.Login.Response_Login;
@@ -17,7 +17,7 @@ package factory
 	import packet.game.message.Standup.Request_Standup;
 	import packet.game.message.Standup.Response_Standup;
 	import packet.game.message.WrapperMessage.Response_WrapperMessage;
-	import packet.game.tlv.UnionTLV;	
+	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.value.BaseGameCfgData;
 	import packet.game.tlv.value.ExitPlayerInfo;
 	import packet.game.tlv.value.GameMsgInfo;
@@ -44,11 +44,11 @@ package factory
 	import packet.game.tv.UnionTV;
 		
 		
-	public class NiuObjectFactory extends DefaultObjectFactory
+	public class NiuObjectFactory extends ObjectFactory
 	{		
-		public function NiuObjectFactory(objCache:IObjectContainer = null)
+		public function NiuObjectFactory(inner:PrivateInner)
 		{
-			super(objCache);				
+			super(null);				
 			
 			registerClass(Request_Login);
 			registerClass(Response_Login);
@@ -90,11 +90,24 @@ package factory
 			registerClass(TTimesInfo);
 			registerClass(TDealerInfo);
 			registerClass(TTimeInfo);
+			
+			registerClass(NiuNotification);
 		}
 		
+		private static var _instance:NiuObjectFactory = null;
 		public static function instance() : NiuObjectFactory
 		{
-			return Singleton.instanceOf(NiuObjectFactory);
+			if (!_instance)
+			{
+				_instance = new NiuObjectFactory(new PrivateInner());
+			}
+			
+			return _instance;
 		}
 	}
+}
+
+class PrivateInner
+{
+	
 }

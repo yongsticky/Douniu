@@ -48,14 +48,13 @@ package packet.game.message.Sitdown
 			}
 		}
 		
-		override public function dispose() : void
+		override public function onObjectRecycled() : void
 		{
-			super.dispose();
+			super.onObjectRecycled();
 			
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
 			for each(var item:UnionTLV in tlv_vec)
-			{
-				item.dispose();
+			{				
 				_factory.destroyInstance(item);
 			}
 			

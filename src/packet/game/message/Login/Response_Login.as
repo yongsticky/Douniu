@@ -57,14 +57,13 @@ package packet.game.message.Login
 			talk_switch = bytes.readUnsignedInt();
 		}
 		
-		override public function dispose() : void
+		override public function onObjectRecycled() : void
 		{
-			super.dispose();
+			super.onObjectRecycled();
 			
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
 			for each(var item:UnionTLV in tlv_vec)
-			{		
-				item.dispose();
+			{					
 				_factory.destroyInstance(item);
 			}
 			
