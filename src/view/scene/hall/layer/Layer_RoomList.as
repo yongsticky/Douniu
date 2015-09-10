@@ -1,6 +1,6 @@
 package view.scene.hall.layer
 {	
-	
+	import controller.HandlerName;
 	
 	import resource.ResManager;
 	
@@ -83,7 +83,11 @@ package view.scene.hall.layer
 		
 		private function onRoomTriggered(event:Event) : void
 		{
-			NiuDirector.instance().switchToScene(new Scene_Table("scene.game"));	
+			NiuDirector.instance().switchToScene(new Scene_Table("scene.game"));
+			
+			var rid:int = 76;
+			NiuDirector.instance().sendNotification(HandlerName.CLICK_ROOM, {"rid":rid}); 
+					
 		}
 	}
 }

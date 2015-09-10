@@ -2,6 +2,7 @@ package view.mediator
 {
 	import camu.mvc.Facade;
 	import camu.mvc.Mediator;
+	import controller.NiuApplicationFacade;
 	
 	public class NiuDirectorMediator extends Mediator
 	{
@@ -12,9 +13,7 @@ package view.mediator
 		
 		override protected function getFacade() : Facade
 		{
-			return ApplicationFacade.instance() as Facade;	
-		}
-		
-		
+			return NiuApplicationFacade.instance() as Facade;	
+		}		
 	}
 }

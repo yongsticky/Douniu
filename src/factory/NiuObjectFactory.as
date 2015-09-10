@@ -2,7 +2,7 @@ package factory
 {	
 	import camu.object.ObjectFactory;
 	
-	import notification.NiuNotification;
+	import controller.NiuNotification;
 	
 	import packet.game.message.Login.Request_Login;
 	import packet.game.message.Login.Response_Login;

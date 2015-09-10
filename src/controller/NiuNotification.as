@@ -1,4 +1,4 @@
-package notification
+package controller
 {
 	import camu.mvc.Notification;
 	import camu.object.interfaces.IObjectRecycled;
@@ -7,9 +7,9 @@ package notification
 	
 	public class NiuNotification extends Notification implements IObjectRecycled
 	{
-		public function NiuNotification(name:String, data:Object)
+		public function NiuNotification()
 		{
-			super(name, data);
+			super();
 		}
 		
 		public static function createNotification(name:String, data:Object) : NiuNotification

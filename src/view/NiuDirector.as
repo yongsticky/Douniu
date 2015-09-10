@@ -5,6 +5,8 @@ package view
 	import camu.logger.Logger;
 	import camu.net.ConnectorEvent;
 	
+	import controller.NiuNotification;
+	
 	import factory.NiuObjectFactory;
 	
 	import packet.game.message.Login.Request_Login;
@@ -51,6 +53,10 @@ package view
 			return _instance;
 		}		
 		
+		public function sendNotification(name:String, data:Object) : void
+		{			
+			_mediator.sendNotification(NiuNotification.createNotification(name, data));
+		}
 		
 		override protected function initialize() : void
 		{	

@@ -17,7 +17,7 @@ package view.framework
 		{
 			super.initialize();
 
-			//stage.addEventListener(Event.RESIZE, onWindowResize);				
+			stage.addEventListener(Event.RESIZE, onWindowResize);				
 		}
 		
 		protected function onWindowResize(event:ResizeEvent) : void

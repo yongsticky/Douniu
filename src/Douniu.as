@@ -3,9 +3,11 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import camu.logger.Logger;
+	
+	import controller.NiuApplicationFacade;
+	
 	import starling.core.Starling;
-		
-	import camu.logger.Logger;	
 	
 	import view.NiuDirector;
 	
@@ -27,7 +29,9 @@ package
 		
 		private function initialize() : void
 		{
-			Logger.setOff(false);			
+			Logger.setOff(false);
+			
+			NiuApplicationFacade.instance().initializeController();
 			
 			_starling = new Starling(NiuDirector, stage);
 			_starling.start();
