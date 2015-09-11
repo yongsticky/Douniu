@@ -15,9 +15,9 @@ package view.scene.table.layer
 		private var _name:TextField;
 		private var _vipMall:Button;
 		
-		public function Layer_BottomBanner()
+		public function Layer_BottomBanner(name:String = null)
 		{
-			super();
+			super(name);
 		}
 		
 		override protected function createChildren() : void

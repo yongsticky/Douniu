@@ -36,9 +36,9 @@ package view.scene.hall.layer
 		private var _marquee:Widget_TextMarquee;
 		
 		
-		public function Layer_TopBanner()
+		public function Layer_TopBanner(name:String = null)
 		{
-			super();
+			super(name);
 		}
 		
 		override protected function createChildren() : void

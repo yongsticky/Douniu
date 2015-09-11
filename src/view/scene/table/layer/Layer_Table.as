@@ -10,28 +10,16 @@ package view.scene.table.layer
 	{		
 		private static const MAX_OTHER_PLAYER_NUM:int = 5;
 		
-		public function Layer_Table() 
+		public function Layer_Table(name:String = null) 
 		{
-			super();			
+			super(name);
 		}
 		
 		override protected function createChildren() : void
-		{			
-			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; i++)
-			{
-				var otherPlayer:Widget_OtherPlayer = new Widget_OtherPlayer();
-								
-				var player:Widget_Player = new Widget_Player();
-				player.x = 120;
-				player.y = stage.stageHeight - 220;
-				addChild(player);
-				
-				createOtherPlayer(0);
-				createOtherPlayer(1);
-				createOtherPlayer(2);
-				createOtherPlayer(3);
-				createOtherPlayer(4);				
-			}
+		{	
+			
+			
+		/*
 			
 			var robButtonGroup:Widget_RobButtonGroup = new Widget_RobButtonGroup();
 			robButtonGroup.x = 280;
@@ -44,42 +32,49 @@ package view.scene.table.layer
 			addChild(timer);
 			
 			timer.startTimer();
-		}
-
-		override protected function layoutChildren() : void
-		{		
-			super.layoutChildren();
+		*/
+		}		
+		
+		
+		
+		
+		public function addPlayer() : void
+		{
+			var player:Widget_Player = new Widget_Player();
+			player.x = 120;
+			player.y = stage.stageHeight - 220;
+			addChild(player);
 		}
 		
-		public function createOtherPlayer(position:int) : void
+		public function addOtherPlayerAt(seat:int) : void
 		{
 			var player:Widget_OtherPlayer = new Widget_OtherPlayer();
 			
-			switch(position)				
+			switch(seat)				
 			{
-			case 0:					
-				player.x = 60;
-				player.y = 350;
-				break;
-			case 1:
-				player.x = 60;
-				player.y = 150;
-				break;
-			case 2:
-				player.x = 450;
-				player.y = 100;
-				break;
-			case 3:
-				player.x = 820;
-				player.y = 160;
-				break;
-			case 4:
-				player.x = 820;
-				player.y = 350;
-				break;				
+				case 0:					
+					player.x = 60;
+					player.y = 350;
+					break;
+				case 1:
+					player.x = 60;
+					player.y = 150;
+					break;
+				case 2:
+					player.x = 450;
+					player.y = 100;
+					break;
+				case 3:
+					player.x = 820;
+					player.y = 160;
+					break;
+				case 4:
+					player.x = 820;
+					player.y = 350;
+					break;				
 			}
 			
-			addChild(player);		
+			addChild(player);	
 		}
 	}
 }

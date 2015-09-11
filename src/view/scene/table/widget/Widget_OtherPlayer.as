@@ -12,9 +12,9 @@ package view.scene.table.widget
 		private var _robMultiple:ExImage;
 		
 		
-		public function Widget_OtherPlayer()
+		public function Widget_OtherPlayer(name:String = null)
 		{
-			super();
+			super(name);
 			
 			
 		}

@@ -14,9 +14,9 @@ package view.scene.table.widget
 		private var _btnRob2x:Button;
 		private var _btnRob4x:Button;
 		
-		public function Widget_RobButtonGroup()
+		public function Widget_RobButtonGroup(name:String = null)
 		{
-			super();
+			super(name);
 		}
 		
 		

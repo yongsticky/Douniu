@@ -10,7 +10,7 @@ package view.framework
 	{			
 		public function ExDirector()
 		{	
-			super();		
+			super();
 		}		
 
 		override protected function initialize() : void

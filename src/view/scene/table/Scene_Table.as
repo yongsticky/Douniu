@@ -13,17 +13,17 @@ package view.scene.table
 		private static const BOTTOMBANNER:String = "table.bottombanner";
 		private static const TABLE:String = "table.table";
 		
-		public function Scene_Table(id:String)
+		public function Scene_Table(name:String = null)
 		{
-			super(id);
+			super(name);
 		}
 		
 		override protected function createChildren() : void
 		{
-			addLayer(BACKGROUND, new Layer_Background());
-			addLayer(TOPBANNER, new Layer_TopBanner());
-			addLayer(BOTTOMBANNER, new Layer_BottomBanner());
-			addLayer(TABLE, new Layer_Table());
+			addChild(new Layer_Background(BACKGROUND));
+			addChild(new Layer_TopBanner(TOPBANNER));
+			addChild(new Layer_BottomBanner(BOTTOMBANNER));
+			addChild(new Layer_Table(TABLE));			
 		}	
 	}
 }

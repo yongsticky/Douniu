@@ -11,7 +11,7 @@ package
 	
 	import view.NiuDirector;
 	
-	[SWF(width="1120", height="780", frameRate="60", backgroundColor="#ffffff")]
+	[SWF(width="1120", height="780", frameRate="60", backgroundColor="#222222")]
 	//[SWF(width="640", height="480", frameRate="60", backgroundColor="#ffffff")]
 	public class Douniu extends Sprite
 	{
@@ -31,12 +31,12 @@ package
 		{
 			Logger.setOff(false);
 			
-			NiuApplicationFacade.instance().initializeController();
+			NiuApplicationFacade.instance().initializeNotificationHandlers();
 			
 			_starling = new Starling(NiuDirector, stage);
 			_starling.start();
 			
-			_starling.showStats = true;
+			//_starling.showStats = true;
 			_starling.antiAliasing = 2;
 		}
 	}

@@ -9,9 +9,9 @@ package view.scene.table.widget
 	{		
 		private static const MAX_CARDS_NUM:int = 5;
 		
-		public function Widget_PlayerCards()
+		public function Widget_PlayerCards(name:String = null)
 		{
-			super();
+			super(name);
 		}
 		
 		override protected function createChildren() : void

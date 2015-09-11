@@ -3,8 +3,10 @@ package view
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
+	import camu.mvc.Notification;
 	import camu.net.ConnectorEvent;
 	
+	import controller.NiuHandlerConstant;
 	import controller.NiuNotification;
 	
 	import factory.NiuObjectFactory;
@@ -18,8 +20,7 @@ package view
 	import starling.events.EnterFrameEvent;
 	
 	import view.framework.ExDirector;
-	import view.mediator.NiuDirectorMediator;
-	import view.scene.hall.Scene_Hall;
+	import view.mediator.NiuDirectorMediator;	
 	
 	public class NiuDirector extends ExDirector
 	{
@@ -66,12 +67,14 @@ package view
 						
 			//connectGameServer();
 			
-			//NiuResponseReceiver.instance().initReceiver();
+			//NiuResponseReceiver.instance().initReceiver();			
+			
+			sendNotification(NiuHandlerConstant.ENTER_HALL, null);
 		}
 		
 		override protected function createChildren() : void
 		{
-			switchToScene(new Scene_Hall());
+			//switchToScene(new Scene_Hall());
 		}
 		
 		private function connectGameServer() : void
@@ -86,7 +89,7 @@ package view
 		
 		private function onEnterFrame(event:EnterFrameEvent):void
 		{			
-			NiuServerConnector.instance().onTickElapse();
+			NiuServerConnector.instance().advanceTime(event.passedTime);
 		}
 		
 		protected function onConnect(event:ConnectorEvent):void

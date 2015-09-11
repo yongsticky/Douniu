@@ -20,9 +20,9 @@ package view.widget
 		private static const DEFAULT_TEXTFIELD_WIDTH:int = 340;
 		private static const DEFAULT_TEXTFIELD_HEIGHT:int = 25;
 		
-		public function Widget_TextMarquee(width:int, height:int)
+		public function Widget_TextMarquee(width:int, height:int, name:String = null)
 		{
-			super();
+			super(name);
 			
 			_spriteWidth = width;
 			_spriteHeight = height;

@@ -8,9 +8,9 @@ package view.scene.table.widget
 		private var _playerCards:Widget_PlayerCards;
 		
 		
-		public function Widget_Player()
+		public function Widget_Player(name:String = null)
 		{
-			super();
+			super(name);
 		}
 		
 		override protected function createChildren() : void

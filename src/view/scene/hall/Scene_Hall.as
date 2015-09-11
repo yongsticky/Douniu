@@ -11,16 +11,16 @@ package view.scene.hall
 		public static const BANNER:String = "hall.topbanner";				// 顶部栏
 		public static const ROOMLIST:String = "hall.roomlist"				// 房间列表 
 		
-		public function Scene_Hall()
+		public function Scene_Hall(name:String = null)
 		{
-			super("hall");			
+			super(name);
 		}
 
 		override protected function createChildren() : void 
 		{
-			addLayer(BACKGROUND, new Layer_Background());
-			addLayer(BANNER, new Layer_TopBanner());
-			addLayer(ROOMLIST, new Layer_RoomList());
+			addChild(new Layer_Background());
+			addChild(new Layer_TopBanner());
+			addChild(new Layer_RoomList());
 		}		
 	}
 }

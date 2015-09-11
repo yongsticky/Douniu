@@ -9,16 +9,14 @@ package view.scene.setting
 	{
 		private var _layerBackground:ExLayer;
 		
-		public function Scene_Setting()
+		public function Scene_Setting(name:String = null)
 		{
-			super("setting");
+			super(name);
 		}
 	
 		override protected function createChildren() : void 
 		{
-			_layerBackground = new Layer_Background();	
-			
-			addLayer("scene.setting.bkg", _layerBackground);
+			addChild(new Layer_Background());			
 		}
 	}
 }

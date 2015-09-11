@@ -14,9 +14,9 @@ package view.scene.table.widget
 		private var _num:ExImage;
 		private var _curTime:int;
 		
-		public function Widget_Timer(timeStart:int)
+		public function Widget_Timer(timeStart:int, name:String = null)
 		{
-			super();
+			super(name);
 			
 			_curTime = timeStart;
 		}
@@ -30,24 +30,19 @@ package view.scene.table.widget
 			
 			var resId:String = "table.timer_" + _curTime;
 			var num:ExImage = new ExImage(resManager.getResourceDev(resId));	
-			num.pivotX = num.pivotY = 0.5;
-			
-			num.x = width/2 - 28;
-			num.y = height/2 - 34;
+			num.pivotX = num.width>>1; 
+			num.pivotY = num.height>>1;			
+			num.x = width>>1;
+			num.y = height>>1;
 			
 			_num = num;
 			addChild(num);
 		}
-		
-		override protected function layoutChildren() : void
-		{
-			super.layoutChildren();
-		}
-		
+				
 		public function startTimer() : void
 		{				
-			var tn:Tween = new Tween(_num, 1, Transitions.EASE_IN);
-			tn.scaleTo(0.8);			
+			var tn:Tween = new Tween(_num, 1, Transitions.EASE_IN_OUT_ELASTIC);
+			tn.scaleTo(0.85);	
 			tn.onComplete = onCountdownAnimationComplete;
 			
 			getOwnerLayer().juggler.add(tn);			

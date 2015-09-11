@@ -1,6 +1,5 @@
 package view.scene.hall.layer
-{	
-	
+{		
 	import resource.ResManager;
 	
 	import view.framework.ExImage;
@@ -11,9 +10,9 @@ package view.scene.hall.layer
 		private var _bg:ExImage;
 		private var _banner:ExImage;
 		
-		public function Layer_Background()
+		public function Layer_Background(name:String = null)
 		{
-			super();
+			super(name);
 		}
 		
 		override protected function createChildren() : void
@@ -25,24 +24,7 @@ package view.scene.hall.layer
 			
 			addChild(_bg);
 			addChild(_banner);
-		}
+		}	
 		
-		override protected function layoutChildren() : void
-		{
-			
-			
-			/*
-			_bg.width = stage.stageWidth;
-			_bg.height = stage.stageHeight;
-			addChild(_bg);
-			
-			
-			_banner.width = stage.stageWidth;
-			addChild(_banner);
-			*/
-			
-			
-			super.layoutChildren();
-		}
 	}
 }

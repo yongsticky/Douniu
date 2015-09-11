@@ -13,9 +13,9 @@ package view.scene.setting.layer
 	{
 		private var _bg:ExImage;
 		
-		public function Layer_Background()
+		public function Layer_Background(name:String = null)
 		{
-			super();
+			super(name);
 		}
 		
 		override protected function createChildren() : void

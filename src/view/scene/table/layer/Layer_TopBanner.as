@@ -18,9 +18,9 @@ package view.scene.table.layer
 		private var _broadcast:TextField;
 		private var _setting:Button;
 		
-		public function Layer_TopBanner()
+		public function Layer_TopBanner(name:String = null)
 		{
-			super();
+			super(name);
 		}
 		
 		override protected function createChildren() : void

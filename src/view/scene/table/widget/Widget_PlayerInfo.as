@@ -14,9 +14,9 @@ package view.scene.table.widget
 		private var _chips:TextField;
 		
 		
-		public function Widget_PlayerInfo()
+		public function Widget_PlayerInfo(name:String = null)
 		{
-			super();			
+			super(name);
 		}
 		
 		override protected function createChildren() : void

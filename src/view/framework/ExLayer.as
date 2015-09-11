@@ -8,9 +8,9 @@ package view.framework
 		private var _juggler:Juggler = null;
 		private var _aniPaused:Boolean = false;
 
-		public function ExLayer()
+		public function ExLayer(name:String = null)
 		{
-			super();
+			super(name);
 		}
 
 		override protected function initialize() : void

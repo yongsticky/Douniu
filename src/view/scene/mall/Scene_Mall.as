@@ -2,7 +2,6 @@ package view.scene.mall
 {
 	import view.framework.ExLayer;
 	import view.framework.ExScene;
-	
 	import view.scene.mall.layer.Layer_Background;
 	
 	
@@ -10,16 +9,14 @@ package view.scene.mall
 	{
 		private var _layerBackground:ExLayer;
 		
-		public function Scene_Mall()
+		public function Scene_Mall(name:String = null)
 		{
-			super("mall");
+			super(name);
 		}
 	
 		override protected function createChildren() : void 
 		{
-			_layerBackground = new Layer_Background();	
-			
-			addLayer("scene.setting.bkg", _layerBackground);
+			addChild(new Layer_Background());			
 		}
 	}
 }

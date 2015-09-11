@@ -1,6 +1,6 @@
 package view.scene.hall.layer
 {	
-	import controller.HandlerName;
+	import controller.NiuHandlerConstant;
 	
 	import resource.ResManager;
 	
@@ -11,8 +11,7 @@ package view.scene.hall.layer
 	
 	import view.NiuDirector;
 	import view.framework.ExImage;
-	import view.framework.ExLayer;
-	import view.scene.table.Scene_Table;
+	import view.framework.ExLayer;	
 	
 	public class Layer_RoomList extends ExLayer
 	{
@@ -24,9 +23,9 @@ package view.scene.hall.layer
 		
 		private static const MAX_ROOM_NUM_PER_TYPE:int = 4;
 		
-		public function Layer_RoomList()
+		public function Layer_RoomList(name:String = null)
 		{
-			super();			
+			super(name);
 		}
 		
 		override protected function createChildren() : void
@@ -74,20 +73,12 @@ package view.scene.hall.layer
 				
 				xStart += btn1.width + 40;
 			}
-		}
-		
-		override protected function layoutChildren() : void
-		{
-			super.layoutChildren();
-		}
-		
+		}		
+
 		private function onRoomTriggered(event:Event) : void
-		{
-			NiuDirector.instance().switchToScene(new Scene_Table("scene.game"));
-			
+		{			
 			var rid:int = 76;
-			NiuDirector.instance().sendNotification(HandlerName.CLICK_ROOM, {"rid":rid}); 
-					
+			NiuDirector.instance().sendNotification(NiuHandlerConstant.ENTER_ROOM, {"rid":rid});					
 		}
 	}
 }

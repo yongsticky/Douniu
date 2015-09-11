@@ -10,9 +10,14 @@ package view.framework
 
 	public class ExSprite extends Sprite
 	{
-		public function ExSprite()
+		public function ExSprite(name:String = null)
 		{
 			super();
+			
+			if (name)
+			{
+				this.name = name;
+			}
 			
 			stage ? initialize():addEventListener(Event.ADDED_TO_STAGE, function (event:Event) : void {
 				event.target.removeEventListener(Event.ADDED_TO_STAGE, arguments.callee);

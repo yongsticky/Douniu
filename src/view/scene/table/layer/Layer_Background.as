@@ -10,9 +10,9 @@ package view.scene.table.layer
 		private var _bg:ExImage;	
 		private var _logo:ExImage;
 		
-		public function Layer_Background()
+		public function Layer_Background(name:String = null)
 		{
-			super();
+			super(name);
 		}
 		
 		override protected function createChildren() : void
