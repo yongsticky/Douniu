@@ -40,10 +40,5 @@ package view.scene.table.layer
 			addChild(_vipMall);
 			
 		}
-
-		override protected function layoutChildren() : void
-		{
-			super.layoutChildren();
-		}
 	}
 }

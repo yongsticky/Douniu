@@ -5,7 +5,7 @@ package controller.handler
 	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
-	import view.scene.table.layer.Layer_Table;
+	import view.scene.table.layer.Layer_GameTable;
 	
 	public class NotificationHandler_PlayerEnter implements INotificationHandler
 	{
@@ -18,10 +18,10 @@ package controller.handler
 			var sceneTable:Scene_Table = NiuDirector.instance().getNamedChildByName("scene.table") as Scene_Table;
 			if (sceneTable)
 			{
-				var layerTable:Layer_Table = sceneTable.getNamedChildByName("table.table") as Layer_Table;
+				var layerTable:Layer_GameTable = sceneTable.getNamedChildByName("table.table") as Layer_GameTable;
 				if (layerTable)
 				{
-					layerTable.addPlayer();
+					layerTable.showPlayer();					
 				}
 			}
 		}

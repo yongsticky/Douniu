@@ -3,7 +3,7 @@ package view.scene.table
 	import view.framework.ExScene;
 	import view.scene.table.layer.Layer_Background;
 	import view.scene.table.layer.Layer_BottomBanner;
-	import view.scene.table.layer.Layer_Table;
+	import view.scene.table.layer.Layer_GameTable;
 	import view.scene.table.layer.Layer_TopBanner;
 	
 	public class Scene_Table extends ExScene
@@ -23,7 +23,7 @@ package view.scene.table
 			addChild(new Layer_Background(BACKGROUND));
 			addChild(new Layer_TopBanner(TOPBANNER));
 			addChild(new Layer_BottomBanner(BOTTOMBANNER));
-			addChild(new Layer_Table(TABLE));			
+			addChild(new Layer_GameTable(TABLE));			
 		}	
 	}
 }

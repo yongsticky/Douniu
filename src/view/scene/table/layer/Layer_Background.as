@@ -30,10 +30,5 @@ package view.scene.table.layer
 			addChild(_logo);
 			
 		}
-
-		override protected function layoutChildren() : void
-		{
-			super.layoutChildren();
-		}
 	}
 }

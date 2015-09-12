@@ -124,12 +124,7 @@ package view.scene.hall.layer
 			addChild(_vipMallBtn);
 			_vipMallBtn.addEventListener(Event.TRIGGERED, onVipMallTriggered);
 		}
-		
-		override protected function layoutChildren() : void
-		{
-			super.layoutChildren();
-		}		
-		
+				
 		protected function onSettingTriggered(event:Event) : void
 		{		
 			NiuDirector.instance().pushScene(new Scene_Setting());			

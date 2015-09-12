@@ -30,12 +30,7 @@ package view.scene.mall.layer
 			
 			_bg.addEventListener(TouchEvent.TOUCH, onTouch);
 		}
-		
-		override protected function layoutChildren() : void
-		{
-			super.layoutChildren();
-		}
-		
+				
 		private function onTouch(event:TouchEvent) : void
 		{
 			var touch:Touch = event.getTouch(_bg);

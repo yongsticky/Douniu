@@ -27,13 +27,13 @@ package view.framework
 
 		protected function initialize() : void
 		{
-			createChildren();			
+			createChildren();
 			layoutChildren();
 		}				
 		
 		protected function createChildren() : void
 		{
-			throw new Error("Abstract function, you must override it.");	
+			throw new Error("Abstract function, you must override it.");
 		}
 
 		protected function layoutChildren() : void

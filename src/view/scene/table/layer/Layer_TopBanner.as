@@ -48,12 +48,7 @@ package view.scene.table.layer
 			_setting.y = (_bg.height - _setting.height) >> 1;
 			addChild(_setting);
 			_setting.addEventListener(Event.TRIGGERED, onTrigered);
-		}
-
-		override protected function layoutChildren() : void
-		{
-			super.layoutChildren();
-		}
+		}	
 		
 		private function onTrigered(event:Event) : void
 		{

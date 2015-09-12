@@ -33,12 +33,7 @@ package view.scene.table.widget
 				
 				startX += 16;
 			}
-		}
-		
-		override protected function layoutChildren() : void
-		{
-			super.layoutChildren();
-		}
+		}		
 				
 		public function setCardShow(index:int, show:Boolean, card:NiuCard) : void
 		{

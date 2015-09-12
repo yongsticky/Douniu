@@ -1,6 +1,12 @@
 package view.scene.table.widget
 {
+	import douniu.NiuCard;
+	
 	import resource.ResManager;
+	
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
@@ -9,29 +15,121 @@ package view.scene.table.widget
 	{		
 		private static const MAX_CARDS_NUM:int = 5;
 		
+		private var _pokers:Vector.<Poker>;
+				
+		
 		public function Widget_PlayerCards(name:String = null)
 		{
-			super(name);
+			super(name);	
+			
+			_pokers = new Vector.<Poker>(MAX_CARDS_NUM);
 		}
 		
 		override protected function createChildren() : void
 		{
-			var resManager:ResManager = ResManager.instance(); 
-				
-			var startX:int = 0;
-			for (var i:int = 0; i < MAX_CARDS_NUM; i++)
-			{
-				var c:ExImage = new ExImage(resManager.getResourceDev("poker.hong.1"));				
-				c.x = startX;				
-				addChild(c);
-				startX += 73;
-			}
 			
 		}
+				
+		public function setPokers(cards:Vector.<NiuCard>) : void
+		{				
+			var maxCount:int = cards.length<MAX_CARDS_NUM ? cards.length:MAX_CARDS_NUM;
+			
+			var startX:int = 0;
+			for (var i:int = 0; i < maxCount; i++)
+			{
+				var p:Poker = new Poker(cards[i]); 
+				
+				p.x = startX;
+				p.addEventListener(TouchEvent.TOUCH, onTouch);
+				
+				addChild(p);
+				
+				startX += 73;
+				
+				_pokers[i] = p;
+			}			
+		}		
 		
-		override protected function layoutChildren() : void
+		public function getSelectedPokerIndex() : Vector.<int>
 		{
-			super.layoutChildren();
+			var selectedVec:Vector.<int> = new Vector.<int>();
+			
+			for (var i:int = 0; i < MAX_CARDS_NUM; ++i)
+			{
+				var p:Poker = _pokers[i];
+				if (p && p.selected)
+				{
+					selectedVec.push(i);
+				}
+			}
+			
+			return selectedVec;
 		}
+		
+		
+		protected function onTouch(event:TouchEvent):void
+		{
+			var theImage:Poker =  event.target as Poker;
+			
+			var touchObj:Touch = event.getTouch(theImage);
+			
+			if (touchObj)
+			{
+				if (touchObj.phase == TouchPhase.ENDED)
+				{	
+					if (theImage.selected)
+					{
+						theImage.y = 0;	
+						theImage.selected = false;
+					}
+					else
+					{
+						theImage.y = -15;
+						theImage.selected = true;
+					}					
+				}			
+			}
+		}
+	}
+}
+
+
+import douniu.NiuCard;
+
+import resource.ResManager;
+
+import view.framework.ExImage;
+
+
+class Poker extends ExImage
+{
+	private var _selected:Boolean = false;
+	private var _card:NiuCard;
+	
+	private var COLOR_TO_STR:Array = ["hei", "hong", "mei", "fang"];
+	
+	public function Poker(card:NiuCard)
+	{			
+		super(ResManager.instance().getResourceDev("poker." + COLOR_TO_STR[card.color] + "." + card.number.toString()));
+	}
+	
+	public function set selected(selected:Boolean) : void
+	{
+		_selected = selected;
+	}
+	
+	public function get selected() : Boolean
+	{
+		return _selected;
+	}
+	
+	public function set card(card:NiuCard) : void
+	{
+		_card = card;
+	}
+	
+	public function get card() : NiuCard
+	{
+		return _card;
 	}
 }

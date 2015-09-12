@@ -5,7 +5,7 @@ package view.scene.table.widget
 	
 	public class Widget_OtherPlayer extends ExSprite
 	{		
-		private var _playerInfo:Widget_PlayerInfo;
+		private var _playerInfo:Widget_PlayerHeader;
 		
 		private var _cards:Widget_OtherPlayerCards;
 		private var _robStatus:ExImage;
@@ -26,13 +26,8 @@ package view.scene.table.widget
 			_cards.y = 30;
 			addChild(_cards);
 			
-			_playerInfo = new Widget_PlayerInfo();
+			_playerInfo = new Widget_PlayerHeader();
 			addChild(_playerInfo);
-		}
-
-		override protected function layoutChildren() : void
-		{
-			super.layoutChildren();
 		}
 	}
 }

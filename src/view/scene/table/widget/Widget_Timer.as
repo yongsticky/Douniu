@@ -14,11 +14,9 @@ package view.scene.table.widget
 		private var _num:ExImage;
 		private var _curTime:int;
 		
-		public function Widget_Timer(timeStart:int, name:String = null)
+		public function Widget_Timer(name:String = null)
 		{
-			super(name);
-			
-			_curTime = timeStart;
+			super(name);			
 		}
 		
 		override protected function createChildren() : void
@@ -39,35 +37,47 @@ package view.scene.table.widget
 			addChild(num);
 		}
 				
-		public function startTimer() : void
-		{				
-			var tn:Tween = new Tween(_num, 1, Transitions.EASE_IN_OUT_ELASTIC);
-			tn.scaleTo(0.85);	
-			tn.onComplete = onCountdownAnimationComplete;
+		public function startTimer(time:int) : void
+		{	
+			_curTime = time;
 			
-			getOwnerLayer().juggler.add(tn);			
+			updateTimerTexture();
+			
+			resumeTimer();					
 		}
-		
+						
 		protected function onCountdownAnimationComplete() : void
 		{
+			getOwnerLayer().juggler.removeTweens(this);
+			
 			if (_curTime > 0)
 			{
-				_curTime --;
-				updateTimer();
-				
-				startTimer();
+				--_curTime
+					
+				updateTimerTexture();				
+				resumeTimer();
 			}
 			else
 			{
-				parent.removeChild(this, true);
+				visible = true;
 			}
 		}
 		
-		protected function updateTimer() : void
-		{
+		protected function updateTimerTexture() : void
+		{			
 			var resId:String = "table.timer_" + _curTime;
 			_num.texture = Texture.fromBitmapData(ResManager.instance().getResourceDev(resId)); 
 			_num.scaleX = _num.scaleY = 1;
 		}
+		
+		protected function resumeTimer() : void
+		{			
+			var tn:Tween = new Tween(_num, 1, Transitions.EASE_IN_OUT_ELASTIC);
+			tn.scaleTo(0.8);	
+			tn.onComplete = onCountdownAnimationComplete;
+			
+			getOwnerLayer().juggler.add(tn);
+		}
+		
 	}
 }
