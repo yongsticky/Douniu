@@ -6,12 +6,12 @@ package server
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	import camu.net.Connector;
-	import camu.net.Packet;	
+	import camu.net.Packet;
 	
-	import factory.NiuObjectFactory;	
+	import factory.NiuObjectFactory;
+	
 	import packet.NiuDecoder;
 	import packet.NiuEncoder;
-	import packet.protocol.NiuPacket;
 	import packet.protocol.NiuResponsePacket;
 	
 	public final class NiuServerConnector extends Connector
@@ -45,7 +45,7 @@ package server
 		
 		public function dispatchWarpperMessagePacket(responsePacket:NiuResponsePacket) : void
 		{
-			_logger.log("dispatchWarpperMessagePacket, eventType=", responsePacket.eventType);
+			_logger.log("dispatchWarpperMessagePacket, eventType=", responsePacket.eventType, LEVEL.INFO);
 			
 			if (responsePacket)
 			{

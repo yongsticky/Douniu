@@ -1,6 +1,7 @@
 package packet.game.message
 {
 	
+	import packet.game.message.Hello.Response_Hello;
 	import packet.game.message.Login.Response_Login;
 	import packet.game.message.Logout.Response_Logout;
 	import packet.game.message.Notify.Response_GameNotify;
@@ -20,6 +21,7 @@ package packet.game.message
 		public static const REQUEST_STANDUP:int = 15804;
 		public static const REQUEST_READY:int = 15810;
 		public static const REQUEST_PLAY:int = 15813;
+		public static const REQUEST_HELLO:int = 15812;
 
 
 		// Server -> Client
@@ -30,6 +32,7 @@ package packet.game.message
 		public static const RESPONSE_GAMEEVENT:int = 15809;
 		public static const RESPONSE_READY:int = 15810;
 		public static const RESPONSE_PLAY:int = 15815;
+		public static const RESPONSE_HELLO:int = 15812;
 
 		public static const RESPONSE_WRAPPER_MESSAGE:int = 15814;
 		public static const RESPONSE_SITDOWN_FROM_VIEW:int = 15816;
@@ -61,6 +64,8 @@ package packet.game.message
 					return Response_GameNotify;
 				case RESPONSE_PLAY:
 					return Response_Play;
+				case RESPONSE_HELLO:
+					return Response_Hello;
 				default:
 					throw new Error("msgId ["+ msgId+"] NOT Match any Response.");					
 			}

@@ -5,7 +5,7 @@ package
 	
 	import camu.logger.Logger;
 	
-	import controller.NiuApplicationFacade;
+	import facade.NiuApplicationFacade;
 	
 	import starling.core.Starling;
 	
@@ -36,7 +36,7 @@ package
 			_starling = new Starling(NiuDirector, stage);
 			_starling.start();
 			
-			//_starling.showStats = true;
+			_starling.showStats = true;
 			_starling.antiAliasing = 2;
 		}
 	}

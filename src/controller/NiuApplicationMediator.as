@@ -1,19 +1,19 @@
-package view.mediator
+package controller
 {
 	import camu.mvc.Facade;
 	import camu.mvc.Mediator;
 	import facade.NiuApplicationFacade;
 	
-	public class NiuDirectorMediator extends Mediator
+	public class NiuApplicationMediator extends Mediator
 	{
-		public function NiuDirectorMediator()
+		public function NiuApplicationMediator()
 		{
 			super();
 		}
 		
 		override protected function getFacade() : Facade
 		{
-			return NiuApplicationFacade.instance() as Facade;	
-		}		
+			return NiuApplicationFacade.instance() as Facade;
+		}
 	}
 }

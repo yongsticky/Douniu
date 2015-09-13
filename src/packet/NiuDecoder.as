@@ -31,7 +31,9 @@ package packet
 			var responsePacket:NiuResponsePacket  = NiuObjectFactory.instance().createInstance(MSGID.MSGID_TO_CLASS(msgId)) as NiuResponsePacket;
 			if (responsePacket)
 			{
-				responsePacket.unpack(bytes);				
+				responsePacket.unpack(bytes);	
+				
+				responsePacket.printResponse(_logger);
 				
 				return responsePacket;
 			}

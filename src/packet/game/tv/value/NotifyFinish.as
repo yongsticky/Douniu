@@ -52,6 +52,9 @@ package packet.game.tv.value
 				item.dispose();
 				_facatory.destroyInstance(item);
 			}
+			
+			finish_info_vec.length = 0;
+			finish_info_num = 0;
 		}
 	}
 }

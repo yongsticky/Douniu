@@ -1,16 +1,20 @@
 package controller.handler
 {
+	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
 	import camu.mvc.interfaces.INotificationHandler;
+	
+	import controller.NiuNotificationHandler;
 	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
 	import view.scene.table.layer.Layer_GameTable;
 	
-	public class NotificationHandler_PlayerEnter implements INotificationHandler
+	public class NotificationHandler_PlayerEnter extends NiuNotificationHandler implements INotificationHandler
 	{
-		public function NotificationHandler_PlayerEnter()
+		public function NotificationHandler_PlayerEnter(mediator:Mediator)
 		{
+			super(mediator);
 		}
 		
 		public function execute(notification:Notification):void

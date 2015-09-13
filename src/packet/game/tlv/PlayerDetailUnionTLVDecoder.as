@@ -12,7 +12,7 @@ package packet.game.tlv
 	{
 		private var _logger:ILogger;
 		
-		public function PlayerDetailUnionTLVDecoder()
+		public function PlayerDetailUnionTLVDecoder(inner:PrivateInner)
 		{
 			_logger = Logger.createLogger(PlayerDetailUnionTLVDecoder, LEVEL.INFO);
 		}

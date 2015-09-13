@@ -18,6 +18,8 @@ package factory
 	import packet.game.message.Sitdown.Response_Sitdown;
 	import packet.game.message.Standup.Request_Standup;
 	import packet.game.message.Standup.Response_Standup;
+	import packet.game.message.Hello.Request_Hello;
+	import packet.game.message.Hello.Response_Hello;
 	import packet.game.message.WrapperMessage.Response_WrapperMessage;
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.value.BaseGameCfgData;
@@ -73,9 +75,11 @@ package factory
 			registerClass(Response_Ready);
 			registerClass(Request_Standup);
 			registerClass(Response_Standup);
+			registerClass(Request_Hello);
+			registerClass(Response_Hello);
 			registerClass(Response_GameNotify);
 			registerClass(Request_Play);
-			registerClass(Response_Play);
+			registerClass(Response_Play);			
 			
 			registerClass(UnionTLV);			
 			registerClass(TAppointmentKey);

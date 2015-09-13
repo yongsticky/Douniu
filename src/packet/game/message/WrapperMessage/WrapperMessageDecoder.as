@@ -45,6 +45,8 @@ package packet.game.message.WrapperMessage
 			{
 				responsePacket.isWrapperedMessage = true;
 				responsePacket.unpack(bytes);
+				
+				responsePacket.printResponse(_logger);
 
 				return responsePacket;
 			}

@@ -1,6 +1,6 @@
 package view.scene.hall.layer
 {	
-	import controller.NiuHandlerConstant;
+	import controller.NiuNotificationHandlerConstant;
 	
 	import resource.ResManager;
 	
@@ -56,9 +56,10 @@ package view.scene.hall.layer
 				
 				var roomNameText:TextField = new TextField(100, 24, "练习场", "", 20, 0);
 				roomNameText.x = 15;
-				roomNameText.y = 10;
+				roomNameText.y = 10;				
 				btn1.addChild(roomNameText);
-				btn1.name = "3000000" + (i+1).toString();
+				
+				btn1.name = "76";
 				addChild(btn1);
 				_room1List.push(btn1);				
 				btn1.addEventListener(Event.TRIGGERED, onRoomTriggered);				
@@ -68,6 +69,7 @@ package view.scene.hall.layer
 				btn2.x = xStart;
 				btn2.y = 460;
 				
+				btn2.name = "77";
 				addChild(btn2);
 				_room2List.push(btn2);
 				btn2.addEventListener(Event.TRIGGERED, onRoomTriggered);
@@ -76,12 +78,11 @@ package view.scene.hall.layer
 			}
 		}		
 
-		private function onRoomTriggered(event:Event) : void
+		protected function onRoomTriggered(event:Event) : void
 		{			
-			var rid:int = 76;
-			var r:Button = event.target as Button;
+			var rid:int = int(event.target["name"]);
 			
-			NiuDirector.instance().sendNotification(NiuHandlerConstant.ENTER_ROOM, {"rid":rid, "uin":r.name});					
+			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROOM, rid);
 		}
 	}
 }

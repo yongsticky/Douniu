@@ -3,18 +3,11 @@ package view
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
-	import camu.mvc.Notification;
 	import camu.net.ConnectorEvent;
 	
-	import controller.NiuHandlerConstant;
+	import controller.NiuNotificationHandlerConstant;
 	import controller.NiuNotification;
-	
-	import factory.NiuObjectFactory;
-	
-	import packet.game.message.Login.Request_Login;
-	
-	import server.NiuRequestSender;
-	import server.NiuResponseReceiver;
+		
 	import server.NiuServerConnector;
 	
 	import starling.events.EnterFrameEvent;
@@ -64,41 +57,21 @@ package view
 			super.initialize();
 			
 			_logger.log("initialize called.", LEVEL.INFO);
-						
-			NiuResponseReceiver.instance().initReceiver();
 			
-			connectGameServer();						
+			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
+			
+			sendNotification(NiuNotificationHandlerConstant.STARTUP);				
 		}
 		
 		override protected function createChildren() : void
 		{			
 		}
 		
-		private function connectGameServer() : void
-		{
-			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
-			
-			var connector_:NiuServerConnector = NiuServerConnector.instance();	
-			connector_.setTargetAddress("182.254.40.11", 8000);			
-			connector_.addEventListener(ConnectorEvent.CONNECTED, onConnect);
-			connector_.connect();
-		}
+
 		
 		private function onEnterFrame(event:EnterFrameEvent):void
 		{			
 			NiuServerConnector.instance().advanceTime(event.passedTime);
-		}
-		
-		protected function onConnect(event:ConnectorEvent):void
-		{
-			_logger.log("Connect Server Succ.", LEVEL.INFO);				
-						
-			sendNotification(NiuHandlerConstant.ENTER_HALL);			
-		}
-
-		override protected function layoutChildren() : void
-		{
-			
 		}
 	}
 }

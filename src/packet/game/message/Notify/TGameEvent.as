@@ -9,8 +9,7 @@ package packet.game.message.Notify
 	import packet.game.tlv.UnionTLVDecoder;
 
 	public class TGameEvent implements IObjectRecycled
-	{
-	
+	{	
 		public var event_id:int;						// int(4)
 		public var player_id:int;						// int(4)
 		public var room_id:int;						// short(2)

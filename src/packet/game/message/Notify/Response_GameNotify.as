@@ -2,7 +2,12 @@ package packet.game.message.Notify
 {
 	import flash.utils.ByteArray;
 	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import factory.NiuObjectFactory;
+	
+	import packet.game.tlv.UnionTLV;
 	import packet.protocol.NiuResponsePacket;
 	
 	public class Response_GameNotify extends NiuResponsePacket
@@ -43,6 +48,30 @@ package packet.game.message.Notify
 			
 			game_event_num = 0;
 			game_event_vec.length = 0;
+		}
+		
+		override public function printResponse(logger:ILogger) : void
+		{
+			logger.log("***********************************************", LEVEL.INFO);
+			logger.log("print Response_GameNotify.", LEVEL.INFO);
+			
+			logger.log("game_event_num:", game_event_num, LEVEL.INFO);
+			
+			for each(var ge:TGameEvent in game_event_vec)
+			{
+				logger.log("TGameEvent.event_id:", ge.event_id, LEVEL.INFO);
+				logger.log("TGameEvent.player_id:", ge.player_id, LEVEL.INFO);
+				logger.log("TGameEvent.room_id:", ge.room_id, LEVEL.INFO);
+				logger.log("TGameEvent.table_id:", ge.table_id, LEVEL.INFO);
+				logger.log("TGameEvent.seat_id:", ge.seat_id, LEVEL.INFO);
+				logger.log("TGameEvent.other_info_num:", ge.other_info_num, LEVEL.INFO);
+				for each(var tlv:UnionTLV in ge.other_info_vec)
+				{
+					logger.log("TGameEvent.other_info_vec.UnionTLV.valueType", tlv.valueType, LEVEL.INFO);	
+				}			
+			}			
+			
+			logger.log("***********************************************", LEVEL.INFO);
 		}
 	}
 }
