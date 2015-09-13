@@ -10,13 +10,20 @@ package view.scene.table.layer
 	public class Layer_GameTable extends ExLayer
 	{		
 		private static const MAX_OTHER_PLAYER_NUM:int = 5;
-				
+		
+		private static const OTHER_PLAYER_SEAT_POSISTION:Array = [{"x":60, "y":360}, {"x":60, "y":180}, {"x":480, "y":60}, {"x":820, "y":180}, {"x":820, "y":360}];
+		
 		private var _player:Widget_Player;
 		private var _timer:Widget_Timer;
+		private var _otherPlayers:Vector.<Widget_OtherPlayer>;
+		
+		
 		
 		public function Layer_GameTable(name:String = null) 
 		{
 			super(name);
+			
+			_otherPlayers = new Vector.<Widget_OtherPlayer>(MAX_OTHER_PLAYER_NUM);
 		}
 		
 		override protected function createChildren() : void
@@ -24,6 +31,15 @@ package view.scene.table.layer
 			_player = new Widget_Player();
 			_player.visible = false;
 			addChild(_player);
+			
+			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; ++i)
+			{
+				var other:Widget_OtherPlayer = new Widget_OtherPlayer(i);
+				_otherPlayers[i] = other;				
+				
+				other.visible = false;				
+				addChild(other);				
+			}
 							
 			_timer = new Widget_Timer();
 			_timer.visible = false;			
@@ -38,6 +54,13 @@ package view.scene.table.layer
 			
 			_timer.x = 510;
 			_timer.y = 320;
+			
+			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; ++i)
+			{
+				var other:Widget_OtherPlayer = _otherPlayers[i];
+				other.x = OTHER_PLAYER_SEAT_POSISTION[i]["x"];
+				other.y = OTHER_PLAYER_SEAT_POSISTION[i]["y"];
+			}
 			
 			super.layoutChildren();
 		}
@@ -68,35 +91,34 @@ package view.scene.table.layer
 			_timer.startTimer(time);
 		}
 		
-		public function addOtherPlayerAt(seat:int) : void
+		public function showOtherPlayer(seat:int, show:Boolean = true) : void
 		{
-			var player:Widget_OtherPlayer = new Widget_OtherPlayer();
+			var vec:Vector.<NiuCard> = new Vector.<NiuCard>();
+			vec.push(new NiuCard(17));
+			vec.push(new NiuCard(22));
+			vec.push(new NiuCard(32));
+			vec.push(new NiuCard(15));
+			vec.push(new NiuCard(8));
 			
-			switch(seat)				
+			if (seat >=0 && seat < MAX_OTHER_PLAYER_NUM)
 			{
-				case 0:					
-					player.x = 60;
-					player.y = 350;
-					break;
-				case 1:
-					player.x = 60;
-					player.y = 150;
-					break;
-				case 2:
-					player.x = 450;
-					player.y = 100;
-					break;
-				case 3:
-					player.x = 820;
-					player.y = 160;
-					break;
-				case 4:
-					player.x = 820;
-					player.y = 350;
-					break;				
+				var other:Widget_OtherPlayer = _otherPlayers[seat];
+												
+				other.visible = show;
+				other.playerHeader.visible = show;
+				other.playerCards.visible = show;
+				
+				
+				if (seat == 2)
+				{
+					other.playerCards.setPokers(vec);
+				}
+				else
+				{
+					other.playerCards.setPokers(null);
+				}
+				
 			}
-			
-			addChild(player);	
-		}
+		}	
 	}
 }

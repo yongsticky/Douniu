@@ -58,9 +58,10 @@ package view.scene.hall.layer
 				roomNameText.x = 15;
 				roomNameText.y = 10;
 				btn1.addChild(roomNameText);
-				addChild(btn1);				
-				_room1List.push(btn1);	
-				btn1.addEventListener(Event.TRIGGERED, onRoomTriggered);
+				btn1.name = "3000000" + (i+1).toString();
+				addChild(btn1);
+				_room1List.push(btn1);				
+				btn1.addEventListener(Event.TRIGGERED, onRoomTriggered);				
 				
 				
 				var btn2:Button = new Button(buttonBGTexture);
@@ -78,7 +79,9 @@ package view.scene.hall.layer
 		private function onRoomTriggered(event:Event) : void
 		{			
 			var rid:int = 76;
-			NiuDirector.instance().sendNotification(NiuHandlerConstant.ENTER_ROOM, {"rid":rid});					
+			var r:Button = event.target as Button;
+			
+			NiuDirector.instance().sendNotification(NiuHandlerConstant.ENTER_ROOM, {"rid":rid, "uin":r.name});					
 		}
 	}
 }

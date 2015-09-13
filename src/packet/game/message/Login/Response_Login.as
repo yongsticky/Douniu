@@ -49,7 +49,7 @@ package packet.game.message.Login
 				var _uTLVDecoder:UnionTLVDecoder = UnionTLVDecoder.instance();
 				for (var i:int = 0; i < tlv_num; i++)
 				{
-					var utlv:UnionTLV = _uTLVDecoder.decode(bytes);					
+					var utlv:UnionTLV = _uTLVDecoder.decode(bytes);
 					tlv_vec.push(utlv);
 				}
 			}

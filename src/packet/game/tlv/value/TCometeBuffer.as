@@ -1,17 +1,19 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-		
+	
 	import packet.game.tlv.TLVValue;
 
-	public class TCompeteBuffer extends TLVValue
+	public class TCometeBuffer extends TLVValue
 	{
 		public var computer_buffer_len:int;			// short(2)
-		public var computer_buffer:String;				// char[]
+		public var computer_buffer:ByteArray;				// char[]
 		
-		public function TCompeteBuffer()
+		public function TCometeBuffer()
 		{
 			super();
+			
+			computer_buffer = new ByteArray();
 		}
 		
 		
@@ -22,7 +24,7 @@ package packet.game.tlv.value
 			bytes.writeShort(computer_buffer_len);
 			if (computer_buffer_len > 0)
 			{
-				bytes.writeUTFBytes(computer_buffer);
+				bytes.writeBytes(computer_buffer, 0, computer_buffer_len);
 			}			
 			
 			super.adjustPosition(bytes);
@@ -35,10 +37,16 @@ package packet.game.tlv.value
 			computer_buffer_len = bytes.readShort();
 			if (computer_buffer_len > 0)
 			{
-				computer_buffer = bytes.readUTFBytes(computer_buffer_len);
+				bytes.readBytes(computer_buffer, 0, computer_buffer_len);
 			}			
 			
 			super.adjustPosition(bytes);
+		}
+		
+		override public function onObjectRecycled() : void
+		{
+			computer_buffer.clear();
+			computer_buffer_len = 0;
 		}
 	}
 }

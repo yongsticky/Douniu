@@ -11,11 +11,15 @@ package packet.game.tlv
 	import packet.game.tlv.value.PlayerViewSeatInfo;
 	import packet.game.tlv.value.TAppointmentKey;
 	import packet.game.tlv.value.TClientInfo;
-	import packet.game.tlv.value.TCompeteBuffer;
+	import packet.game.tlv.value.TCometeBuffer;
+	import packet.game.tlv.value.TDealerInfo;
 	import packet.game.tlv.value.TMatchTickKey;
+	import packet.game.tlv.value.TMultipleInfo;
 	import packet.game.tlv.value.TPlayerAvatarChangeInfo;
 	import packet.game.tlv.value.TPlayerCountNormalItemChangeInfo;
 	import packet.game.tlv.value.TPlayerKickOutInfo;
+	import packet.game.tlv.value.TTilesInfo;
+	import packet.game.tlv.value.TTimerInfo;
 	import packet.game.tlv.value.TableSimpleInfo;
 
 	public final class TLVType
@@ -41,19 +45,24 @@ package packet.game.tlv
 		public static const DN_TLV_GAME_LOGIC_MSG:int = 10014;
 		public static const DN_TLV_GAME_SCORE_MSG:int = 10015;
 		
+		public static const SO_UP_TLV_TILES_KEY:int = 20001;
+		public static const SO_UP_TLV_TIMER_KEY:int = 20002;
+		public static const SO_UP_TLV_DEALER_KEY:int = 20003;
+		public static const SO_UP_TLV_MULTIPLE_KEY:int = 20004;
+		
 		public function TLVType()
 		{
 			throw new Error("Abstract class, you must extend it.");
 		}
 		
-		public static function TLVTypeToClass(typeTLV:int) : Class
+		public static function TLVTypeToClass(tlvType:int) : Class
 		{
-			switch(typeTLV)
+			switch(tlvType)
 			{
 				case UP_TLV_APPOINTMENT_KEY:			// 1
 					return TAppointmentKey;
 				case UP_TLV_TGA_COMETE_BUFFER:			// 2
-					return TCompeteBuffer;				
+					return TCometeBuffer;				
 				case UP_TLV_CLIENT_INFO:				// 3
 					return TClientInfo;
 				case UP_TLV_MATCH_TICK_KEY:				// 4
@@ -90,8 +99,16 @@ package packet.game.tlv
 					return null;
 				case DN_TLV_GAME_SCORE_MSG:				// 10015
 					return GameScoreValue;
+				case SO_UP_TLV_TILES_KEY:
+					return TTilesInfo;
+				case SO_UP_TLV_TIMER_KEY:
+					return TTimerInfo;
+				case SO_UP_TLV_DEALER_KEY:
+					return TDealerInfo;
+				case SO_UP_TLV_MULTIPLE_KEY:
+					return TMultipleInfo;					
 				default:
-					throw new Error("typeTLV [" + typeTLV + "] NOT Match any TLVValue.");
+					throw new Error("tlvType [" + tlvType + "] NOT Match any TLVValue.");
 			}
 		}
 	}

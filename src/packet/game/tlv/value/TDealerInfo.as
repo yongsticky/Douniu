@@ -11,9 +11,7 @@ package packet.game.tlv.value
 		public function TDealerInfo()
 		{
 			super();
-		}
-		
-		
+		}		
 		
 		override public function pack(bytes:ByteArray) : void
 		{

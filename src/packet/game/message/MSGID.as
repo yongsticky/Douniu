@@ -1,11 +1,12 @@
 package packet.game.message
 {
 	
-	import packet.game.message.Login.Response_Login;	
+	import packet.game.message.Login.Response_Login;
 	import packet.game.message.Logout.Response_Logout;
-	import packet.game.message.Notify.Response_GameNotify;	
-	import packet.game.message.Ready.Response_Ready;	
-	import packet.game.message.Sitdown.Response_Sitdown;	
+	import packet.game.message.Notify.Response_GameNotify;
+	import packet.game.message.Play.Response_Play;
+	import packet.game.message.Ready.Response_Ready;
+	import packet.game.message.Sitdown.Response_Sitdown;
 	import packet.game.message.Standup.Response_Standup;
 	import packet.game.message.WrapperMessage.Response_WrapperMessage;
 
@@ -28,6 +29,7 @@ package packet.game.message
 		public static const RESPONSE_STANDUP:int = 15804;
 		public static const RESPONSE_GAMEEVENT:int = 15809;
 		public static const RESPONSE_READY:int = 15810;
+		public static const RESPONSE_PLAY:int = 15815;
 
 		public static const RESPONSE_WRAPPER_MESSAGE:int = 15814;
 		public static const RESPONSE_SITDOWN_FROM_VIEW:int = 15816;
@@ -57,6 +59,8 @@ package packet.game.message
 					return Response_Ready;	
 				case RESPONSE_GAMEEVENT:
 					return Response_GameNotify;
+				case RESPONSE_PLAY:
+					return Response_Play;
 				default:
 					throw new Error("msgId ["+ msgId+"] NOT Match any Response.");					
 			}

@@ -15,14 +15,7 @@ package packet.game.tlv.value
 			super();
 
 			game_score_vec = new Vector.<Int64>(MAX_GAME_SCORE_NUM);
-		}
-		
-		/*
-		override public function getValueType() : int
-		{
-			return TLVType.DN_TLV_GAME_SCORE_MSG;
-		}
-		*/
+		}		
 
 		override public function pack(bytes:ByteArray) : void
 		{

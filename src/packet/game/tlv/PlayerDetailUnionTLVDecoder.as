@@ -8,33 +8,32 @@ package packet.game.tlv
 	
 	import factory.NiuObjectFactory;
 
-
-	public final class UnionTLVDecoder
+	public class PlayerDetailUnionTLVDecoder
 	{
 		private var _logger:ILogger;
 		
-		public function UnionTLVDecoder(inner:PrivateInner)
+		public function PlayerDetailUnionTLVDecoder()
 		{
-			_logger = Logger.createLogger(UnionTLVDecoder, LEVEL.INFO);
+			_logger = Logger.createLogger(PlayerDetailUnionTLVDecoder, LEVEL.INFO);
 		}
 		
-		private static var _instance:UnionTLVDecoder = null;
-		public static function instance() : UnionTLVDecoder
+		private static var _instance:PlayerDetailUnionTLVDecoder = null;
+		public static function instance() : PlayerDetailUnionTLVDecoder
 		{
 			if (!_instance)
 			{
-				_instance = new UnionTLVDecoder(new PrivateInner());
+				_instance = new PlayerDetailUnionTLVDecoder(new PrivateInner());
 			}
 			
 			return _instance;
 		}
-
+		
 		public function decode(bytes:ByteArray) : UnionTLV
 		{
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();			
 			
 			var tlvType:int = peekTLVType(bytes);
-			var tlvValue:TLVValue = _factory.createInstance(TLVType.TLVTypeToClass(tlvType));
+			var tlvValue:TLVValue = _factory.createInstance(PlayerDetailTLVType.TLVTypeToClass(tlvType));
 			if (tlvValue)
 			{
 				var uTLV:UnionTLV = _factory.createInstance(UnionTLV) as UnionTLV;
@@ -44,7 +43,7 @@ package packet.game.tlv
 					
 					uTLV.unpack(bytes);	
 					
-					_logger.log("decode tlv, type:[",tlvType,"]", LEVEL.INFO);
+					_logger.log("decode playerdetail tlv, type:[",tlvType,"]", LEVEL.INFO);
 				}
 				else
 				{
@@ -56,14 +55,14 @@ package packet.game.tlv
 			
 			throw new Error("TLV [type=" + tlvType + "] NOT EXIST!");
 		}
-
+		
 		public function peekTLVType(bytes:ByteArray) : int
 		{
 			var tlvType:int = bytes.readShort();
 			bytes.position -= 2;
 			
 			_logger.log("peekTLVType, TLV Type = ", tlvType, LEVEL.INFO);
-
+			
 			return tlvType;
 		}
 	}

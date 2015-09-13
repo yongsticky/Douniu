@@ -4,8 +4,6 @@ package view.scene.table.widget
 	
 	import resource.ResManager;
 	
-	import starling.textures.Texture;
-	
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
@@ -13,31 +11,56 @@ package view.scene.table.widget
 	{		
 		private static const MAX_CARDS_NUM:int = 5;
 		
+		private var COLOR_TO_STR:Array = ["hei", "hong", "mei", "fang"];
+		
+		private var _pokers:Vector.<ExImage>;
+		
 		public function Widget_OtherPlayerCards(name:String = null)
 		{
-			super(name);			
+			super(name);
+			
+			_pokers = new Vector.<ExImage>(MAX_CARDS_NUM);
 		}
 		
 		override protected function createChildren() : void
-		{
-			var resManager:ResManager = ResManager.instance();				
-			
-			var backSideTexture:Texture = Texture.fromBitmapData(resManager.getResourceDev("poker.bei"));
+		{			
+		}
+		
+		public function setPokers(cards:Vector.<NiuCard>) : void
+		{			
+			var maxCount:int = (cards&&cards.length<MAX_CARDS_NUM) ? cards.length:MAX_CARDS_NUM;
+			var resManager:ResManager = ResManager.instance();
+						
 			var startX:int = 0;
 			for (var i:int = 0; i < MAX_CARDS_NUM; i++)
-			{
-				var c:ExImage = new ExImage(backSideTexture);
+			{				
+				var c:ExImage = new ExImage(getPokerResource(cards ? cards[i]:null));
 				c.y = 0;
-				c.x = startX;				
+				c.x = startX;
 				addChild(c);
 				
-				startX += 16;
-			}
-		}		
+				if (i == 2 && cards && cards[i])
+				{
+					startX += 16;
+				}
 				
-		public function setCardShow(index:int, show:Boolean, card:NiuCard) : void
+				startX += 16;
+			}			
+		}
+		
+		private function getPokerResource(card:NiuCard) : *
 		{
+			var res:*;
+			if (card)
+			{
+				res = ResManager.instance().getResourceDev("poker." + COLOR_TO_STR[card.color] + "." + card.number.toString());
+			}
+			else
+			{
+				res = ResManager.instance().getResourceDev("poker.bei");
+			}
 			
+			return res;
 		}
 	}
 }

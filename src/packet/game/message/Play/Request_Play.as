@@ -49,7 +49,7 @@ package packet.game.message.Play
 			bytes.position = posEnd;
 		}
 		
-		override public function dispose() : void
+		public function dispose() : void
 		{
 			if (tv_data)
 			{

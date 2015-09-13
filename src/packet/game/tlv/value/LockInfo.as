@@ -1,7 +1,7 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-		
+	
 	import packet.game.tlv.TLVValue;
 
 	public class LockInfo extends TLVValue
@@ -10,20 +10,15 @@ package packet.game.tlv.value
 		public var locked_server_id:int;		// short(2)
 		public var locked_room_id:int;			// short(2)
 		public var extend_buf_len:int;			// short(2)
-		public var extend_buf:String;			// char[]
+		public var extend_buf:ByteArray;		// char[]
 
 		public function LockInfo()
 		{
 			super();
+			
+			extend_buf = new ByteArray();
 		}
 		
-		/*
-		override public function getValueType() : int
-		{
-			return TLVType.DN_TLV_LOCK_INFO;
-		}
-		*/
-
 		override public function pack(bytes:ByteArray) : void
 		{
 			super.pack(bytes);
@@ -34,7 +29,7 @@ package packet.game.tlv.value
 			bytes.writeShort(extend_buf_len);
 			if (extend_buf_len > 0)
 			{
-				bytes.writeUTFBytes(extend_buf);
+				bytes.writeBytes(extend_buf, 0, extend_buf_len);
 			}
 			
 			super.adjustPosition(bytes);
@@ -50,10 +45,19 @@ package packet.game.tlv.value
 			extend_buf_len = bytes.readShort();
 			if (extend_buf_len > 0)
 			{
-				extend_buf = bytes.readUTFBytes(extend_buf_len);
+				bytes.readBytes(extend_buf, 0, extend_buf_len);
 			}
 			
 			super.adjustPosition(bytes);
+		}
+		
+		override public function onObjectRecycled() : void
+		{
+			extend_buf.clear();
+			extend_buf_len = 0;
+			lock_type = 0;
+			locked_server_id = 0;
+			locked_room_id = 0;
 		}
 	}
 }

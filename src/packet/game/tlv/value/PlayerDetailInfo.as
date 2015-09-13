@@ -4,9 +4,10 @@ package packet.game.tlv.value
 	
 	import factory.NiuObjectFactory;
 	
+	
 	import packet.game.tlv.TLVValue;
-	import packet.game.tlv.UnionTLV;
-	import packet.game.tlv.UnionTLVDecoder;
+	import packet.game.tlv.UnionTLV;	
+	import packet.game.tlv.PlayerDetailUnionTLVDecoder;
 	import packet.util.Int64;
 
 	public class PlayerDetailInfo extends TLVValue
@@ -36,7 +37,7 @@ package packet.game.tlv.value
 		public var head_url:String;				// char[]
 		public var score:Int64;					// int64(8)
 		public var ident_len:int;				// short(2)
-		public var ident_info:String;			// char[]
+		public var ident_info:ByteArray;			// char[]
 		public var using_face_item_id:int;		// int(4)
 		public var player_detail_tlv:UnionTLV;	// UnionTLV
 		
@@ -47,16 +48,10 @@ package packet.game.tlv.value
 			money = new Int64();
 			score = new Int64();
 			avatar_skill_id = new Vector.<int>();
+			ident_info = new ByteArray();
 			
 		}
-		
-		/*
-		override public function getValueType() : int
-		{
-			return TLVType.DN_TLV_PLAYERDETAIL;
-		}
-		*/
-		
+
 		override public function pack(bytes:ByteArray):void
 		{
 			super.pack(bytes);
@@ -100,7 +95,7 @@ package packet.game.tlv.value
 			bytes.writeShort(ident_len);
 			if (ident_len > 0)
 			{
-				bytes.writeUTFBytes(ident_info);
+				bytes.writeBytes(ident_info, 0, ident_len);
 			}
 			bytes.writeInt(using_face_item_id);
 			player_detail_tlv.pack(bytes);
@@ -110,9 +105,7 @@ package packet.game.tlv.value
 		
 		override public function unpack(bytes:ByteArray):void
 		{
-			super.unpack(bytes);
-			
-			var posIn:int = bytes.position;
+			super.unpack(bytes);			
 			
 			player_id = bytes.readInt();
 			player_uin = bytes.readUnsignedInt();
@@ -154,11 +147,11 @@ package packet.game.tlv.value
 			ident_len = bytes.readShort();
 			if (ident_len > 0)
 			{
-				ident_info = bytes.readUTFBytes(ident_len);
+				bytes.readBytes(ident_info, 0, ident_len);
 			}
 			using_face_item_id = bytes.readInt();
-			player_detail_tlv = UnionTLVDecoder.instance().decode(bytes);
-			bytes.position = posIn + value_len;	
+			player_detail_tlv = PlayerDetailUnionTLVDecoder.instance().decode(bytes);
+			
 			
 			super.adjustPosition(bytes);
 		}

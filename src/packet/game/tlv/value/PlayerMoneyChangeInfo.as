@@ -18,14 +18,7 @@ package packet.game.tlv.value
 			money_change_value = new Int64();
 			money_cur_value = new Int64();
 		}
-		
-		/*
-		override public function getValueType() : int
-		{
-			return TLVType.DN_TLV_MONEY_CHANGE_INFO;
-		}
-		*/
-
+				
 		override public function pack(bytes:ByteArray) : void
 		{
 			super.pack(bytes);

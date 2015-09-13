@@ -5,6 +5,7 @@ package packet.game.tv
 	import factory.NiuObjectFactory;
 	
 	import packet.game.tlv.UnionTLV;
+	import packet.game.tlv.UnionTLVDecoder;
 
 	public class TVValue
 	{
@@ -30,19 +31,29 @@ package packet.game.tv
 		
 		public function unpack(bytes:ByteArray) : void
 		{
+			tlv_num = bytes.readShort();
 			
+			if (tlv_num > 0)
+			{				
+				var _uTLVDecoder:UnionTLVDecoder = UnionTLVDecoder.instance();		
+				for (var i:int = 0; i < tlv_num; i++)
+				{
+					var uTLV:UnionTLV = _uTLVDecoder.decode(bytes);
+					tlv_vec.push(uTLV);
+				}
+			}
 		}
 		
 		public function dispose() : void
 		{
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
-			for each(var item:UnionTV in tlv_vec)
-			{
-				item.dispose();
+			for each(var item:UnionTLV in tlv_vec)
+			{				
 				_factory.destroyInstance(item);
 			}
 			
 			tlv_vec.length = 0;
+			tlv_num = 0;
 		}
 		
 		

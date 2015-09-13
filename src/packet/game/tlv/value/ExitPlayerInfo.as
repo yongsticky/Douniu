@@ -12,14 +12,7 @@ package packet.game.tlv.value
 		{
 			super();			
 		}
-		
-		/*
-		override public function getValueType() : int
-		{
-			return TLVType.DN_TLV_EXIT_PLAYER_INFO;
-		}
-		*/
-		
+				
 		override public function pack(bytes:ByteArray) : void
 		{
 			super.pack(bytes);

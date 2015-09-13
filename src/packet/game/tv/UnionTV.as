@@ -2,13 +2,15 @@ package packet.game.tv
 {
 	import flash.utils.ByteArray;
 	
+	import camu.object.interfaces.IObjectRecycled;
+	
 	import factory.NiuObjectFactory;
 
-	public class UnionTV
+	public class UnionTV implements IObjectRecycled
 	{
-		public var value_type:int;				// int(4)
-		public var error_no:int;				// int(4)
-		public var tv_value:TVValue;			// ?:
+		protected var value_type:int;				// int(4)
+		protected var error_no:int;				// int(4)
+		protected var tv_value:TVValue;			// ?:
 		
 		public function UnionTV(value:TVValue = null)
 		{
@@ -57,8 +59,16 @@ package packet.game.tv
 		
 		public function unpack(bytes:ByteArray) : void
 		{
+			value_type = bytes.readInt();
+			error_no = bytes.readInt();
 			
+			tv_value.unpack(bytes);
 		}
+		
+		public function onObjectRecycled() : void
+		{			
+			dispose();
+		}		
 		
 		public function dispose() : void
 		{

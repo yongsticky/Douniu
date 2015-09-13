@@ -110,6 +110,7 @@ package server
 			
 			printResponseResult(resp);			
 
+			/*
 			var readyRequest:Request_Ready = NiuObjectFactory.instance().createInstance(Request_Ready);
 				
 			readyRequest.csHeader.dialog_id = resp.csHeader.dialog_id;
@@ -119,6 +120,7 @@ package server
 			readyRequest.table_id = resp.table_id;		
 				
 			NiuRequestSender.instance().sendRequest(readyRequest);
+			*/
 		}
 		
 		protected function onReceive_Ready(event:PacketEvent) : void

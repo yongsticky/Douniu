@@ -1,10 +1,11 @@
 package packet.game.tv.value
 {
 	import packet.game.tv.TVValue;
+	import flash.utils.ByteArray;
 	
 	public class RequestBet extends TVValue
 	{
-		public var times:int;			// Byte(1) 
+		public var multiple:int;			// Byte(1) 
 		
 		public function RequestBet()
 		{
@@ -14,7 +15,7 @@ package packet.game.tv.value
 		
 		override public function pack(bytes:ByteArray) : void
 		{
-			bytes.writeByte(times);
+			bytes.writeByte(multiple);
 
 			super.pack(bytes);
 		}

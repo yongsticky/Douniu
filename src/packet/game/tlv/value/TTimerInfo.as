@@ -4,14 +4,12 @@ package packet.game.tlv.value
 	
 	import packet.game.tlv.TLVValue;
 	
-	public class TTimesInfo extends TLVValue
+	public class TTimerInfo extends TLVValue
 	{
-		public var type_:int;				// char(1)
-		public var times_num:int;			// short(2)
-		public var times:String;			// char[]
+		public var type_:int;			// char(1)
+		public var time_:int;			// char(1)
 		
-		
-		public function TTimesInfo()
+		public function TTimerInfo()
 		{
 			super();
 		}
@@ -21,11 +19,7 @@ package packet.game.tlv.value
 			super.pack(bytes);
 			
 			bytes.writeByte(type_);
-			bytes.writeShort(times_num);
-			if (times_num > 0)
-			{
-				bytes.writeUTFBytes(times);
-			}
+			bytes.writeByte(time_);
 			
 			super.adjustPosition(bytes);
 		}
@@ -35,11 +29,7 @@ package packet.game.tlv.value
 			super.unpack(bytes);
 			
 			type_ = bytes.readByte();
-			times_num = bytes.readShort();
-			if (times_num > 0)
-			{
-				times = bytes.readUTFBytes(times_num);
-			}			
+			time_ = bytes.readByte();
 			
 			super.adjustPosition(bytes);
 		}

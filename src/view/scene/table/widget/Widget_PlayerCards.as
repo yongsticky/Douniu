@@ -109,8 +109,8 @@ class Poker extends ExImage
 	private var COLOR_TO_STR:Array = ["hei", "hong", "mei", "fang"];
 	
 	public function Poker(card:NiuCard)
-	{			
-		super(ResManager.instance().getResourceDev("poker." + COLOR_TO_STR[card.color] + "." + card.number.toString()));
+	{	
+		super(getPokerResource(card));
 	}
 	
 	public function set selected(selected:Boolean) : void
@@ -122,14 +122,24 @@ class Poker extends ExImage
 	{
 		return _selected;
 	}
-	
-	public function set card(card:NiuCard) : void
-	{
-		_card = card;
-	}
-	
+		
 	public function get card() : NiuCard
 	{
 		return _card;
+	}
+	
+	private function getPokerResource(card:NiuCard) : *
+	{
+		var res:*;
+		if (card)
+		{
+			res = ResManager.instance().getResourceDev("poker." + COLOR_TO_STR[card.color] + "." + card.number.toString());
+		}
+		else
+		{
+			res = ResManager.instance().getResourceDev("poker.bei");
+		}
+		
+		return res;
 	}
 }

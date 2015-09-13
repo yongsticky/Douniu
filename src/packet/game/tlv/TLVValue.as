@@ -31,7 +31,7 @@ package packet.game.tlv
 			}
 			
 			value_len = bytes.readShort();			
-			if (bytes.bytesAvailable < value_len - 2)
+			if (bytes.bytesAvailable < value_len)
 			{
 				throw new Error("TLVValue Length Error.");
 			}

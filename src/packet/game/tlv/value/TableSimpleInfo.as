@@ -1,11 +1,12 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-		
+	
 	import packet.game.tlv.TLVValue;
 
 	public class TableSimpleInfo extends TLVValue
 	{
+		public var table_id:int;			// short(2)
 		public var table_status:int;		// short(2)
 		public var table_seat_num:int;		// short(2)
 		public var cur_player_num:int;		// short(2)
@@ -16,17 +17,11 @@ package packet.game.tlv.value
 			super();
 		}
 		
-		/*
-		override public function getValueType() : int
-		{
-			return TLVType.DN_TLV_TABLE_SIMPLE_INFO;
-		}
-		*/
-
 		override public function pack(bytes:ByteArray) : void
 		{
 			super.pack(bytes);
 
+			bytes.writeShort(table_id);
 			bytes.writeShort(table_status);
 			bytes.writeShort(table_seat_num);
 			bytes.writeShort(cur_player_num);
@@ -39,6 +34,7 @@ package packet.game.tlv.value
 		{
 			super.unpack(bytes);
 
+			table_id = bytes.readShort();
 			table_status = bytes.readShort();
 			table_seat_num = bytes.readShort();
 			cur_player_num = bytes.readShort();

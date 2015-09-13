@@ -54,7 +54,7 @@ package view
 			return _instance;
 		}		
 		
-		public function sendNotification(name:String, data:Object) : void
+		public function sendNotification(name:String, data:Object = null) : void
 		{			
 			_mediator.sendNotification(NiuNotification.createNotification(name, data));
 		}
@@ -65,16 +65,13 @@ package view
 			
 			_logger.log("initialize called.", LEVEL.INFO);
 						
-			//connectGameServer();
+			NiuResponseReceiver.instance().initReceiver();
 			
-			//NiuResponseReceiver.instance().initReceiver();			
-			
-			sendNotification(NiuHandlerConstant.ENTER_HALL, null);
+			connectGameServer();						
 		}
 		
 		override protected function createChildren() : void
-		{
-			//switchToScene(new Scene_Hall());
+		{			
 		}
 		
 		private function connectGameServer() : void
@@ -94,20 +91,9 @@ package view
 		
 		protected function onConnect(event:ConnectorEvent):void
 		{
-			_logger.log("Connect Server Succ.", LEVEL.INFO);	
-			
-			
-			var loginRequest:Request_Login = NiuObjectFactory.instance().createInstance(Request_Login);			
-
-			loginRequest.room_id = 76;
-			loginRequest.uin = loginRequest.csHeader.uin = 700033;
-			loginRequest.request_src = 0;
-			loginRequest.login_life_style = 0;
-			loginRequest.room_id = 76;
-			loginRequest.tlv_num = 0;
-			loginRequest.imei_len = 0;
-			
-			NiuRequestSender.instance().sendRequest(loginRequest);
+			_logger.log("Connect Server Succ.", LEVEL.INFO);				
+						
+			sendNotification(NiuHandlerConstant.ENTER_HALL);			
 		}
 
 		override protected function layoutChildren() : void

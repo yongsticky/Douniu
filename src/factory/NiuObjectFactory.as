@@ -10,6 +10,8 @@ package factory
 	import packet.game.message.Logout.Response_Logout;
 	import packet.game.message.Notify.Response_GameNotify;
 	import packet.game.message.Notify.TGameEvent;
+	import packet.game.message.Play.Request_Play;
+	import packet.game.message.Play.Response_Play;
 	import packet.game.message.Ready.Request_Ready;
 	import packet.game.message.Ready.Response_Ready;
 	import packet.game.message.Sitdown.Request_Sitdown;
@@ -30,18 +32,28 @@ package factory
 	import packet.game.tlv.value.T3DMJPlayInfo;
 	import packet.game.tlv.value.TAppointmentKey;
 	import packet.game.tlv.value.TClientInfo;
-	import packet.game.tlv.value.TCompeteBuffer;
+	import packet.game.tlv.value.TCometeBuffer;
 	import packet.game.tlv.value.TDNPlayInfo;
 	import packet.game.tlv.value.TDealerInfo;
 	import packet.game.tlv.value.TMatchTickKey;
+	import packet.game.tlv.value.TMultipleInfo;
 	import packet.game.tlv.value.TPlayerAvatarChangeInfo;
 	import packet.game.tlv.value.TPlayerCountNormalItemChangeInfo;
 	import packet.game.tlv.value.TPlayerKickOutInfo;
 	import packet.game.tlv.value.TTilesInfo;
-	import packet.game.tlv.value.TTimeInfo;
-	import packet.game.tlv.value.TTimesInfo;
+	import packet.game.tlv.value.TTimerInfo;
 	import packet.game.tlv.value.TableSimpleInfo;
 	import packet.game.tv.UnionTV;
+	import packet.game.tv.value.FinishInfo;
+	import packet.game.tv.value.NotifyBet;
+	import packet.game.tv.value.NotifyBetDetail;
+	import packet.game.tv.value.NotifyDealerDetail;
+	import packet.game.tv.value.NotifyFinish;
+	import packet.game.tv.value.NotifyGive;
+	import packet.game.tv.value.NotifyRobDealer;
+	import packet.game.tv.value.RequestBet;
+	import packet.game.tv.value.RequestDealer;
+	import packet.game.tv.value.RequestGive;
 		
 		
 	public class NiuObjectFactory extends ObjectFactory
@@ -62,12 +74,12 @@ package factory
 			registerClass(Request_Standup);
 			registerClass(Response_Standup);
 			registerClass(Response_GameNotify);
+			registerClass(Request_Play);
+			registerClass(Response_Play);
 			
-			registerClass(UnionTLV);
-			registerClass(UnionTV);
-			
+			registerClass(UnionTLV);			
 			registerClass(TAppointmentKey);
-			registerClass(TCompeteBuffer);
+			registerClass(TCometeBuffer);
 			registerClass(TClientInfo);
 			registerClass(PlayerDetailInfo);			
 			registerClass(PlayerViewSeatInfo);
@@ -85,12 +97,25 @@ package factory
 			registerClass(PlayerCapability);			
 			registerClass(T3DMJPlayInfo);			
 			registerClass(TDNPlayInfo);			
-			registerClass(TGameEvent);
-			registerClass(TTilesInfo);
-			registerClass(TTimesInfo);
-			registerClass(TDealerInfo);
-			registerClass(TTimeInfo);
+			registerClass(TGameEvent);						
 			
+			registerClass(UnionTV);
+			registerClass(RequestBet);
+			registerClass(RequestDealer);
+			registerClass(RequestGive);
+			registerClass(NotifyBet);
+			registerClass(NotifyBetDetail);
+			registerClass(NotifyDealerDetail);
+			registerClass(NotifyFinish);
+			registerClass(NotifyGive);
+			registerClass(NotifyRobDealer);			
+			
+			registerClass(TTilesInfo);
+			registerClass(TMultipleInfo);
+			registerClass(TDealerInfo);
+			registerClass(TTimerInfo);
+			registerClass(FinishInfo);
+						
 			registerClass(NiuNotification);
 		}
 		

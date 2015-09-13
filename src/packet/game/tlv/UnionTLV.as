@@ -47,7 +47,7 @@ package packet.game.tlv
 			
 			value_type = bytes.readShort();		
 			
-			value.unpack(bytes);			
+			tlv_value.unpack(bytes);			
 		}
 
 		public function pack(bytes:ByteArray) : void

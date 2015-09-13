@@ -16,9 +16,11 @@ package packet.protocol
 		override public function onObjectRecycled() : void
 		{			
 			super.onObjectRecycled();
+						
+			_isWrapperedMessage = false;
 			
-			_isWrapperedMessage = false;		
-		}
+			
+		}		
 		
 		public function set isWrapperedMessage(wrappered:Boolean) : void
 		{
