@@ -43,7 +43,8 @@ package server
 			{
 				dispatchPacketEvent(responsePacket);
 				
-				deleteObject(responsePacket);
+				// xiaoyong
+				//deleteObject(responsePacket);
 			}
 		}
 		

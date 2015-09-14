@@ -2,7 +2,10 @@ package packet.game.tlv
 {
 	import flash.utils.ByteArray;
 	
+	import camu.logger.Logger;
 	import camu.object.interfaces.IObjectRecycled;
+	import camu.logger.ILogger;
+
 
 	public class TLVValue implements IObjectRecycled
 	{
@@ -34,9 +37,7 @@ package packet.game.tlv
 			if (bytes.bytesAvailable < value_len)
 			{
 				throw new Error("TLVValue Length Error.");
-			}
-			
-			//end_pos = bytes.position + value_len;
+			}			
 		}
 		
 		protected function adjustPosition(bytes:ByteArray) : void
@@ -56,6 +57,11 @@ package packet.game.tlv
 		public function onObjectRecycled() : void
 		{
 			
+		}
+
+		public function printValue(logger:ILogger) : void
+		{
+
 		}
 		 
 	}

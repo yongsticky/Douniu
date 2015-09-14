@@ -14,9 +14,13 @@ package view.scene.table.widget
 		private var _num:ExImage;
 		private var _curTime:int;
 		
+		private var _running:Boolean;
+		
 		public function Widget_Timer(name:String = null)
 		{
-			super(name);			
+			super(name);
+			
+			_running = false;
 		}
 		
 		override protected function createChildren() : void
@@ -36,6 +40,11 @@ package view.scene.table.widget
 			_num = num;
 			addChild(num);
 		}
+		
+		public function get running() : Boolean
+		{
+			return _running;
+		}
 				
 		public function startTimer(time:int) : void
 		{	
@@ -45,10 +54,17 @@ package view.scene.table.widget
 			
 			resumeTimer();					
 		}
+		
+		public function stopTimer() : void
+		{
+			_curTime = 0;		
+			
+			visible = false;
+		}
 						
 		protected function onCountdownAnimationComplete() : void
 		{
-			getOwnerLayer().juggler.removeTweens(this);
+			//getOwnerLayer().juggler.removeTweens(this);
 			
 			if (_curTime > 0)
 			{
@@ -59,7 +75,7 @@ package view.scene.table.widget
 			}
 			else
 			{
-				visible = true;
+				_running = false;
 			}
 		}
 		
@@ -75,8 +91,12 @@ package view.scene.table.widget
 			var tn:Tween = new Tween(_num, 1, Transitions.EASE_IN_OUT_ELASTIC);
 			tn.scaleTo(0.8);	
 			tn.onComplete = onCountdownAnimationComplete;
+			//tn.onCompleteArgs = [tn];
 			
 			getOwnerLayer().juggler.add(tn);
+			
+			
+			_running = true;
 		}
 		
 	}

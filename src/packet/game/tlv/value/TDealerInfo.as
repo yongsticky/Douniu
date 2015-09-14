@@ -2,6 +2,9 @@ package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
 	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import packet.game.tlv.TLVValue;	
 	
 	public class TDealerInfo extends TLVValue
@@ -29,6 +32,14 @@ package packet.game.tlv.value
 			dealer = bytes.readByte();
 			
 			super.adjustPosition(bytes);
+		}
+
+		override public function printValue(logger:ILogger) : void
+		{
+			logger.log(this, "**************************************", LEVEL.INFO);
+			logger.log(this, "print TDealerInfo value", LEVEL.INFO);
+			logger.log(this, "dealer:", dealer, LEVEL.INFO);			
+			logger.log(this, "**************************************", LEVEL.INFO);
 		}
 	}
 }

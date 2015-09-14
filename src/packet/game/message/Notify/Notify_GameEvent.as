@@ -10,12 +10,12 @@ package packet.game.message.Notify
 	import packet.game.tlv.UnionTLV;
 	import packet.protocol.NiuResponsePacket;
 	
-	public class Response_GameNotify extends NiuResponsePacket
+	public class Notify_GameEvent extends NiuResponsePacket
 	{
 		public var game_event_num:int;						// short(2)
 		public var game_event_vec:Vector.<TGameEvent>;		// ?
 		
-		public function Response_GameNotify()
+		public function Notify_GameEvent()
 		{
 			super();
 			
@@ -53,7 +53,7 @@ package packet.game.message.Notify
 		override public function printResponse(logger:ILogger) : void
 		{
 			logger.log(this, "***********************************************", LEVEL.INFO);
-			logger.log(this, "print Response_GameNotify.", LEVEL.INFO);
+			logger.log(this, "print Notify_GameEvent.", LEVEL.INFO);
 			
 			logger.log(this, "game_event_num:", game_event_num, LEVEL.INFO);
 			
@@ -67,7 +67,8 @@ package packet.game.message.Notify
 				logger.log(this, "TGameEvent.other_info_num:", ge.other_info_num, LEVEL.INFO);
 				for each(var tlv:UnionTLV in ge.other_info_vec)
 				{
-					logger.log(this, "TGameEvent.other_info_vec.UnionTLV.valueType", tlv.valueType, LEVEL.INFO);	
+					logger.log(this, "TGameEvent.other_info_vec.UnionTLV.valueType", tlv.valueType, LEVEL.INFO);
+					tlv.value.printValue(logger);
 				}			
 			}			
 			

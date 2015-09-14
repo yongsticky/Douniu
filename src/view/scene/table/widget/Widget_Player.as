@@ -16,7 +16,7 @@ package view.scene.table.widget
 		private var _playerReadyButtonGroup:Widget_ReadyButtonGroup;		// 玩家准备操作按钮
 		private var _playerReadyState:ExImage;								// 玩家准备状态
 		private var _playerRobState:ExImage;								// 玩家抢庄状态
-		private var _playerRobButtonGroup:Widget_RobButtonGroup;			// 玩家抢庄倍数操作按钮组
+		private var _playerRobButtonGroup:Widget_RobDealerButtonGroup;			// 玩家抢庄倍数操作按钮组
 		private var _playerBankerState:ExImage;							// 玩家获得庄家状态		
 		private var _playerBetButtonGroup:Widget_BetButtonGroup;			// 玩家押注倍数操作按钮
 		private var _playerCommitButtonGroup:Widget_CommitButtonGroup;		// 玩家提交结果按钮组
@@ -57,7 +57,7 @@ package view.scene.table.widget
 			_playerRobState.visible = false;			
 			addChild(_playerRobState);
 			
-			_playerRobButtonGroup = new Widget_RobButtonGroup();
+			_playerRobButtonGroup = new Widget_RobDealerButtonGroup();
 			_playerRobButtonGroup.x = 180;
 			_playerRobButtonGroup.y = 0;
 			_playerRobButtonGroup.visible = false;
@@ -70,6 +70,8 @@ package view.scene.table.widget
 			addChild(_playerBankerState);
 			
 			_playerBetButtonGroup = new Widget_BetButtonGroup();
+			_playerBetButtonGroup.x = 180;
+			_playerBetButtonGroup.y = 0;
 			_playerBetButtonGroup.visible = false;
 			addChild(_playerBetButtonGroup);
 			
@@ -113,9 +115,14 @@ package view.scene.table.widget
 			return _playerReadyButtonGroup;
 		}
 		
-		public function get playerRobButtonGroup() : Widget_RobButtonGroup
+		public function get playerRobButtonGroup() : Widget_RobDealerButtonGroup
 		{
 			return _playerRobButtonGroup;
+		}
+		
+		public function get playerDealerFlag() : ExImage
+		{
+			return _playerBankerState;
 		}
 		
 		public function get playerBetButtonGroup() : Widget_BetButtonGroup

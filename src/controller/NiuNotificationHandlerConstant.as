@@ -9,10 +9,12 @@ package controller
 		public static const SELECT_ROOM:String = "select_room";
 		public static const SITDOWN_SUCCESS:String = "sitdown_success";
 		public static const GAME_NOTIFY:String = "game_notify";
+		public static const RESPONSE_PLAY:String = "response_play";
+		public static const SELECT_ROB_DEALER_X:String = "select_rob_dealer_x";
+		public static const SELECT_BET_X:String = "select_bet_x";
 		
-		public static const PLAYER_ENTER:String = "player_enter";		
-		public static const OTHERPLAYER_ENTER:String = "otherplayer_enter";
-		
+		public static const USER_LOGOUT:String = "user_logout";
+				
 				
 		public function NiuNotificationHandlerConstant()
 		{

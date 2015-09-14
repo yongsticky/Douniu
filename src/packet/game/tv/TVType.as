@@ -6,8 +6,9 @@ package packet.game.tv
 	import packet.game.tv.value.NotifyFinish;
 	import packet.game.tv.value.NotifyGive;
 	import packet.game.tv.value.NotifyRobDealer;
+	import packet.game.tv.value.NotifyStartTimer;
 	import packet.game.tv.value.RequestBet;
-	import packet.game.tv.value.RequestDealer;
+	import packet.game.tv.value.RequestRobDealer;
 	import packet.game.tv.value.RequestGive;
 
 	/*
@@ -35,6 +36,7 @@ package packet.game.tv
 		public static const SO_NOTIFY_BET_DETAIL:int = 6;
 		public static const SO_NOTIFY_GIVE:int = 7;
 		public static const SO_NOTIFY_FINISH:int = 9;
+		public static const SO_NOTIFY_START_TIME:int = 10;
 		
 		public function TVType()
 		{
@@ -47,7 +49,7 @@ package packet.game.tv
 			switch(tvType)
 			{
 				case SO_REQUEST_DEALER:
-					return RequestDealer;
+					return RequestRobDealer;
 				case SO_REQUEST_BET:
 					return RequestBet;
 				case SO_REQUEST_GIVE:
@@ -64,6 +66,8 @@ package packet.game.tv
 					return NotifyGive;
 				case SO_NOTIFY_FINISH:
 					return NotifyFinish;
+				case SO_NOTIFY_START_TIME:
+					return NotifyStartTimer;
 				default:
 					throw new Error("tvType [" + tvType + "] NOT Match any TLVValue.");
 			}

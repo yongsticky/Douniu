@@ -1,11 +1,14 @@
 package view.scene.table.layer
 {
+	import controller.NiuNotificationHandlerConstant;
+	
+	import resource.ResManager;
+	
 	import starling.display.Button;
 	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.textures.Texture;
 	
-	import resource.ResManager;
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExLayer;
@@ -52,7 +55,9 @@ package view.scene.table.layer
 		
 		private function onTrigered(event:Event) : void
 		{
-			NiuDirector.instance().pushScene(new Scene_Setting());			
+			//NiuDirector.instance().pushScene(new Scene_Setting());
+			
+			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.USER_LOGOUT);
 		}
 	}
 }

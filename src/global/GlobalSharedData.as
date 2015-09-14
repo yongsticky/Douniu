@@ -6,6 +6,8 @@ package global
 		private var _playerId:int;
 		private var _roomId:int;
 		private var _tableId:int;
+		private var _seatId:int;
+		private var _dealer:int;
 		
 		public function GlobalSharedData(inner:PrivateInner)
 		{
@@ -60,6 +62,26 @@ package global
 		public function get tableId() : int
 		{
 			return _tableId;
+		}
+		
+		public function set seatId(id:int) : void
+		{
+			_seatId = id;
+		}
+		
+		public function get seatId() : int
+		{
+			return _seatId;
+		}
+		
+		public function set dealer(dealer:int) : void
+		{
+			_dealer = dealer;
+		}
+		
+		public function get dealer() : int
+		{
+			return _dealer;
 		}
 	}
 }

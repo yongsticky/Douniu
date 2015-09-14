@@ -2,6 +2,9 @@ package packet.game.tv.value
 {
 	import flash.utils.ByteArray;
 	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import packet.game.tv.TVValue;
 	
 	public class NotifyDealerDetail extends TVValue
@@ -25,6 +28,19 @@ package packet.game.tv.value
 			multiple = bytes.readByte();
 			
 			super.unpack(bytes);
-		}		
+		}
+
+		override public function printValue(logger:ILogger) : void
+		{		
+			logger.log(this, "**************************************", LEVEL.INFO);			
+			logger.log(this, "print NotifyDealerDetail value", LEVEL.INFO);
+			
+			logger.log(this, "seat_id:", seat_id, LEVEL.INFO);
+			logger.log(this, "multiple:", int(multiple), LEVEL.INFO);
+			
+			super.printValue(logger);
+
+			logger.log(this, "**************************************", LEVEL.INFO);
+		}
 	}
 }

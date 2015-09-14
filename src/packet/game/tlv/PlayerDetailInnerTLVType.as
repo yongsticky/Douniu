@@ -3,12 +3,12 @@ package packet.game.tlv
 	import packet.game.tlv.value.T3DMJPlayInfo;
 	import packet.game.tlv.value.TDNPlayInfo;
 
-	public class PlayerDetailTLVType
+	public class PlayerDetailInnerTLVType
 	{
 		public static const EN_PLAYERDETAIL_TLV_3DMJ:int = 1;
 		public static const EN_PLAYERDETAIL_TLV_DN:int = 2;
 		
-		public function PlayerDetailTLVType()
+		public function PlayerDetailInnerTLVType()
 		{
 			throw new Error("Abstract class, you must extend it.");
 		}

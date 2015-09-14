@@ -2,6 +2,9 @@ package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
 	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import packet.game.tlv.TLVValue;
 	
 	public class TTimerInfo extends TLVValue
@@ -32,6 +35,15 @@ package packet.game.tlv.value
 			time_ = bytes.readByte();
 			
 			super.adjustPosition(bytes);
+		}
+
+		override public function printValue(logger:ILogger) : void
+		{
+			logger.log(this, "**************************************", LEVEL.INFO);
+			logger.log(this, "print TTimerInfo value", LEVEL.INFO);
+			logger.log(this, "type:", type_, LEVEL.INFO);
+			logger.log(this, "time:", time_, LEVEL.INFO);
+			logger.log(this, "**************************************", LEVEL.INFO);
 		}
 	}
 }

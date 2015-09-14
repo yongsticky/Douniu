@@ -67,20 +67,7 @@ package packet.game.message.Sitdown
 			
 			tlv_num = 0;
 			tlv_vec.length = 0;
-		}
-		
-		/*
-		public var rresult:ResponseResult;			// ?
-		public var room_id:int;						// short(2)
-		public var table_id:int;					// short(2)
-		public var seat_id:int;						// short(2)
-		public var table_seat_num:int;				// short(2)
-		public var cur_player_num:int;				// short(2)
-		public var cur_viewer_num:int;				// short(2)
-		public var tlv_num:int;						// short(2)
-		public var tlv_vec:Vector.<UnionTLV>;		// ?
- 
-		*/
+		}		
 		
 		override public function printResponse(logger:ILogger) : void
 		{
@@ -98,6 +85,7 @@ package packet.game.message.Sitdown
 			for each(var tlv:UnionTLV in tlv_vec)
 			{
 				logger.log(this, "tlvType:", tlv.valueType, LEVEL.INFO);	
+				tlv.value.printValue(logger);
 			}									
 			
 			logger.log(this, "***********************************************", LEVEL.INFO);

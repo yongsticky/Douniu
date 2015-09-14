@@ -2,6 +2,9 @@ package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
 	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import packet.game.tlv.TLVValue;
 	
 	public class TMultipleInfo extends TLVValue
@@ -44,6 +47,19 @@ package packet.game.tlv.value
 			}			
 			
 			super.adjustPosition(bytes);
+		}
+
+		override public function printValue(logger:ILogger) : void
+		{
+			logger.log(this, "**************************************", LEVEL.INFO);
+			logger.log(this, "print TMultipleInfo value", LEVEL.INFO);
+			logger.log(this, "type:", type_, LEVEL.INFO);
+			logger.log(this, "multiple_num:", multiple_num, LEVEL.INFO);
+			for (var i:int = 0; i < multiple_num; ++i)
+			{
+				logger.log(this, "multiple[", i, "] = ", multiple[i], LEVEL.INFO);	
+			}
+			logger.log(this, "**************************************", LEVEL.INFO);
 		}
 	}
 }

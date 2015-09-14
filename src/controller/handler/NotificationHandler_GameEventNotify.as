@@ -9,26 +9,25 @@ package controller.handler
 	import global.GlobalSharedData;
 	
 	import packet.game.message.Notify.GAME_EVENT_ID;
-	import packet.game.message.Notify.Response_GameNotify;
+	import packet.game.message.Notify.Notify_GameEvent;
 	import packet.game.message.Notify.TGameEvent;
 	import packet.game.tlv.TLVType;
 	import packet.game.tlv.UnionTLV;
-	import packet.game.tlv.value.PlayerDetailInfo;
-	
+	import packet.game.tlv.value.PlayerDetailInfo;	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
 	import view.scene.table.layer.Layer_GameTable;
 	
-	public class NotificationHandler_GameNotify extends NiuNotificationHandler
+	public class NotificationHandler_GameEventNotify extends NiuNotificationHandler
 	{
-		public function NotificationHandler_GameNotify(mediator:Mediator)
+		public function NotificationHandler_GameEventNotify(mediator:Mediator)
 		{
 			super(mediator);
 		}
 		
 		override public function execute(notification:Notification) : void
 		{
-			var resp:Response_GameNotify = notification.getData() as Response_GameNotify;
+			var resp:Notify_GameEvent = notification.getData() as Notify_GameEvent;
 			
 			for (var i:int = 0; i < resp.game_event_num; ++i)
 			{
@@ -46,6 +45,12 @@ package controller.handler
 			{
 				case GAME_EVENT_ID.SITDOWN:
 					onEvent_OtherPlayerSitdown(event);
+					break;
+				case GAME_EVENT_ID.GAME_START:
+					onEvent_GameStart(event);
+					break;
+				case GAME_EVENT_ID.GAME_END:
+					onEvent_GameEnd(event);
 					break;
 				default:
 					_logger.log(this, "this event_id[", event.event_id, "] NO MATCH ANY PROCESS HANDLER.", LEVEL.WARNING);
@@ -80,11 +85,11 @@ package controller.handler
 			
 			if (playerDetail)
 			{
-				addPlayerToTable(playerDetail.nick, playerDetail.money.lowPart, playerDetail.seat_id);	
+				addPlayerToTableAndWaitStart(playerDetail.player_uin.toString(), playerDetail.money.lowPart, playerDetail.seat_id);						
 			}			
 		}
 		
-		private function addPlayerToTable(nick:String, chips:int, seatId:int) : void
+		private function addPlayerToTableAndWaitStart(nick:String, chips:int, seatId:int) : void
 		{
 			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (sceneTable)
@@ -92,9 +97,30 @@ package controller.handler
 				var layerTable:Layer_GameTable = sceneTable.getNamedChildByName("table.table") as Layer_GameTable;
 				if (layerTable)
 				{					
-					layerTable.showOtherPlayer(nick, chips, seatId);
+					layerTable.showOtherPlayer(nick, chips, seatId);					
+					layerTable.showTimer(8);
 				}
 			}
+		}		
+		
+		private function onEvent_GameStart(event:TGameEvent) : void
+		{
+			_logger.log(this, "onEvent_GameStart", LEVEL.INFO);
+			
+			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (sceneTable)
+			{
+				var layerTable:Layer_GameTable = sceneTable.getNamedChildByName("table.table") as Layer_GameTable;
+				if (layerTable)
+				{										
+					layerTable.hideTimer();				
+				}
+			}
+		}
+		
+		private function onEvent_GameEnd(event:TGameEvent) : void
+		{
+			_logger.log(this, "onEvent_GameEnd", LEVEL.INFO);
 		}
 	}
 }

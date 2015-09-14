@@ -1,7 +1,10 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-	import packet.game.tlv.TLVValue;
+	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import packet.game.tlv.TLVValue;
 	
 	public class TDNPlayInfo extends TLVValue
@@ -29,6 +32,14 @@ package packet.game.tlv.value
 			vip_level = bytes.readByte();
 			
 			super.adjustPosition(bytes);
+		}
+
+		override public function printValue(logger:ILogger) : void
+		{
+			logger.log(this, "**************************************", LEVEL.INFO);
+			logger.log(this, "print TDNPlayInfo value", LEVEL.INFO);
+			logger.log(this, "vip_level:", vip_level, LEVEL.INFO);			
+			logger.log(this, "**************************************", LEVEL.INFO);
 		}
 	}
 }

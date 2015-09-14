@@ -2,6 +2,9 @@ package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
 	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import packet.game.tlv.TLVValue;
 
 	public class TableSimpleInfo extends TLVValue
@@ -41,6 +44,18 @@ package packet.game.tlv.value
 			cur_viewer_num = bytes.readShort();
 			
 			super.adjustPosition(bytes);
+		}
+
+		override public function printValue(logger:ILogger) : void
+		{
+			logger.log(this, "**************************************", LEVEL.INFO);
+			logger.log(this, "print TableSimpleInfo value", LEVEL.INFO);
+			logger.log(this, "table_id:", table_id, LEVEL.INFO);
+			logger.log(this, "table_status:", table_status, LEVEL.INFO);
+			logger.log(this, "table_seat_num:", table_seat_num, LEVEL.INFO);
+			logger.log(this, "cur_player_num:", cur_player_num, LEVEL.INFO);
+			logger.log(this, "cur_viewer_num:", cur_viewer_num, LEVEL.INFO);
+			logger.log(this, "**************************************", LEVEL.INFO);
 		}
 	}
 }

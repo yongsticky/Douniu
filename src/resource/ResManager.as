@@ -132,7 +132,7 @@ package resource
 			}
 			else
 			{
-				throw new Error("No Found Resource!");
+				throw new Error("No Found Resource["+id+"]");
 			}			
 		}
 

@@ -3,11 +3,11 @@ package packet.game.tv.value
 	import packet.game.tv.TVValue;
 	import flash.utils.ByteArray;
 
-	public class RequestDealer extends TVValue
+	public class RequestRobDealer extends TVValue
 	{
 		public var multiple:int;				// Byte(1)
 				
-		public function RequestDealer()
+		public function RequestRobDealer()
 		{
 			super();
 		}

@@ -50,14 +50,7 @@ package packet.game.tlv.value
 			open_id_len = 0;
 			head_url_len = 0;
 		}
-		
-		/*
-		override public function getValueType() : int
-		{
-			return TLVType.UP_TLV_CLIENT_INFO;
-		}
-		*/
-		
+	
 		override public function pack(bytes:ByteArray) : void
 		{
 			//super.pack(bytes);

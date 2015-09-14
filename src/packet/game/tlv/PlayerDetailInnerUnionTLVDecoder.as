@@ -8,21 +8,21 @@ package packet.game.tlv
 	
 	import factory.NiuObjectFactory;
 
-	public class PlayerDetailUnionTLVDecoder
+	public class PlayerDetailInnerUnionTLVDecoder
 	{
 		protected var _logger:ILogger;
 		
-		public function PlayerDetailUnionTLVDecoder(inner:PrivateInner)
+		public function PlayerDetailInnerUnionTLVDecoder(inner:PrivateInner)
 		{
-			_logger = Logger.createLogger(PlayerDetailUnionTLVDecoder, LEVEL.INFO);
+			_logger = Logger.createLogger(PlayerDetailInnerUnionTLVDecoder, LEVEL.INFO);
 		}
 		
-		private static var _instance:PlayerDetailUnionTLVDecoder = null;
-		public static function instance() : PlayerDetailUnionTLVDecoder
+		private static var _instance:PlayerDetailInnerUnionTLVDecoder = null;
+		public static function instance() : PlayerDetailInnerUnionTLVDecoder
 		{
 			if (!_instance)
 			{
-				_instance = new PlayerDetailUnionTLVDecoder(new PrivateInner());
+				_instance = new PlayerDetailInnerUnionTLVDecoder(new PrivateInner());
 			}
 			
 			return _instance;
@@ -33,7 +33,7 @@ package packet.game.tlv
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();			
 			
 			var tlvType:int = peekTLVType(bytes);
-			var tlvValue:TLVValue = _factory.createInstance(PlayerDetailTLVType.TLVTypeToClass(tlvType));
+			var tlvValue:TLVValue = _factory.createInstance(PlayerDetailInnerTLVType.TLVTypeToClass(tlvType));
 			if (tlvValue)
 			{
 				var uTLV:UnionTLV = _factory.createInstance(UnionTLV) as UnionTLV;

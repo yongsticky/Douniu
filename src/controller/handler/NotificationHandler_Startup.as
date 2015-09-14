@@ -2,8 +2,6 @@ package controller.handler
 {
 	import flash.events.Event;
 	
-	import camu.logger.Logger;
-	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;	

@@ -90,7 +90,8 @@ package packet.game.message.Login
 			logger.log(this, "tlv_num:", tlv_num, LEVEL.INFO);
 			for each(var tlv:UnionTLV in tlv_vec)
 			{
-				logger.log(this, "tlvType:", tlv.valueType, LEVEL.INFO);	
+				logger.log(this, "tlvType:", tlv.valueType, LEVEL.INFO);
+				tlv.value.printValue(logger);
 			}
 			logger.log(this, "control_flag:", control_flag, LEVEL.INFO);
 			logger.log(this, "talk_switch:", talk_switch, LEVEL.INFO);						

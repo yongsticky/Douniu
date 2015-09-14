@@ -31,9 +31,10 @@ package view.scene.table.widget
 		}
 				
 		public function setPokers(cards:Vector.<NiuCard>) : void
-		{				
-			var maxCount:int = cards.length<MAX_CARDS_NUM ? cards.length:MAX_CARDS_NUM;
+		{	
+			removeChildren(0, -1, true);
 			
+			var maxCount:int = cards.length<MAX_CARDS_NUM ? cards.length:MAX_CARDS_NUM;			
 			var startX:int = 0;
 			for (var i:int = 0; i < maxCount; i++)
 			{

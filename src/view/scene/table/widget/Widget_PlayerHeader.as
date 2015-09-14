@@ -2,8 +2,7 @@ package view.scene.table.widget
 {
 	import resource.ResManager;
 	
-	import starling.text.TextField;
-	import starling.textures.Texture;
+	import starling.text.TextField;	
 	
 	import view.framework.ExImage;
 	import view.framework.ExSprite;

@@ -39,10 +39,7 @@ package controller.handler
 			sitdownRequest.csHeader.uin = resp.csHeader.uin;
 			sitdownRequest.csHeader.dialog_id = resp.player_id;			
 			sitdownRequest.sitdown_flag = 3;
-			sitdownRequest.room_id = resp.room_id;
-			
-			
-			
+			sitdownRequest.room_id = resp.room_id;					
 			
 			
 			NiuRequestSender.instance().sendRequest(sitdownRequest);			

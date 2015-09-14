@@ -5,6 +5,11 @@ package douniu
 		/*
 	
 			0 ~ 51  黑红梅方 A到K
+		
+		1~13  hei  A ~ K
+		14~26 hong A ~ K
+		27~39 mei A ~ K
+		40~52 fang A ~ K
 
 		*/
 
@@ -41,14 +46,32 @@ package douniu
 
 		public function get color() : int
 		{
-			var c:int = _data % 4;
+			/*
+			var c:int = _data % 4;			
 			return c;
+			*/
+			
+			if (_data == 52)
+			{
+				return 0;
+			}
+			else
+			{
+				return _data/13;
+			}
+			
 		}
 
 		public function get number() : int
 		{
+			/*
 			var n:int = (_data >> 2) + 1;
 			return n;
+			*/
+			
+			var n:int = _data % 13;
+			
+			return n>0 ? n:13;
 		}
 
 		public function get value() : int

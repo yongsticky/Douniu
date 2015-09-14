@@ -2,8 +2,10 @@ package packet.game.tv.value
 {
 	import flash.utils.ByteArray;
 	
-	import factory.NiuObjectFactory;
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
 	
+	import factory.NiuObjectFactory;	
 	import packet.game.tv.TVValue;
 	
 	public class NotifyFinish extends TVValue
@@ -56,5 +58,21 @@ package packet.game.tv.value
 			finish_info_vec.length = 0;
 			finish_info_num = 0;
 		}
+
+		override public function printValue(logger:ILogger) : void
+		{		
+			logger.log(this, "**************************************", LEVEL.INFO);			
+			logger.log(this, "print NotifyFinish value", LEVEL.INFO);
+			
+			logger.log(this, "finish_info_num", finish_info_num, LEVEL.INFO);
+			for each(var info:FinishInfo in finish_info_vec)
+			{
+				info.printValue(logger);
+			}
+			
+			super.printValue(logger);
+
+			logger.log(this, "**************************************", LEVEL.INFO);
+		}	
 	}
 }

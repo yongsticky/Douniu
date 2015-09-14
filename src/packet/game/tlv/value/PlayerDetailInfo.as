@@ -2,12 +2,13 @@ package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
 	
-	import factory.NiuObjectFactory;
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
 	
-	
+	import factory.NiuObjectFactory;	
 	import packet.game.tlv.TLVValue;
 	import packet.game.tlv.UnionTLV;	
-	import packet.game.tlv.PlayerDetailUnionTLVDecoder;
+	import packet.game.tlv.PlayerDetailInnerUnionTLVDecoder;
 	import packet.util.Int64;
 
 	public class PlayerDetailInfo extends TLVValue
@@ -39,7 +40,7 @@ package packet.game.tlv.value
 		public var ident_len:int;				// short(2)
 		public var ident_info:ByteArray;			// char[]
 		public var using_face_item_id:int;		// int(4)
-		public var player_detail_tlv:UnionTLV;	// UnionTLV
+		public var inner_tlv:UnionTLV;			// UnionTLV
 		
 		public function PlayerDetailInfo()
 		{
@@ -98,7 +99,7 @@ package packet.game.tlv.value
 				bytes.writeBytes(ident_info, 0, ident_len);
 			}
 			bytes.writeInt(using_face_item_id);
-			player_detail_tlv.pack(bytes);
+			inner_tlv.pack(bytes);
 			
 			super.adjustPosition(bytes);
 		}
@@ -150,7 +151,7 @@ package packet.game.tlv.value
 				bytes.readBytes(ident_info, 0, ident_len);
 			}
 			using_face_item_id = bytes.readInt();
-			player_detail_tlv = PlayerDetailUnionTLVDecoder.instance().decode(bytes);
+			inner_tlv = PlayerDetailInnerUnionTLVDecoder.instance().decode(bytes);
 			
 			
 			super.adjustPosition(bytes);
@@ -162,8 +163,51 @@ package packet.game.tlv.value
 			
 			avatar_skill_id.length = 0;
 			
-			NiuObjectFactory.instance().destroyInstance(player_detail_tlv);			
-			player_detail_tlv = null;
+			NiuObjectFactory.instance().destroyInstance(inner_tlv);			
+			inner_tlv = null;
+		}
+
+		override public function printValue(logger:ILogger) : void
+		{
+			logger.log(this, "**************************************************", LEVEL.INFO);
+			logger.log(this, "print PlayerDetailInfo value", LEVEL.INFO);
+
+			logger.log(this, "player_id:", player_id, LEVEL.INFO);
+			logger.log(this, "player_uin:", player_uin, LEVEL.INFO);
+			logger.log(this, "player_status:", player_status, LEVEL.INFO);
+			logger.log(this, "table_id:", table_id, LEVEL.INFO);
+			logger.log(this, "seat_id:", seat_id, LEVEL.INFO);
+			logger.log(this, "nick_len:", nick_len, LEVEL.INFO);
+			logger.log(this, "nick:", nick, LEVEL.INFO);
+			logger.log(this, "age:", age, LEVEL.INFO);
+			logger.log(this, "gender:", gender, LEVEL.INFO);
+			logger.log(this, "level:", level, LEVEL.INFO);
+			logger.log(this, "experience:", experience, LEVEL.INFO);
+			logger.log(this, "money.lowPart:", money.lowPart, LEVEL.INFO);
+			logger.log(this, "money.highPart:", money.highPart, LEVEL.INFO);
+			logger.log(this, "heart_count:", heart_count, LEVEL.INFO);
+			logger.log(this, "open_id_len:", open_id_len, LEVEL.INFO);
+			logger.log(this, "open_id:", open_id, LEVEL.INFO);
+			logger.log(this, "avatar_id:", avatar_id, LEVEL.INFO);
+			logger.log(this, "avatar_level:", avatar_level, LEVEL.INFO);
+			logger.log(this, "avatar_skill_num:", avatar_skill_num, LEVEL.INFO);
+			for each(var sk:int in avatar_skill_id)
+			{
+				logger.log(this, "avatar_skill_id:", sk, LEVEL.INFO);
+			}
+			logger.log(this, "client_type:", client_type, LEVEL.INFO);
+			logger.log(this, "account_type:", account_type, LEVEL.INFO);
+			logger.log(this, "head_url_len:", head_url_len, LEVEL.INFO);
+			logger.log(this, "head_url:", head_url, LEVEL.INFO);
+			logger.log(this, "score.lowPart:", score.lowPart, LEVEL.INFO);
+			logger.log(this, "score.highPart:", score.highPart, LEVEL.INFO);
+			logger.log(this, "ident_len:", ident_len, LEVEL.INFO);
+			logger.log(this, "ident_info:", ident_info, LEVEL.INFO);
+			logger.log(this, "using_face_item_id:", using_face_item_id, LEVEL.INFO);
+			logger.log(this, "inner_tlv.valueType:", inner_tlv.valueType, LEVEL.INFO);
+			inner_tlv.value.printValue(logger);
+
+			logger.log(this, "**************************************************", LEVEL.INFO);
 		}
 	}
 }

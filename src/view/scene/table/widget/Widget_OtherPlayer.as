@@ -1,5 +1,7 @@
 package view.scene.table.widget
 {
+	import resource.ResManager;
+	
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
@@ -41,6 +43,13 @@ package view.scene.table.widget
 			}
 			_playerCards.visible = false;
 			addChild(_playerCards);
+			
+			
+			_playerBankerState = new ExImage(ResManager.instance().getResourceDev("table.banker"));
+			_playerBankerState.x = 140;
+			_playerBankerState.y = 30;
+			_playerBankerState.visible = false;
+			addChild(_playerBankerState);
 		}	
 		
 		
@@ -52,6 +61,11 @@ package view.scene.table.widget
 		public function get playerCards() : Widget_OtherPlayerCards
 		{
 			return _playerCards;
+		}
+		
+		public function get playerDealerFlag() : ExImage
+		{
+			return _playerBankerState;
 		}
 	}
 }

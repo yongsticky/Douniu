@@ -2,6 +2,9 @@ package packet.game.tv.value
 {
 	import flash.utils.ByteArray;
 	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import packet.game.tv.TVValue;
 	import packet.util.Int64;
 	
@@ -47,6 +50,26 @@ package packet.game.tv.value
 			money.highPart = money.lowPart = 0;
 			
 			super.dispose();
+		}
+
+		override public function printValue(logger:ILogger) : void
+		{		
+			logger.log(this, "**************************************", LEVEL.INFO);			
+			logger.log(this, "print FinishInfo value", LEVEL.INFO);
+			
+			logger.log(this, "seat_id:", seat_id, LEVEL.INFO);
+			logger.log(this, "tiles_num:", tiles_num, LEVEL.INFO);
+			
+			for (var i:int = 0; i < tiles_num; ++i)
+			{
+				logger.log(this, "tiles[", i, "] = ", tiles[i], LEVEL.INFO);	
+			}	
+			
+			logger.log(this, "money", money.highPart, money.lowPart, LEVEL.INFO);
+
+			super.printValue(logger);
+
+			logger.log(this, "**************************************", LEVEL.INFO);
 		}
 	}
 }

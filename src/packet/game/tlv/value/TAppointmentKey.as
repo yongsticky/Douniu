@@ -1,7 +1,7 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-		
+	
 	import packet.game.tlv.TLVValue;
 
 	public class TAppointmentKey extends TLVValue
@@ -12,6 +12,8 @@ package packet.game.tlv.value
 		public function TAppointmentKey()
 		{
 			super();
+			
+			appointment_key = new ByteArray();
 		}
 		
 		override public function pack(bytes:ByteArray) : void

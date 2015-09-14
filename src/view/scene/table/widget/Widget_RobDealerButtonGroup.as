@@ -1,6 +1,5 @@
 package view.scene.table.widget
 {
-	import controller.NiuNotification;
 	import controller.NiuNotificationHandlerConstant;
 	
 	import resource.ResManager;
@@ -11,13 +10,14 @@ package view.scene.table.widget
 	
 	import view.NiuDirector;
 	import view.framework.ExSprite;
-	
-	public class Widget_BetButtonGroup extends ExSprite
-	{
-		public function Widget_BetButtonGroup(name:String=null)
+
+	public class Widget_RobDealerButtonGroup extends ExSprite
+	{		
+		public function Widget_RobDealerButtonGroup(name:String = null)
 		{
 			super(name);
 		}
+		
 		
 		override protected function createChildren() : void
 		{
@@ -25,8 +25,8 @@ package view.scene.table.widget
 			
 			var btnRobNo:Button = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.ask_rob_no")));
 			btnRobNo.x = 0;
-			btnRobNo.y = 0;			
-			btnRobNo.visible = false;
+			btnRobNo.y = 0;
+			btnRobNo.addEventListener(Event.TRIGGERED, onBtnRobNoTriggered);			
 			addChild(btnRobNo);
 			
 			var btnRob1x:Button = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.ask_rob_1x")));
@@ -45,25 +45,34 @@ package view.scene.table.widget
 			btnRob4x.x = btnRob2x.x + btnRob2x.width - 10;
 			btnRob4x.y = btnRobNo.y;
 			btnRob4x.addEventListener(Event.TRIGGERED, onBtnRob4xTriggered);
-			addChild(btnRob4x);				
+			addChild(btnRob4x);			
+		}		
+
+		
+		private function onBtnRobNoTriggered(event:Event) : void
+		{	
+			visible = false;
+			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, 0);
 		}
 		
-		private function onBtnRob1xTriggered(event:Event):void
-		{
+		private function onBtnRob1xTriggered(event:Event) : void
+		{	
 			visible = false;
-			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_BET_X, 1);
-		}
-				
-		private function onBtnRob2xTriggered(event:Event):void
-		{
-			visible = false;
-			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_BET_X, 3);
+			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, 1);
 		}
 		
-		private function onBtnRob4xTriggered(event:Event):void
-		{			
+		private function onBtnRob2xTriggered(event:Event) : void
+		{	
 			visible = false;
-			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_BET_X, 5);
+			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, 3);
 		}
+		
+		private function onBtnRob4xTriggered(event:Event) : void
+		{	
+			visible = false;
+			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, 5);
+		}
+		
+
 	}
 }

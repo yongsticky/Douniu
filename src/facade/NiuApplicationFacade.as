@@ -4,15 +4,17 @@ package facade
 	
 	import controller.NiuControllerMediator;
 	import controller.NiuNotificationHandlerConstant;
-	import controller.handler.NotificationHandler_GameNotify;
+	import controller.handler.NotificationHandler_DouniuEventNotify;
+	import controller.handler.NotificationHandler_GameEventNotify;
 	import controller.handler.NotificationHandler_LoginSuccess;
-	import controller.handler.NotificationHandler_OtherPlayerEnter;
-	import controller.handler.NotificationHandler_PlayerEnter;
+	import controller.handler.NotificationHandler_SelectBetX;
+	import controller.handler.NotificationHandler_SelectRobDealerX;
 	import controller.handler.NotificationHandler_SelectRoom;
 	import controller.handler.NotificationHandler_SelectUser;
 	import controller.handler.NotificationHandler_ServerConnected;
 	import controller.handler.NotificationHandler_SitdownSuccess;
 	import controller.handler.NotificationHandler_Startup;
+	import controller.handler.NotificationHandler_UserLogout;
 	
 	public class NiuApplicationFacade extends Facade
 	{
@@ -44,11 +46,12 @@ package facade
 			registerHandler(NiuNotificationHandlerConstant.LOGIN_SUCCESS, new NotificationHandler_LoginSuccess(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SELECT_ROOM, new NotificationHandler_SelectRoom(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SITDOWN_SUCCESS, new NotificationHandler_SitdownSuccess(_mediator));
-			registerHandler(NiuNotificationHandlerConstant.GAME_NOTIFY, new NotificationHandler_GameNotify(_mediator));			
+			registerHandler(NiuNotificationHandlerConstant.GAME_NOTIFY, new NotificationHandler_GameEventNotify(_mediator));
+			registerHandler(NiuNotificationHandlerConstant.RESPONSE_PLAY, new NotificationHandler_DouniuEventNotify(_mediator));
+			registerHandler(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, new NotificationHandler_SelectRobDealerX(_mediator));
+			registerHandler(NiuNotificationHandlerConstant.SELECT_BET_X, new NotificationHandler_SelectBetX(_mediator));
 			
-			
-			registerHandler(NiuNotificationHandlerConstant.PLAYER_ENTER, new NotificationHandler_PlayerEnter(_mediator));			
-			registerHandler(NiuNotificationHandlerConstant.OTHERPLAYER_ENTER, new NotificationHandler_OtherPlayerEnter(_mediator));			
+			registerHandler(NiuNotificationHandlerConstant.USER_LOGOUT, new NotificationHandler_UserLogout(_mediator));
 		}
 	}
 }

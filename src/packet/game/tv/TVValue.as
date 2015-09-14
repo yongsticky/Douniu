@@ -2,6 +2,9 @@ package packet.game.tv
 {
 	import flash.utils.ByteArray;
 	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import factory.NiuObjectFactory;
 	
 	import packet.game.tlv.UnionTLV;
@@ -15,6 +18,20 @@ package packet.game.tv
 		public function TVValue()
 		{
 			tlv_vec = new Vector.<UnionTLV>();
+		}
+		
+		public function getTLVValue(tlvType:int) : *
+		{
+			for (var i:int = 0; i < tlv_num; ++i)
+			{
+				var uTLV:UnionTLV = tlv_vec[i];
+				if (uTLV && uTLV.valueType == tlvType)
+				{
+					return uTLV.value;
+				}
+			}
+			
+			return null;
 		}
 		
 		public function pack(bytes:ByteArray) : void
@@ -56,6 +73,15 @@ package packet.game.tv
 			tlv_num = 0;
 		}
 		
+		public function printValue(logger:ILogger) : void
+		{			
+			logger.log(this, "tlv_num:", tlv_num, LEVEL.INFO);
+			for each(var tlv:UnionTLV in tlv_vec)
+			{
+				logger.log(this, "tlv.valueType", tlv.valueType, LEVEL.INFO);
+				tlv.value.printValue(logger);
+			}
+		}
 		
 	}	
 	

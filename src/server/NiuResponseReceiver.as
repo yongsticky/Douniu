@@ -1,7 +1,5 @@
 package server
-{		
-	import flash.net.sendToURL;
-	
+{	
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
@@ -16,7 +14,9 @@ package server
 	import packet.game.message.Login.Response_Login;
 	import packet.game.message.Logout.Request_Logout;
 	import packet.game.message.Logout.Response_Logout;
-	import packet.game.message.Notify.Response_GameNotify;
+	import packet.game.message.Notify.Notify_DouniuEvent;
+	import packet.game.message.Notify.Notify_GameEvent;
+	import packet.game.message.Play.Response_Play;
 	import packet.game.message.Ready.Response_Ready;
 	import packet.game.message.Sitdown.Response_Sitdown;
 	import packet.game.message.Standup.Request_Standup;
@@ -52,16 +52,19 @@ package server
 			addReceiver(Response_Sitdown, onReceive_Sitdown);
 			addReceiver(Response_Ready, onReceive_Ready);
 			addReceiver(Response_Standup, onReceive_Standup);
-			addReceiver(Response_GameNotify, onReceive_GameNotify);
+			addReceiver(Response_Play, onReceive_Play);
+			addReceiver(Notify_GameEvent, onReceive_GameNotify);
+			addReceiver(Notify_DouniuEvent, onReceive_DouniuEvent);
 		}
-				
-		private function sendNotification(name:String, data:Object = null) : void
+			
+		
+		protected function sendNotification(name:String, data:Object = null) : void
 		{
 			NiuServerMediator.instance().sendNotification(NiuNotification.createNotification(name, data));
 		}
 		
 		
-		private function addReceiver(cls:Class, f:Function) : void
+		protected function addReceiver(cls:Class, f:Function) : void
 		{			
 			var eventType:String = PacketEventTypeUtil.getEventTypeByClass(cls);
 			_logger.log(this, "addReveiver, event = [", eventType, "]", LEVEL.INFO);
@@ -90,11 +93,10 @@ package server
 					var responsePacket:NiuResponsePacket = resp as NiuResponsePacket;
 					responsePacket.csHeader.copy(wrapperMessage.csHeader);
 					_logger.log(this, "onReceive_WrapperMessage, prepare to dispatch, msgid=", responsePacket.msgHeader.msg_id, LEVEL.INFO);
-					NiuServerConnector.instance().dispatchWarpperMessagePacket(resp);	
+					NiuServerConnector.instance().dispatchWarpperMessagePacket(resp);
 				}				
 			}
-		}
-		
+		}	
 	
 		
 		protected function onReceive_Sitdown(event:PacketEvent) : void
@@ -130,19 +132,31 @@ package server
 			NiuRequestSender.instance().sendRequest(logoutReqeust);			
 		}
 		
+		protected function onReceive_Play(event:PacketEvent) : void
+		{
+			_logger.log(this, "onReceive_Play Enter.", LEVEL.INFO);
+		}
 		
-		private function onReceive_GameNotify(event:PacketEvent) : void
+		
+		protected function onReceive_GameNotify(event:PacketEvent) : void
 		{
 			_logger.log(this, "onReceive_GameNotify Enter.", LEVEL.INFO);	
 			sendNotification(NiuNotificationHandlerConstant.GAME_NOTIFY, event.packet);
 		}
 		
+		protected function onReceive_DouniuEvent(event:PacketEvent) : void
+		{
+			_logger.log(this, "onReceive_DouniuEvent Enter.", LEVEL.INFO);
+			
+			sendNotification(NiuNotificationHandlerConstant.RESPONSE_PLAY, event.packet);
+		}
+		
 		
 		protected function OnReceive_Logout(event:PacketEvent) : void
 		{
-			_logger.log(this, "onReceive_Logout Enter.", LEVEL.INFO);							
-		}	
-					
+			var resp:Response_Logout = event.packet as Response_Logout;
+			_logger.log(this, "onReceive_Logout, reason=", resp.logout_reason, LEVEL.INFO);				
+		}					
 	}
 }
 

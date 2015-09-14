@@ -4,11 +4,14 @@ package factory
 	
 	import controller.NiuNotification;
 	
+	import packet.game.message.Hello.Request_Hello;
+	import packet.game.message.Hello.Response_Hello;
 	import packet.game.message.Login.Request_Login;
 	import packet.game.message.Login.Response_Login;
 	import packet.game.message.Logout.Request_Logout;
 	import packet.game.message.Logout.Response_Logout;
-	import packet.game.message.Notify.Response_GameNotify;
+	import packet.game.message.Notify.Notify_DouniuEvent;
+	import packet.game.message.Notify.Notify_GameEvent;
 	import packet.game.message.Notify.TGameEvent;
 	import packet.game.message.Play.Request_Play;
 	import packet.game.message.Play.Response_Play;
@@ -18,8 +21,6 @@ package factory
 	import packet.game.message.Sitdown.Response_Sitdown;
 	import packet.game.message.Standup.Request_Standup;
 	import packet.game.message.Standup.Response_Standup;
-	import packet.game.message.Hello.Request_Hello;
-	import packet.game.message.Hello.Response_Hello;
 	import packet.game.message.WrapperMessage.Response_WrapperMessage;
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.value.BaseGameCfgData;
@@ -53,9 +54,10 @@ package factory
 	import packet.game.tv.value.NotifyFinish;
 	import packet.game.tv.value.NotifyGive;
 	import packet.game.tv.value.NotifyRobDealer;
+	import packet.game.tv.value.NotifyStartTimer;
 	import packet.game.tv.value.RequestBet;
-	import packet.game.tv.value.RequestDealer;
 	import packet.game.tv.value.RequestGive;
+	import packet.game.tv.value.RequestRobDealer;
 		
 		
 	public class NiuObjectFactory extends ObjectFactory
@@ -76,10 +78,11 @@ package factory
 			registerClass(Request_Standup);
 			registerClass(Response_Standup);
 			registerClass(Request_Hello);
-			registerClass(Response_Hello);
-			registerClass(Response_GameNotify);
+			registerClass(Response_Hello);			
 			registerClass(Request_Play);
-			registerClass(Response_Play);			
+			registerClass(Response_Play);
+			registerClass(Notify_GameEvent);
+			registerClass(Notify_DouniuEvent);			
 			
 			registerClass(UnionTLV);			
 			registerClass(TAppointmentKey);
@@ -105,14 +108,15 @@ package factory
 			
 			registerClass(UnionTV);
 			registerClass(RequestBet);
-			registerClass(RequestDealer);
+			registerClass(RequestRobDealer);
 			registerClass(RequestGive);
 			registerClass(NotifyBet);
 			registerClass(NotifyBetDetail);
 			registerClass(NotifyDealerDetail);
 			registerClass(NotifyFinish);
 			registerClass(NotifyGive);
-			registerClass(NotifyRobDealer);			
+			registerClass(NotifyRobDealer);	
+			registerClass(NotifyStartTimer);
 			
 			registerClass(TTilesInfo);
 			registerClass(TMultipleInfo);
