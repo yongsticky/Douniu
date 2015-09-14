@@ -1,9 +1,8 @@
 package packet.protocol
 {
 	import flash.utils.ByteArray;
-	
 	import camu.logger.ILogger;
-	
+
 	public class NiuResponsePacket extends NiuPacket
 	{	
 		protected var _isWrapperedMessage:Boolean;		
@@ -96,8 +95,7 @@ package packet.protocol
 		
 		
 		public function printResponse(logger:ILogger) : void
-		{
-			
+		{			
 		}
 	}
 }

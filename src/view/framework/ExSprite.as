@@ -3,6 +3,10 @@ package view.framework
 		
 	
 	
+	import camu.logger.Logger;
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Sprite;
@@ -10,9 +14,13 @@ package view.framework
 
 	public class ExSprite extends Sprite
 	{
+		protected var _logger:ILogger;
+		
 		public function ExSprite(name:String = null)
 		{
 			super();
+			
+			_logger = Logger.createLogger(ExSprite, LEVEL.WARNING);
 			
 			if (name)
 			{

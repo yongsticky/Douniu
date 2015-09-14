@@ -10,7 +10,7 @@ package packet.game.tlv
 
 	public class PlayerDetailUnionTLVDecoder
 	{
-		private var _logger:ILogger;
+		protected var _logger:ILogger;
 		
 		public function PlayerDetailUnionTLVDecoder(inner:PrivateInner)
 		{
@@ -43,7 +43,7 @@ package packet.game.tlv
 					
 					uTLV.unpack(bytes);	
 					
-					_logger.log("decode playerdetail tlv, type:[",tlvType,"]", LEVEL.INFO);
+					_logger.log(this, "decode playerdetail tlv, type:[",tlvType,"]", LEVEL.INFO);
 				}
 				else
 				{
@@ -61,7 +61,7 @@ package packet.game.tlv
 			var tlvType:int = bytes.readShort();
 			bytes.position -= 2;
 			
-			_logger.log("peekTLVType, TLV Type = ", tlvType, LEVEL.INFO);
+			_logger.log(this, "peekTLVType, TLV Type = ", tlvType, LEVEL.INFO);
 			
 			return tlvType;
 		}

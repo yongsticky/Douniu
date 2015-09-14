@@ -22,7 +22,7 @@ package resource
 
 	public class ResManager extends EventDispatcher
 	{
-		private var _logger:ILogger;		
+		protected var _logger:ILogger;		
 		
 		private var _loaders:Vector.<Loader>;
 		private var _res:Dictionary;
@@ -158,7 +158,7 @@ package resource
 
 		private function _startLoadResource(res:Object) : void
 		{
-			_logger.log("_startLoadResource Enter.", LEVEL.INFO);
+			_logger.log(this, "_startLoadResource Enter.", LEVEL.INFO);
 			
 			if (!res)
 			{
@@ -172,7 +172,7 @@ package resource
 			loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onProgress);
 			
 			
-			_logger.log("_startLoadResource, URL=", res[PROPS][URL], LEVEL.INFO);
+			_logger.log(this, "_startLoadResource, URL=", res[PROPS][URL], LEVEL.INFO);
 			
 			res[STATUS] = S_RUNNING;
 			loader.load(new URLRequest(res[PROPS][URL]));	
@@ -184,22 +184,22 @@ package resource
 		
 		private function onComplete(event:Event) : void
 		{
-			_logger.log("onComplete Enter.", LEVEL.INFO);	
+			_logger.log(this, "onComplete Enter.", LEVEL.INFO);	
 		}
 		
 		private function onIoError(event:IOErrorEvent) : void
 		{
-			_logger.log("onIoError Enter.", LEVEL.INFO);
+			_logger.log(this, "onIoError Enter.", LEVEL.INFO);
 		}
 		
 		private function onSecurityError(event:SecurityErrorEvent) : void
 		{
-			_logger.log("onSecurityError Enter.", LEVEL.INFO);
+			_logger.log(this, "onSecurityError Enter.", LEVEL.INFO);
 		}
 		
 		private function onProgress(event:ProgressEvent) : void
 		{
-			_logger.log("onProgress Enter.", LEVEL.INFO);
+			_logger.log(this, "onProgress Enter.", LEVEL.INFO);
 		}
 	}
 }

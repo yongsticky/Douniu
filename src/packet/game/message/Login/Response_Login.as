@@ -2,6 +2,9 @@ package packet.game.message.Login
 {
 	import flash.utils.ByteArray;
 	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import factory.NiuObjectFactory;
 	
 	import packet.game.message.ResponseResult;
@@ -69,6 +72,30 @@ package packet.game.message.Login
 			
 			tlv_num = 0;
 			tlv_vec.length = 0;
+		}
+		
+		override public function printResponse(logger:ILogger) : void
+		{
+			logger.log(this, "***********************************************", LEVEL.INFO);
+			logger.log(this, "print Response_Login.", LEVEL.INFO);			
+			
+			logger.log(this, "result:", rresult.result_id, LEVEL.INFO);
+			logger.log(this, "recommend_scene_id:", recommend_scene_id, LEVEL.INFO);
+			logger.log(this, "room_id:", room_id, LEVEL.INFO);
+			logger.log(this, "room_table_num:",room_table_num, LEVEL.INFO);
+			logger.log(this, "room_player_num:", room_player_num, LEVEL.INFO);
+			logger.log(this, "room_ticket:", room_ticket, LEVEL.INFO);
+			logger.log(this, "player_id:", player_id, LEVEL.INFO);
+			logger.log(this, "trigger_present_beans:", trigger_present_beans, LEVEL.INFO);
+			logger.log(this, "tlv_num:", tlv_num, LEVEL.INFO);
+			for each(var tlv:UnionTLV in tlv_vec)
+			{
+				logger.log(this, "tlvType:", tlv.valueType, LEVEL.INFO);	
+			}
+			logger.log(this, "control_flag:", control_flag, LEVEL.INFO);
+			logger.log(this, "talk_switch:", talk_switch, LEVEL.INFO);						
+			
+			logger.log(this, "***********************************************", LEVEL.INFO);
 		}
 	}
 }

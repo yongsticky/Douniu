@@ -15,7 +15,7 @@ package packet
 
 	public class NiuDecoder
 	{
-		private var _logger:ILogger;
+		protected var _logger:ILogger;
 		
 		public function NiuDecoder()
 		{ 		
@@ -24,7 +24,7 @@ package packet
 		
 		public function decode(bytes:ByteArray) : Packet
 		{			
-			_logger.log("decode Enter, bytes.length=", bytes.length, LEVEL.DEBUG);
+			_logger.log(this, "decode Enter, bytes.length=", bytes.length, LEVEL.DEBUG);
 			Bytes2Hex.Trace(bytes);			
 			
 			var msgId:int = peekMsgId(bytes);		
@@ -63,7 +63,7 @@ package packet
 		
 			bytes.position = backupPos;
 
-			_logger.log("PeekMsgId, msgId:", msgId, LEVEL.INFO);
+			_logger.log(this, "PeekMsgId, msgId:", msgId, LEVEL.INFO);
 			
 			return msgId;
 		}

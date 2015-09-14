@@ -14,7 +14,7 @@ package packet.game.message.WrapperMessage
 
 	public class WrapperMessageDecoder
 	{
-		private var _logger:ILogger;		
+		protected var _logger:ILogger;		
 		
 		public function WrapperMessageDecoder(inner:PrivateInner)
 		{
@@ -35,9 +35,9 @@ package packet.game.message.WrapperMessage
 		
 		public function decode(bytes:ByteArray, bytesLen:int) : NiuResponsePacket
 		{	
-			_logger.log("decode Enter", LEVEL.DEBUG);
+			_logger.log(this, "decode Enter", LEVEL.DEBUG);
 
-			_logger.log("decode, bytes length=", bytesLen, LEVEL.DEBUG)
+			_logger.log(this, "decode, bytes length=", bytesLen, LEVEL.DEBUG)
 						
 			var msgId:int = peekMsgId(bytes);			
 			var responsePacket:NiuResponsePacket  = NiuObjectFactory.instance().createInstance(MSGID.MSGID_TO_CLASS(msgId)) as NiuResponsePacket;
@@ -63,7 +63,7 @@ package packet.game.message.WrapperMessage
 				bytes.position -= 2;	
 			}
 
-			_logger.log("PeekMsgId, msgId:", msgId, LEVEL.INFO);
+			_logger.log(this, "PeekMsgId, msgId:", msgId, LEVEL.INFO);
 
 			return msgId;		
 		}

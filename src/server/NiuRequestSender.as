@@ -8,7 +8,7 @@ package server
 
 	public class NiuRequestSender
 	{
-		private var _logger:ILogger;
+		protected var _logger:ILogger;
 		
 		public function NiuRequestSender(inner:PrivateInner)
 		{
@@ -30,7 +30,7 @@ package server
 		{
 			if (requestPacket)
 			{
-				_logger.log("sendRequest,msgId=", requestPacket.msgHeader.msg_id, LEVEL.INFO);				
+				_logger.log(this, "sendRequest,msgId=", requestPacket.msgHeader.msg_id, LEVEL.INFO);				
 				NiuServerConnector.instance().send(requestPacket);
 			}
 			else

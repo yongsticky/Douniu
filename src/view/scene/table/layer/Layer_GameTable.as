@@ -67,22 +67,12 @@ package view.scene.table.layer
 		
 		
 		
-		public function showPlayer() : void
+		public function showPlayer(name:String, chips:int) : void
 		{
 			_player.visible = true;
 			_player.playerHeader.visible = true;
 			
-			
-			var vec:Vector.<NiuCard> = new Vector.<NiuCard>();
-			vec.push(new NiuCard(17));
-			vec.push(new NiuCard(22));
-			vec.push(new NiuCard(32));
-			vec.push(new NiuCard(15));
-			vec.push(new NiuCard(8));
-			
-			_player.playerCards.setPokers(vec);
-			
-			_player.playerCards.visible = true;
+			_player.playerHeader.setPlayerInfo(name, chips, null);			
 		}
 		
 		public function showTimer(time:int) : void
@@ -91,33 +81,15 @@ package view.scene.table.layer
 			_timer.startTimer(time);
 		}
 		
-		public function showOtherPlayer(seat:int, show:Boolean = true) : void
-		{
-			var vec:Vector.<NiuCard> = new Vector.<NiuCard>();
-			vec.push(new NiuCard(17));
-			vec.push(new NiuCard(22));
-			vec.push(new NiuCard(32));
-			vec.push(new NiuCard(15));
-			vec.push(new NiuCard(8));
-			
+		public function showOtherPlayer(nick:String, chips:int, seat:int, show:Boolean = true) : void
+		{		
 			if (seat >=0 && seat < MAX_OTHER_PLAYER_NUM)
 			{
 				var other:Widget_OtherPlayer = _otherPlayers[seat];
 												
 				other.visible = show;
-				other.playerHeader.visible = show;
-				other.playerCards.visible = show;
-				
-				
-				if (seat == 2)
-				{
-					other.playerCards.setPokers(vec);
-				}
-				else
-				{
-					other.playerCards.setPokers(null);
-				}
-				
+				other.playerHeader.setPlayerInfo(nick, chips, 0);
+				other.playerHeader.visible = show;			
 			}
 		}	
 	}

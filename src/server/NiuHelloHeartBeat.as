@@ -7,13 +7,13 @@ package server
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	
-	import global.GlobalInfo;
+	import global.GlobalSharedData;
 	
 	import packet.game.message.Hello.Request_Hello;
 	
 	public class NiuHelloHeartBeat
 	{
-		private var _logger:ILogger;
+		protected var _logger:ILogger;
 		
 		private var _timer:Timer;
 		private var _now:Date;
@@ -58,9 +58,9 @@ package server
 		
 		protected function onTimer(event:TimerEvent):void
 		{
-			_logger.log("Send Heart Beat Hello.", LEVEL.INFO);
+			_logger.log(this, "Send Heart Beat Hello.", LEVEL.INFO);
 			
-			_request.csHeader.uin = GlobalInfo.instance().uin;
+			_request.csHeader.uin = GlobalSharedData.instance().uin;
 						
 			_request.time = _now.getTime() + 60*1000*_count;
 			

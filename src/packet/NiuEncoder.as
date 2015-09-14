@@ -16,7 +16,7 @@ package packet
 
 	public class NiuEncoder
 	{
-		private var _logger:ILogger;
+		protected var _logger:ILogger;
 		
 		public function NiuEncoder()
 		{
@@ -25,7 +25,7 @@ package packet
 		
 		public function encode(packet:Packet) : ByteArray
 		{
-			_logger.log("encode Enter", LEVEL.DEBUG);
+			_logger.log(this, "encode Enter", LEVEL.DEBUG);
 			
 			var niuPacket:NiuRequestPacket = packet as NiuRequestPacket;
 			if (niuPacket)
@@ -37,7 +37,7 @@ package packet
 
 				niuPacket.pack(bytes);
 				
-				_logger.log("encode, pack length=", bytes.length, LEVEL.DEBUG);
+				_logger.log(this, "encode, pack length=", bytes.length, LEVEL.DEBUG);
 				Bytes2Hex.Trace(bytes);				
 				
 				return bytes;

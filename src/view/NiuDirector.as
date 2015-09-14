@@ -1,9 +1,7 @@
 package view
 {
 	import camu.logger.ILogger;
-	import camu.logger.LEVEL;
-	import camu.logger.Logger;
-	import camu.net.ConnectorEvent;
+	import camu.logger.LEVEL;		
 	
 	import controller.NiuNotificationHandlerConstant;
 	import controller.NiuNotification;
@@ -13,12 +11,11 @@ package view
 	import starling.events.EnterFrameEvent;
 	
 	import view.framework.ExDirector;
-	import view.mediator.NiuDirectorMediator;	
+	import view.mediator.NiuViewMediator;	
 	
 	public class NiuDirector extends ExDirector
-	{
-		private var _logger:ILogger = null;
-		private var _mediator:NiuDirectorMediator;	
+	{		
+		private var _mediator:NiuViewMediator;	
 		
 		public function NiuDirector()
 		{
@@ -31,9 +28,7 @@ package view
 					
 			_instance = this;
 			
-			_mediator = new NiuDirectorMediator();
-			
-			_logger = Logger.createLogger(NiuDirector, LEVEL.DEBUG);			
+			_mediator = new NiuViewMediator();					
 		}
 		
 		private static var _instance:NiuDirector = null;
@@ -56,7 +51,7 @@ package view
 		{	
 			super.initialize();
 			
-			_logger.log("initialize called.", LEVEL.INFO);
+			_logger.log(this, "initialize called.", LEVEL.INFO);
 			
 			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
 			
@@ -66,8 +61,6 @@ package view
 		override protected function createChildren() : void
 		{			
 		}
-		
-
 		
 		private function onEnterFrame(event:EnterFrameEvent):void
 		{			

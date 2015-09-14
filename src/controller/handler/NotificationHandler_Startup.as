@@ -6,8 +6,7 @@ package controller.handler
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
-	import camu.mvc.Notification;
-	import camu.mvc.interfaces.INotificationHandler;
+	import camu.mvc.Notification;	
 	import camu.net.ConnectorEvent;
 	
 	import controller.NiuNotificationHandler;
@@ -16,18 +15,14 @@ package controller.handler
 	import server.NiuResponseReceiver;
 	import server.NiuServerConnector;	
 	
-	public class NotificationHandler_Startup extends NiuNotificationHandler implements INotificationHandler
-	{
-		private var _logger:ILogger;
-		
+	public class NotificationHandler_Startup extends NiuNotificationHandler
+	{	
 		public function NotificationHandler_Startup(mediator:Mediator)
 		{
-			super(mediator);
-			
-			_logger = Logger.createLogger(NotificationHandler_Startup, LEVEL.INFO);
+			super(mediator);			
 		}
 		
-		public function execute(notification:Notification):void
+		override public function execute(notification:Notification):void
 		{			
 			NiuResponseReceiver.instance().initReceiver();
 			
@@ -40,7 +35,7 @@ package controller.handler
 		protected function onConnect(event:Event):void
 		{
 			
-			_logger.log("Connect Server Succ.", LEVEL.INFO);				
+			_logger.log(this, "Connect Server Succ.", LEVEL.INFO);				
 						
 			sendNotification(NiuNotificationHandlerConstant.SERVER_CONNECTED);					
 		}

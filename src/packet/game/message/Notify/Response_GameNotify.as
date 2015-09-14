@@ -52,26 +52,26 @@ package packet.game.message.Notify
 		
 		override public function printResponse(logger:ILogger) : void
 		{
-			logger.log("***********************************************", LEVEL.INFO);
-			logger.log("print Response_GameNotify.", LEVEL.INFO);
+			logger.log(this, "***********************************************", LEVEL.INFO);
+			logger.log(this, "print Response_GameNotify.", LEVEL.INFO);
 			
-			logger.log("game_event_num:", game_event_num, LEVEL.INFO);
+			logger.log(this, "game_event_num:", game_event_num, LEVEL.INFO);
 			
 			for each(var ge:TGameEvent in game_event_vec)
 			{
-				logger.log("TGameEvent.event_id:", ge.event_id, LEVEL.INFO);
-				logger.log("TGameEvent.player_id:", ge.player_id, LEVEL.INFO);
-				logger.log("TGameEvent.room_id:", ge.room_id, LEVEL.INFO);
-				logger.log("TGameEvent.table_id:", ge.table_id, LEVEL.INFO);
-				logger.log("TGameEvent.seat_id:", ge.seat_id, LEVEL.INFO);
-				logger.log("TGameEvent.other_info_num:", ge.other_info_num, LEVEL.INFO);
+				logger.log(this, "TGameEvent.event_id:", ge.event_id, LEVEL.INFO);
+				logger.log(this, "TGameEvent.player_id:", ge.player_id, LEVEL.INFO);
+				logger.log(this, "TGameEvent.room_id:", ge.room_id, LEVEL.INFO);
+				logger.log(this, "TGameEvent.table_id:", ge.table_id, LEVEL.INFO);
+				logger.log(this, "TGameEvent.seat_id:", ge.seat_id, LEVEL.INFO);
+				logger.log(this, "TGameEvent.other_info_num:", ge.other_info_num, LEVEL.INFO);
 				for each(var tlv:UnionTLV in ge.other_info_vec)
 				{
-					logger.log("TGameEvent.other_info_vec.UnionTLV.valueType", tlv.valueType, LEVEL.INFO);	
+					logger.log(this, "TGameEvent.other_info_vec.UnionTLV.valueType", tlv.valueType, LEVEL.INFO);	
 				}			
 			}			
 			
-			logger.log("***********************************************", LEVEL.INFO);
+			logger.log(this, "***********************************************", LEVEL.INFO);
 		}
 	}
 }

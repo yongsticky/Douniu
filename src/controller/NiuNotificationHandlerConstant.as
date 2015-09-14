@@ -7,6 +7,8 @@ package controller
 		public static const SELECT_USER:String = "select_user";		
 		public static const LOGIN_SUCCESS:String = "login_success";
 		public static const SELECT_ROOM:String = "select_room";
+		public static const SITDOWN_SUCCESS:String = "sitdown_success";
+		public static const GAME_NOTIFY:String = "game_notify";
 		
 		public static const PLAYER_ENTER:String = "player_enter";		
 		public static const OTHERPLAYER_ENTER:String = "otherplayer_enter";

@@ -11,7 +11,7 @@ package packet.game.tv
 
 	public class UnionTVDecoder
 	{
-		private var _logger:ILogger;
+		protected var _logger:ILogger;
 		
 		public function UnionTVDecoder(inner:PrivateInner)
 		{
@@ -61,7 +61,7 @@ package packet.game.tv
 			var tvType:int = bytes.readInt();
 			bytes.position -= 4;
 			
-			_logger.log("peekTVType, TV Type = ", tvType, LEVEL.INFO);
+			_logger.log(this, "peekTVType, TV Type = ", tvType, LEVEL.INFO);
 			
 			return tvType;
 		}

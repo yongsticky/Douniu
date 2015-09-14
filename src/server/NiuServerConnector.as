@@ -2,30 +2,22 @@ package server
 {
 	import flash.utils.ByteArray;
 	
-	import camu.logger.ILogger;
-	import camu.logger.LEVEL;
-	import camu.logger.Logger;
+	import camu.logger.LEVEL;	
 	import camu.net.Connector;
-	import camu.net.Packet;
-	
-	import factory.NiuObjectFactory;
-	
+	import camu.net.Packet;	
+	import factory.NiuObjectFactory;	
 	import packet.NiuDecoder;
 	import packet.NiuEncoder;
 	import packet.protocol.NiuResponsePacket;
 	
 	public final class NiuServerConnector extends Connector
-	{
-		private var _logger:ILogger;
-		
+	{		
 		private var _encoder:NiuEncoder;
 		private var _decoder:NiuDecoder;		
 		
 		public function NiuServerConnector(inner:PrivateInner)
 		{
-			super();
-			
-			_logger = Logger.createLogger(NiuServerConnector, LEVEL.INFO);
+			super();	
 			
 			_encoder = new NiuEncoder();
 			_decoder = new NiuDecoder();
@@ -45,7 +37,7 @@ package server
 		
 		public function dispatchWarpperMessagePacket(responsePacket:NiuResponsePacket) : void
 		{
-			_logger.log("dispatchWarpperMessagePacket, eventType=", responsePacket.eventType, LEVEL.INFO);
+			_logger.log(this, "dispatchWarpperMessagePacket, eventType=", responsePacket.eventType, LEVEL.INFO);
 			
 			if (responsePacket)
 			{

@@ -16,6 +16,7 @@ package server
 	import packet.game.message.Login.Response_Login;
 	import packet.game.message.Logout.Request_Logout;
 	import packet.game.message.Logout.Response_Logout;
+	import packet.game.message.Notify.Response_GameNotify;
 	import packet.game.message.Ready.Response_Ready;
 	import packet.game.message.Sitdown.Response_Sitdown;
 	import packet.game.message.Standup.Request_Standup;
@@ -25,7 +26,7 @@ package server
 
 	public class NiuResponseReceiver
 	{
-		private var _logger:ILogger;		
+		protected var _logger:ILogger;		
 		
 		public function NiuResponseReceiver(inner:PrivateInner)
 		{
@@ -51,81 +52,62 @@ package server
 			addReceiver(Response_Sitdown, onReceive_Sitdown);
 			addReceiver(Response_Ready, onReceive_Ready);
 			addReceiver(Response_Standup, onReceive_Standup);
-		}		
+			addReceiver(Response_GameNotify, onReceive_GameNotify);
+		}
+				
+		private function sendNotification(name:String, data:Object = null) : void
+		{
+			NiuServerMediator.instance().sendNotification(NiuNotification.createNotification(name, data));
+		}
 		
 		
 		private function addReceiver(cls:Class, f:Function) : void
 		{			
 			var eventType:String = PacketEventTypeUtil.getEventTypeByClass(cls);
-			_logger.log("addReveiver, event = [", eventType, "]", LEVEL.INFO);
+			_logger.log(this, "addReveiver, event = [", eventType, "]", LEVEL.INFO);
 			
 			NiuServerConnector.instance().addEventListener(eventType, f);			
 		}
 		
 		protected function onReceive_Login(event:PacketEvent) : void
 		{
-			_logger.log("onReceive_Login Enter.", LEVEL.INFO);			
+			_logger.log(this, "onReceive_Login Enter.", LEVEL.INFO);			
 			
-			var resp:Response_Login = event.packet as Response_Login;			
-			printResponseResult(resp);		
-						
-			
-			NiuServerConnectorMediator.instance().sendNotification(NiuNotification.createNotification(NiuNotificationHandlerConstant.LOGIN_SUCCESS, resp));
+			sendNotification(NiuNotificationHandlerConstant.LOGIN_SUCCESS, event.packet);
 		}
 		
 		protected function onReceive_WrapperMessage(event:PacketEvent) : void
 		{
-			_logger.log("onReceive_WrapperMessage Enter.", LEVEL.DEBUG);
+			_logger.log(this, "onReceive_WrapperMessage Enter.", LEVEL.DEBUG);
 				
 			var wrapperMessage:Response_WrapperMessage = event.packet as Response_WrapperMessage;
 			if (wrapperMessage)
 			{
-				_logger.log("onReceive_WrapperMessage, wrapper msg num:", wrapperMessage.packet_vec.length, LEVEL.INFO);
+				_logger.log(this, "onReceive_WrapperMessage, wrapper msg num:", wrapperMessage.packet_vec.length, LEVEL.INFO);
 				
 				for each(var resp:NiuResponsePacket in wrapperMessage.packet_vec)
 				{					
 					var responsePacket:NiuResponsePacket = resp as NiuResponsePacket;
 					responsePacket.csHeader.copy(wrapperMessage.csHeader);
-					_logger.log("onReceive_WrapperMessage, prepare to dispatch, msgid=", responsePacket.msgHeader.msg_id, LEVEL.INFO);
+					_logger.log(this, "onReceive_WrapperMessage, prepare to dispatch, msgid=", responsePacket.msgHeader.msg_id, LEVEL.INFO);
 					NiuServerConnector.instance().dispatchWarpperMessagePacket(resp);	
 				}				
 			}
 		}
 		
-		protected function OnReceive_Logout(event:PacketEvent) : void
-		{
-			_logger.log("onReceive_Logout Enter.", LEVEL.INFO);
-			var resp:NiuResponsePacket = event.packet as NiuResponsePacket;
-			
-			printResponseResult(resp);			
-		}
+	
 		
 		protected function onReceive_Sitdown(event:PacketEvent) : void
 		{
-			_logger.log("onReceive_Sitdown Enter.", LEVEL.INFO);
-			
-			var resp:Response_Sitdown = event.packet as Response_Sitdown;
-			
-			printResponseResult(resp);			
-
-			/*
-			var readyRequest:Request_Ready = NiuObjectFactory.instance().createInstance(Request_Ready);
-				
-			readyRequest.csHeader.dialog_id = resp.csHeader.dialog_id;
-			readyRequest.csHeader.uin = resp.csHeader.uin;
-			readyRequest.ready_mode = 0;
-			readyRequest.room_id = resp.room_id;
-			readyRequest.table_id = resp.table_id;		
-				
-			NiuRequestSender.instance().sendRequest(readyRequest);
-			*/
+			_logger.log(this, "onReceive_Sitdown Enter.", LEVEL.INFO);
+						
+			sendNotification(NiuNotificationHandlerConstant.SITDOWN_SUCCESS, event.packet);			
 		}
 		
 		protected function onReceive_Ready(event:PacketEvent) : void
 		{
-			_logger.log("onReceive_Ready Enter.", LEVEL.INFO);
-			var resp:NiuResponsePacket = event.packet as NiuResponsePacket;
-			printResponseResult(resp);
+			_logger.log(this, "onReceive_Ready Enter.", LEVEL.INFO);
+			var resp:NiuResponsePacket = event.packet as NiuResponsePacket;			
 			
 			var standupRequest:Request_Standup = NiuObjectFactory.instance().createInstance(Request_Standup);
 			standupRequest.csHeader.copy(resp.csHeader);
@@ -137,26 +119,30 @@ package server
 		
 		protected function onReceive_Standup(event:PacketEvent) : void
 		{
-			_logger.log("onReceive_Standup Enter.", LEVEL.INFO);
+			_logger.log(this, "onReceive_Standup Enter.", LEVEL.INFO);
 			
-			var resp:NiuResponsePacket = event.packet as NiuResponsePacket; 
-			printResponseResult(resp);
+			var resp:NiuResponsePacket = event.packet as NiuResponsePacket;			
 			
 			var logoutReqeust:Request_Logout = NiuObjectFactory.instance().createInstance(Request_Logout);
 			logoutReqeust.csHeader.copy(resp.csHeader);
 			logoutReqeust.reason = 0;
 			
-			NiuRequestSender.instance().sendRequest(logoutReqeust);
-			
+			NiuRequestSender.instance().sendRequest(logoutReqeust);			
 		}
 		
-		private function printResponseResult(responsePacket:NiuResponsePacket) : void
+		
+		private function onReceive_GameNotify(event:PacketEvent) : void
 		{
-			if (responsePacket)
-			{
-				_logger.log("RESPONSE: msgId=[", responsePacket.msgHeader.msg_id, "], result=[", responsePacket["rresult"]["result_id"], "].", LEVEL.INFO);
-			}			
-		}			
+			_logger.log(this, "onReceive_GameNotify Enter.", LEVEL.INFO);	
+			sendNotification(NiuNotificationHandlerConstant.GAME_NOTIFY, event.packet);
+		}
+		
+		
+		protected function OnReceive_Logout(event:PacketEvent) : void
+		{
+			_logger.log(this, "onReceive_Logout Enter.", LEVEL.INFO);							
+		}	
+					
 	}
 }
 

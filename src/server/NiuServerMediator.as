@@ -3,21 +3,23 @@ package server
 	import camu.mvc.Facade;
 	import camu.mvc.Mediator;
 	
+	import controller.NiuNotification;
+	
 	import facade.NiuApplicationFacade;
 	
-	public class NiuServerConnectorMediator extends Mediator
+	public class NiuServerMediator extends Mediator
 	{
-		public function NiuServerConnectorMediator(inner:PrivateInner)
+		public function NiuServerMediator(inner:PrivateInner)
 		{
 			super();
 		}
 		
-		private static var _instance:NiuServerConnectorMediator = null;
-		public static function instance() : NiuServerConnectorMediator
+		private static var _instance:NiuServerMediator = null;
+		public static function instance() : NiuServerMediator
 		{
 			if (!_instance)
 			{
-				_instance = new NiuServerConnectorMediator(new PrivateInner());
+				_instance = new NiuServerMediator(new PrivateInner());
 			}
 			
 			return _instance;
@@ -26,7 +28,7 @@ package server
 		override protected function getFacade() : Facade
 		{
 			return NiuApplicationFacade.instance() as Facade;
-		}
+		}		
 	}
 }
 

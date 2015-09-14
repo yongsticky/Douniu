@@ -38,11 +38,17 @@ package view.scene.table.widget
 			addChild(_chips);
 		}
 		
-		public function setPlayerInfo(name:String, texture:Texture, chips:int) : void
+		public function setPlayerInfo(nick:String, chips:int, header:int) : void
 		{
-			_playerName.text = name;
-			_playerIcon.texture = texture;
-			_chips.text = chips.toString();
+			if (nick)
+			{
+				_playerName.text = nick;
+			}						
+			
+			if (chips)
+			{
+				_chips.text = chips.toString();
+			}
 		}
 	}
 }

@@ -1,25 +1,28 @@
 package controller.handler
 {
+	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
-	import camu.mvc.interfaces.INotificationHandler;
 	
-	import controller.NiuNotificationHandler;	
-	import global.GlobalInfo;
+	import controller.NiuNotificationHandler;
+	
+	import global.GlobalSharedData;
 	
 	import view.NiuDirector;
 	import view.scene.hall.Scene_Hall;
 	
-	public class NotificationHandler_SelectUser extends NiuNotificationHandler implements INotificationHandler
+	public class NotificationHandler_SelectUser extends NiuNotificationHandler
 	{
 		public function NotificationHandler_SelectUser(mediator:Mediator)
 		{
 			super(mediator);
 		}
 		
-		public function execute(notification:Notification):void
+		override public function execute(notification:Notification):void
 		{
-			GlobalInfo.instance().uin = uint(notification.getData());
+			GlobalSharedData.instance().uin = uint(notification.getData());
+			
+			_logger.log(this, "User select User:[", uint(notification.getData()), "]", LEVEL.INFO);
 			
 			NiuDirector.instance().switchToScene(new Scene_Hall());			
 		}

@@ -54,7 +54,6 @@ package packet.game.tlv
 		{
 			bytes.writeShort(value_type);		
 			value.pack(bytes);
-
 		}
 		
 		public function onObjectRecycled() : void

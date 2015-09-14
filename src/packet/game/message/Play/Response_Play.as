@@ -46,22 +46,22 @@ package packet.game.message.Play
 		
 		override public function printResponse(logger:ILogger) : void
 		{
-			logger.log("***********************************************", LEVEL.INFO);
-			logger.log("print Response_Play.", LEVEL.INFO);
+			logger.log(this, "***********************************************", LEVEL.INFO);
+			logger.log(this, "print Response_Play.", LEVEL.INFO);
 			
-			logger.log("data_len:", data_len, LEVEL.INFO);
-			logger.log("flag:", flag, LEVEL.INFO);
-			logger.log("tv_data.type:", tv_data.valueType, LEVEL.INFO);
-			logger.log("tv_data.errno:", tv_data.errorNo, LEVEL.INFO);
-			logger.log("tv_data.value.tlv_num:", tv_data.value.tlv_num, LEVEL.INFO);
+			logger.log(this, "data_len:", data_len, LEVEL.INFO);
+			logger.log(this, "flag:", flag, LEVEL.INFO);
+			logger.log(this, "tv_data.type:", tv_data.valueType, LEVEL.INFO);
+			logger.log(this, "tv_data.errno:", tv_data.errorNo, LEVEL.INFO);
+			logger.log(this, "tv_data.value.tlv_num:", tv_data.value.tlv_num, LEVEL.INFO);
 			for each(var tlv:UnionTLV in tv_data.value.tlv_vec)
 			{
-				logger.log("tlv.type", tlv.valueType, LEVEL.INFO);
-				logger.log(">>>>>", LEVEL.INFO)
+				logger.log(this, "tlv.type", tlv.valueType, LEVEL.INFO);
+				logger.log(this, ">>>>>", LEVEL.INFO)
 			}
 						
 			
-			logger.log("***********************************************", LEVEL.INFO);
+			logger.log(this, "***********************************************", LEVEL.INFO);
 		}
 	}
 }
