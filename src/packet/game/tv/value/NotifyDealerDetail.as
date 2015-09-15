@@ -29,11 +29,6 @@ package packet.game.tv.value
 			
 			super.unpack(bytes);
 		}
-		
-		override public function dispose() : void
-		{			
-			super.dispose();
-		}
 
 		override public function printValue(logger:ILogger) : void
 		{		
