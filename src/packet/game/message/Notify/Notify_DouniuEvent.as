@@ -33,9 +33,7 @@ package packet.game.message.Notify
 		
 		
 		override public function onObjectRecycled() : void
-		{
-			trace("onObjectRecycled");
-			
+		{			
 			super.onObjectRecycled();
 			
 			NiuObjectFactory.instance().destroyInstance(tv_data);

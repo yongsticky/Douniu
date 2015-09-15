@@ -43,7 +43,7 @@ package packet.game.message.WrapperMessage
 		}
 		
 		override public function onObjectRecycled() : void
-		{
+		{			
 			super.onObjectRecycled();
 			
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();

@@ -35,7 +35,7 @@ package packet.game.tv.value
 		}
 		
 		override public function dispose() : void
-		{
+		{			
 			multiple.clear();
 			multiple_num = 0;
 			

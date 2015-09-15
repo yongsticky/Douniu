@@ -63,9 +63,13 @@ package controller.handler
 					onNotify_Finish(resp.tv_data.value as NotifyFinish);
 					break;
 				default:
-					_logger.log(this, "tv_data is NULL.", LEVEL.ERROR);
+					_logger.log(this, "NO MATCH TV TTYPE.", LEVEL.WARNING);
 					break;
-				}
+				}				
+			}
+			else
+			{
+				_logger.log(this, "tv_data is NULL.", LEVEL.ERROR);
 			}
 				
 		}
