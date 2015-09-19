@@ -2,6 +2,8 @@ package packet.game.message.Notify
 {
 	import flash.utils.ByteArray;
 	
+	import camu.errors.NullObjectError;
+	
 	import factory.NiuObjectFactory;
 	
 	public class TGameEventDecoder
@@ -31,13 +33,12 @@ package packet.game.message.Notify
 					NiuObjectFactory.instance().destroyInstance(gameEvent);
 					gameEvent = null;
 				}
-			}
-			else
-			{
-				throw new Error("Not TGameEvent Class.");
+				
+				return gameEvent;
 			}
 			
-			return gameEvent;
+							
+			throw new NullObjectError();			
 		}
 	}
 }

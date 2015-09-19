@@ -2,6 +2,7 @@ package packet.game.tlv
 {	
 	import flash.utils.ByteArray;
 	
+	import camu.errors.UnexpectedLengthError;
 	import camu.object.interfaces.IObjectRecycled;
 	
 	import factory.NiuObjectFactory;
@@ -42,7 +43,7 @@ package packet.game.tlv
 		{
 			if (bytes.bytesAvailable < 2)
 			{
-				throw new Error("ByteArray Length Error.");
+				throw new UnexpectedLengthError();
 			}
 			
 			value_type = bytes.readShort();		

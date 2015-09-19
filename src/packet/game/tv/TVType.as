@@ -1,5 +1,8 @@
 package packet.game.tv
 {
+	import camu.errors.AbstractClassError;
+	import camu.errors.UnhandledBranchError;
+	
 	import packet.game.tv.value.NotifyBet;
 	import packet.game.tv.value.NotifyBetDetail;
 	import packet.game.tv.value.NotifyDealerDetail;
@@ -8,8 +11,8 @@ package packet.game.tv
 	import packet.game.tv.value.NotifyRobDealer;
 	import packet.game.tv.value.NotifyStartTimer;
 	import packet.game.tv.value.RequestBet;
-	import packet.game.tv.value.RequestRobDealer;
 	import packet.game.tv.value.RequestGive;
+	import packet.game.tv.value.RequestRobDealer;
 
 	/*
 	
@@ -40,7 +43,7 @@ package packet.game.tv
 		
 		public function TVType()
 		{
-			throw new Error("Abstract class, you must extend it.");
+			throw new AbstractClassError();
 		}
 		
 		
@@ -69,7 +72,7 @@ package packet.game.tv
 				case SO_NOTIFY_START_TIME:
 					return NotifyStartTimer;
 				default:
-					throw new Error("tvType [" + tvType + "] NOT Match any TLVValue.");
+					throw new UnhandledBranchError("tvType [" + tvType + "] NOT Match any TLVValue.");					
 			}
 		}
 	}

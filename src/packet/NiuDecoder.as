@@ -2,13 +2,15 @@ package packet
 {
 	import flash.utils.ByteArray;
 	
+	import camu.errors.NullObjectError;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	import camu.net.Packet;
 	import camu.util.Bytes2Hex;
 	
-	import factory.NiuObjectFactory;	
+	import factory.NiuObjectFactory;
+	
 	import packet.game.message.MSGID;
 	import packet.protocol.CsHeader;
 	import packet.protocol.NiuResponsePacket;
@@ -39,7 +41,7 @@ package packet
 			}
 			else
 			{
-				throw new Error("Not ResponsePacket Class.");
+				throw new NullObjectError();				
 			}			
 		}
 		

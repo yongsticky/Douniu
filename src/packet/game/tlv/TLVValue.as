@@ -2,9 +2,10 @@ package packet.game.tlv
 {
 	import flash.utils.ByteArray;
 	
+	import camu.errors.UnexpectedLengthError;
+	import camu.logger.ILogger;
 	import camu.logger.Logger;
 	import camu.object.interfaces.IObjectRecycled;
-	import camu.logger.ILogger;
 
 
 	public class TLVValue implements IObjectRecycled
@@ -19,8 +20,8 @@ package packet.game.tlv
 		{
 			bytes.writeShort(value_len);
 			if (bytes.bytesAvailable < value_len-2)
-			{
-				throw new Error("TLVValue Length Error.");
+			{				
+				throw new UnexpectedLengthError();
 			}
 			
 			//end_pos = bytes.position + value_len;
@@ -30,29 +31,15 @@ package packet.game.tlv
 		{
 			if (bytes.bytesAvailable < 2)			
 			{
-				throw new Error("TLVValue Length Error.");
+				throw new UnexpectedLengthError();
 			}
 			
 			value_len = bytes.readShort();			
 			if (bytes.bytesAvailable < value_len)
 			{
-				throw new Error("TLVValue Length Error.");
+				throw new UnexpectedLengthError();
 			}			
-		}
-		
-		protected function adjustPosition(bytes:ByteArray) : void
-		{
-			/*
-			if (bytes.position <= end_pos)
-			{
-				bytes.position = end_pos;	
-			}
-			else
-			{
-				throw new Error("ByteArray position Overflow.");
-			}
-			*/
-		}
+		}		
 		
 		public function onObjectRecycled() : void
 		{

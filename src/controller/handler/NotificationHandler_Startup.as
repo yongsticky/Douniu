@@ -22,19 +22,17 @@ package controller.handler
 		
 		override public function execute(notification:Notification):void
 		{			
-			NiuResponseReceiver.instance().initReceiver();
+			NiuResponseReceiver.instance().initReceivers();
 			
-			var connector_:NiuServerConnector = NiuServerConnector.instance();	
-			connector_.setTargetAddress("182.254.40.11", 8000);			
-			connector_.addEventListener(ConnectorEvent.CONNECTED, onConnect);
-			connector_.connect();
+			var connector:NiuServerConnector = NiuServerConnector.instance();	
+			connector.setTargetAddress("182.254.40.11", 8000);			
+			connector.addEventListener(ConnectorEvent.CONNECTED, onConnect);
+			connector.connect();
 		}
 		
 		protected function onConnect(event:Event):void
-		{
-			
-			_logger.log(this, "Connect Server Succ.", LEVEL.INFO);				
-						
+		{			
+			_logger.log(this, "Connect Server Succ.", LEVEL.INFO);						
 			sendNotification(NiuNotificationHandlerConstant.SERVER_CONNECTED);					
 		}
 	}

@@ -1,6 +1,10 @@
 package packet.game.message
 {
 	
+	import camu.errors.AbstractClassError;
+	import camu.errors.AbstractFunctionError;
+	import camu.errors.UnhandledBranchError;
+	
 	import packet.game.message.Hello.Response_Hello;
 	import packet.game.message.Login.Response_Login;
 	import packet.game.message.Logout.Response_Logout;
@@ -44,7 +48,7 @@ package packet.game.message
 		
 		public function MSGID()
 		{
-			throw new Error("Abstract class, you must extend it.");
+			throw new AbstractClassError();			
 		}
 		
 		public static function MSGID_TO_CLASS(msgId:int) : Class
@@ -72,7 +76,7 @@ package packet.game.message
 				case RESPONSE_PLAY:
 					return Response_Play;
 				default:
-					throw new Error("msgId ["+ msgId+"] NOT Match any Response.");					
+					throw new UnhandledBranchError("msgId ["+ msgId+"] NOT Match any Response.");					
 			}
 		}
 

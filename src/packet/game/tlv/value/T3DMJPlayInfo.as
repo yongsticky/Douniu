@@ -45,9 +45,7 @@ package packet.game.tlv.value
 					var value:int = bytes.readInt();
 					avata_vec.push(value);
 				}
-			}	
-			
-			adjustPosition(bytes);
+			}			
 		}
 		
 		override public function onObjectRecycled() : void

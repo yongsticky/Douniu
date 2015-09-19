@@ -1,18 +1,17 @@
-package view.scene.table.widget
+package view.widget
 {
-	import resource.ResManager;
-	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
-	import starling.textures.Texture;
 	
+	import resource.ResManager;
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 
 	public class Widget_Timer extends ExSprite
-	{	
-		private var _num:ExImage;
-		private var _curTime:int;
+	{			
+		private var _num:ExImage;		// 数字	
+		private var _curTime:int;		// 
+		
 		
 		private var _running:Boolean;
 		
@@ -25,7 +24,7 @@ package view.scene.table.widget
 		
 		override protected function createChildren() : void
 		{
-			var resManager:ResManager = ResManager.instance();
+			var resManager:ResManager = ResManager.instance();			
 			
 			var bg:ExImage = new ExImage(resManager.getResourceDev("table.timer_bg"));			
 			addChild(bg);
@@ -82,7 +81,7 @@ package view.scene.table.widget
 		protected function updateTimerTexture() : void
 		{			
 			var resId:String = "table.timer_" + _curTime;
-			_num.texture = Texture.fromBitmapData(ResManager.instance().getResourceDev(resId)); 
+			_num.res =  ResManager.instance().getResourceDev(resId); 
 			_num.scaleX = _num.scaleY = 1;
 		}
 		

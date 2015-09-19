@@ -1,17 +1,17 @@
 package view
 {
-	import camu.logger.ILogger;
-	import camu.logger.LEVEL;		
+	import camu.errors.AbstractClassError;	
+	import camu.logger.LEVEL;
 	
-	import controller.NiuNotificationHandlerConstant;
 	import controller.NiuNotification;
-		
+	import controller.NiuNotificationHandlerConstant;
+	
 	import server.NiuServerConnector;
 	
 	import starling.events.EnterFrameEvent;
 	
 	import view.framework.ExDirector;
-	import view.mediator.NiuViewMediator;	
+	import view.mediator.NiuViewMediator;
 	
 	public class NiuDirector extends ExDirector
 	{		
@@ -23,7 +23,7 @@ package view
 			
 			if (_instance)
 			{
-				throw new Error("single class can't create new.");
+				throw new AbstractClassError();				
 			}
 					
 			_instance = this;

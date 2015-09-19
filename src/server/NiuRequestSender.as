@@ -1,5 +1,6 @@
 package server
 {
+	import camu.errors.NullObjectError;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
@@ -34,8 +35,8 @@ package server
 				NiuServerConnector.instance().send(requestPacket);
 			}
 			else
-			{
-				throw new Error("null packet!");
+			{				
+				throw new NullObjectError();
 			}
 		}
 	}

@@ -1,52 +1,101 @@
 package view.framework
-{
+{	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	
-	import starling.display.Image;
-	import starling.textures.Texture;
+	import camu.errors.UnhandledBranchError;
 	
-
-	public class ExImage extends Image
+	import starling.display.Image;
+	import starling.display.Sprite;
+	import starling.textures.Texture;
+	import camu.errors.ZeroError;
+	
+	public class ExImage extends Sprite
 	{
-		protected var texture:Texture;
-		public function ExImage(res:*)
-		{
-			texture = null;			
+		protected var _texture:Texture;
+		protected var _starlingImage:Image;
+		
+		
+		public function ExImage(res:* = null)
+		{			
+			this.res = res;		
 			
-			if (res is Bitmap)
+			super();
+		}
+		
+		public function set res(res:*) : void
+		{	
+			if (res == null)
 			{
-				texture = Texture.fromBitmap(res);
-			}
-			else if (res is BitmapData)
-			{
-				texture = Texture.fromBitmapData(res);
-			}
-			else if (res is Texture)
-			{
-				texture = res;
-			}
-				
-			
-			if (texture)
-			{
-				super(texture);
+				destoryStarlingImage();
+				_texture = null;
 			}
 			else
 			{			
-				throw new Error("Neither Bitmap nor BitmapData!");
+				if (res is Bitmap)
+				{
+					_texture = Texture.fromBitmap(res);
+				}
+				else if (res is BitmapData)
+				{
+					_texture = Texture.fromBitmapData(res);
+				}
+				else if (res is Texture)
+				{
+					_texture = res;
+				}
+				else
+				{
+					throw new UnhandledBranchError();					
+				}
+				
+				updateStarlingImage();
+			}
+		}
+	
+		protected function updateStarlingImage() : void
+		{			
+			if (_texture)
+			{
+				if (!_starlingImage)
+				{
+					_starlingImage = new Image(_texture);
+					addChild(_starlingImage);
+				}
+				else
+				{
+					_starlingImage.texture = _texture;
+				}				
 			}
 		}
 		
-		override public function dispose() : void
+		protected function destoryStarlingImage() : void
 		{
-			if (texture)
+			if (_starlingImage)
 			{
-				texture.dispose();
-				texture = null;
-			}		
-			
-			super.dispose();
+				removeChild(_starlingImage, true);				
+				_starlingImage = null;
+			}
 		}
+		
+		override public function set width(value:Number) : void
+		{
+			if (numChildren == 0)
+			{
+				throw new ZeroError();
+			}
+			
+			super.width = value;
+		}
+		
+		override public function set height(value:Number) : void
+		{
+			if (numChildren == 0)
+			{
+				throw new ZeroError();
+			}
+			
+			super.height = value;
+		}	
 	}
 }

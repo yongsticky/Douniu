@@ -3,11 +3,11 @@ package view.scene.table.layer
 	import douniu.NiuCard;
 	
 	import global.GlobalSharedData;
-	
+		
 	import view.framework.ExLayer;
 	import view.scene.table.widget.Widget_OtherPlayer;
 	import view.scene.table.widget.Widget_Player;
-	import view.scene.table.widget.Widget_Timer;
+	import view.widget.Widget_Timer;
 
 	public class Layer_GameTable extends ExLayer
 	{		
@@ -15,9 +15,11 @@ package view.scene.table.layer
 		
 		private static const OTHER_PLAYER_SEAT_POSISTION:Array = [{"x":60, "y":360}, {"x":60, "y":180}, {"x":480, "y":60}, {"x":820, "y":180}, {"x":820, "y":360}];
 		
-		private var _player:Widget_Player;
+		private var _player:Widget_Player;		
+		private var _otherPlayers:Vector.<Widget_OtherPlayer>;		
 		private var _timer:Widget_Timer;
-		private var _otherPlayers:Vector.<Widget_OtherPlayer>;
+		
+		
 		private var _playerSeatId:int;
 		
 		
@@ -43,7 +45,7 @@ package view.scene.table.layer
 				other.visible = false;				
 				addChild(other);				
 			}
-							
+										
 			_timer = new Widget_Timer();
 			_timer.visible = false;			
 			addChild(_timer);

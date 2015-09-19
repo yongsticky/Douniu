@@ -1,5 +1,6 @@
 package controller.handler
 {
+	import camu.errors.UnhandledBranchError;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
 	
@@ -43,8 +44,8 @@ package controller.handler
 					addOtherPlayer(tlv.value as PlayerDetailInfo);
 				}
 				else
-				{
-					throw new Error("Unhandled TLV type.");
+				{					
+					throw new UnhandledBranchError();
 				}
 			}						
 		}
@@ -54,7 +55,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layerTable:Layer_GameTable = scene.getNamedChildByName("table.table") as Layer_GameTable;
+				var layerTable:Layer_GameTable = scene.getChildByNameWithRecursive("table.table") as Layer_GameTable;
 				if (layerTable)
 				{
 					layerTable.showPlayer(resp.csHeader.uin.toString(), 100000, resp.seat_id);
@@ -67,7 +68,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layerTable:Layer_GameTable = scene.getNamedChildByName("table.table") as Layer_GameTable;
+				var layerTable:Layer_GameTable = scene.getChildByNameWithRecursive("table.table") as Layer_GameTable;
 				if (layerTable)
 				{
 					layerTable.showOtherPlayer(playerDeatil.player_uin.toString(), 100000, playerDeatil.seat_id);

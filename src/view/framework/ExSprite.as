@@ -3,9 +3,11 @@ package view.framework
 		
 	
 	
-	import camu.logger.Logger;
+	import camu.errors.AbstractFunctionError;
+	import camu.errors.NullObjectError;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
+	import camu.logger.Logger;
 	
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
@@ -41,7 +43,7 @@ package view.framework
 		
 		protected function createChildren() : void
 		{
-			throw new Error("Abstract function, you must override it.");
+			throw new AbstractFunctionError();			
 		}
 
 		protected function layoutChildren() : void
@@ -55,7 +57,7 @@ package view.framework
 					ExSprite(child).layoutChildren();
 				}
 			}
-		}
+		}	
 		
 		public function getOwnerLayer() : ExLayer
 		{
@@ -72,12 +74,12 @@ package view.framework
 				}			
 			}
 			
-			throw new Error("Class NOT Layer's child.");
+			throw new NullObjectError();			
 		}
 		
 		/** Returns a namede-child object with a certain name (support recursively). */
-		public function getNamedChildByName(name:String) : *
-		{
+		public function getChildByNameWithRecursive(name:String) : *
+		{			
 			var obj:* = null;
 			obj = getChildByName(name);
 			if (obj)
@@ -91,7 +93,7 @@ package view.framework
 				var child:ExSprite = getChildAt(i) as ExSprite;
 				if (child)
 				{
-					obj = child.getNamedChildByName(name);
+					obj = child.getChildByNameWithRecursive(name);
 					if (obj)
 					{
 						return obj;

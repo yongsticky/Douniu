@@ -1,5 +1,8 @@
 package packet.game.tlv
 {
+	import camu.errors.AbstractClassError;
+	import camu.errors.UnhandledBranchError;
+	
 	import packet.game.tlv.value.BaseGameCfgData;
 	import packet.game.tlv.value.ExitPlayerInfo;
 	import packet.game.tlv.value.GameMsgInfo;
@@ -52,7 +55,7 @@ package packet.game.tlv
 		
 		public function TLVType()
 		{
-			throw new Error("Abstract class, you must extend it.");
+			throw new AbstractClassError();
 		}
 		
 		public static function TLVTypeToClass(tlvType:int) : Class
@@ -108,7 +111,7 @@ package packet.game.tlv
 				case SO_UP_TLV_MULTIPLE_KEY:
 					return TMultipleInfo;					
 				default:
-					throw new Error("tlvType [" + tlvType + "] NOT Match any TLVValue.");
+					throw new UnhandledBranchError("tlvType [" + tlvType + "] NOT Match any TLVValue.");					
 			}
 		}
 	}

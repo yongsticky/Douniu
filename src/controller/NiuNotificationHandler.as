@@ -1,11 +1,13 @@
 package controller
 {
+	import camu.errors.AbstractFunctionError;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
 	import camu.mvc.interfaces.INotificationHandler;
+
 		public class NiuNotificationHandler implements INotificationHandler
 	{
 		protected var _logger:ILogger;
@@ -25,7 +27,7 @@ package controller
 		
 		public function execute(notification:Notification) : void
 		{
-			throw new Error("Abstract function, please override it.");
+			throw new AbstractFunctionError();			
 		}
 		
 		protected function sendNotification(name:String, data:Object = null) : void

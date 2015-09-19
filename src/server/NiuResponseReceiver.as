@@ -44,7 +44,7 @@ package server
 			return _instance;
 		}
 		
-		public function initReceiver() : void
+		public function initReceivers() : void
 		{			
 			addReceiver(Response_WrapperMessage, onReceive_WrapperMessage);
 			addReceiver(Response_Login, onReceive_Login);

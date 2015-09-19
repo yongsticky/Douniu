@@ -1,5 +1,8 @@
 package packet.game.tlv
 {
+	import camu.errors.AbstractClassError;
+	import camu.errors.UnhandledBranchError;
+	
 	import packet.game.tlv.value.T3DMJPlayInfo;
 	import packet.game.tlv.value.TDNPlayInfo;
 
@@ -10,7 +13,7 @@ package packet.game.tlv
 		
 		public function PlayerDetailInnerTLVType()
 		{
-			throw new Error("Abstract class, you must extend it.");
+			throw new AbstractClassError();			
 		}
 		
 		public static function TLVTypeToClass(tlvType:int) : Class
@@ -22,7 +25,7 @@ package packet.game.tlv
 				case EN_PLAYERDETAIL_TLV_DN:
 					return TDNPlayInfo;
 				default:
-					throw new Error("tlvType [" + tlvType + "] NOT Match any TLVValue.");
+					throw new UnhandledBranchError("tlvType [" + tlvType + "] NOT Match any TLVValue.");					
 			}
 		}
 	}

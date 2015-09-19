@@ -1,5 +1,6 @@
 package packet.protocol
 {
+	import camu.errors.AbstractFunctionError;
 	import camu.net.Packet;
 	import camu.object.interfaces.IObjectRecycled;
 	
@@ -18,7 +19,7 @@ package packet.protocol
 		
 		protected function initData() : void
 		{
-			throw new Error("Abstract function, you must override it.");
+			throw new AbstractFunctionError();			
 		}
 	
 		public function onObjectRecycled() : void

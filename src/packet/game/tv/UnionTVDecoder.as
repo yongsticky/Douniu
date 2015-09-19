@@ -2,6 +2,7 @@ package packet.game.tv
 {
 	import flash.utils.ByteArray;
 	
+	import camu.errors.NullObjectError;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
@@ -41,19 +42,13 @@ package packet.game.tv
 				if (uTV)
 				{
 					uTV.value = tvValue;				
-					uTV.unpack(bytes);	
-				}										
-				else
-				{
-					throw new Error("Not UnionTV Class.");
+					uTV.unpack(bytes);
+					
+					return uTV;
 				}
-				
-				return uTV;
 			}
-			else
-			{
-				throw new Error("TV [type=" + tvType + "] NOT EXIST!");	
-			}			
+			
+			throw new NullObjectError();
 		}
 		
 		protected function peekTVType(bytes:ByteArray) : int

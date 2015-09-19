@@ -1,10 +1,12 @@
 package packet.protocol
 {
+	import camu.errors.AbstractClassError;
+
 	public class SeqUtil
 	{
 		public function SeqUtil()
 		{
-			throw new Error("static class.");
+			throw new AbstractClassError();
 		}
 		
 		private static var _curSeq:int = 100;

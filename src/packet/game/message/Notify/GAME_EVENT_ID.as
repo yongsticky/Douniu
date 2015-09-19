@@ -1,5 +1,7 @@
 package packet.game.message.Notify
 {
+	import camu.errors.AbstractClassError;
+
 	public class GAME_EVENT_ID
 	{
 		public static const LOGIN:int = 1;
@@ -22,7 +24,7 @@ package packet.game.message.Notify
 		
 		public function GAME_EVENT_ID()
 		{
-			throw new Error("Abstract class.");
+			throw new AbstractClassError();		
 		}
 	}
 }

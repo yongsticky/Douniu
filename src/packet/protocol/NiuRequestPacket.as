@@ -1,6 +1,8 @@
 package packet.protocol
 {
-	import flash.utils.ByteArray;	
+	import flash.utils.ByteArray;
+	
+	import camu.errors.AbstractFunctionError;
 	
 	
 	public class NiuRequestPacket extends NiuPacket
@@ -69,7 +71,7 @@ package packet.protocol
 		
 		public function packMsgParam(bytes:ByteArray) : void
 		{
-			throw new Error("Abstract function, you must override it.");
+			throw new AbstractFunctionError();
 		}
 	}
 }

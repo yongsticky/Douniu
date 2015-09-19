@@ -1,5 +1,7 @@
 package controller
 {
+	import camu.errors.AbstractClassError;
+
 	public class NiuNotificationHandlerConstant
 	{
 		public static const STARTUP:String = "startup";		
@@ -18,7 +20,7 @@ package controller
 				
 		public function NiuNotificationHandlerConstant()
 		{
-			throw new Error("static abstract class, do not create instance.");
+			throw new AbstractClassError();			
 		}
 	}
 }

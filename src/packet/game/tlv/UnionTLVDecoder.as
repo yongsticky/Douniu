@@ -2,6 +2,7 @@ package packet.game.tlv
 {
 	import flash.utils.ByteArray;
 	
+	import camu.errors.NullObjectError;
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
@@ -45,16 +46,12 @@ package packet.game.tlv
 					uTLV.unpack(bytes);	
 					
 					_logger.log(this, "decode tlv, type:[",tlvType,"]", LEVEL.INFO);
-				}
-				else
-				{
-					throw new Error("Not UnionTLV Class.");	
-				}
-				
-				return uTLV;
+					
+					return uTLV;
+				}			
 			}					
 			
-			throw new Error("TLV [type=" + tlvType + "] NOT EXIST!");
+			throw new NullObjectError();			
 		}
 
 		public function peekTLVType(bytes:ByteArray) : int

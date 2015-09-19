@@ -2,6 +2,9 @@ package packet.util
 {
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
+	
+	import camu.errors.BufferOverflowError;
+	import camu.errors.UnhandledBranchError;
 
 	public class Int64
 	{
@@ -46,7 +49,7 @@ package packet.util
 			}
 			else
 			{
-				throw new Error("Wrong Endian.");				
+				throw new UnhandledBranchError();							
 			}			
 		}
 		
@@ -67,12 +70,12 @@ package packet.util
 				}
 				else
 				{
-					throw new Error("Wrong Endian.");
+					throw new UnhandledBranchError();
 				}	
 			}
 			else
-			{
-				throw new Error("bytesAvailable not enough.");
+			{				
+				throw new BufferOverflowError();
 			}			
 		}
 	}

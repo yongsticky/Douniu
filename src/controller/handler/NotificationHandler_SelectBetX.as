@@ -52,7 +52,7 @@ package controller.handler
 			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (sceneTable)
 			{
-				var layerTable:Layer_GameTable = sceneTable.getNamedChildByName("table.table") as Layer_GameTable;
+				var layerTable:Layer_GameTable = sceneTable.getChildByNameWithRecursive("table.table") as Layer_GameTable;
 				if (layerTable)
 				{					
 					layerTable.hideBetButtonGroup();

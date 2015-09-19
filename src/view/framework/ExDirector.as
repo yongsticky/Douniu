@@ -62,7 +62,7 @@ package view.framework
 
 			setSceneFadeInOut(scene, 0, 1, 0.3, Transitions.EASE_IN);
 
-			addChild(scene);		
+			addChild(scene);
 		}
 		
 		public function popScene() : ExScene

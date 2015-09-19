@@ -1,6 +1,9 @@
 package packet.protocol
 {
 	import flash.utils.ByteArray;
+	
+	import camu.errors.AbstractFunctionError;
+	import camu.errors.UnexpectedLengthError;
 	import camu.logger.ILogger;
 
 	public class NiuResponsePacket extends NiuPacket
@@ -43,7 +46,7 @@ package packet.protocol
 		{
 			if (bytes.bytesAvailable < CsHeader.BASE_LENGTH)
 			{
-				throw new Error("ByteArray Length Error(BASE_LENGTH).");				
+				throw new UnexpectedLengthError();								
 			}
 
 			_csHeader.total_len = bytes.readShort();
@@ -57,7 +60,7 @@ package packet.protocol
 			{
 				if (bytes.bytesAvailable < _csHeader.opt_len)
 				{
-					throw new Error("ByteArray Length Error(opt_len).");					
+					throw new UnexpectedLengthError();				
 				}
 
 				bytes.readBytes(_csHeader.opt, 0, _csHeader.opt_len);
@@ -68,7 +71,7 @@ package packet.protocol
 		{
 			if (bytes.bytesAvailable < MsgHeader.BASE_LENGTH)
 			{
-				throw new Error("ByteArray Length Error(BASE_LENGTH).");
+				throw new UnexpectedLengthError();
 			}
 
 			_msgHeader.msg_id = bytes.readShort();
@@ -83,14 +86,14 @@ package packet.protocol
 			
 			if (bytes.bytesAvailable < _msgHeader.param_len - 2)
 			{
-				throw new Error("ByteArray Length Error(param_len).");
+				throw new UnexpectedLengthError();
 			}
 			
 		}
 		
 		public function unpackMsgParam(bytes:ByteArray) : void
-		{				
-			throw new Error("Abstract function, you must override it.");
+		{
+			throw new AbstractFunctionError();			
 		}
 		
 		
