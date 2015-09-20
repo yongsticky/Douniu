@@ -1,5 +1,8 @@
 package view.scene.table.widget
 {
+	import camu.errors.NullObjectError;
+	import camu.errors.UnexpectedLengthError;
+	
 	import douniu.NiuCard;
 	
 	import resource.ResManager;
@@ -13,82 +16,120 @@ package view.scene.table.widget
 	
 	public class Widget_PlayerCards extends ExSprite
 	{		
-		private static const MAX_CARDS_NUM:int = 5;
+		private static const MAX_POKER_NUM:int = 5;
 		
-		private var _pokers:Vector.<Poker>;
+		private var _pokers:Vector.<PokerImage>;
+		private var _giveCards:Vector.<int>;
+		private var _selectedCount:int;
 				
 		
 		public function Widget_PlayerCards(name:String = null)
 		{
-			super(name);	
+			super(name);
 			
-			_pokers = new Vector.<Poker>(MAX_CARDS_NUM);
+			_selectedCount = 0;
+			
+			_giveCards = new <int>[0, 0, 0, 0, 0];			
 		}
 		
 		override protected function createChildren() : void
 		{
+			_pokers = new Vector.<PokerImage>(MAX_POKER_NUM);
 			
-		}
-				
-		public function setPokers(cards:Vector.<NiuCard>) : void
-		{	
-			removeChildren(0, -1, true);
-			
-			var maxCount:int = cards.length<MAX_CARDS_NUM ? cards.length:MAX_CARDS_NUM;			
 			var startX:int = 0;
-			for (var i:int = 0; i < maxCount; i++)
+			for (var i:int = 0; i < MAX_POKER_NUM; ++i)
 			{
-				var p:Poker = new Poker(cards[i]); 
+				var pI:PokerImage = new PokerImage();				
 				
-				p.x = startX;
-				p.addEventListener(TouchEvent.TOUCH, onTouch);
+				pI.x = startX;
+				pI.addEventListener(TouchEvent.TOUCH, onTouch);
+				addChild(pI);
 				
-				addChild(p);
+				_pokers[i] = pI;
 				
 				startX += 73;
+			}		
+		}
 				
-				_pokers[i] = p;
-			}			
-		}		
-		
-		public function getSelectedPokerIndex() : Vector.<int>
-		{
-			var selectedVec:Vector.<int> = new Vector.<int>();
-			
-			for (var i:int = 0; i < MAX_CARDS_NUM; ++i)
+		public function setPokers(cards:Vector.<int>) : void
+		{				
+			if (!cards)
 			{
-				var p:Poker = _pokers[i];
-				if (p && p.selected)
-				{
-					selectedVec.push(i);
-				}
+				throw new NullObjectError();
 			}
 			
-			return selectedVec;
+			if (cards.length != MAX_POKER_NUM)
+			{
+				throw new UnexpectedLengthError();
+			}
+			
+			var maxIndex:int = cards.length;
+			for (var i:int = 0; i < maxIndex; ++i)
+			{
+				var pI:PokerImage = _pokers[i];
+				pI.card = cards[i];	
+				_giveCards[i] = cards[i];
+			}
 		}
 		
-		
-		protected function onTouch(event:TouchEvent):void
+		public function get selectedCount() : int
 		{
-			var theImage:Poker =  event.target as Poker;
-			
-			var touchObj:Touch = event.getTouch(theImage);
-			
-			if (touchObj)
+			return _selectedCount;
+		}
+		
+		public function getGivePokers() : Vector.<int>
+		{			
+			if (_selectedCount == 3)
 			{
-				if (touchObj.phase == TouchPhase.ENDED)
-				{	
-					if (theImage.selected)
+				var curSelectedIndex:int = 0;
+				var curUnselectedIndex:int = 3;
+				for (var i:int = 0; i < MAX_POKER_NUM; ++i)
+				{
+					var pI:PokerImage = _pokers[i];				
+					if (pI.selected)
 					{
-						theImage.y = 0;	
-						theImage.selected = false;
+						_giveCards[curSelectedIndex] = pI.card;
+						++ curSelectedIndex;
 					}
 					else
 					{
-						theImage.y = -15;
-						theImage.selected = true;
-					}					
-				}			
+						_giveCards[curUnselectedIndex] = pI.card;
+						++ curUnselectedIndex;
+					}
+				}
+			}
+			
+			return _giveCards;
+		}				
+		
+		protected function onTouch(event:TouchEvent):void
+		{
+			var pI:PokerImage =  event.currentTarget as PokerImage;			
+			if (pI && pI.card > 0)
+			{
+				var touchObj:Touch = event.getTouch(pI);
+				
+				if (touchObj)
+				{					
+					if (touchObj.phase == TouchPhase.ENDED)
+					{	
+						if (pI.selected)
+						{
+							pI.y = 0;	
+							pI.selected = false;
+							-- _selectedCount;
+						}
+						else
+						{
+							if (_selectedCount < 3)
+							{
+								pI.y = -15;
+								pI.selected = true;
+								++ _selectedCount;	
+							}							
+						}					
+					}			
+				}
 			}
 		}
 	}
@@ -102,16 +143,16 @@ import resource.ResManager;
 import view.framework.ExImage;
 
 
-class Poker extends ExImage
+class PokerImage extends ExImage
 {
 	private var _selected:Boolean = false;
-	private var _card:NiuCard;
+	private var _card:int;
 	
 	private var COLOR_TO_STR:Array = ["hei", "hong", "mei", "fang"];
 	
-	public function Poker(card:NiuCard)
+	public function PokerImage()
 	{	
-		super(getPokerResource(card));
+		super();
 	}
 	
 	public function set selected(selected:Boolean) : void
@@ -124,17 +165,23 @@ class Poker extends ExImage
 		return _selected;
 	}
 		
-	public function get card() : NiuCard
+	public function get card() : int
 	{
 		return _card;
 	}
 	
-	private function getPokerResource(card:NiuCard) : *
+	public function set card(c:int) : void
+	{
+		_card = c;
+		super.res = getPokerResource(_card);
+	}
+	
+	private function getPokerResource(c:int) : *
 	{
 		var res:*;
-		if (card)
+		if (c > 0)
 		{
-			res = ResManager.instance().getResourceDev("poker." + COLOR_TO_STR[card.color] + "." + card.number.toString());
+			res = ResManager.instance().getResourceDev("poker." + COLOR_TO_STR[NiuCard.getColor(c)] + "." + NiuCard.getNumber(c).toString());
 		}
 		else
 		{

@@ -21,7 +21,7 @@ package douniu
 		];
 
 
-		public static function getSuggestObject(cards:Vector.<NiuCard>) : Object
+		public static function getSuggestObject(cards:Vector.<int>) : Object
 		{
 			var result:Object = {};
 
@@ -30,18 +30,18 @@ package douniu
 			if (vs != NiuType.NIU_ERROR)
 			{				
 				result.niuType = vs;
-				result.cardSequence = new Vector.<int>([0, 1, 2, 3, 4]);
+				result.cardSequence = new <int>[0, 1, 2, 3, 4];
 
 				return result;
 			}
 
 			// 先计算一下，如果有牛的话，是牛几
 			var sum:int = 0;
-			for (var c:NiuCard in cards)
+			for (var c:int in cards)
 			{
 				if (c)
 				{
-					sum += c.value;
+					sum += NiuCard.getValue(c);
 				}
 				else
 				{
@@ -80,7 +80,7 @@ package douniu
 
 			// 没有牛
 			result.niuType = NiuType.NIU_0;
-			result.cardSequence = new Vector.<int>([0, 1, 2, 3, 4]);
+			result.cardSequence = new <int>[0, 1, 2, 3, 4];
 			return result;
 
 		}

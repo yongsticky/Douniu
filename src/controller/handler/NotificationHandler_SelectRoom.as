@@ -17,8 +17,7 @@ package controller.handler
 		}
 		
 		override public function execute(notification:Notification):void
-		{		
-		
+		{			
 			var loginRequest:Request_Login = NiuObjectFactory.instance().createInstance(Request_Login);
 			
 			loginRequest.room_id = int(notification.getData());

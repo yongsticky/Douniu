@@ -56,24 +56,28 @@ package view.widget
 		
 		public function stopTimer() : void
 		{
-			_curTime = 0;		
+			_curTime = 0;
 			
 			visible = false;
 		}
+		
+		public function resetTimer(time:int) : void
+		{
+			_curTime = time;
+			_curTime ++;
+		}
 						
 		protected function onCountdownAnimationComplete() : void
-		{
-			//getOwnerLayer().juggler.removeTweens(this);
-			
+		{			
 			if (_curTime > 0)
 			{
 				--_curTime
-					
+
 				updateTimerTexture();				
-				resumeTimer();
+				resumeTimer();				
 			}
 			else
-			{
+			{				
 				_running = false;
 			}
 		}
@@ -90,7 +94,6 @@ package view.widget
 			var tn:Tween = new Tween(_num, 1, Transitions.EASE_IN_OUT_ELASTIC);
 			tn.scaleTo(0.8);	
 			tn.onComplete = onCountdownAnimationComplete;
-			//tn.onCompleteArgs = [tn];
 			
 			getOwnerLayer().juggler.add(tn);
 			

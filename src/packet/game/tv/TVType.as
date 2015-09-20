@@ -39,7 +39,7 @@ package packet.game.tv
 		public static const SO_NOTIFY_BET_DETAIL:int = 6;
 		public static const SO_NOTIFY_GIVE:int = 7;
 		public static const SO_NOTIFY_FINISH:int = 9;
-		public static const SO_NOTIFY_START_TIME:int = 10;
+		public static const SO_NOTIFY_START_TIMER:int = 10;
 		
 		public function TVType()
 		{
@@ -69,7 +69,7 @@ package packet.game.tv
 					return NotifyGive;
 				case SO_NOTIFY_FINISH:
 					return NotifyFinish;
-				case SO_NOTIFY_START_TIME:
+				case SO_NOTIFY_START_TIMER:
 					return NotifyStartTimer;
 				default:
 					throw new UnhandledBranchError("tvType [" + tvType + "] NOT Match any TLVValue.");					

@@ -1,5 +1,6 @@
 package controller.handler
 {
+	import camu.errors.NullObjectError;
 	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
@@ -7,6 +8,8 @@ package controller.handler
 	import controller.NiuNotificationHandler;
 	
 	import douniu.NiuCard;
+	
+	import factory.NiuObjectFactory;
 	
 	import global.GlobalSharedData;
 	
@@ -23,6 +26,7 @@ package controller.handler
 	import packet.game.tv.value.NotifyFinish;
 	import packet.game.tv.value.NotifyGive;
 	import packet.game.tv.value.NotifyRobDealer;
+	import packet.game.tv.value.NotifyStartTimer;
 	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
@@ -40,7 +44,7 @@ package controller.handler
 			_logger.log(this, "execute Enter.", LEVEL.INFO);
 			
 			var resp:Notify_DouniuEvent = notification.getData() as Notify_DouniuEvent;
-			if (resp.tv_data)
+			if (resp && resp.tv_data)
 			{					
 				switch(resp.tv_data.valueType)
 				{
@@ -62,14 +66,16 @@ package controller.handler
 				case TVType.SO_NOTIFY_FINISH:
 					onNotify_Finish(resp.tv_data.value as NotifyFinish);
 					break;
+				case TVType.SO_NOTIFY_START_TIMER:
+					onNotify_StartTimer(resp.tv_data.value as NotifyStartTimer);
 				default:
 					_logger.log(this, "NO MATCH TV TTYPE.", LEVEL.WARNING);
 					break;
 				}				
 			}
 			else
-			{
-				_logger.log(this, "tv_data is NULL.", LEVEL.ERROR);
+			{				
+				throw new NullObjectError();
 			}
 				
 		}
@@ -184,15 +190,17 @@ package controller.handler
 					
 					var tInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY);
 					if (tInfo)
-					{
-						var vec:Vector.<NiuCard> = new Vector.<NiuCard>(tInfo.tiles_num);
+					{		
+						var vec:Vector.<int> = new <int>[0, 0, 0, 0, 0];
 						for (var i:int = 0; i < tInfo.tiles_num; ++i)
 						{
-							vec[i] = new NiuCard(tInfo.tiles[i]);
-						}
-												
+							vec[i] = tInfo.tiles[i];
+						}																								
 						layerTable.showPlayerCards(vec);
-						layerTable.showOtherPlayerCards(null);
+						
+						var vec2:Vector.<int> = new <int>[0, 0, 0, 0, 0];
+						layerTable.showOtherPlayerCards(vec2);
+						
 						layerTable.showTimer(9);
 						
 						vec.length = 0;
@@ -222,6 +230,11 @@ package controller.handler
 					GlobalSharedData.instance().dealer = -1;					
 				}
 			}
+		}
+		
+		private function onNotify_StartTimer(v:NotifyStartTimer) : void
+		{
+			_logger.log(this, "onNotify_StartTimer Enter.", LEVEL.INFO);
 		}
 	}
 }

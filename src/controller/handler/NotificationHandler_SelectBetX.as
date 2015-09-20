@@ -33,8 +33,7 @@ package controller.handler
 			
 			var multiple:int = int(notification.getData());
 			
-			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
-			
+			var _factory:NiuObjectFactory = NiuObjectFactory.instance();			
 			var betPref:RequestBet = _factory.createInstance(RequestBet);
 			betPref.multiple = multiple;
 			

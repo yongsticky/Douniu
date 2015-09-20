@@ -1,5 +1,7 @@
 package douniu
 {
+	import camu.errors.AbstractClassError;
+
 	public class NiuCard
 	{
 		/*
@@ -34,50 +36,36 @@ package douniu
 
 		private var _data:int = 0;
 
-		public function NiuCard(data:int)
+		public function NiuCard()
 		{
-			_data = data;
+			throw new AbstractClassError();
 		}
-
-		public function reset(data:int) : void
+		
+		// 获取花色
+		public static function getColor(data:int) : int
 		{
-			_data = data;
-		}
-
-		public function get color() : int
-		{
-			/*
-			var c:int = _data % 4;			
-			return c;
-			*/
-			
-			if (_data == 52)
+			if (data == 52)
 			{
 				return 0;
 			}
 			else
 			{
-				return _data/13;
+				return data/13;
 			}
-			
 		}
-
-		public function get number() : int
+		
+		// 获取数字
+		public static function getNumber(data:int) :int
 		{
-			/*
-			var n:int = (_data >> 2) + 1;
-			return n;
-			*/
-			
-			var n:int = _data % 13;
-			
+			var n:int = data%13;
 			return n>0 ? n:13;
 		}
-
-		public function get value() : int
+		
+		// 获取计算值
+		public static function getValue(data:int) : int
 		{
-			var v:int = this.number;
-			return (v<10 ? v:10);
-		}
+			var v:int = getNumber(data);
+			return v<10? v:10; 
+		}		
 	}
 }

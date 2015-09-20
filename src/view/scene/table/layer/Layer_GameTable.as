@@ -3,11 +3,11 @@ package view.scene.table.layer
 	import douniu.NiuCard;
 	
 	import global.GlobalSharedData;
-		
+	
 	import view.framework.ExLayer;
 	import view.scene.table.widget.Widget_OtherPlayer;
 	import view.scene.table.widget.Widget_Player;
-	import view.widget.Widget_Timer;
+	import view.scene.table.widget.Widget_TimerWithText;
 
 	public class Layer_GameTable extends ExLayer
 	{		
@@ -17,7 +17,7 @@ package view.scene.table.layer
 		
 		private var _player:Widget_Player;		
 		private var _otherPlayers:Vector.<Widget_OtherPlayer>;		
-		private var _timer:Widget_Timer;
+		private var _timer:Widget_TimerWithText;
 		
 		
 		private var _playerSeatId:int;
@@ -46,7 +46,7 @@ package view.scene.table.layer
 				addChild(other);				
 			}
 										
-			_timer = new Widget_Timer();
+			_timer = new Widget_TimerWithText();
 			_timer.visible = false;			
 			addChild(_timer);
 					
@@ -84,14 +84,26 @@ package view.scene.table.layer
 		
 		public function showTimer(time:int) : void
 		{			
-			_timer.visible = true;			
-			_timer.startTimer(time < 10 ? time:9);
+			/*_timer.visible = true;			
+			_timer.timer.startTimer(time < 10 ? time:9);
+			*/
+			
+			_timer.show(1, time);
 		}
 		
 		public function hideTimer(): void
 		{
-			_timer.stopTimer();
-			_timer.visible = false;			
+			/*_timer.timer.stopTimer();
+			_timer.visible = false;
+			*/
+			_timer.hide();
+		}
+		
+		public function resetTimer(time:int) : void
+		{
+			//_timer.timer.resetTimer(time);
+			
+			_timer.reset(2, time);
 		}
 		
 		public function showOtherPlayer(nick:String, chips:int, seat_id:int) : void
@@ -162,7 +174,7 @@ package view.scene.table.layer
 			_player.playerBetButtonGroup.visible = false;
 		}
 		
-		public function showPlayerCards(cards:Vector.<NiuCard>) : void
+		public function showPlayerCards(cards:Vector.<int>) : void
 		{
 			_player.playerCards.setPokers(cards);
 			_player.playerCards.visible = true;
@@ -173,7 +185,7 @@ package view.scene.table.layer
 			_player.playerCards.visible = false;
 		}
 		
-		public function showOtherPlayerCards(cards:Vector.<NiuCard>) : void
+		public function showOtherPlayerCards(cards:Vector.<int>) : void
 		{
 			for each(var other:Widget_OtherPlayer in _otherPlayers)
 			{

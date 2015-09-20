@@ -16,6 +16,8 @@ package controller
 		public static const SELECT_BET_X:String = "select_bet_x";
 		
 		public static const USER_LOGOUT:String = "user_logout";
+		
+		public static const TEST_UI:String = "test_ui";
 				
 				
 		public function NiuNotificationHandlerConstant()

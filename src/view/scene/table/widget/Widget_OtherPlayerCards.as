@@ -1,5 +1,8 @@
 package view.scene.table.widget
 {
+	import camu.errors.NullObjectError;
+	import camu.errors.UnexpectedLengthError;
+	
 	import douniu.NiuCard;
 	
 	import resource.ResManager;
@@ -9,7 +12,7 @@ package view.scene.table.widget
 	
 	public class Widget_OtherPlayerCards extends ExSprite
 	{		
-		private static const MAX_CARDS_NUM:int = 5;
+		private static const MAX_POKER_NUM:int = 5;
 		
 		private var COLOR_TO_STR:Array = ["hei", "hong", "mei", "fang"];
 		
@@ -19,43 +22,51 @@ package view.scene.table.widget
 		{
 			super(name);
 			
-			_pokers = new Vector.<ExImage>(MAX_CARDS_NUM);
+			_pokers = new Vector.<ExImage>(MAX_POKER_NUM);
 		}
 		
 		override protected function createChildren() : void
-		{			
-		}
-		
-		public function setPokers(cards:Vector.<NiuCard>) : void
 		{
-			removeChildren(0, -1, true);
-			
-			var maxCount:int = (cards&&cards.length<MAX_CARDS_NUM) ? cards.length:MAX_CARDS_NUM;
-			var resManager:ResManager = ResManager.instance();
-						
 			var startX:int = 0;
-			for (var i:int = 0; i < MAX_CARDS_NUM; i++)
-			{				
-				var c:ExImage = new ExImage(getPokerResource(cards ? cards[i]:null));
-				c.y = 0;
-				c.x = startX;
-				addChild(c);
-				
-				if (i == 2 && cards && cards[i])
-				{
-					startX += 16;
-				}
+			for (var i:int = 0; i < MAX_POKER_NUM; ++i)
+			{
+				var cI:ExImage = new ExImage();
+				cI.x = startX;
+				cI.y = 0;
+				addChild(cI);
+				_pokers[i] = cI;
 				
 				startX += 16;
-			}			
+			}
 		}
 		
-		private function getPokerResource(card:NiuCard) : *
+		public function setPokers(cards:Vector.<int>) : void
+		{
+			if (!cards)
+			{
+				throw new NullObjectError();
+			}
+			
+			if (cards.length != MAX_POKER_NUM)
+			{
+				throw new UnexpectedLengthError();
+			}
+			
+			var maxIndex:int = cards.length;
+			
+			for (var i:int = 0; i < maxIndex; ++i)
+			{
+				var cI:ExImage = _pokers[i];
+				cI.res = getPokerResource(cards[i]);
+			}
+		}
+		
+		private function getPokerResource(c:int) : *
 		{
 			var res:*;
-			if (card)
+			if (c > 0)
 			{
-				res = ResManager.instance().getResourceDev("poker." + COLOR_TO_STR[card.color] + "." + card.number.toString());
+				res = ResManager.instance().getResourceDev("poker." + COLOR_TO_STR[NiuCard.getColor(c)] + "." + NiuCard.getNumber(c).toString());
 			}
 			else
 			{

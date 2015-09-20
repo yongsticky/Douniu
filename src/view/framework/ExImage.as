@@ -6,22 +6,28 @@ package view.framework
 	import camu.errors.UnhandledBranchError;
 	
 	import starling.display.Image;
-	import starling.display.Sprite;
 	import starling.textures.Texture;
-	import camu.errors.ZeroError;
 	
-	public class ExImage extends Sprite
+	public class ExImage extends ExSprite
 	{
 		protected var _texture:Texture;
 		protected var _starlingImage:Image;
+		//protected var _initRes:*;
 		
 		
 		public function ExImage(res:* = null)
-		{			
-			this.res = res;		
-			
+		{	
 			super();
+			
+			//_initRes = res;
+			this.res = res;
 		}
+		
+		override protected function createChildren():void
+		{
+			//this.res = _initRes;
+		}
+				  
 		
 		public function set res(res:*) : void
 		{	
@@ -56,7 +62,7 @@ package view.framework
 		protected function updateStarlingImage() : void
 		{			
 			if (_texture)
-			{
+			{				
 				if (!_starlingImage)
 				{
 					_starlingImage = new Image(_texture);
@@ -64,6 +70,11 @@ package view.framework
 				}
 				else
 				{
+					
+					
+					_starlingImage.width = _texture.width;
+					_starlingImage.height = _texture.height;
+					
 					_starlingImage.texture = _texture;
 				}				
 			}
@@ -76,26 +87,6 @@ package view.framework
 				removeChild(_starlingImage, true);				
 				_starlingImage = null;
 			}
-		}
-		
-		override public function set width(value:Number) : void
-		{
-			if (numChildren == 0)
-			{
-				throw new ZeroError();
-			}
-			
-			super.width = value;
-		}
-		
-		override public function set height(value:Number) : void
-		{
-			if (numChildren == 0)
-			{
-				throw new ZeroError();
-			}
-			
-			super.height = value;
-		}	
+		}		
 	}
 }

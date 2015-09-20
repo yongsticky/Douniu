@@ -27,28 +27,21 @@ package douniu
 		{
 		}
 
-		public static function verifyNormal(cards:Vector.<NiuCard>) : int
+		public static function verifyNormal(cards:Vector.<int>) : int
 		{			
 			if (!cards || cards.length != 5)
 			{
 				return NIU_ERROR;
-			}
-
-			if (cards.every(function (item:NiuCard, idx:int, ar:Vector.<NiuCard>) : Boolean {
-				return item;
-				}))
-			{
-				return NIU_ERROR;
-			}
+			}		
 	
-			var result:int = cards[0].value + cards[1].value + cards[2].value;
+			var result:int = NiuCard.getValue(cards[0]) + NiuCard.getValue(cards[1]) + NiuCard.getValue(cards[2]);
 			if (result%10 != 0)
 			{
 				return NIU_0;
 			}
 			else
 			{
-				result = cards[3].value + cards[4].value;
+				result = NiuCard.getValue(cards[3]) + NiuCard.getValue(cards[4]);
 
 				return result>10 ? (result-10):result;
 			}
@@ -57,33 +50,26 @@ package douniu
 			
 		}
 
-		public static function verifySpecial(cards:Vector.<NiuCard>) : int
+		public static function verifySpecial(cards:Vector.<int>) : int
 		{
 			if (!cards || cards.length != 5)
 			{
 				return NIU_ERROR;
 			}
-
-			if (cards.every(function (item:NiuCard, idx:int, ar:Vector.<NiuCard>) : Boolean {
-				return item;
-				}))
-			{
-				return NIU_ERROR;
-			}
-
+			
 			var isSilver:Boolean = true;
 			var isGold:Boolean = true;
 			var isLittle:Boolean = true;
 			var isBomb:Boolean = true;
 
 			var sum:int = 0;
-			var c0:int = cards[0].number;
+			var c0:int = NiuCard.getNumber(c);
 			var c1:int = -1;
-			for (var c:NiuCard in cards)
+			for (var c:int in cards)
 			{
 				if (isSilver)
 				{
-					if (c.number < NiuCard.NUMBER_10)
+					if (NiuCard.getNumber(c) < NiuCard.NUMBER_10)
 					{
 						isSilver = false;
 						isGold = false;
@@ -92,7 +78,7 @@ package douniu
 
 				if (isGold)
 				{
-					if (c.number < NiuCard.NUMBER_J)
+					if (NiuCard.getNumber(c) < NiuCard.NUMBER_J)
 					{					
 						isGold = false;
 					}	
@@ -100,7 +86,7 @@ package douniu
 
 				if (isLittle)
 				{
-					sum += c.value;
+					sum += NiuCard.getValue(c);
 					if (sum > 10)
 					{
 						isLittle = false;
@@ -110,7 +96,7 @@ package douniu
 				
 				if (isBomb)
 				{
-					if (c.number != c0 && c.number != c1)
+					if (NiuCard.getNumber(c) != c0 && NiuCard.getNumber(c) != c1)
 					{
 						if (c1 != -1)
 						{
@@ -118,7 +104,7 @@ package douniu
 						}
 						else
 						{
-							c1 = c.number;
+							c1 = NiuCard.getNumber(c);
 						}
 					}
 				}				
