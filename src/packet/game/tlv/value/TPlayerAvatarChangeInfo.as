@@ -33,7 +33,7 @@ package packet.game.tlv.value
 			bytes.writeInt(level);
 			bytes.writeInt(skill);
 						
-			super.adjustPosition(bytes);
+
 		}
 			
 		override public function unpack(bytes:ByteArray) : void
@@ -49,7 +49,7 @@ package packet.game.tlv.value
 			level = bytes.readInt();
 			skill = bytes.readInt();		
 				
-			super.adjustPosition(bytes);
+
 		}
 	}
 }

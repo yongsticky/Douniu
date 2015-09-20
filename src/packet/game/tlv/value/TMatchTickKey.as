@@ -27,7 +27,7 @@ package packet.game.tlv.value
 				bytes.writeBytes(match_ticket_key, 0, match_ticket_key_len);
 			}			
 				
-			super.adjustPosition(bytes);
+
 		}
 			
 		override public function unpack(bytes:ByteArray) : void
@@ -40,7 +40,7 @@ package packet.game.tlv.value
 				bytes.readBytes(match_ticket_key, 0, match_ticket_key_len);
 			}			
 				
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function onObjectRecycled() : void

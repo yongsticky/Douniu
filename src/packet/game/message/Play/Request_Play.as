@@ -23,9 +23,9 @@ package packet.game.message.Play
 			tv_data = NiuObjectFactory.instance().createInstance(UnionTV);
 		}
 		
-		override protected function initData() : void
+		override protected function defineMsgId() : int
 		{
-			msgHeader.msg_id = MSGID.REQUEST_PLAY; 
+			return MSGID.REQUEST_PLAY; 
 		}
 		
 		override public function packMsgParam(bytes:ByteArray) : void

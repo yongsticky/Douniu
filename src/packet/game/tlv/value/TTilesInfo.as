@@ -29,7 +29,7 @@ package packet.game.tlv.value
 				bytes.writeBytes(tiles, 0, tiles_num);
 			}
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -42,7 +42,7 @@ package packet.game.tlv.value
 				bytes.readBytes(tiles, 0, tiles_num);
 			}
 			
-			super.adjustPosition(bytes);
+
 		}
 
 		override public function printValue(logger:ILogger) : void

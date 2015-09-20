@@ -7,7 +7,7 @@ package controller.handler
 	
 	import factory.NiuObjectFactory;
 	
-	import global.GlobalSharedData;
+	import global.SharedData;
 	
 	import packet.game.message.Login.Response_Login;
 	import packet.game.message.Sitdown.Request_Sitdown;
@@ -30,17 +30,19 @@ package controller.handler
 		{
 			var resp:Response_Login = notification.getData() as Response_Login;
 						
-			GlobalSharedData.instance().roomId = resp.room_id;
-			GlobalSharedData.instance().playerId = resp.player_id;
+			SharedData.instance().roomId = resp.room_id;
+			SharedData.instance().playerId = resp.player_id;
 			
 			
 			var sitdownRequest:Request_Sitdown = NiuObjectFactory.instance().createInstance(Request_Sitdown);		
 			
 			sitdownRequest.csHeader.uin = resp.csHeader.uin;
-			sitdownRequest.csHeader.dialog_id = resp.player_id;			
+			sitdownRequest.csHeader.dialog_id = resp.player_id;
+						
 			sitdownRequest.sitdown_flag = 3;
-			sitdownRequest.room_id = resp.room_id;					
-			
+			sitdownRequest.room_id = resp.room_id;
+			sitdownRequest.table_id = -1;
+			sitdownRequest.seat_id = -1;			
 			
 			NiuRequestSender.instance().sendRequest(sitdownRequest);			
 			

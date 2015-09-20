@@ -27,7 +27,7 @@ package packet.game.tlv.value
 			money_change_value.writeToBytes(bytes);
 			money_cur_value.writeToBytes(bytes);	
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -38,7 +38,7 @@ package packet.game.tlv.value
 			money_change_value.readFromBytes(bytes);
 			money_cur_value.readFromBytes(bytes);	
 			
-			super.adjustPosition(bytes);
+
 		}
 	}
 }

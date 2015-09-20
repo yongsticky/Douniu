@@ -26,7 +26,7 @@ package packet.game.tlv.value
 				bytes.writeBytes(appointment_key, 0, appointment_key_len);
 			}
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -39,7 +39,7 @@ package packet.game.tlv.value
 				bytes.readBytes(appointment_key, 0, appointment_key_len);
 			}
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function onObjectRecycled() : void

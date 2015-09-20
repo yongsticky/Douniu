@@ -25,7 +25,7 @@ package packet.game.tlv.value
 			bytes.writeInt(item_change_count);
 			bytes.writeInt(item_cur_count);
 						
-			super.adjustPosition(bytes);
+
 		}
 				
 		override public function unpack(bytes:ByteArray) : void
@@ -37,7 +37,7 @@ package packet.game.tlv.value
 			item_change_count = bytes.readInt();
 			item_cur_count = bytes.readInt();
 				
-			super.adjustPosition(bytes);
+
 		}
 	}
 }

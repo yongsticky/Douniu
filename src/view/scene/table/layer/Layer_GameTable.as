@@ -2,7 +2,7 @@ package view.scene.table.layer
 {	
 	import douniu.NiuCard;
 	
-	import global.GlobalSharedData;
+	import global.SharedData;
 	
 	import view.framework.ExLayer;
 	import view.scene.table.widget.Widget_OtherPlayer;
@@ -137,13 +137,13 @@ package view.scene.table.layer
 		public function setDealerFlag(seat_id:int, multiple:int) : void
 		{
 			// 是自己抢到
-			if (seat_id == GlobalSharedData.instance().seatId)
+			if (seat_id == SharedData.instance().seatId)
 			{
 				_player.playerDealerFlag.visible = true;
 			}
 			else
 			{
-				var seat:int = seat_id - GlobalSharedData.instance().seatId;
+				var seat:int = seat_id - SharedData.instance().seatId;
 				if (seat < 0)
 				{
 					seat += 5;

@@ -27,7 +27,7 @@ package packet.game.tlv.value
 				bytes.writeBytes(computer_buffer, 0, computer_buffer_len);
 			}			
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -40,7 +40,7 @@ package packet.game.tlv.value
 				bytes.readBytes(computer_buffer, 0, computer_buffer_len);
 			}			
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function onObjectRecycled() : void

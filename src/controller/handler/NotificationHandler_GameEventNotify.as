@@ -6,7 +6,7 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
-	import global.GlobalSharedData;
+	import global.SharedData;
 	
 	import packet.game.message.Notify.GAME_EVENT_ID;
 	import packet.game.message.Notify.Notify_GameEvent;
@@ -60,15 +60,15 @@ package controller.handler
 		
 		private function onEvent_OtherPlayerSitdown(event:TGameEvent) : void
 		{
-			if (event.room_id != GlobalSharedData.instance().roomId)
+			if (event.room_id != SharedData.instance().roomId)
 			{
-				_logger.log(this, "NOT my ROOM event. my room id:[", GlobalSharedData.instance().roomId, "], event room id:[", event.room_id, "].", LEVEL.WARNING);
+				_logger.log(this, "NOT my ROOM event. my room id:[", SharedData.instance().roomId, "], event room id:[", event.room_id, "].", LEVEL.WARNING);
 				return;
 			}
 			
-			if (event.table_id != GlobalSharedData.instance().tableId)
+			if (event.table_id != SharedData.instance().tableId)
 			{
-				_logger.log(this, "NOT my TABLE event. my table id:[", GlobalSharedData.instance().tableId, "], event table id:[", event.table_id, "].", LEVEL.WARNING);
+				_logger.log(this, "NOT my TABLE event. my table id:[", SharedData.instance().tableId, "], event table id:[", event.table_id, "].", LEVEL.WARNING);
 				return;
 			}
 			

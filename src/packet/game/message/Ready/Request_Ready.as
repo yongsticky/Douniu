@@ -4,7 +4,7 @@ package packet.game.message.Ready
 	
 	import factory.NiuObjectFactory;
 	
-	import packet.game.message.MSGID;	
+	import packet.game.message.MSGID;
 	import packet.game.tlv.UnionTLV;
 	import packet.protocol.NiuRequestPacket;
 	
@@ -23,9 +23,9 @@ package packet.game.message.Ready
 			tlv_vec = new Vector.<UnionTLV>();
 		}
 		
-		override protected function initData():void
+		override protected function defineMsgId() : int
 		{
-			msgHeader.msg_id = MSGID.REQUEST_READY;
+			return MSGID.REQUEST_READY;
 		}
 
 		override public function packMsgParam(bytes:ByteArray) : void

@@ -30,7 +30,7 @@ package packet.game.tlv.value
 			bytes.writeShort(cur_player_num);
 			bytes.writeShort(cur_viewer_num);
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -43,7 +43,7 @@ package packet.game.tlv.value
 			cur_player_num = bytes.readShort();
 			cur_viewer_num = bytes.readShort();
 			
-			super.adjustPosition(bytes);
+
 		}
 
 		override public function printValue(logger:ILogger) : void

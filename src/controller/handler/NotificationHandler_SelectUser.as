@@ -6,7 +6,7 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
-	import global.GlobalSharedData;
+	import global.SharedData;
 	
 	import view.NiuDirector;
 	import view.scene.hall.Scene_Hall;
@@ -20,7 +20,7 @@ package controller.handler
 		
 		override public function execute(notification:Notification):void
 		{
-			GlobalSharedData.instance().uin = uint(notification.getData());
+			SharedData.instance().uin = uint(notification.getData());
 			
 			_logger.log(this, "User select User:[", uint(notification.getData()), "]", LEVEL.INFO);
 			

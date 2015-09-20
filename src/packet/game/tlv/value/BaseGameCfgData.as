@@ -41,7 +41,7 @@ package packet.game.tlv.value
 			bytes.writeUnsignedInt(room_ticket);
 			bytes.writeUnsignedInt(result_type);
 			
-			super.adjustPosition(bytes);
+
 		}
 
 		override public function unpack(bytes:ByteArray) : void
@@ -55,7 +55,7 @@ package packet.game.tlv.value
 			room_ticket = bytes.readUnsignedInt();
 			result_type = bytes.readUnsignedInt();
 			
-			super.adjustPosition(bytes);
+
 		}
 	}
 }

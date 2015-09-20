@@ -1,6 +1,6 @@
 package global
 {	
-	public class GlobalSharedData
+	public class SharedData
 	{
 		private var _uin:uint;
 		private var _playerId:int;
@@ -8,22 +8,22 @@ package global
 		private var _tableId:int;
 		private var _seatId:int;
 		private var _dealer:int;
-		
-		public function GlobalSharedData(inner:PrivateInner)
+				
+		public function SharedData(inner:PrivateInner)
 		{
 		}
 		
-		private static var _instance:GlobalSharedData = null;
-		public static function instance() : GlobalSharedData
+		private static var _instance:SharedData = null;
+		public static function instance() : SharedData
 		{
 			if (!_instance)
 			{
-				_instance = new GlobalSharedData(new PrivateInner());
+				_instance = new SharedData(new PrivateInner());
 			}
 			
 			return _instance;
 		}
-		
+				
 		public function set uin(uin:uint) : void
 		{
 			_uin = uin;

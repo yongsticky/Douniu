@@ -16,9 +16,9 @@ package packet.game.message.Standup
 			super();
 		}
 		
-		override protected function initData() : void
+		override protected function defineMsgId() : int
 		{
-			msgHeader.msg_id = MSGID.REQUEST_STANDUP;
+			return MSGID.REQUEST_STANDUP;
 		}
 
 		override public function packMsgParam(bytes:ByteArray) : void

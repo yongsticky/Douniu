@@ -75,7 +75,7 @@ package packet.game.tlv.value
 			}
 			score.writeToBytes(bytes);
 			
-			super.adjustPosition(bytes);			
+			
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -111,7 +111,7 @@ package packet.game.tlv.value
 			}
 			score.readFromBytes(bytes);	
 			
-			super.adjustPosition(bytes);
+
 		}
 	}
 }

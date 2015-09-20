@@ -30,9 +30,9 @@ package packet.game.message.Login
 			tlv_vec = new Vector.<UnionTLV>();					
 		}		
 
-		override protected function initData() : void
+		override protected function defineMsgId() : int
 		{
-			msgHeader.msg_id = MSGID.REQUEST_LOGIN;
+			return MSGID.REQUEST_LOGIN;
 		}
 				
 		

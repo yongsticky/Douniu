@@ -8,7 +8,7 @@ package controller.handler
 	
 	import factory.NiuObjectFactory;
 	
-	import global.GlobalSharedData;
+	import global.SharedData;
 	
 	import packet.game.message.Play.Request_Play;
 	import packet.game.tv.TVType;
@@ -39,8 +39,8 @@ package controller.handler
 			}
 			
 			var requestPlay:Request_Play = _factory.createInstance(Request_Play);
-			requestPlay.csHeader.uin = requestPlay.uin = GlobalSharedData.instance().uin;
-			requestPlay.csHeader.dialog_id = GlobalSharedData.instance().playerId;
+			requestPlay.csHeader.uin = requestPlay.uin = SharedData.instance().uin;
+			requestPlay.csHeader.dialog_id = SharedData.instance().playerId;
 			
 			requestPlay.tv_data.valueType = TVType.SO_REQUEST_GIVE;
 			requestPlay.tv_data.value = givePref;

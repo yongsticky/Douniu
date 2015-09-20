@@ -26,7 +26,7 @@ package packet.game.tlv.value
 				game_score_vec[i].writeToBytes(bytes);
 			}
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -38,7 +38,7 @@ package packet.game.tlv.value
 				game_score_vec[i].readFromBytes(bytes);
 			}
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function onObjectRecycled() : void

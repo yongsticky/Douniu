@@ -101,7 +101,7 @@ package packet.game.tlv.value
 			bytes.writeInt(using_face_item_id);
 			inner_tlv.pack(bytes);
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray):void
@@ -154,7 +154,7 @@ package packet.game.tlv.value
 			inner_tlv = PlayerDetailInnerUnionTLVDecoder.instance().decode(bytes);
 			
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function onObjectRecycled() : void

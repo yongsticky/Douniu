@@ -11,7 +11,7 @@ package controller.handler
 	
 	import factory.NiuObjectFactory;
 	
-	import global.GlobalSharedData;
+	import global.SharedData;
 	
 	import packet.game.message.Notify.Notify_DouniuEvent;
 	import packet.game.tlv.TLVType;
@@ -111,7 +111,7 @@ package controller.handler
 			var dealerInfo:TDealerInfo = v.getTLVValue(TLVType.SO_UP_TLV_DEALER_KEY) as TDealerInfo;
 			if (dealerInfo)
 			{
-				GlobalSharedData.instance().dealer = dealerInfo.dealer;	
+				SharedData.instance().dealer = dealerInfo.dealer;	
 			}
 			else
 			{
@@ -142,7 +142,7 @@ package controller.handler
 				var layerTable:Layer_GameTable = sceneTable.getChildByNameWithRecursive("table.table") as Layer_GameTable;
 				if (layerTable)
 				{
-					if (GlobalSharedData.instance().dealer != GlobalSharedData.instance().seatId)
+					if (SharedData.instance().dealer != SharedData.instance().seatId)
 					{
 						layerTable.showBetButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);
 					}
@@ -227,7 +227,7 @@ package controller.handler
 					layerTable.hideTimer();
 					layerTable.clearDealerFlag();
 					
-					GlobalSharedData.instance().dealer = -1;					
+					SharedData.instance().dealer = -1;					
 				}
 			}
 		}

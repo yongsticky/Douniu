@@ -6,7 +6,7 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
-	import global.GlobalSharedData;
+	import global.SharedData;
 	
 	import packet.game.message.Sitdown.Response_Sitdown;
 	import packet.game.tlv.TLVType;
@@ -27,8 +27,8 @@ package controller.handler
 		override public function execute(notification:Notification):void
 		{
 			var resp:Response_Sitdown = notification.getData() as Response_Sitdown;			
-			GlobalSharedData.instance().tableId = resp.table_id;
-			GlobalSharedData.instance().seatId = resp.seat_id;
+			SharedData.instance().tableId = resp.table_id;
+			SharedData.instance().seatId = resp.seat_id;
 			
 			AddPlayer(resp);
 			

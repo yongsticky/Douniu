@@ -23,7 +23,7 @@ package packet.game.tlv.value
 
 			bytes.writeShort(standup_reason);
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -32,7 +32,7 @@ package packet.game.tlv.value
 
 			standup_reason = bytes.readShort();
 			
-			super.adjustPosition(bytes);
+
 		}
 
 		override public function printValue(logger:ILogger) : void

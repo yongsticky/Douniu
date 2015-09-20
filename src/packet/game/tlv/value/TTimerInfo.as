@@ -24,7 +24,7 @@ package packet.game.tlv.value
 			bytes.writeByte(type_);
 			bytes.writeByte(time_);
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -34,7 +34,7 @@ package packet.game.tlv.value
 			type_ = bytes.readByte();
 			time_ = bytes.readByte();
 			
-			super.adjustPosition(bytes);
+
 		}
 
 		override public function printValue(logger:ILogger) : void

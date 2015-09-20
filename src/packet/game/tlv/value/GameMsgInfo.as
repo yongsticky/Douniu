@@ -24,7 +24,7 @@ package packet.game.tlv.value
 				bytes.writeUTFBytes(game_msg_info);
 			}
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -37,7 +37,7 @@ package packet.game.tlv.value
 				bytes.readUTFBytes(game_msg_info_len);
 			}
 			
-			super.adjustPosition(bytes);
+
 		}
 	}
 }

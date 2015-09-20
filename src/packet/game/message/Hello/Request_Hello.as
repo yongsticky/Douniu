@@ -18,9 +18,9 @@ package packet.game.message.Hello
 			info = new ByteArray();
 		}
 		
-		override protected function initData() : void
+		override protected function defineMsgId() : int
 		{
-			msgHeader.msg_id = MSGID.REQUEST_HELLO;
+			return MSGID.REQUEST_HELLO;
 		}
 		
 		override public function packMsgParam(bytes:ByteArray) : void

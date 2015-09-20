@@ -22,7 +22,7 @@ package packet.game.tlv.value
 			
 			bytes.writeByte(vip_level);
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -31,7 +31,7 @@ package packet.game.tlv.value
 			
 			vip_level = bytes.readByte();
 			
-			super.adjustPosition(bytes);
+
 		}
 
 		override public function printValue(logger:ILogger) : void

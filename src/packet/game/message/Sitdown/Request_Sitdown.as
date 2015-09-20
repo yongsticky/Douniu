@@ -24,17 +24,11 @@ package packet.game.message.Sitdown
 			tlv_vec = new Vector.<UnionTLV>();
 		}
 		
-		override protected function initData() : void
-		{
-			msgHeader.msg_id = MSGID.REQUEST_SITDOWN;
-			
-			room_id = 76;
-			table_id = -1;
-			seat_id = -1;
-			tlv_num = 0;
+		override protected function defineMsgId() : int
+		{			
+			return MSGID.REQUEST_SITDOWN;			
 		}
-		
-		
+				
 		override public function packMsgParam(bytes:ByteArray) : void
 		{	
 			bytes.writeInt(sitdown_flag);

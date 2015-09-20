@@ -14,9 +14,9 @@ package packet.game.message.Logout
 			super();
 		}
 		
-		override protected function initData() : void
+		override protected function defineMsgId() : int
 		{
-			msgHeader.msg_id = MSGID.REQUEST_LOGOUT;
+			return MSGID.REQUEST_LOGOUT;
 		}
 
 		override public function packMsgParam(bytes:ByteArray) : void

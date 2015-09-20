@@ -29,7 +29,7 @@ package packet.game.tlv.value
 
 			client_capability.writeToBytes(bytes);	
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -38,7 +38,7 @@ package packet.game.tlv.value
 
 			client_capability.readFromBytes(bytes);
 			
-			super.adjustPosition(bytes);
+
 		}
 	}
 }

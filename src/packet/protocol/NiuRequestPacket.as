@@ -10,12 +10,33 @@ package packet.protocol
 		public function NiuRequestPacket()
 		{
 			super();
-			
-			deafualtCsHeader();
-			defaultMsgHeader();
-			
+									
 			initData();
-		}				
+		}
+		
+		protected function defineMsgId() : int
+		{
+			throw new AbstractFunctionError();
+		}		
+		
+		protected function initData() : void
+		{
+			_csHeader.ver = 0;
+			_csHeader.dialog_id = -1;
+			_csHeader.opt_len = 0;
+			_csHeader.body_flag = 0;			
+			_csHeader.seq = SeqUtil.getNextSeq();
+			
+			_msgHeader.msg_type = 0;
+			_msgHeader.msg_seq = SeqUtil.getNextSeq();
+			_msgHeader.src_fe = 1;
+			_msgHeader.dest_fe = 158;	
+			_msgHeader.src_id = 0;
+			_msgHeader.dest_id = 0;
+			
+			_msgHeader.msg_id = defineMsgId();	
+		}
+		
 
 		public function pack(bytes:ByteArray) : void
 		{

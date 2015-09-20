@@ -7,7 +7,7 @@ package controller.handler
 	
 	import factory.NiuObjectFactory;
 	
-	import global.GlobalSharedData;
+	import global.SharedData;
 	
 	import packet.game.message.Logout.Request_Logout;
 	
@@ -26,9 +26,9 @@ package controller.handler
 		override public function execute(notification:Notification) : void
 		{			
 			var logoutReqeust:Request_Logout = NiuObjectFactory.instance().createInstance(Request_Logout);
-			
-			logoutReqeust.csHeader.uin = GlobalSharedData.instance().uin;
-			logoutReqeust.csHeader.dialog_id = GlobalSharedData.instance().playerId;			
+						
+			logoutReqeust.csHeader.uin = SharedData.instance().uin;
+			logoutReqeust.csHeader.dialog_id = SharedData.instance().playerId;			
 			
 			logoutReqeust.reason = 0;
 			

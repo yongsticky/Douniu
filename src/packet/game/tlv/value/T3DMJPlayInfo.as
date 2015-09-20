@@ -29,7 +29,7 @@ package packet.game.tlv.value
 				bytes.writeInt(avata_vec[i]);
 			}
 			
-			super.adjustPosition(bytes);
+
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
