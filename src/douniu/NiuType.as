@@ -65,7 +65,7 @@ package douniu
 			var sum:int = 0;
 			var c0:int = NiuCard.getNumber(c);
 			var c1:int = -1;
-			for (var c:int in cards)
+			for each(var c:int in cards)
 			{
 				if (isSilver)
 				{

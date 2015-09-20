@@ -37,7 +37,7 @@ package douniu
 
 			// 先计算一下，如果有牛的话，是牛几
 			var sum:int = 0;
-			for (var c:int in cards)
+			for each(var c:int in cards)
 			{
 				if (c)
 				{
@@ -51,7 +51,7 @@ package douniu
 			sum %= 10;
 
 			// 穷举排列	
-			for (var seq:Array in SEQUENCE_ENUM)
+			for each(var seq:Array in SEQUENCE_ENUM)
 			{
 				var sum2:int = (cards[seq[0][0]].value+cards[seq[0][1]].value) % 10;
 				if (sum == sum2)
@@ -60,13 +60,8 @@ package douniu
 					sum3 %= 10;
 					if (sum3 == 0)
 					{						
-						result.niuType = ((!sum) ? sum:NiuType.NIU_10);
-						var seqence:Vector.<int> = new Vector.<int>();
-						seqence.push(seq[0][0]);
-						seqence.push(seq[0][1]);
-						seqence.push(seq[1][0]);
-						seqence.push(seq[1][1]);
-						seqence.push(seq[1][2]);
+						result.niuType = (sum==0 ? sum:NiuType.NIU_10);
+						var seqence:Vector.<int> = new <int>[seq[1][0], seq[1][1], seq[1][2], seq[0][0], seq[0][1]];												
 						result.cardSequence = seqence;
 
 						return result;
