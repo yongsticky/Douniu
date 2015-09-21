@@ -25,7 +25,7 @@ package controller.handler
 		
 		override public function execute(notification:Notification) : void
 		{
-			_logger.log(this, "execute, prepare send RobDealer Request.", LEVEL.INFO);
+			_logger.log(this, "execute, prepare send RobDealer Request.", LEVEL.DEBUG);
 			
 			
 			var multiple:int = int(notification.getData());

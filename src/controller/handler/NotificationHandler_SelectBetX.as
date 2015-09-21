@@ -18,7 +18,7 @@ package controller.handler
 	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
-	import view.scene.table.layer.Layer_GameTable;
+	import view.scene.table.layer.Layer_TableMain;
 	
 	public class NotificationHandler_SelectBetX extends NiuNotificationHandler
 	{
@@ -29,7 +29,7 @@ package controller.handler
 		
 		override public function execute(notification:Notification) : void
 		{
-			_logger.log(this, "execute Enter.", LEVEL.INFO);
+			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
 			
 			var multiple:int = int(notification.getData());
 			
@@ -51,7 +51,7 @@ package controller.handler
 			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (sceneTable)
 			{
-				var layerTable:Layer_GameTable = sceneTable.getChildByNameWithRecursive("table.table") as Layer_GameTable;
+				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
 				{					
 					layerTable.hideBetButtonGroup();

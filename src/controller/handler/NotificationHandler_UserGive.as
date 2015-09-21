@@ -25,7 +25,7 @@ package controller.handler
 		
 		override public function execute(notification:Notification):void
 		{
-			_logger.log(this, "execute Enter.", LEVEL.INFO);
+			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
 			
 			var selectedVec:Vector.<int> = notification.getData() as Vector.<int>;
 			

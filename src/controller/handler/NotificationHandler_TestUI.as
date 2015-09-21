@@ -4,6 +4,7 @@ package controller.handler
 	import flash.utils.ByteArray;
 	import flash.utils.Timer;
 	
+	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
 	
@@ -11,7 +12,7 @@ package controller.handler
 	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
-	import view.scene.table.layer.Layer_GameTable;
+	import view.scene.table.layer.Layer_TableMain;
 	
 	public class NotificationHandler_TestUI extends NiuNotificationHandler
 	{
@@ -24,12 +25,13 @@ package controller.handler
 		
 		override public function execute(notification:Notification):void
 		{
+			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
+			
 			var scene:Scene_Table = new Scene_Table();
 			NiuDirector.instance().switchToScene(scene);
+						
 			
-			
-			
-			var layer:Layer_GameTable = scene.getChildByNameWithRecursive("table.table");
+			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");
 			
 			layer.showPlayer("3000011", 10000, 0);
 			layer.showOtherPlayer("3000012", 12000, 1);
@@ -43,7 +45,7 @@ package controller.handler
 		protected function OnTimer(event:TimerEvent):void
 		{
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			var layer:Layer_GameTable = scene.getChildByNameWithRecursive("table.table");
+			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");
 	
 
 			if (_first)

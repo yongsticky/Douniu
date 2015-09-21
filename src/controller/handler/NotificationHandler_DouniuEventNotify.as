@@ -14,8 +14,7 @@ package controller.handler
 	import global.SharedData;
 	
 	import packet.game.message.Notify.Notify_DouniuEvent;
-	import packet.game.tlv.TLVType;
-	import packet.game.tlv.UnionTLV;
+	import packet.game.tlv.TLVType;	
 	import packet.game.tlv.value.TDealerInfo;
 	import packet.game.tlv.value.TTilesInfo;
 	import packet.game.tlv.value.TTimerInfo;
@@ -30,7 +29,7 @@ package controller.handler
 	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
-	import view.scene.table.layer.Layer_GameTable;
+	import view.scene.table.layer.Layer_TableMain;
 	
 	public class NotificationHandler_DouniuEventNotify extends NiuNotificationHandler
 	{
@@ -41,7 +40,7 @@ package controller.handler
 		
 		override public function execute(notification:Notification) : void
 		{
-			_logger.log(this, "execute Enter.", LEVEL.INFO);
+			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
 			
 			var resp:Notify_DouniuEvent = notification.getData() as Notify_DouniuEvent;
 			if (resp && resp.tv_data)
@@ -87,7 +86,7 @@ package controller.handler
 			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (sceneTable)
 			{
-				var layerTable:Layer_GameTable = sceneTable.getChildByNameWithRecursive("table.table") as Layer_GameTable;
+				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
 				{
 					_logger.log(this, "showDealerRobButtonGroup.", LEVEL.INFO);
@@ -121,7 +120,7 @@ package controller.handler
 			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (sceneTable)
 			{
-				var layerTable:Layer_GameTable = sceneTable.getChildByNameWithRecursive("table.table") as Layer_GameTable;
+				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
 				{					
 					layerTable.hideTimer();
@@ -139,7 +138,7 @@ package controller.handler
 			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (sceneTable)
 			{
-				var layerTable:Layer_GameTable = sceneTable.getChildByNameWithRecursive("table.table") as Layer_GameTable;
+				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
 				{
 					if (SharedData.instance().dealer != SharedData.instance().seatId)
@@ -164,7 +163,7 @@ package controller.handler
 			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (sceneTable)
 			{
-				var layerTable:Layer_GameTable = sceneTable.getChildByNameWithRecursive("table.table") as Layer_GameTable;
+				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
 				{					
 					layerTable.hideBetButtonGroup();
@@ -181,7 +180,7 @@ package controller.handler
 			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (sceneTable)
 			{
-				var layerTable:Layer_GameTable = sceneTable.getChildByNameWithRecursive("table.table") as Layer_GameTable;
+				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
 				{					
 					layerTable.hideBetButtonGroup();
@@ -218,10 +217,9 @@ package controller.handler
 			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (sceneTable)
 			{
-				var layerTable:Layer_GameTable = sceneTable.getChildByNameWithRecursive("table.table") as Layer_GameTable;
+				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
-				{										
-						
+				{		
 					layerTable.hidePlayerCards();
 					layerTable.hideOtherPlayerCards();
 					layerTable.hideTimer();

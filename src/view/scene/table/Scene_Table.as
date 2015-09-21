@@ -3,7 +3,7 @@ package view.scene.table
 	import view.framework.ExScene;
 	import view.scene.table.layer.Layer_Background;
 	import view.scene.table.layer.Layer_BottomBanner;
-	import view.scene.table.layer.Layer_GameTable;
+	import view.scene.table.layer.Layer_TableMain;
 	import view.scene.table.layer.Layer_TopBanner;
 	
 	public class Scene_Table extends ExScene
@@ -11,7 +11,7 @@ package view.scene.table
 		private static const BACKGROUND:String = "table.background";
 		private static const TOPBANNER:String = "table.topbanner";
 		private static const BOTTOMBANNER:String = "table.bottombanner";
-		private static const TABLE:String = "table.table";
+		private static const TABLEMAIN:String = "table.main";
 		
 		public function Scene_Table(name:String = null)
 		{
@@ -23,7 +23,7 @@ package view.scene.table
 			addChild(new Layer_Background(BACKGROUND));
 			addChild(new Layer_TopBanner(TOPBANNER));
 			addChild(new Layer_BottomBanner(BOTTOMBANNER));
-			addChild(new Layer_GameTable(TABLE));			
+			addChild(new Layer_TableMain(TABLEMAIN));			
 		}	
 	}
 }

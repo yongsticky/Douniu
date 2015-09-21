@@ -7,7 +7,9 @@ package server
 	import camu.net.PacketEventTypeUtil;
 	
 	import controller.NiuNotification;
-	import controller.NiuNotificationHandlerConstant;
+	
+	import facade.NiuApplicationFacade;
+	import facade.NiuNotificationHandlerConstant;
 	
 	import factory.NiuObjectFactory;
 	
@@ -26,11 +28,16 @@ package server
 
 	public class NiuResponseReceiver
 	{
-		protected var _logger:ILogger;		
+		protected var _logger:ILogger;
+		
+		protected var _mediator:NiuServerMediator;
+		
 		
 		public function NiuResponseReceiver(inner:PrivateInner)
 		{
-			_logger = Logger.createLogger(NiuResponseReceiver, LEVEL.INFO);
+			_logger = Logger.createLogger(NiuResponseReceiver, LEVEL.INFO);		
+			
+			_mediator = new NiuServerMediator();
 		}
 		
 		private static var _instance:NiuResponseReceiver = null;
@@ -59,10 +66,9 @@ package server
 			
 		
 		protected function sendNotification(name:String, data:Object = null) : void
-		{
-			NiuServerMediator.instance().sendNotification(NiuNotification.createNotification(name, data));
-		}
-		
+		{			
+			_mediator.sendNotification(NiuNotification.createNotification(name, data));		
+		}		
 		
 		protected function addReceiver(cls:Class, f:Function) : void
 		{			

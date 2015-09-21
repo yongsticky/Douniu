@@ -9,7 +9,7 @@ package view.scene.table.layer
 	import view.scene.table.widget.Widget_Player;
 	import view.scene.table.widget.Widget_TimerWithText;
 
-	public class Layer_GameTable extends ExLayer
+	public class Layer_TableMain extends ExLayer
 	{		
 		private static const MAX_OTHER_PLAYER_NUM:int = 5;
 		
@@ -24,7 +24,7 @@ package view.scene.table.layer
 		
 		
 		
-		public function Layer_GameTable(name:String = null) 
+		public function Layer_TableMain(name:String = null) 
 		{
 			super(name);
 			

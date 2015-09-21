@@ -1,7 +1,7 @@
 package view.scene.startup.layer
 {
 	
-	import controller.NiuNotificationHandlerConstant;
+	import facade.NiuNotificationHandlerConstant;
 	
 	import resource.ResManager;
 	

@@ -8,7 +8,7 @@ package controller.handler
 	import camu.net.ConnectorEvent;
 	
 	import controller.NiuNotificationHandler;
-	import controller.NiuNotificationHandlerConstant;
+	import facade.NiuNotificationHandlerConstant;
 	
 	import server.NiuResponseReceiver;
 	import server.NiuServerConnector;	
@@ -23,6 +23,7 @@ package controller.handler
 		
 		override public function execute(notification:Notification):void
 		{
+			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
 			
 			NiuResponseReceiver.instance().initReceivers();
 			

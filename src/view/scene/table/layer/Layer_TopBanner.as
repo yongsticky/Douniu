@@ -1,6 +1,6 @@
 package view.scene.table.layer
 {
-	import controller.NiuNotificationHandlerConstant;
+	import facade.NiuNotificationHandlerConstant;
 	
 	import resource.ResManager;
 	

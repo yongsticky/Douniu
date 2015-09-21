@@ -17,7 +17,7 @@ package controller
 		{
 			_mediator = mediator;
 			
-			_logger = Logger.createLogger(NiuNotificationHandler, LEVEL.INFO);
+			_logger = Logger.createLogger(NiuNotificationHandler, LEVEL.DEBUG);
 		}
 		
 		public function get mediator() : Mediator

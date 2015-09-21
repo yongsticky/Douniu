@@ -64,8 +64,7 @@ package server
 						
 			_request.time = _now.getTime() + 60*1000*_count;
 			
-			_count ++;
-			
+			++ _count;			
 			
 			NiuRequestSender.instance().sendRequest(_request);
 		}

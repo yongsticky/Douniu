@@ -1,17 +1,14 @@
 package view
 {
-	import camu.errors.AbstractClassError;	
-	import camu.logger.LEVEL;
-	
-	import controller.NiuNotification;
-	import controller.NiuNotificationHandlerConstant;
-	
-	import server.NiuServerConnector;
-	
 	import starling.events.EnterFrameEvent;
 	
+	import camu.errors.AbstractClassError;
+	import camu.logger.LEVEL;
+	
+	import controller.NiuNotification;		
+	import facade.NiuNotificationHandlerConstant;	
+	import server.NiuServerConnector;	
 	import view.framework.ExDirector;
-	import view.mediator.NiuViewMediator;
 	
 	public class NiuDirector extends ExDirector
 	{		
@@ -28,7 +25,7 @@ package view
 					
 			_instance = this;
 			
-			_mediator = new NiuViewMediator();					
+			_mediator = new NiuViewMediator();			
 		}
 		
 		private static var _instance:NiuDirector = null;
@@ -44,7 +41,7 @@ package view
 		
 		public function sendNotification(name:String, data:Object = null) : void
 		{			
-			_mediator.sendNotification(NiuNotification.createNotification(name, data));
+			_mediator.sendNotification(NiuNotification.createNotification(name, data));			
 		}
 		
 		override protected function initialize() : void

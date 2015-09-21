@@ -1,4 +1,4 @@
-package view.mediator
+package view
 {
 	import camu.mvc.Facade;
 	import camu.mvc.Mediator;

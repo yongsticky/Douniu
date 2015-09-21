@@ -1,5 +1,6 @@
 package controller.handler
 {	
+	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
 	
@@ -24,7 +25,9 @@ package controller.handler
 		}
 		
 		override public function execute(notification:Notification) : void
-		{			
+		{	
+			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
+			
 			var logoutReqeust:Request_Logout = NiuObjectFactory.instance().createInstance(Request_Logout);
 						
 			logoutReqeust.csHeader.uin = SharedData.instance().uin;

@@ -1,6 +1,6 @@
 package view.scene.table.widget
 {
-	import controller.NiuNotificationHandlerConstant;
+	import facade.NiuNotificationHandlerConstant;
 	
 	import resource.ResManager;
 	

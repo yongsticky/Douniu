@@ -16,7 +16,7 @@ package controller.handler
 	import packet.game.tlv.value.PlayerDetailInfo;	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
-	import view.scene.table.layer.Layer_GameTable;
+	import view.scene.table.layer.Layer_TableMain;
 	
 	public class NotificationHandler_GameEventNotify extends NiuNotificationHandler
 	{
@@ -27,6 +27,8 @@ package controller.handler
 		
 		override public function execute(notification:Notification) : void
 		{
+			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
+			
 			var resp:Notify_GameEvent = notification.getData() as Notify_GameEvent;
 			
 			for (var i:int = 0; i < resp.game_event_num; ++i)
@@ -94,7 +96,7 @@ package controller.handler
 			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (sceneTable)
 			{
-				var layerTable:Layer_GameTable = sceneTable.getChildByNameWithRecursive("table.table") as Layer_GameTable;
+				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
 				{					
 					layerTable.showOtherPlayer(nick, chips, seatId);					
@@ -110,7 +112,7 @@ package controller.handler
 			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (sceneTable)
 			{
-				var layerTable:Layer_GameTable = sceneTable.getChildByNameWithRecursive("table.table") as Layer_GameTable;
+				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
 				{										
 					layerTable.hideTimer();				

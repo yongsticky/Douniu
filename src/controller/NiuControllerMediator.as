@@ -2,6 +2,7 @@ package controller
 {
 	import camu.mvc.Facade;
 	import camu.mvc.Mediator;
+	
 	import facade.NiuApplicationFacade;
 	
 	public class NiuControllerMediator extends Mediator
@@ -13,7 +14,7 @@ package controller
 		
 		override protected function getFacade() : Facade
 		{
-			return NiuApplicationFacade.instance() as Facade;
+			return NiuApplicationFacade.instance();
 		}
 	}
 }

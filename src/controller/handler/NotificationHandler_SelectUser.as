@@ -20,6 +20,8 @@ package controller.handler
 		
 		override public function execute(notification:Notification):void
 		{
+			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
+			
 			SharedData.instance().uin = uint(notification.getData());
 			
 			_logger.log(this, "User select User:[", uint(notification.getData()), "]", LEVEL.INFO);

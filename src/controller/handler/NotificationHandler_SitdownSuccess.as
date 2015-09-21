@@ -1,6 +1,7 @@
 package controller.handler
 {
 	import camu.errors.UnhandledBranchError;
+	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
 	
@@ -15,7 +16,7 @@ package controller.handler
 	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
-	import view.scene.table.layer.Layer_GameTable;
+	import view.scene.table.layer.Layer_TableMain;
 	
 	public class NotificationHandler_SitdownSuccess extends NiuNotificationHandler
 	{
@@ -26,6 +27,8 @@ package controller.handler
 		
 		override public function execute(notification:Notification):void
 		{
+			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
+			
 			var resp:Response_Sitdown = notification.getData() as Response_Sitdown;			
 			SharedData.instance().tableId = resp.table_id;
 			SharedData.instance().seatId = resp.seat_id;
@@ -55,7 +58,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layerTable:Layer_GameTable = scene.getChildByNameWithRecursive("table.table") as Layer_GameTable;
+				var layerTable:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
 				{
 					layerTable.showPlayer(resp.csHeader.uin.toString(), 100000, resp.seat_id);
@@ -68,7 +71,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layerTable:Layer_GameTable = scene.getChildByNameWithRecursive("table.table") as Layer_GameTable;
+				var layerTable:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
 				{
 					layerTable.showOtherPlayer(playerDeatil.player_uin.toString(), 100000, playerDeatil.seat_id);

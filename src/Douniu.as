@@ -31,7 +31,8 @@ package
 		{
 			Logger.setOff(false);
 			
-			NiuApplicationFacade.instance().initializeNotificationHandlers();
+			// 初始化controller handlers
+			NiuApplicationFacade.instance().initializeNotificationHandlers();			
 			
 			_starling = new Starling(NiuDirector, stage);
 			_starling.start();

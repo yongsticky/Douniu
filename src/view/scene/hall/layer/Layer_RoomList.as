@@ -1,6 +1,6 @@
 package view.scene.hall.layer
 {	
-	import controller.NiuNotificationHandlerConstant;
+	import facade.NiuNotificationHandlerConstant;
 	
 	import resource.ResManager;
 	
