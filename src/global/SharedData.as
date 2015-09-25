@@ -8,6 +8,10 @@ package global
 		private var _tableId:int;
 		private var _seatId:int;
 		private var _dealer:int;
+		
+		private var _nick:String;
+		private var _chips:int;
+		private var _gender:int;
 				
 		public function SharedData(inner:PrivateInner)
 		{
@@ -24,9 +28,9 @@ package global
 			return _instance;
 		}
 				
-		public function set uin(uin:uint) : void
+		public function set uin(value:uint) : void
 		{
-			_uin = uin;
+			_uin = value;
 		}
 		
 		public function get uin() : uint
@@ -34,9 +38,9 @@ package global
 			return _uin;
 		}
 		
-		public function set playerId(id:int) : void
+		public function set playerId(value:int) : void
 		{
-			_playerId = id;
+			_playerId = value;
 		}
 		
 		public function get playerId() : int
@@ -44,9 +48,9 @@ package global
 			return _playerId;
 		}
 		
-		public function set roomId(id:int) : void
+		public function set roomId(value:int) : void
 		{
-			_roomId = id;
+			_roomId = value;
 		}
 		
 		public function get roomId() : int
@@ -54,9 +58,9 @@ package global
 			return _roomId;
 		}
 		
-		public function set tableId(id:int) : void
+		public function set tableId(value:int) : void
 		{
-			_tableId = id;
+			_tableId = value;
 		}
 		
 		public function get tableId() : int
@@ -64,9 +68,9 @@ package global
 			return _tableId;
 		}
 		
-		public function set seatId(id:int) : void
+		public function set seatId(value:int) : void
 		{
-			_seatId = id;
+			_seatId = value;
 		}
 		
 		public function get seatId() : int
@@ -74,14 +78,44 @@ package global
 			return _seatId;
 		}
 		
-		public function set dealer(dealer:int) : void
+		public function set dealer(value:int) : void
 		{
-			_dealer = dealer;
+			_dealer = value;
 		}
 		
 		public function get dealer() : int
 		{
 			return _dealer;
+		}
+		
+		public function set nick(value:String) : void
+		{
+			_nick = value;
+		}
+		
+		public function get nick() : String
+		{
+			return _nick;
+		}
+		
+		public function set chips(value:int) : void
+		{
+			_chips = value;
+		}
+		
+		public function get chips() : int
+		{
+			return _chips;
+		}
+		
+		public function set gender(value:int) : void
+		{
+			_gender = value;
+		}
+		
+		public function get gender() : int
+		{
+			return _gender;
 		}
 	}
 }

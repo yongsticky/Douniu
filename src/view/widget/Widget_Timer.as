@@ -1,16 +1,21 @@
 package view.widget
 {
+	import resource.ResManager;
+	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
 	
-	import resource.ResManager;
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 
 	public class Widget_Timer extends ExSprite
 	{			
 		private var _num:ExImage;		// 数字	
-		private var _curTime:int;		// 
+		private var _curTime:int;		//
+		
+		private var _tween:Tween;
+		
+		private const MAX_TIMER_NUM:int = 9;
 		
 		
 		private var _running:Boolean;
@@ -19,25 +24,23 @@ package view.widget
 		{
 			super(name);
 			
+			_tween = null;
 			_running = false;
 		}
 		
 		override protected function createChildren() : void
-		{
-			var resManager:ResManager = ResManager.instance();			
-			
-			var bg:ExImage = new ExImage(resManager.getResourceDev("table.timer_bg"));			
+		{		
+			var bg:ExImage = new ExImage( ResManager.instance().getResourceDev("table.timer_bg"));			
 			addChild(bg);
-			
-			var resId:String = "table.timer_" + _curTime;
-			var num:ExImage = new ExImage(resManager.getResourceDev(resId));	
-			num.pivotX = num.width>>1; 
-			num.pivotY = num.height>>1;			
-			num.x = width>>1;
-			num.y = height>>1;
-			
-			_num = num;
-			addChild(num);
+						
+			// 70*80
+			_num = new ExImage();
+			_num.pivotX = 35; 
+			_num.pivotY = 40;
+			_num.x = bg.width>>1;
+			_num.y = bg.height>>1;
+			 
+			addChild(_num);
 		}
 		
 		public function get running() : Boolean
@@ -47,34 +50,27 @@ package view.widget
 				
 		public function startTimer(time:int) : void
 		{	
-			_curTime = time;
+			_curTime = time<=MAX_TIMER_NUM ? time:MAX_TIMER_NUM;
 			
 			updateTimerTexture();
 			
-			resumeTimer();					
+			doAnimation();					
 		}
 		
 		public function stopTimer() : void
 		{
 			_curTime = 0;
-			
-			visible = false;
-		}
-		
-		public function resetTimer(time:int) : void
-		{
-			_curTime = time;
-			_curTime ++;
-		}
+		}		
 						
-		protected function onCountdownAnimationComplete() : void
-		{			
+		protected function onAnimationComplete() : void
+		{				
 			if (_curTime > 0)
 			{
-				--_curTime
+				-- _curTime;				
 
-				updateTimerTexture();				
-				resumeTimer();				
+				updateTimerTexture();
+				
+				doAnimation();				
 			}
 			else
 			{				
@@ -89,14 +85,21 @@ package view.widget
 			_num.scaleX = _num.scaleY = 1;
 		}
 		
-		protected function resumeTimer() : void
-		{			
-			var tn:Tween = new Tween(_num, 1, Transitions.EASE_IN_OUT_ELASTIC);
-			tn.scaleTo(0.8);	
-			tn.onComplete = onCountdownAnimationComplete;
+		protected function doAnimation() : void
+		{
+			if (_tween)
+			{
+				_tween.reset(_num, 1, Transitions.EASE_IN_OUT_ELASTIC);
+			}
+			else
+			{
+				_tween = new Tween(_num, 1, Transitions.EASE_IN_OUT_ELASTIC);
+			}
+						
+			_tween.scaleTo(0.8);	
+			_tween.onComplete = onAnimationComplete;
 			
-			getOwnerLayer().juggler.add(tn);
-			
+			getOwnerLayer().juggler.add(_tween);
 			
 			_running = true;
 		}

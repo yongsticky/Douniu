@@ -1,5 +1,8 @@
 package view.scene.table.widget
 {
+	import camu.errors.IndexOutOfRangeError;
+	import camu.logger.LEVEL;
+	
 	import resource.ResManager;
 	
 	import view.framework.ExImage;
@@ -11,6 +14,17 @@ package view.scene.table.widget
 		private var _text:ExImage;
 		private var _timer:Widget_Timer;
 		
+		
+		private static const INDEX_2_RES:Array = ["table.wait_next", "table.wait_rob_dealer", "table.wait_bet", "table.wait_give"];
+		
+		public static const INDEX_WAIT_NEXT:int = 0;
+		public static const INDEX_WAIT_ROB_DEALER:int = 1;
+		public static const INDEX_WAIT_BET:int = 2;
+		public static const INDEX_WAIT_GIVE:int = 3;
+		
+		
+		
+		
 		public function Widget_TimerWithText(name:String = null)
 		{
 			super(name);
@@ -18,11 +32,11 @@ package view.scene.table.widget
 		
 		override protected function createChildren() : void
 		{			
-			_text = new ExImage(/*ResManager.instance().getResourceDev("table.wait_next")*/);			
+			_text = new ExImage();			
 			addChild(_text);
 			
 			_timer = new Widget_Timer();						
-			_timer.y = 40;	//_text.height + 14;
+			_timer.y = 40;
 			addChild(_timer);
 		}
 		
@@ -36,49 +50,25 @@ package view.scene.table.widget
 			return _timer;
 		}
 		
-		public function show(textType:int, time:int) : void
+		public function show(index:int, time:int) : void
 		{
-			if (textType == 1)
+			if (index < 0 || index > INDEX_WAIT_GIVE)
 			{
-				_text.res = ResManager.instance().getResourceDev("table.wait_next");
-			}
-			else if (textType == 2)
-			{
-				_text.res = ResManager.instance().getResourceDev("table.wait_rob");		
-			}
-			else
-			{
-				_text.visible = false;
+				throw new IndexOutOfRangeError();					
 			}
 			
-			_timer.startTimer(time);
+			visible = true;
 			
-			this.visible = true;
+			_text.res = ResManager.instance().getResourceDev(INDEX_2_RES[index]);
+			
+			_timer.startTimer(time);		
 		}
 		
 		public function hide() : void
-		{
-			_timer.stopTimer();
+		{		
+			visible = false;
 			
-			this.visible = false;
-		}
-		
-		public function reset(textType:int, time:int) : void
-		{
-			if (textType == 1)
-			{
-				_text.res = ResManager.instance().getResourceDev("table.wait_next");
-			}
-			else if (textType == 2)
-			{
-				_text.res = ResManager.instance().getResourceDev("table.wait_rob");		
-			}
-			else
-			{
-				_text.visible = false;
-			}
-			
-			_timer.resetTimer(time);
+			_timer.stopTimer();			
 		}
 	}
 }

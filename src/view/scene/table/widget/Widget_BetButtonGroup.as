@@ -1,9 +1,6 @@
 package view.scene.table.widget
 {
-	import controller.NiuNotification;
 	import facade.NiuNotificationHandlerConstant;
-	
-	import resource.ResManager;
 	
 	import starling.display.Button;
 	import starling.events.Event;
@@ -14,38 +11,41 @@ package view.scene.table.widget
 	
 	public class Widget_BetButtonGroup extends ExSprite
 	{
+		private var _firstBet:Button;
+		private var _secondBet:Button;
+		private var _thirdBet:Button;
+		
 		public function Widget_BetButtonGroup(name:String=null)
 		{
 			super(name);
 		}
 		
-		override protected function createChildren() : void
+		public function setBetMultiple(x1:int, x2:int, x3:int) : void
 		{
-			var resManager:ResManager = ResManager.instance();
+			if (_firstBet)
+			{
+				_firstBet.text = x1.toString() + " 倍";
+				_secondBet.text = x2.toString() + " 倍";
+				_thirdBet.text = x3.toString() + " 倍";
+			}
+		}
+		
+		override protected function createChildren() : void
+		{			
+			_firstBet = new Button(Texture.fromColor(100, 48, 0xFF0000FF), "");
+			_firstBet.x = 60;
+			_firstBet.addEventListener(Event.TRIGGERED, onBtnRob1xTriggered);
+			addChild(_firstBet);
 			
-			var btnRobNo:Button = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.ask_rob_no")));
-			btnRobNo.x = 0;
-			btnRobNo.y = 0;			
-			btnRobNo.visible = false;
-			addChild(btnRobNo);
+			_secondBet = new Button(Texture.fromColor(100, 48, 0xFF0000FF), "");
+			_secondBet.x = _firstBet.x + _firstBet.width + 5;
+			_secondBet.addEventListener(Event.TRIGGERED, onBtnRob2xTriggered);
+			addChild(_secondBet);
 			
-			var btnRob1x:Button = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.ask_rob_1x")));
-			btnRob1x.x = btnRobNo.x + btnRobNo.width - 10;
-			btnRob1x.y = btnRobNo.y;
-			btnRob1x.addEventListener(Event.TRIGGERED, onBtnRob1xTriggered);
-			addChild(btnRob1x);
-			
-			var btnRob2x:Button = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.ask_rob_2x")));
-			btnRob2x.x = btnRob1x.x + btnRob1x.width - 10;
-			btnRob2x.y = btnRobNo.y;
-			btnRob2x.addEventListener(Event.TRIGGERED, onBtnRob2xTriggered);
-			addChild(btnRob2x);
-			
-			var btnRob4x:Button = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.ask_rob_4x")));
-			btnRob4x.x = btnRob2x.x + btnRob2x.width - 10;
-			btnRob4x.y = btnRobNo.y;
-			btnRob4x.addEventListener(Event.TRIGGERED, onBtnRob4xTriggered);
-			addChild(btnRob4x);				
+			_thirdBet = new Button(Texture.fromColor(100, 48, 0xFF0000FF), "");
+			_thirdBet.x = _secondBet.x + _secondBet.width + 5;
+			_thirdBet.addEventListener(Event.TRIGGERED, onBtnRob4xTriggered);
+			addChild(_thirdBet);				
 		}
 		
 		private function onBtnRob1xTriggered(event:Event):void

@@ -31,36 +31,53 @@ package controller.handler
 			NiuDirector.instance().switchToScene(scene);
 						
 			
-			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");
+			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");			
 			
 			layer.showPlayer("3000011", 10000, 0);
 			layer.showOtherPlayer("3000012", 12000, 1);
-			layer.showTimer(3);
+			layer.showBetButtonGroup(1, 3, 5);
+			layer.showWaitRobDealerTimer(5);
+						
 			
 			var timer:Timer = new Timer(3000, 2);
-			timer.addEventListener(TimerEvent.TIMER, OnTimer);			
+			timer.addEventListener(TimerEvent.TIMER, onTimer);			
 			timer.start();
+			
 		}
 		
-		protected function OnTimer(event:TimerEvent):void
+		protected function onTimer(event:TimerEvent):void
 		{
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");
 	
 
 			if (_first)
-			{
-				layer.hideTimer();
+			{				
 				layer.showPlayerCards(new <int>[1, 2, 3, 4, 5]);
 				layer.showOtherPlayerCards(new <int>[0, 0, 0, 0, 0]);
 				
+				layer.hideTimer();
+				
+				layer.showWaitBetTimer(8);
+				
 				_first = false;
+				
+				var timer:Timer = new Timer(200, 1);
+				timer.addEventListener(TimerEvent.TIMER, onTimer2);				
 			}
 			else
 			{
 				layer.showPlayerCards(new <int>[21, 32, 33, 34, 0]);
 				layer.showOtherPlayerCards(new <int>[30, 31, 32, 33, 34]);
 			}			
+		}
+		
+		protected function onTimer2(event:TimerEvent):void
+		{
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");
+			
+			layer.showWaitGiveTimer(5);
 		}
 	}
 }

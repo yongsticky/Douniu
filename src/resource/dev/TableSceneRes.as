@@ -102,17 +102,23 @@ package resource.dev
 		[Embed(source="../../../resource/table/res_table.swf#vip_mall.png")]
 		private static const VipMallPNG:Class;
 		
-		[Embed(source="../../../resource/table/res_table.swf#wait_rob.png")]
-		private static const WaitRobPNG:Class;
+		[Embed(source="../../../resource/table/res_table.swf#wait_next.png")]
+		private static const WaitNextPNG:Class;
 		
 		[Embed(source="../../../resource/table/res_table.swf#wait_next.png")]
-		private static const WaitNextPNG:Class;		
+		private static const WaitBetPNG:Class;
+		
+		[Embed(source="../../../resource/table/res_table.swf#wait_rob.png")]
+		private static const WaitRobDealerPNG:Class;
+		
+		[Embed(source="../../../resource/table/res_table.swf#wait_rob.png")]
+		private static const WaitGivePNG:Class;				
 		
 		[Embed(source="../../../resource/table/res_table.swf#viewer.png")]
 		private static const ViewerPNG:Class;	
 		
 		[Embed(source="../../../resource/table/res_table.swf#banker.png")]
-		private static const BankerPNG:Class;
+		private static const DealerPNG:Class;
 		
 		[Embed(source="../../../resource/table/res_table.swf#bet.png")]
 		private static const BetPNG:Class;
@@ -155,10 +161,12 @@ package resource.dev
 			_res["table.rob_2x"] = new Rob2xPNG();
 			_res["table.rob_4x"] = new Rob4xPNG();
 			_res["table.vip_mall"] = new VipMallPNG();
-			_res["table.wait_rob"] = new WaitRobPNG();
 			_res["table.wait_next"] = new WaitNextPNG();
+			_res["table.wait_rob_dealer"] = new WaitRobDealerPNG();
+			_res["table.wait_bet"] = new WaitBetPNG();
+			_res["table.wait_give"] = new WaitGivePNG();
 			_res["table.viewer"] = new ViewerPNG();
-			_res["table.banker"] = new BankerPNG();
+			_res["table.dealer"] = new DealerPNG();
 			_res["table.bet"] = new BetPNG();
 		}
 

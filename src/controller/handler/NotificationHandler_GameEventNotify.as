@@ -13,7 +13,9 @@ package controller.handler
 	import packet.game.message.Notify.TGameEvent;
 	import packet.game.tlv.TLVType;
 	import packet.game.tlv.UnionTLV;
-	import packet.game.tlv.value.PlayerDetailInfo;	
+	import packet.game.tlv.value.PlayerDetailInfo;
+	import packet.game.tlv.value.PlayerMoneyChangeInfo;
+	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
 	import view.scene.table.layer.Layer_TableMain;
@@ -54,6 +56,9 @@ package controller.handler
 				case GAME_EVENT_ID.GAME_END:
 					onEvent_GameEnd(event);
 					break;
+				case GAME_EVENT_ID.MONEY_CHANGE:
+					onEvent_MoneyChange(event);
+					break;			
 				default:
 					_logger.log(this, "this event_id[", event.event_id, "] NO MATCH ANY PROCESS HANDLER.", LEVEL.WARNING);
 					break;
@@ -93,36 +98,77 @@ package controller.handler
 		
 		private function addPlayerToTableAndWaitStart(nick:String, chips:int, seatId:int) : void
 		{
-			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (sceneTable)
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
 			{
-				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layerTable)
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
 				{					
-					layerTable.showOtherPlayer(nick, chips, seatId);					
-					layerTable.showTimer(8);
+					layer.showOtherPlayer(nick, chips, seatId);										
 				}
 			}
 		}		
 		
 		private function onEvent_GameStart(event:TGameEvent) : void
 		{
-			_logger.log(this, "onEvent_GameStart", LEVEL.INFO);
+			_logger.log(this, "onEvent_GameStart", LEVEL.DEBUG);
 			
-			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (sceneTable)
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
 			{
-				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layerTable)
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
 				{										
-					layerTable.hideTimer();				
+					layer.hideTimer();				
 				}
 			}
 		}
 		
 		private function onEvent_GameEnd(event:TGameEvent) : void
 		{
-			_logger.log(this, "onEvent_GameEnd", LEVEL.INFO);
+			_logger.log(this, "onEvent_GameEnd", LEVEL.DEBUG);
+			
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
+			{
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
+				{										
+					layer.showWaitNextTimer(8);				
+				}
+			}
+		}
+		
+		private function onEvent_MoneyChange(event:TGameEvent) : void
+		{
+			_logger.log(this, "onEvent_MoneyChange", LEVEL.DEBUG);
+			
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
+			{
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
+				{
+					for each(var tlv:UnionTLV in event.other_info_vec)
+					{
+						if (tlv.valueType == TLVType.DN_TLV_MONEY_CHANGE_INFO)
+						{
+							var mcInfo:PlayerMoneyChangeInfo = tlv.value as PlayerMoneyChangeInfo;
+							if (mcInfo)
+							{
+								if (mcInfo.money_change_value.highPart > 0)
+								{
+									layer.PlayerMoneyChange(event.seat_id,  mcInfo.money_change_value.lowPart, mcInfo.money_cur_value.lowPart);
+								}
+								else
+								{
+									layer.PlayerMoneyChange(event.seat_id,  -mcInfo.money_change_value.lowPart, mcInfo.money_cur_value.lowPart);
+								}
+							}						
+						}
+					}
+				}
+			}
 		}
 	}
 }

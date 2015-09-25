@@ -29,13 +29,10 @@ package controller.handler
 			
 			//sendNotification(NiuNotificationHandlerConstant.TEST_UI);
 				
-			
 			var connector:NiuServerConnector = NiuServerConnector.instance();	
 			connector.setTargetAddress("182.254.40.11", 8000);			
 			connector.addEventListener(ConnectorEvent.CONNECTED, onConnect);
-			connector.connect();
-			
-			
+			connector.connect();			
 		}
 		
 		

@@ -1,11 +1,18 @@
 package view.scene.table.widget
 {
+	import camu.logger.LEVEL;
+	
+	import facade.NiuNotificationHandlerConstant;
+	
 	import resource.ResManager;
 	
+	import starling.display.Button;
+	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	
+	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
@@ -17,10 +24,10 @@ package view.scene.table.widget
 		private var _playerReadyState:ExImage;								// 玩家准备状态
 		private var _playerRobState:ExImage;								// 玩家抢庄状态
 		private var _playerRobButtonGroup:Widget_RobDealerButtonGroup;			// 玩家抢庄倍数操作按钮组
-		private var _playerBankerState:ExImage;							// 玩家获得庄家状态		
+		private var _playerDealerState:ExImage;							// 玩家获得庄家状态		
 		private var _playerBetButtonGroup:Widget_BetButtonGroup;			// 玩家押注倍数操作按钮
-		private var _playerCommitButtonGroup:Widget_CommitButtonGroup;		// 玩家提交结果按钮组
-		private var _playerCommitCalculater:Widget_CommitCalculater;		// 玩家算牛辅助框
+		private var _playerGiveButtonGroup:Widget_GiveButtonGroup;		// 玩家提交结果按钮组
+		private var _playerGiveCalculater:Widget_GiveCalculater;		// 玩家算牛辅助框
 		
 		
 		public function Widget_Player(name:String = null)
@@ -44,13 +51,9 @@ package view.scene.table.widget
 			_playerCards.visible = false;
 			_playerCards.addEventListener(TouchEvent.TOUCH, onTouch);
 			addChild(_playerCards);
-			
-			
-			//_playerReadyButtonGroup = new Widget_ReadyButtonGroup();
-			
-			
-			//_playerReadyState = new ExImage(resManager.getResourceDev(""));
-			
+						
+			//_playerReadyButtonGroup = new Widget_ReadyButtonGroup();			
+			//_playerReadyState = new ExImage(resManager.getResourceDev(""));			
 			
 			_playerRobState = new ExImage(resManager.getResourceDev("table.notify_norob"));
 			_playerRobState.x = 120;
@@ -63,11 +66,11 @@ package view.scene.table.widget
 			_playerRobButtonGroup.visible = false;
 			addChild(_playerRobButtonGroup);
 			
-			_playerBankerState = new ExImage(resManager.getResourceDev("table.banker"));
-			_playerBankerState.x = 0;
-			_playerBankerState.y = 60;
-			_playerBankerState.visible = false;
-			addChild(_playerBankerState);
+			_playerDealerState = new ExImage(resManager.getResourceDev("table.dealer"));
+			_playerDealerState.x = 0;
+			_playerDealerState.y = 60;
+			_playerDealerState.visible = false;
+			addChild(_playerDealerState);
 			
 			_playerBetButtonGroup = new Widget_BetButtonGroup();
 			_playerBetButtonGroup.x = 180;
@@ -75,14 +78,18 @@ package view.scene.table.widget
 			_playerBetButtonGroup.visible = false;
 			addChild(_playerBetButtonGroup);
 			
-			_playerCommitButtonGroup = new Widget_CommitButtonGroup();
-			_playerCommitButtonGroup.visible = false;
-			addChild(_playerCommitButtonGroup);
+			_playerGiveButtonGroup = new Widget_GiveButtonGroup();
+			_playerGiveButtonGroup.visible = false;
+			_playerGiveButtonGroup.x = 620;
+			_playerGiveButtonGroup.y = 60;
+			_playerGiveButtonGroup.addEventListener(Event.TRIGGERED, onTriggered);
+			addChild(_playerGiveButtonGroup);
 			
-			_playerCommitCalculater = new Widget_CommitCalculater();
-			_playerCommitCalculater.visible = false;
-			addChild(_playerCommitCalculater);			
+			_playerGiveCalculater = new Widget_GiveCalculater();
+			_playerGiveCalculater.visible = false;
+			addChild(_playerGiveCalculater);			
 		}
+		
 		
 		protected function onTouch(event:TouchEvent) : void
 		{			
@@ -91,13 +98,34 @@ package view.scene.table.widget
 			{
 				if (touchObj.phase == TouchPhase.ENDED)
 				{
-					
+					if (_playerCards.selectedCount == 3)
+					{
+						_playerGiveButtonGroup.setGiveNiuEnabled(true);
+					}
+					else
+					{
+						_playerGiveButtonGroup.setGiveNiuEnabled(false);
+					}
 				}
 				
 				event.stopImmediatePropagation();
-			}
+			}						
+		}
+		
+		private function onTriggered(event:Event):void
+		{
+			_logger.log(this, "user click give button.", LEVEL.INFO);
 			
+			if (_playerGiveButtonGroup.isGiveNiuButton(event.target as Button))
+			{
+				NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.USER_GIVE, _playerCards.getUserGivePokers());				
+			}
+			else
+			{
+				NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.USER_GIVE, _playerCards.getDefaultPokers());
+			}
 						
+			_playerGiveButtonGroup.visible = false;
 		}
 		
 		public function get playerHeader() : Widget_PlayerHeader
@@ -122,7 +150,7 @@ package view.scene.table.widget
 		
 		public function get playerDealerFlag() : ExImage
 		{
-			return _playerBankerState;
+			return _playerDealerState;
 		}
 		
 		public function get playerBetButtonGroup() : Widget_BetButtonGroup
@@ -130,14 +158,14 @@ package view.scene.table.widget
 			return _playerBetButtonGroup;
 		}
 		
-		public function get playerCommitButtonGroup() : Widget_CommitButtonGroup
+		public function get playerGiveButtonGroup() : Widget_GiveButtonGroup
 		{
-			return _playerCommitButtonGroup;
+			return _playerGiveButtonGroup;
 		}
 		
-		public function get playerCommitCalculater() : Widget_CommitCalculater
+		public function get playerGiveCalculater() : Widget_GiveCalculater
 		{
-			return _playerCommitCalculater;
+			return _playerGiveCalculater;
 		}
 	}
 }

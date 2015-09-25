@@ -1,5 +1,9 @@
 package controller.handler
 {
+	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
+	
 	import camu.errors.NullObjectError;
 	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
@@ -14,7 +18,7 @@ package controller.handler
 	import global.SharedData;
 	
 	import packet.game.message.Notify.Notify_DouniuEvent;
-	import packet.game.tlv.TLVType;	
+	import packet.game.tlv.TLVType;
 	import packet.game.tlv.value.TDealerInfo;
 	import packet.game.tlv.value.TTilesInfo;
 	import packet.game.tlv.value.TTimerInfo;
@@ -26,6 +30,8 @@ package controller.handler
 	import packet.game.tv.value.NotifyGive;
 	import packet.game.tv.value.NotifyRobDealer;
 	import packet.game.tv.value.NotifyStartTimer;
+	
+	import starling.core.Starling;
 	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
@@ -68,9 +74,9 @@ package controller.handler
 				case TVType.SO_NOTIFY_START_TIMER:
 					onNotify_StartTimer(resp.tv_data.value as NotifyStartTimer);
 				default:
-					_logger.log(this, "NO MATCH TV TTYPE.", LEVEL.WARNING);
+					_logger.log(this, "NO MATCH TV TTYPE [" + resp.tv_data.valueType + "]", LEVEL.WARNING);
 					break;
-				}				
+				}
 			}
 			else
 			{				
@@ -83,20 +89,18 @@ package controller.handler
 		{
 			_logger.log(this, "onNotify_RobDealer Enter.", LEVEL.INFO);
 			
-			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (sceneTable)
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
 			{
-				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layerTable)
-				{
-					_logger.log(this, "showDealerRobButtonGroup.", LEVEL.INFO);
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
+				{					
+					layer.showDealerRobButtonGroup(0, v.multiple[0], v.multiple[1], v.multiple[2]);
 					
-					layerTable.showDealerRobButtonGroup(0, v.multiple[0], v.multiple[1], v.multiple[2]);
-					
-					var tInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY);
+					var tInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
 					if (tInfo)
 					{
-						layerTable.showTimer(tInfo.time_);	
+						layer.showWaitRobDealerTimer(tInfo.time_);
 					}					
 				}
 			}			
@@ -117,16 +121,17 @@ package controller.handler
 				return;
 			}			
 			
-			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (sceneTable)
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
 			{
-				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layerTable)
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
 				{					
-					layerTable.hideTimer();
-					layerTable.hideDealerRobButtonGroup();
+					layer.hideTimer();
+					
+					layer.hideDealerRobButtonGroup();
 										
-					layerTable.setDealerFlag(v.seat_id, v.multiple);
+					layer.setDealerFlag(v.seat_id, v.multiple);
 				}
 			}			
 		}
@@ -135,18 +140,23 @@ package controller.handler
 		{
 			_logger.log(this, "onNotify_Bet Enter.", LEVEL.INFO);			
 			
-			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (sceneTable)
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
 			{
-				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layerTable)
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
 				{
 					if (SharedData.instance().dealer != SharedData.instance().seatId)
 					{
-						layerTable.showBetButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);
+						layer.showBetButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);
 					}
 					
-					layerTable.showTimer(9);					
+					var tInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
+					if (tInfo)
+					{
+						layer.showWaitBetTimer(tInfo.time_);	
+					}
+					
 				}
 			}
 		}
@@ -160,14 +170,13 @@ package controller.handler
 				return;
 			}		
 			
-			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (sceneTable)
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
 			{
-				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layerTable)
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
 				{					
-					layerTable.hideBetButtonGroup();
-					layerTable.hideTimer();				
+					//layer.hideBetButtonGroup();					
 				}
 			}
 						
@@ -177,30 +186,35 @@ package controller.handler
 		{
 			_logger.log(this, "onNotify_Give Enter.", LEVEL.INFO);
 			
-			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (sceneTable)
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
 			{
-				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layerTable)
-				{					
-					layerTable.hideBetButtonGroup();
-					layerTable.hideTimer();
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
+				{		
+					layer.hideTimer();
+					layer.hideBetButtonGroup();
+					
+					var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
+					if (tmInfo)
+					{
+						layer.showWaitGiveTimer(tmInfo.time_);	
+					}
 					
 					
-					var tInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY);
-					if (tInfo)
+					var tlInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY) as TTilesInfo;
+					if (tlInfo)
 					{		
 						var vec:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-						for (var i:int = 0; i < tInfo.tiles_num; ++i)
+						for (var i:int = 0; i < tlInfo.tiles_num; ++i)
 						{
-							vec[i] = tInfo.tiles[i];
+							vec[i] = tlInfo.tiles[i];
 						}																								
-						layerTable.showPlayerCards(vec);
+						layer.showPlayerCards(vec);
+						
 						
 						var vec2:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-						layerTable.showOtherPlayerCards(vec2);
-						
-						layerTable.showTimer(9);
+						layer.showOtherPlayerCards(vec2);
 						
 						vec.length = 0;
 						vec = null;
@@ -214,16 +228,16 @@ package controller.handler
 		{
 			_logger.log(this, "onNotify_Finish Enter.", LEVEL.INFO);
 			
-			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (sceneTable)
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
 			{
-				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layerTable)
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
 				{		
-					layerTable.hidePlayerCards();
-					layerTable.hideOtherPlayerCards();
-					layerTable.hideTimer();
-					layerTable.clearDealerFlag();
+					layer.hidePlayerCards();
+					layer.hideOtherPlayerCards();
+					layer.hideTimer();
+					layer.clearDealerFlag();
 					
 					SharedData.instance().dealer = -1;					
 				}
@@ -232,7 +246,28 @@ package controller.handler
 		
 		private function onNotify_StartTimer(v:NotifyStartTimer) : void
 		{
-			_logger.log(this, "onNotify_StartTimer Enter.", LEVEL.INFO);
+			_logger.log(this, "onNotify_StartTimer Enter.", LEVEL.INFO);			
+			
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
+			{
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
+				{	
+					if (v.flag == 1)
+					{
+						var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
+						if (tmInfo)
+						{							
+							layer.showWaitNextTimer(tmInfo.time_);		
+						}
+					}
+					else
+					{
+						layer.hideTimer();
+					}
+				}
+			}		
 		}
 	}
 }

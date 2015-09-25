@@ -22,7 +22,7 @@ package packet.game.tv.value
 			bytes.writeShort(tiles_num);
 			if (tiles_num > 0)
 			{
-				bytes.readBytes(tiles, 0, tiles_num);
+				bytes.writeBytes(tiles, 0, tiles_num);
 			}
 
 			super.pack(bytes);

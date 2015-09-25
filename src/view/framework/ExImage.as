@@ -11,21 +11,18 @@ package view.framework
 	public class ExImage extends ExSprite
 	{
 		protected var _texture:Texture;
-		protected var _starlingImage:Image;
-		//protected var _initRes:*;
+		protected var _starlingImage:Image;		
 		
 		
 		public function ExImage(res:* = null)
 		{	
-			super();
+			super();			
 			
-			//_initRes = res;
 			this.res = res;
 		}
 		
 		override protected function createChildren():void
-		{
-			//this.res = _initRes;
+		{			
 		}
 				  
 		
@@ -69,9 +66,7 @@ package view.framework
 					addChild(_starlingImage);
 				}
 				else
-				{
-					
-					
+				{					
 					_starlingImage.width = _texture.width;
 					_starlingImage.height = _texture.height;
 					

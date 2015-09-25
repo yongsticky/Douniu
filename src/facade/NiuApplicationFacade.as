@@ -1,7 +1,8 @@
 package facade 
 {
 	import camu.mvc.Facade;
-		
+	
+	import controller.NiuControllerMediator;
 	import controller.handler.NotificationHandler_DouniuEventNotify;
 	import controller.handler.NotificationHandler_GameEventNotify;
 	import controller.handler.NotificationHandler_LoginSuccess;
@@ -14,7 +15,7 @@ package facade
 	import controller.handler.NotificationHandler_Startup;
 	import controller.handler.NotificationHandler_TestUI;
 	import controller.handler.NotificationHandler_UserLogout;
-	import controller.NiuControllerMediator;
+	import controller.handler.NotificationHandler_UserGive;
 	
 	public class NiuApplicationFacade extends Facade
 	{
@@ -50,7 +51,7 @@ package facade
 			registerHandler(NiuNotificationHandlerConstant.RESPONSE_PLAY, new NotificationHandler_DouniuEventNotify(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, new NotificationHandler_SelectRobDealerX(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SELECT_BET_X, new NotificationHandler_SelectBetX(_mediator));
-			
+			registerHandler(NiuNotificationHandlerConstant.USER_GIVE, new NotificationHandler_UserGive(_mediator));		
 						
 			registerHandler(NiuNotificationHandlerConstant.USER_LOGOUT, new NotificationHandler_UserLogout(_mediator));
 			

@@ -27,7 +27,7 @@ package controller.handler
 		
 		override public function execute(notification:Notification):void
 		{
-			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
+			_logger.log(this, "execute Enter.", LEVEL.DEBUG);			
 			
 			var resp:Response_Sitdown = notification.getData() as Response_Sitdown;			
 			SharedData.instance().tableId = resp.table_id;
@@ -35,16 +35,15 @@ package controller.handler
 			
 			AddPlayer(resp);
 			
-			
 			for each(var tlv:UnionTLV in resp.tlv_vec)
 			{
-				if (tlv.valueType == TLVType.DN_TLV_TABLE_SIMPLE_INFO)
-				{
-					
-				}
-				else if (tlv.valueType == TLVType.DN_TLV_PLAYERDETAIL)
+				if (tlv.valueType == TLVType.DN_TLV_PLAYERDETAIL)
 				{
 					addOtherPlayer(tlv.value as PlayerDetailInfo);
+				}
+				else if (tlv.valueType == TLVType.DN_TLV_TABLE_SIMPLE_INFO)
+				{
+					
 				}
 				else
 				{					
@@ -60,8 +59,8 @@ package controller.handler
 			{
 				var layerTable:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
-				{
-					layerTable.showPlayer(resp.csHeader.uin.toString(), 100000, resp.seat_id);
+				{					
+					layerTable.showPlayer(resp.csHeader.uin.toString(), SharedData.instance().chips, resp.seat_id);
 				}
 			}
 		}
@@ -74,8 +73,7 @@ package controller.handler
 				var layerTable:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layerTable)
 				{
-					layerTable.showOtherPlayer(playerDeatil.player_uin.toString(), 100000, playerDeatil.seat_id);
-					layerTable.showTimer(8);
+					layerTable.showOtherPlayer(playerDeatil.player_uin.toString(), playerDeatil.money.lowPart, playerDeatil.seat_id);					
 				}
 			}
 		}

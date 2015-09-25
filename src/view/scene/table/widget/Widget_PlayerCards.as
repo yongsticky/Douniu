@@ -68,16 +68,26 @@ package view.scene.table.widget
 			{
 				var pI:PokerImage = _pokers[i];
 				pI.card = cards[i];	
-				_giveCards[i] = cards[i];
+				pI.selected = false;
+				pI.y = 0;
+				
+				_giveCards[i] = cards[i];				
 			}
-		}
+			
+			_selectedCount = 0;
+		}		
 		
 		public function get selectedCount() : int
 		{
 			return _selectedCount;
 		}
 		
-		public function getGivePokers() : Vector.<int>
+		public function getDefaultPokers() : Vector.<int>
+		{
+			return _giveCards;
+		}
+		
+		public function getUserGivePokers() : Vector.<int>
 		{			
 			if (_selectedCount == 3)
 			{

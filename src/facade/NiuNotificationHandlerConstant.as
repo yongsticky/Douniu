@@ -14,6 +14,7 @@ package facade
 		public static const RESPONSE_PLAY:String = "handler.response_play";
 		public static const SELECT_ROB_DEALER_X:String = "handler.select_rob_dealer_x";
 		public static const SELECT_BET_X:String = "handler.select_bet_x";
+		public static const USER_GIVE:String = "handler.user_give";		
 		
 		public static const USER_LOGOUT:String = "handler.user_logout";		
 		public static const TEST_UI:String = "handler.test_ui";				

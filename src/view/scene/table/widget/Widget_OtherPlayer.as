@@ -45,7 +45,7 @@ package view.scene.table.widget
 			addChild(_playerCards);
 			
 			
-			_playerBankerState = new ExImage(ResManager.instance().getResourceDev("table.banker"));
+			_playerBankerState = new ExImage(ResManager.instance().getResourceDev("table.dealer"));
 			_playerBankerState.x = 140;
 			_playerBankerState.y = 30;
 			_playerBankerState.visible = false;

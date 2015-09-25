@@ -18,14 +18,14 @@ package view.framework
 	{
 		protected var _logger:ILogger;
 		
-		protected var _width:Number;
-		protected var _height:Number;
+		//protected var _width:Number;
+		//protected var _height:Number;
 		
 		public function ExSprite(name:String = null)
 		{
 			super();
 			
-			_logger = Logger.createLogger(ExSprite, LEVEL.WARNING);
+			_logger = Logger.createLogger(ExSprite, LEVEL.DEBUG);
 			
 			if (name)
 			{

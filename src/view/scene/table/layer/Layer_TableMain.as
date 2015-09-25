@@ -1,7 +1,5 @@
 package view.scene.table.layer
 {	
-	import douniu.NiuCard;
-	
 	import global.SharedData;
 	
 	import view.framework.ExLayer;
@@ -17,12 +15,8 @@ package view.scene.table.layer
 		
 		private var _player:Widget_Player;		
 		private var _otherPlayers:Vector.<Widget_OtherPlayer>;		
-		private var _timer:Widget_TimerWithText;
-		
-		
-		private var _playerSeatId:int;
-		
-		
+		private var _timer:Widget_TimerWithText;		
+		private var _playerSeatId:int;		
 		
 		public function Layer_TableMain(name:String = null) 
 		{
@@ -82,28 +76,29 @@ package view.scene.table.layer
 			_player.playerHeader.setPlayerInfo(name, chips, null);			
 		}
 		
-		public function showTimer(time:int) : void
-		{			
-			/*_timer.visible = true;			
-			_timer.timer.startTimer(time < 10 ? time:9);
-			*/
-			
-			_timer.show(1, time);
+		public function showWaitRobDealerTimer(time:int) : void
+		{
+			_timer.show(Widget_TimerWithText.INDEX_WAIT_ROB_DEALER, time);
 		}
+		
+		public function showWaitBetTimer(time:int) : void
+		{
+			_timer.show(Widget_TimerWithText.INDEX_WAIT_BET, time);
+		}
+		
+		public function showWaitGiveTimer(time:int) : void
+		{
+			_timer.show(Widget_TimerWithText.INDEX_WAIT_GIVE, time);
+		}
+		
+		public function showWaitNextTimer(time:int) : void
+		{
+			_timer.show(Widget_TimerWithText.INDEX_WAIT_NEXT, time);
+		}	
 		
 		public function hideTimer(): void
 		{
-			/*_timer.timer.stopTimer();
-			_timer.visible = false;
-			*/
 			_timer.hide();
-		}
-		
-		public function resetTimer(time:int) : void
-		{
-			//_timer.timer.resetTimer(time);
-			
-			_timer.reset(2, time);
 		}
 		
 		public function showOtherPlayer(nick:String, chips:int, seat_id:int) : void
@@ -166,6 +161,7 @@ package view.scene.table.layer
 		
 		public function showBetButtonGroup(x1:int, x2:int, x3:int) : void
 		{
+			_player.playerBetButtonGroup.setBetMultiple(x1, x2, x3);
 			_player.playerBetButtonGroup.visible = true;
 		}
 		
@@ -178,11 +174,14 @@ package view.scene.table.layer
 		{
 			_player.playerCards.setPokers(cards);
 			_player.playerCards.visible = true;
+			_player.playerGiveButtonGroup.setGiveNiuEnabled(false);
+			_player.playerGiveButtonGroup.visible = true;
 		}
 		
 		public function hidePlayerCards() : void
 		{
 			_player.playerCards.visible = false;
+			_player.playerGiveButtonGroup.visible = false;
 		}
 		
 		public function showOtherPlayerCards(cards:Vector.<int>) : void
@@ -206,6 +205,19 @@ package view.scene.table.layer
 					other.playerCards.visible = false;
 				}
 			}			
+		}
+		
+		public function PlayerMoneyChange(seatId:int, changed:int, current:int) : void
+		{
+			var seat:int = seatId - _playerSeatId;
+			if (seat < 0)
+			{
+				seat += 5;
+			}
+			
+			var player:Widget_OtherPlayer = _otherPlayers[seat];
+			
+			player.playerHeader.setPlayerInfo(null, current, null);			
 		}
 	}
 }

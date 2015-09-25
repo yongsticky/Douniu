@@ -8,19 +8,19 @@ package packet.util
 
 	public class Int64
 	{
-		private var _lowPart:int;
+		private var _lowPart:uint;
 		private var _highPart:int;
 		
 		public function Int64()
 		{
 		}
 		
-		public function get lowPart() : int
+		public function get lowPart() : uint
 		{
 			return _lowPart;
 		}
 		
-		public function set lowPart(value:int) : void
+		public function set lowPart(value:uint) : void
 		{
 			_lowPart = value;
 		}
@@ -39,13 +39,13 @@ package packet.util
 		{
 			if (bytes.endian == Endian.BIG_ENDIAN)
 			{
-				bytes.writeUnsignedInt(_highPart);
+				bytes.writeInt(_highPart);
 				bytes.writeUnsignedInt(_lowPart);
 			}
 			else if (bytes.endian == Endian.LITTLE_ENDIAN) 
 			{
 				bytes.writeUnsignedInt(_lowPart);
-				bytes.writeUnsignedInt(_highPart);				
+				bytes.writeInt(_highPart);				
 			}
 			else
 			{
@@ -60,13 +60,13 @@ package packet.util
 				if (bytes.endian == Endian.BIG_ENDIAN)
 				{	
 					// 先读的是低位
-					_highPart = bytes.readUnsignedInt();
+					_highPart = bytes.readInt();
 					_lowPart = bytes.readUnsignedInt();					
 				}
 				else if (bytes.endian == Endian.LITTLE_ENDIAN)
 				{
 					_lowPart = bytes.readUnsignedInt();
-					_highPart = bytes.readUnsignedInt();
+					_highPart = bytes.readInt();
 				}
 				else
 				{
