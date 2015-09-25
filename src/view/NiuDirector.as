@@ -1,13 +1,17 @@
 package view
 {
-	import starling.events.EnterFrameEvent;
-	
 	import camu.errors.AbstractClassError;
 	import camu.logger.LEVEL;
 	
-	import controller.NiuNotification;		
-	import facade.NiuNotificationHandlerConstant;	
-	import server.NiuServerConnector;	
+	import controller.NiuNotification;
+	
+	import facade.NiuApplicationFacade;
+	import facade.NiuNotificationHandlerConstant;
+	
+	import server.NiuServerConnector;
+	
+	import starling.events.EnterFrameEvent;
+	
 	import view.framework.ExDirector;
 	
 	public class NiuDirector extends ExDirector
@@ -25,7 +29,7 @@ package view
 					
 			_instance = this;
 			
-			_mediator = new NiuViewMediator();			
+			_mediator = new NiuViewMediator();
 		}
 		
 		private static var _instance:NiuDirector = null;

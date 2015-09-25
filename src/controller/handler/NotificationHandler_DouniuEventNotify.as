@@ -29,10 +29,7 @@ package controller.handler
 	import packet.game.tv.value.NotifyFinish;
 	import packet.game.tv.value.NotifyGive;
 	import packet.game.tv.value.NotifyRobDealer;
-	import packet.game.tv.value.NotifyStartTimer;
-	
-	import starling.core.Starling;
-	
+	import packet.game.tv.value.NotifyStartTimer;	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
 	import view.scene.table.layer.Layer_TableMain;

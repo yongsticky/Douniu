@@ -14,8 +14,10 @@ package facade
 	import controller.handler.NotificationHandler_SitdownSuccess;
 	import controller.handler.NotificationHandler_Startup;
 	import controller.handler.NotificationHandler_TestUI;
-	import controller.handler.NotificationHandler_UserLogout;
 	import controller.handler.NotificationHandler_UserGive;
+	import controller.handler.NotificationHandler_UserLogout;
+	
+	import view.NiuViewMediator;
 	
 	public class NiuApplicationFacade extends Facade
 	{
@@ -56,7 +58,7 @@ package facade
 			registerHandler(NiuNotificationHandlerConstant.USER_LOGOUT, new NotificationHandler_UserLogout(_mediator));
 			
 			registerHandler(NiuNotificationHandlerConstant.TEST_UI, new NotificationHandler_TestUI(_mediator));
-		}	
+		}		
 	}
 }
 
