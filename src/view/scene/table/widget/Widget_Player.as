@@ -126,6 +126,7 @@ package view.scene.table.widget
 			}
 						
 			_playerGiveButtonGroup.visible = false;
+			_playerCards.visible = false;
 		}
 		
 		public function get playerHeader() : Widget_PlayerHeader

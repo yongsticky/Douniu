@@ -1,5 +1,6 @@
 package view.scene.table.widget
 {
+	import camu.errors.IndexOutOfRangeError;
 	import camu.errors.NullObjectError;
 	import camu.errors.UnexpectedLengthError;
 	
@@ -75,7 +76,22 @@ package view.scene.table.widget
 			}
 			
 			_selectedCount = 0;
-		}		
+		}
+		
+		public function updatePoker(index:int, card:int) : void
+		{
+			if (index < 0 || index >= MAX_POKER_NUM)
+			{
+				throw new IndexOutOfRangeError();
+			}
+						
+			var pI:PokerImage = _pokers[index];
+			pI.card = card;
+			pI.selected = false;
+			pI.y = 0;
+				
+			_giveCards[index] = card;
+		}
 		
 		public function get selectedCount() : int
 		{

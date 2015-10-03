@@ -35,7 +35,8 @@ package view.scene.table.widget
 			_text = new ExImage();			
 			addChild(_text);
 			
-			_timer = new Widget_Timer();						
+			_timer = new Widget_Timer();
+			_timer.visible = false;
 			_timer.y = 40;
 			addChild(_timer);
 		}

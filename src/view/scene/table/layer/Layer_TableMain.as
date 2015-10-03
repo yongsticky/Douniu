@@ -187,14 +187,27 @@ package view.scene.table.layer
 		public function showPlayerCards(cards:Vector.<int>) : void
 		{
 			_player.playerCards.setPokers(cards);
-			_player.playerCards.visible = true;
-			_player.playerGiveButtonGroup.setGiveNiuEnabled(false);
-			_player.playerGiveButtonGroup.visible = true;
+			_player.playerCards.visible = true;			
+		}
+		
+		public function updatePlayerCard(index:int, card:int) : void
+		{
+			_player.playerCards.updatePoker(index, card);
 		}
 		
 		public function hidePlayerCards() : void
 		{
-			_player.playerCards.visible = false;
+			_player.playerCards.visible = false;			
+		}
+		
+		public function showPlayerGiveButtonGroup() : void
+		{
+			_player.playerGiveButtonGroup.setGiveNiuEnabled(false);
+			_player.playerGiveButtonGroup.visible = true;
+		}
+		
+		public function hidePlayerGiveButtonGroup() : void
+		{
 			_player.playerGiveButtonGroup.visible = false;
 		}
 		

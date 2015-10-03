@@ -5,8 +5,10 @@ package controller.handler
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
 	
-	import controller.NiuNotificationHandler;	
-	import global.RuntimeSharedData;	
+	import controller.NiuNotificationHandler;
+	
+	import global.RuntimeSharedData;
+	
 	import packet.game.message.Notify.Notify_DouniuEvent;
 	import packet.game.tlv.TLVType;
 	import packet.game.tlv.value.TDealerInfo;
@@ -19,7 +21,8 @@ package controller.handler
 	import packet.game.tv.value.NotifyFinish;
 	import packet.game.tv.value.NotifyGive;
 	import packet.game.tv.value.NotifyRobDealer;
-	import packet.game.tv.value.NotifyStartTimer;	
+	import packet.game.tv.value.NotifyStartTimer;
+	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
 	import view.scene.table.layer.Layer_TableMain;
@@ -85,11 +88,31 @@ package controller.handler
 				{					
 					layer.showDealerRobButtonGroup(0, v.multiple[0], v.multiple[1], v.multiple[2]);
 					
-					var tInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
-					if (tInfo)
+					var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
+					if (tmInfo)
 					{
-						layer.showWaitRobDealerTimer(tInfo.time_);
-					}					
+						layer.showWaitRobDealerTimer(tmInfo.time_);
+					}
+					
+					// 如果有牌，说明是看牌场
+					var tlInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY) as TTilesInfo;
+					if (tlInfo)
+					{
+						var vec:Vector.<int> = new <int>[0, 0, 0, 0, 0];
+						for (var i:int = 0; i < tlInfo.tiles_num; ++i)
+						{
+							vec[i] = int(tlInfo.tiles[i]);
+						}
+						
+						layer.showPlayerCards(vec);	
+						vec.length = 0;
+						vec = null;
+						
+						var vec2:Vector.<int> = new <int>[0, 0, 0, 0, 0];
+						layer.showOtherPlayerCards(vec2);
+						vec2.length = 0;
+						vec2 = null;
+					}
 				}
 			}			
 		}
@@ -193,20 +216,30 @@ package controller.handler
 					
 					var tlInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY) as TTilesInfo;
 					if (tlInfo)
-					{		
-						var vec:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-						for (var i:int = 0; i < tlInfo.tiles_num; ++i)
+					{	
+						if (tlInfo.tiles_num == 1)
 						{
-							vec[i] = tlInfo.tiles[i];
-						}																								
-						layer.showPlayerCards(vec);
-						
-						
-						var vec2:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-						layer.showOtherPlayerCards(vec2);
-						
-						vec.length = 0;
-						vec = null;
+							layer.updatePlayerCard(4, int(tlInfo.tiles[0]));
+							layer.showPlayerGiveButtonGroup();
+						}
+						else
+						{
+							var vec:Vector.<int> = new <int>[0, 0, 0, 0, 0];
+							for (var i:int = 0; i < tlInfo.tiles_num; ++i)
+							{
+								vec[i] = tlInfo.tiles[i];
+							}																								
+							layer.showPlayerCards(vec);
+							vec.length = 0;
+							vec = null;
+													
+							var vec2:Vector.<int> = new <int>[0, 0, 0, 0, 0];
+							layer.showOtherPlayerCards(vec2);
+							vec2.length = 0;
+							vec2 = null;	
+							
+							layer.showPlayerGiveButtonGroup();
+						}
 					}
 				}
 			}	
@@ -224,9 +257,11 @@ package controller.handler
 				if (layer)
 				{		
 					layer.hidePlayerCards();
+					layer.hidePlayerGiveButtonGroup();
 					layer.hideOtherPlayerCards();
-					layer.hideTimer();
 					layer.clearDealerFlag();
+					
+					layer.hideTimer();					
 					
 					RuntimeSharedData.instance().rsdTableData.dealer_seat_id = -1;					
 				}
