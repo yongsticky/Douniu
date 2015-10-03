@@ -6,7 +6,7 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
-	import global.SharedData;
+	import global.RuntimeSharedData;
 	
 	import view.NiuDirector;
 	import view.scene.hall.Scene_Hall;
@@ -22,7 +22,7 @@ package controller.handler
 		{
 			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
 			
-			SharedData.instance().uin = uint(notification.getData());
+			RuntimeSharedData.instance().rsdPlayerData.uin = uint(notification.getData());
 			
 			_logger.log(this, "User select User:[", uint(notification.getData()), "]", LEVEL.INFO);
 			

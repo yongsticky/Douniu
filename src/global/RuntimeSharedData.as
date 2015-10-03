@@ -1,7 +1,12 @@
 package global
 {	
-	public class SharedData
+	import global.structs.RSDRoomData;
+	import global.structs.RSDTableData;
+	import global.structs.RSDPlayerData;
+
+	public class RuntimeSharedData
 	{
+		/*
 		private var _uin:uint;
 		private var _playerId:int;
 		private var _roomId:int;
@@ -12,22 +17,48 @@ package global
 		private var _nick:String;
 		private var _chips:int;
 		private var _gender:int;
+		*/
+		
+		
+		private var _rsdPlayerData:RSDPlayerData;
+		private var _rsdTableData:RSDTableData;
+		private var _rsdRoomData:RSDRoomData;
+
 				
-		public function SharedData(inner:PrivateInner)
+		public function RuntimeSharedData(inner:PrivateInner)
 		{
+			_rsdPlayerData = new RSDPlayerData();
+			_rsdTableData = new RSDTableData();
+			_rsdRoomData = new RSDRoomData();
 		}
 		
-		private static var _instance:SharedData = null;
-		public static function instance() : SharedData
+		private static var _instance:RuntimeSharedData = null;
+		public static function instance() : RuntimeSharedData
 		{
 			if (!_instance)
 			{
-				_instance = new SharedData(new PrivateInner());
+				_instance = new RuntimeSharedData(new PrivateInner());
 			}
 			
 			return _instance;
 		}
-				
+		
+		public function get rsdPlayerData() : RSDPlayerData
+		{
+			return _rsdPlayerData;
+		}
+		
+		public function get rsdTableData() : RSDTableData
+		{
+			return _rsdTableData;
+		}
+		
+		public function get rsdRoomData() : RSDRoomData
+		{
+			return _rsdRoomData;
+		}
+		
+		/*
 		public function set uin(value:uint) : void
 		{
 			_uin = value;
@@ -117,6 +148,7 @@ package global
 		{
 			return _gender;
 		}
+		*/
 	}
 }
 

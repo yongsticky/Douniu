@@ -1,22 +1,12 @@
 package controller.handler
 {
-	import flash.events.Event;
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
-	
 	import camu.errors.NullObjectError;
 	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
 	
-	import controller.NiuNotificationHandler;
-	
-	import douniu.NiuCard;
-	
-	import factory.NiuObjectFactory;
-	
-	import global.SharedData;
-	
+	import controller.NiuNotificationHandler;	
+	import global.RuntimeSharedData;	
 	import packet.game.message.Notify.Notify_DouniuEvent;
 	import packet.game.tlv.TLVType;
 	import packet.game.tlv.value.TDealerInfo;
@@ -70,6 +60,7 @@ package controller.handler
 					break;
 				case TVType.SO_NOTIFY_START_TIMER:
 					onNotify_StartTimer(resp.tv_data.value as NotifyStartTimer);
+					break;
 				default:
 					_logger.log(this, "NO MATCH TV TTYPE [" + resp.tv_data.valueType + "]", LEVEL.WARNING);
 					break;
@@ -111,7 +102,7 @@ package controller.handler
 			var dealerInfo:TDealerInfo = v.getTLVValue(TLVType.SO_UP_TLV_DEALER_KEY) as TDealerInfo;
 			if (dealerInfo)
 			{
-				SharedData.instance().dealer = dealerInfo.dealer;	
+				RuntimeSharedData.instance().rsdTableData.dealer_seat_id = dealerInfo.dealer;
 			}
 			else
 			{
@@ -143,7 +134,8 @@ package controller.handler
 				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layer)
 				{
-					if (SharedData.instance().dealer != SharedData.instance().seatId)
+					if (RuntimeSharedData.instance().rsdTableData.dealer_seat_id != 
+						RuntimeSharedData.instance().rsdPlayerData.seat_id)
 					{
 						layer.showBetButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);
 					}
@@ -236,7 +228,7 @@ package controller.handler
 					layer.hideTimer();
 					layer.clearDealerFlag();
 					
-					SharedData.instance().dealer = -1;					
+					RuntimeSharedData.instance().rsdTableData.dealer_seat_id = -1;					
 				}
 			}
 		}

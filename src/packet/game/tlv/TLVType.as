@@ -102,13 +102,13 @@ package packet.game.tlv
 					return null;
 				case DN_TLV_GAME_SCORE_MSG:				// 10015
 					return GameScoreValue;
-				case SO_UP_TLV_TILES_KEY:
+				case SO_UP_TLV_TILES_KEY:				// 20001
 					return TTilesInfo;
-				case SO_UP_TLV_TIMER_KEY:
+				case SO_UP_TLV_TIMER_KEY:				// 20002
 					return TTimerInfo;
-				case SO_UP_TLV_DEALER_KEY:
+				case SO_UP_TLV_DEALER_KEY:				// 20003
 					return TDealerInfo;
-				case SO_UP_TLV_MULTIPLE_KEY:
+				case SO_UP_TLV_MULTIPLE_KEY:			// 20004
 					return TMultipleInfo;					
 				default:
 					throw new UnhandledBranchError("tlvType [" + tlvType + "] NOT Match any TLVValue.");					

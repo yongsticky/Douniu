@@ -141,20 +141,23 @@ package server
 		protected function onReceive_Play(event:PacketEvent) : void
 		{
 			_logger.log(this, "onReceive_Play Enter.", LEVEL.INFO);
+			
+			var resp:Response_Play = event.packet as Response_Play;
+			_logger.log(this, "result_id:[", resp.rr.result_id, "]", LEVEL.INFO);
 		}
 		
 		
 		protected function onReceive_GameNotify(event:PacketEvent) : void
 		{
 			_logger.log(this, "onReceive_GameNotify Enter.", LEVEL.INFO);	
-			sendNotification(NiuNotificationHandlerConstant.GAME_NOTIFY, event.packet);
+			sendNotification(NiuNotificationHandlerConstant.GAME_EVENT, event.packet);
 		}
 		
 		protected function onReceive_DouniuEvent(event:PacketEvent) : void
 		{
 			_logger.log(this, "onReceive_DouniuEvent Enter.", LEVEL.INFO);
 			
-			sendNotification(NiuNotificationHandlerConstant.RESPONSE_PLAY, event.packet);
+			sendNotification(NiuNotificationHandlerConstant.DOUNIU_EVENT, event.packet);
 		}
 		
 		

@@ -8,7 +8,7 @@ package controller.handler
 	
 	import factory.NiuObjectFactory;
 	
-	import global.SharedData;
+	import global.RuntimeSharedData;
 	
 	import packet.game.message.Login.Response_Login;
 	import packet.game.message.Sitdown.Request_Sitdown;
@@ -34,9 +34,9 @@ package controller.handler
 			_logger.log(this, "execute Enter.", LEVEL.DEBUG);			
 						
 			var resp:Response_Login = notification.getData() as Response_Login;
-			var sd:SharedData = SharedData.instance();
-			sd.roomId = resp.room_id;
-			sd.playerId = resp.player_id;			
+			var rsd:RuntimeSharedData = RuntimeSharedData.instance();
+			rsd.rsdRoomData.room_id = resp.room_id;
+			rsd.rsdPlayerData.player_id = resp.player_id;			
 			for each(var tlv:UnionTLV in resp.tlv_vec)
 			{				
 				if (tlv.valueType == TLVType.DN_TLV_PLAYERDETAIL)
@@ -44,9 +44,9 @@ package controller.handler
 					var plInfo:PlayerDetailInfo = tlv.value as PlayerDetailInfo;
 					if (plInfo)
 					{
-						sd.nick = plInfo.nick;
-						sd.gender = plInfo.gender;
-						sd.chips = plInfo.money.lowPart;						
+						rsd.rsdPlayerData.nick = plInfo.nick;
+						rsd.rsdPlayerData.gender = plInfo.gender;
+						rsd.rsdPlayerData.chips = plInfo.money.lowPart;						
 					}
 				}
 			}

@@ -26,7 +26,6 @@ package view.scene.table.widget
 		override protected function createChildren() : void
 		{				
 			_playerHeader = new Widget_PlayerHeader();
-			_playerHeader.visible = false;
 			addChild(_playerHeader);
 			
 			

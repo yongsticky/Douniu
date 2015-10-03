@@ -8,7 +8,7 @@ package controller.handler
 	
 	import factory.NiuObjectFactory;
 	
-	import global.SharedData;
+	import global.RuntimeSharedData;
 	
 	import packet.game.message.Play.Request_Play;
 	import packet.game.tv.TVType;
@@ -38,8 +38,8 @@ package controller.handler
 			betPref.multiple = multiple;
 			
 			var requestPlay:Request_Play = _factory.createInstance(Request_Play);
-			requestPlay.csHeader.uin = requestPlay.uin = SharedData.instance().uin; 
-			requestPlay.csHeader.dialog_id = SharedData.instance().playerId;
+			requestPlay.csHeader.uin = requestPlay.uin = RuntimeSharedData.instance().rsdPlayerData.uin; 
+			requestPlay.csHeader.dialog_id = RuntimeSharedData.instance().rsdPlayerData.player_id;
 			
 			requestPlay.time = (new Date()).getTime();
 			

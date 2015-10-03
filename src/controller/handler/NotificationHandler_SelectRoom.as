@@ -4,14 +4,10 @@ package controller.handler
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
 	
-	import controller.NiuNotificationHandler;
-	
-	import factory.NiuObjectFactory;
-	
-	import global.SharedData;
-	
-	import packet.game.message.Login.Request_Login;
-	
+	import controller.NiuNotificationHandler;	
+	import factory.NiuObjectFactory;	
+	import global.RuntimeSharedData;	
+	import packet.game.message.Login.Request_Login;	
 	import server.NiuRequestSender;
 	
 	public class NotificationHandler_SelectRoom extends NiuNotificationHandler
@@ -25,10 +21,13 @@ package controller.handler
 		{
 			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
 			
-			var loginRequest:Request_Login = NiuObjectFactory.instance().createInstance(Request_Login);
+			var roomId:int = int(notification.getData());
 			
-			loginRequest.room_id = int(notification.getData());
-			loginRequest.uin = loginRequest.csHeader.uin = SharedData.instance().uin;			
+			_logger.log(this, "User Select Room:[",roomId,"]", LEVEL.DEBUG);
+			
+			var loginRequest:Request_Login = NiuObjectFactory.instance().createInstance(Request_Login);			
+			loginRequest.room_id = roomId;
+			loginRequest.uin = loginRequest.csHeader.uin = RuntimeSharedData.instance().rsdPlayerData.uin;			
 			loginRequest.request_src = 0;
 			loginRequest.login_life_style = 0;			
 			loginRequest.tlv_num = 0;

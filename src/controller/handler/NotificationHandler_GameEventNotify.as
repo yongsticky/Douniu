@@ -6,13 +6,14 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
-	import global.SharedData;
+	import global.RuntimeSharedData;
 	
 	import packet.game.message.Notify.GAME_EVENT_ID;
 	import packet.game.message.Notify.Notify_GameEvent;
 	import packet.game.message.Notify.TGameEvent;
 	import packet.game.tlv.TLVType;
 	import packet.game.tlv.UnionTLV;
+	import packet.game.tlv.value.ExitPlayerInfo;
 	import packet.game.tlv.value.PlayerDetailInfo;
 	import packet.game.tlv.value.PlayerMoneyChangeInfo;
 	
@@ -45,10 +46,18 @@ package controller.handler
 		
 		private function handleGameEvent(event:TGameEvent) : void
 		{
+			if (!checkRoomAndTable(event))
+			{
+				return;
+			}
+			
 			switch(event.event_id)
 			{
 				case GAME_EVENT_ID.SITDOWN:
 					onEvent_OtherPlayerSitdown(event);
+					break;
+				case GAME_EVENT_ID.STANDUP:
+					onEvent_OtherPlayerStandup(event);
 					break;
 				case GAME_EVENT_ID.GAME_START:
 					onEvent_GameStart(event);
@@ -65,24 +74,30 @@ package controller.handler
 			}			
 		}
 		
-		private function onEvent_OtherPlayerSitdown(event:TGameEvent) : void
+		private function checkRoomAndTable(event:TGameEvent) : Boolean
 		{
-			if (event.room_id != SharedData.instance().roomId)
+			if (event.room_id != RuntimeSharedData.instance().rsdRoomData.room_id)
 			{
-				_logger.log(this, "NOT my ROOM event. my room id:[", SharedData.instance().roomId, "], event room id:[", event.room_id, "].", LEVEL.WARNING);
-				return;
+				_logger.log(this, "NOT my ROOM event. my room id:[", RuntimeSharedData.instance().rsdRoomData.room_id, "], event room id:[", event.room_id, "].", LEVEL.WARNING);
+				return false;
 			}
 			
-			if (event.table_id != SharedData.instance().tableId)
+			if (event.table_id != RuntimeSharedData.instance().rsdTableData.table_id)
 			{
-				_logger.log(this, "NOT my TABLE event. my table id:[", SharedData.instance().tableId, "], event table id:[", event.table_id, "].", LEVEL.WARNING);
-				return;
+				_logger.log(this, "NOT my TABLE event. my table id:[", RuntimeSharedData.instance().rsdTableData.table_id, "], event table id:[", event.table_id, "].", LEVEL.WARNING);
+				return false;
 			}
+			
+			return true;
+		}	
+		
+		private function onEvent_OtherPlayerSitdown(event:TGameEvent) : void
+		{	
+			_logger.log(this, "onEvent_OtherPlayerSitdown", LEVEL.INFO);
 			
 			var playerDetail:PlayerDetailInfo = null;
 			for each(var tlv:UnionTLV in event.other_info_vec)
 			{
-				_logger.log(this, "check tlv type:", tlv.valueType, LEVEL.DEBUG);
 				if (tlv.valueType == TLVType.DN_TLV_PLAYERDETAIL)
 				{
 					playerDetail = tlv.value as PlayerDetailInfo;
@@ -92,11 +107,33 @@ package controller.handler
 			
 			if (playerDetail)
 			{
-				addPlayerToTableAndWaitStart(playerDetail.player_uin.toString(), playerDetail.money.lowPart, playerDetail.seat_id);						
+				addPlayerToTable(playerDetail.player_uin.toString(), playerDetail.money.lowPart, playerDetail.seat_id);						
 			}			
 		}
 		
-		private function addPlayerToTableAndWaitStart(nick:String, chips:int, seatId:int) : void
+		private function onEvent_OtherPlayerStandup(event:TGameEvent) : void
+		{
+			_logger.log(this, "onEvent_OtherPlayerStandup", LEVEL.INFO);
+			
+			var exitPlayerInfo:ExitPlayerInfo = null;
+			for each(var tlv:UnionTLV in event.other_info_vec)
+			{
+				if (tlv.valueType == TLVType.DN_TLV_EXIT_PLAYER_INFO)
+				{
+					exitPlayerInfo = tlv.value as ExitPlayerInfo;
+					break;
+				}
+			}
+			
+			if (exitPlayerInfo)
+			{
+				_logger.log(this, "Player Standup, Reason:[",exitPlayerInfo.standup_reason,"]",  LEVEL.INFO);
+			}
+			 
+			removePlayerFromTable(event.seat_id);
+		}
+		
+		private function addPlayerToTable(nick:String, chips:int, seatId:int) : void
 		{
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
@@ -107,7 +144,20 @@ package controller.handler
 					layer.showOtherPlayer(nick, chips, seatId);										
 				}
 			}
-		}		
+		}	
+		
+		private function removePlayerFromTable(seatId:int) : void
+		{
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (scene)
+			{
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
+				{					
+					layer.hideOtherPlayer(seatId);										
+				}
+			}
+		}
 		
 		private function onEvent_GameStart(event:TGameEvent) : void
 		{
@@ -170,5 +220,7 @@ package controller.handler
 				}
 			}
 		}
+		
+		
 	}
 }

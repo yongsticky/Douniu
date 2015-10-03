@@ -49,8 +49,8 @@ package facade
 			registerHandler(NiuNotificationHandlerConstant.LOGIN_SUCCESS, new NotificationHandler_LoginSuccess(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SELECT_ROOM, new NotificationHandler_SelectRoom(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SITDOWN_SUCCESS, new NotificationHandler_SitdownSuccess(_mediator));
-			registerHandler(NiuNotificationHandlerConstant.GAME_NOTIFY, new NotificationHandler_GameEventNotify(_mediator));
-			registerHandler(NiuNotificationHandlerConstant.RESPONSE_PLAY, new NotificationHandler_DouniuEventNotify(_mediator));
+			registerHandler(NiuNotificationHandlerConstant.GAME_EVENT, new NotificationHandler_GameEventNotify(_mediator));
+			registerHandler(NiuNotificationHandlerConstant.DOUNIU_EVENT, new NotificationHandler_DouniuEventNotify(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, new NotificationHandler_SelectRobDealerX(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SELECT_BET_X, new NotificationHandler_SelectBetX(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.USER_GIVE, new NotificationHandler_UserGive(_mediator));		

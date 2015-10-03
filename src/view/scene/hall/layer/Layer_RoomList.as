@@ -1,14 +1,12 @@
 package view.scene.hall.layer
-{	
-	import facade.NiuNotificationHandlerConstant;
-	
-	import resource.ResManager;
-	
+{		
 	import starling.display.Button;
 	import starling.events.Event;
 	import starling.text.TextField;
 	import starling.textures.Texture;
-	
+
+	import facade.NiuNotificationHandlerConstant;
+	import resource.ResManager;
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExLayer;	
@@ -54,7 +52,7 @@ package view.scene.hall.layer
 				btn1.x = xStart;
 				btn1.y = 260;				
 				
-				var roomNameText:TextField = new TextField(100, 24, "练习场", "", 20, 0);
+				var roomNameText:TextField = new TextField(100, 28, "经典场", "", 20, 0);
 				roomNameText.x = 15;
 				roomNameText.y = 10;				
 				btn1.addChild(roomNameText);
@@ -62,14 +60,19 @@ package view.scene.hall.layer
 				btn1.name = "76";
 				addChild(btn1);
 				_room1List.push(btn1);				
-				btn1.addEventListener(Event.TRIGGERED, onRoomTriggered);				
+				btn1.addEventListener(Event.TRIGGERED, onRoomTriggered);
 				
 				
 				var btn2:Button = new Button(buttonBGTexture);
 				btn2.x = xStart;
 				btn2.y = 460;
 				
-				btn2.name = "77";
+				var roomNameText2:TextField = new TextField(100, 28, "看牌场", "", 20, 0);
+				roomNameText2.x = 15;
+				roomNameText2.y = 10;				
+				btn2.addChild(roomNameText2);
+				
+				btn2.name = "81";
 				addChild(btn2);
 				_room2List.push(btn2);
 				btn2.addEventListener(Event.TRIGGERED, onRoomTriggered);
@@ -80,8 +83,7 @@ package view.scene.hall.layer
 
 		protected function onRoomTriggered(event:Event) : void
 		{			
-			var rid:int = int(event.target["name"]);
-			
+			var rid:int = int(event.target["name"]);			
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROOM, rid);
 		}
 	}

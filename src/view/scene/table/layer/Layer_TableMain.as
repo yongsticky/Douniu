@@ -1,6 +1,6 @@
 package view.scene.table.layer
 {	
-	import global.SharedData;
+	import global.RuntimeSharedData;
 	
 	import view.framework.ExLayer;
 	import view.scene.table.widget.Widget_OtherPlayer;
@@ -101,21 +101,35 @@ package view.scene.table.layer
 			_timer.hide();
 		}
 		
-		public function showOtherPlayer(nick:String, chips:int, seat_id:int) : void
+		public function showOtherPlayer(nick:String, chips:int, seatId:int) : void
 		{		
-			if (seat_id >=0 && seat_id < MAX_OTHER_PLAYER_NUM)
+			if (seatId >=0 && seatId < MAX_OTHER_PLAYER_NUM)
 			{
-				var seat:int = seat_id - _playerSeatId;
+				var seat:int = seatId - _playerSeatId;
 				if (seat < 0)
 				{
-					seat += 5;
+					seat += MAX_OTHER_PLAYER_NUM;
 				}
 				
 				var other:Widget_OtherPlayer = _otherPlayers[seat];
 												
 				other.visible = true;
 				other.playerHeader.setPlayerInfo(nick, chips, 0);
-				other.playerHeader.visible = true;			
+			}
+		}
+		
+		public function hideOtherPlayer(seatId:int) : void
+		{
+			if (seatId >= 0 && seatId < MAX_OTHER_PLAYER_NUM)
+			{
+				var seat:int = seatId - _playerSeatId;
+				if (seat < 0)
+				{
+					seat += MAX_OTHER_PLAYER_NUM;
+				}
+				
+				var other:Widget_OtherPlayer = _otherPlayers[seat];
+				other.visible = false;				
 			}
 		}
 		
@@ -132,13 +146,13 @@ package view.scene.table.layer
 		public function setDealerFlag(seat_id:int, multiple:int) : void
 		{
 			// 是自己抢到
-			if (seat_id == SharedData.instance().seatId)
+			if (seat_id == RuntimeSharedData.instance().rsdPlayerData.seat_id)
 			{
 				_player.playerDealerFlag.visible = true;
 			}
 			else
 			{
-				var seat:int = seat_id - SharedData.instance().seatId;
+				var seat:int = seat_id - RuntimeSharedData.instance().rsdPlayerData.seat_id;
 				if (seat < 0)
 				{
 					seat += 5;
