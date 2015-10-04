@@ -2,6 +2,8 @@ package view.scene.table.layer
 {	
 	import global.RuntimeSharedData;
 	
+	import resource.ResManager;
+	
 	import view.framework.ExLayer;
 	import view.scene.table.widget.Widget_OtherPlayer;
 	import view.scene.table.widget.Widget_Player;
@@ -135,43 +137,76 @@ package view.scene.table.layer
 		
 		public function showDealerRobButtonGroup(x1:int, x2:int, x3:int, x4:int) : void
 		{
-			_player.playerRobButtonGroup.visible = true;	
+			_player.playerRobDealerButtonGroup.visible = true;	
 		}
 		
 		public function hideDealerRobButtonGroup() : void
 		{
-			_player.playerRobButtonGroup.visible = false;
+			_player.playerRobDealerButtonGroup.visible = false;
 		}
 		
-		public function setDealerFlag(seat_id:int, multiple:int) : void
+		public function setAnyPlayerAsDealer(seatId:int, multiple:int) : void
 		{
 			// 是自己抢到
-			if (seat_id == RuntimeSharedData.instance().rsdPlayerData.seat_id)
+			if (seatId == RuntimeSharedData.instance().rsdPlayerData.seat_id)
 			{
-				_player.playerDealerFlag.visible = true;
+				_player.playerDealerState.visible = true;
 			}
 			else
 			{
-				var seat:int = seat_id - RuntimeSharedData.instance().rsdPlayerData.seat_id;
+				var seat:int = seatId - RuntimeSharedData.instance().rsdPlayerData.seat_id;
 				if (seat < 0)
 				{
-					seat += 5;
+					seat += MAX_OTHER_PLAYER_NUM;
 				}
 				
-				_otherPlayers[seat].playerDealerFlag.visible = true;
-			}
-		
+				_otherPlayers[seat].playerDealerState.visible = true;
+			}		
 		}
 		
-		public function clearDealerFlag() : void
+		public function clearAnyPlayerAsDealer() : void
 		{
-			_player.playerDealerFlag.visible = false;
+			_player.playerDealerState.visible = false;
 			
 			for each(var other:Widget_OtherPlayer in _otherPlayers)
 			{
-				other.playerDealerFlag.visible = false;
+				other.playerDealerState.visible = false;
 			}
 		}
+		public function setAnyPlayerRobDealerState(seatId:int, rob:Boolean) : void
+		{
+			var resName:String = rob ? "table.notify_rob":"table.notify_norob";
+			
+			if (seatId == RuntimeSharedData.instance().rsdPlayerData.seat_id)
+			{
+				_player.playerRobDealerState.res = ResManager.instance().getResourceDev(resName);
+				_player.playerRobDealerState.visible = true;
+			}
+			else
+			{
+				var seat:int = seatId - RuntimeSharedData.instance().rsdPlayerData.seat_id;
+				if (seat < 0)
+				{
+					seat += MAX_OTHER_PLAYER_NUM;
+				}
+				
+				var p:Widget_OtherPlayer = _otherPlayers[seat];
+				
+				p.playerRobDealerState.res = ResManager.instance().getResourceDev(resName);
+				p.playerRobDealerState.visible = true;
+			}
+		}
+		
+		public function clearAllPlayerRobDealerState() : void
+		{
+			_player.playerRobDealerState.visible = false;
+			
+			for each(var p:Widget_OtherPlayer in _otherPlayers)
+			{
+				p.playerRobDealerState.visible = false;
+			}
+		}
+		
 		
 		public function showBetButtonGroup(x1:int, x2:int, x3:int) : void
 		{

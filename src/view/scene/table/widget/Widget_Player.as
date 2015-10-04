@@ -1,17 +1,13 @@
 package view.scene.table.widget
-{
-	import camu.logger.LEVEL;
-	
-	import facade.NiuNotificationHandlerConstant;
-	
-	import resource.ResManager;
-	
+{	
 	import starling.display.Button;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	
+	import facade.NiuNotificationHandlerConstant;
+	import resource.ResManager;
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
@@ -20,12 +16,13 @@ package view.scene.table.widget
 	{
 		private var _playerHeader:Widget_PlayerHeader;						// 玩家头像
 		private var _playerCards:Widget_PlayerCards;						// 玩家手牌
-		private var _playerReadyButtonGroup:Widget_ReadyButtonGroup;		// 玩家准备操作按钮
-		private var _playerReadyState:ExImage;								// 玩家准备状态
-		private var _playerRobState:ExImage;								// 玩家抢庄状态
-		private var _playerRobButtonGroup:Widget_RobDealerButtonGroup;			// 玩家抢庄倍数操作按钮组
-		private var _playerDealerState:ExImage;							// 玩家获得庄家状态		
+
+		private var _playerRobDealerState:ExImage;								// 玩家抢庄状态
+		private var _playerDealerState:ExImage;							// 玩家获得庄家状态
+		private var _playerRobDealerButtonGroup:Widget_RobDealerButtonGroup;			// 玩家抢庄倍数操作按钮组
+		
 		private var _playerBetButtonGroup:Widget_BetButtonGroup;			// 玩家押注倍数操作按钮
+		
 		private var _playerGiveButtonGroup:Widget_GiveButtonGroup;		// 玩家提交结果按钮组
 		private var _playerGiveCalculater:Widget_GiveCalculater;		// 玩家算牛辅助框
 		
@@ -52,19 +49,16 @@ package view.scene.table.widget
 			_playerCards.addEventListener(TouchEvent.TOUCH, onTouch);
 			addChild(_playerCards);
 						
-			//_playerReadyButtonGroup = new Widget_ReadyButtonGroup();			
-			//_playerReadyState = new ExImage(resManager.getResourceDev(""));			
+			_playerRobDealerState = new ExImage(/*resManager.getResourceDev("table.notify_norob")*/);
+			_playerRobDealerState.x = 120;
+			_playerRobDealerState.visible = false;			
+			addChild(_playerRobDealerState);
 			
-			_playerRobState = new ExImage(resManager.getResourceDev("table.notify_norob"));
-			_playerRobState.x = 120;
-			_playerRobState.visible = false;			
-			addChild(_playerRobState);
-			
-			_playerRobButtonGroup = new Widget_RobDealerButtonGroup();
-			_playerRobButtonGroup.x = 180;
-			_playerRobButtonGroup.y = 0;
-			_playerRobButtonGroup.visible = false;
-			addChild(_playerRobButtonGroup);
+			_playerRobDealerButtonGroup = new Widget_RobDealerButtonGroup();
+			_playerRobDealerButtonGroup.x = 180;
+			_playerRobDealerButtonGroup.y = 0;
+			_playerRobDealerButtonGroup.visible = false;
+			addChild(_playerRobDealerButtonGroup);
 			
 			_playerDealerState = new ExImage(resManager.getResourceDev("table.dealer"));
 			_playerDealerState.x = 0;
@@ -113,9 +107,7 @@ package view.scene.table.widget
 		}
 		
 		private function onTriggered(event:Event):void
-		{
-			_logger.log(this, "user click give button.", LEVEL.INFO);
-			
+		{			
 			if (_playerGiveButtonGroup.isGiveNiuButton(event.target as Button))
 			{
 				NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.USER_GIVE, _playerCards.getUserGivePokers());				
@@ -137,19 +129,19 @@ package view.scene.table.widget
 		public function get playerCards() : Widget_PlayerCards
 		{
 			return _playerCards;
-		}
+		}		
 		
-		public function get playerReadyButtonGroup() : Widget_ReadyButtonGroup
+		public function get playerRobDealerButtonGroup() : Widget_RobDealerButtonGroup
 		{
-			return _playerReadyButtonGroup;
+			return _playerRobDealerButtonGroup;
 		}
 		
-		public function get playerRobButtonGroup() : Widget_RobDealerButtonGroup
+		public function get playerRobDealerState() : ExImage
 		{
-			return _playerRobButtonGroup;
+			return _playerRobDealerState;
 		}
 		
-		public function get playerDealerFlag() : ExImage
+		public function get playerDealerState() : ExImage
 		{
 			return _playerDealerState;
 		}

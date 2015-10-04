@@ -156,7 +156,7 @@ package resource.dev
 			_res["table.ask_rob_4x"] = new AskRob4xPNG();
 			_res["table.ask_rob_4x_disable"] = new AskRob4xDisablePNG();
 			_res["table.notify_norob"] = new NotifyNorobPNG();
-			_res["table.notify_nrob"] = new NotifyRobPNG();
+			_res["table.notify_rob"] = new NotifyRobPNG();
 			_res["table.rob_1x"] = new Rob1xPNG();
 			_res["table.rob_2x"] = new Rob2xPNG();
 			_res["table.rob_4x"] = new Rob4xPNG();

@@ -121,29 +121,31 @@ package controller.handler
 		{
 			_logger.log(this, "onNotify_DealerDetail Enter.", LEVEL.INFO);	
 
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			if (!scene)
+			{
+				throw new NullObjectError();
+			}
+			
+			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+			if (!layer)
+			{
+				throw new NullObjectError();
+			}
 			
 			var dealerInfo:TDealerInfo = v.getTLVValue(TLVType.SO_UP_TLV_DEALER_KEY) as TDealerInfo;
 			if (dealerInfo)
 			{
 				RuntimeSharedData.instance().rsdTableData.dealer_seat_id = dealerInfo.dealer;
+				
+				layer.hideTimer();				
+				layer.hideDealerRobButtonGroup();				
+				layer.setAnyPlayerAsDealer(v.seat_id, v.multiple);
+				layer.clearAllPlayerRobDealerState();
 			}
 			else
 			{
-				return;
-			}			
-			
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
-			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layer)
-				{					
-					layer.hideTimer();
-					
-					layer.hideDealerRobButtonGroup();
-										
-					layer.setDealerFlag(v.seat_id, v.multiple);
-				}
+				layer.setAnyPlayerRobDealerState(v.seat_id, (v.multiple!=0));
 			}			
 		}
 		
@@ -259,7 +261,7 @@ package controller.handler
 					layer.hidePlayerCards();
 					layer.hidePlayerGiveButtonGroup();
 					layer.hideOtherPlayerCards();
-					layer.clearDealerFlag();
+					layer.clearAnyPlayerAsDealer();
 					
 					layer.hideTimer();					
 					

@@ -35,16 +35,25 @@ package controller.handler
 			
 			layer.showPlayer("3000011", 10000, 0);
 			layer.showOtherPlayer("3000012", 12000, 1);
-			layer.showBetButtonGroup(1, 3, 5);
-			layer.showWaitRobDealerTimer(5);
+			//layer.showBetButtonGroup(1, 3, 5);
+			//layer.showWaitRobDealerTimer(5);
 						
 			
-			var timer:Timer = new Timer(3000, 2);
+			var timer:Timer = new Timer(3000, 1);
 			timer.addEventListener(TimerEvent.TIMER, onTimer);			
 			timer.start();
 			
 		}
 		
+		protected function onTimer(event:TimerEvent):void
+		{
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");
+			
+			layer.setAnyPlayerRobDealerState(1, false);
+		}
+		
+		/*
 		protected function onTimer(event:TimerEvent):void
 		{
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
@@ -79,5 +88,6 @@ package controller.handler
 			
 			layer.showWaitGiveTimer(5);
 		}
+		*/
 	}
 }

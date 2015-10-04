@@ -11,9 +11,9 @@ package view.scene.table.widget
 		
 		private var _playerHeader:Widget_PlayerHeader;			// 头像信息
 		private var _playerCards:Widget_OtherPlayerCards;		// 手牌
-		private var _playerRobState:ExImage;					// 抢庄状态
-		private var _playerRobMultiple:ExImage;				// 抢庄倍数
-		private var _playerBankerState:ExImage;				// 庄家状态
+		private var _playerRobDealerState:ExImage;					// 抢庄状态
+		private var _playerRobDealerMultiple:ExImage;				// 抢庄倍数
+		private var _playerDealerState:ExImage;				// 庄家状态
 		
 		
 		public function Widget_OtherPlayer(seat:int, name:String = null)
@@ -44,11 +44,18 @@ package view.scene.table.widget
 			addChild(_playerCards);
 			
 			
-			_playerBankerState = new ExImage(ResManager.instance().getResourceDev("table.dealer"));
-			_playerBankerState.x = 140;
-			_playerBankerState.y = 30;
-			_playerBankerState.visible = false;
-			addChild(_playerBankerState);
+			_playerDealerState = new ExImage(ResManager.instance().getResourceDev("table.dealer"));
+			_playerDealerState.x = 140;
+			_playerDealerState.y = 30;
+			_playerDealerState.visible = false;
+			addChild(_playerDealerState);
+			
+			_playerRobDealerState = new ExImage();
+			_playerRobDealerState.x = 50;
+			_playerRobDealerState.y = -40;
+			_playerRobDealerState.visible = false;
+			addChild(_playerRobDealerState);
+			
 		}	
 		
 		
@@ -62,9 +69,19 @@ package view.scene.table.widget
 			return _playerCards;
 		}
 		
-		public function get playerDealerFlag() : ExImage
+		public function get playerDealerState() : ExImage
 		{
-			return _playerBankerState;
+			return _playerDealerState;
+		}
+		
+		public function get playerRobDealerState() : ExImage
+		{
+			return _playerRobDealerState;
+		}
+		
+		public function get playerRobDealerMultiple() : ExImage
+		{
+			return _playerRobDealerMultiple;
 		}
 	}
 }
