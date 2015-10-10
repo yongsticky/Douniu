@@ -1,8 +1,6 @@
 package resource.dev
 {
-	import flash.utils.Dictionary;
-
-	public class HallSceneRes
+	public class HallSceneRes extends Resource
 	{
 		[Embed(source="../../../resource/hall/res_hall.swf#bg.png")]
 		private static const BgPNG:Class;
@@ -46,12 +44,30 @@ package resource.dev
 		[Embed(source="../../../resource/hall/res_hall.swf#vip_mall_hover.png")]
 		private static const VipMallHoverHPNG:Class;
 		
-		private var _res:Dictionary;
+		//private var _res:Dictionary;
 
 		public function HallSceneRes()
 		{
-			_res = new Dictionary();
+			//_res = new Dictionary();
 
+			super();
+
+			add("hall.bg", new BgPNG());
+			add("hall.top_banner", new TopBannerPNG());
+			add("hall.chips", new ChipsPNG());
+			add("hall.name", new NamePNG());
+			add("hall.room_bg", new RoomBgPNG());
+			add("hall.type1_room", new Type1RoomPNG());
+			add("hall.type2_room", new Type2RoomPNG());
+			add("hall.type3_room", new Type3RoomPNG());
+			add("hall.setting", new SettingPNG());
+			add("hall.ticket", new TicketPNG());
+			add("hall.room_enter_error", new RoomEnterErrorPNG());
+			add("hall.user", new UserPNG());
+			add("hall.vip_mall", new VipMallPNG());
+			add("hall.vip_mall_hover", new VipMallHoverHPNG());
+
+			/*
 			_res["hall.bg"] = new BgPNG();
 			_res["hall.top_banner"] = new TopBannerPNG();
 			_res["hall.chips"] = new ChipsPNG();
@@ -66,8 +82,10 @@ package resource.dev
 			_res["hall.user"] = new UserPNG();
 			_res["hall.vip_mall"] = new VipMallPNG();
 			_res["hall.vip_mall_hover"] = new VipMallHoverHPNG();
+			*/
 		}
 
+		/*
 		public function getResource(id:String) : *
 		{
 			if (_res.hasOwnProperty(id))
@@ -79,5 +97,6 @@ package resource.dev
 				return null;
 			}
 		}
+		*/
 	}
 }

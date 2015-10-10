@@ -1,10 +1,6 @@
 package resource.dev
 {
-	import flash.utils.Dictionary;
-
-	
-
-	public class TableSceneRes
+	public class TableSceneRes extends Resource
 	{		
 		[Embed(source="../../../resource/table/res_table.swf#top_banner.png")]
 		private static const TopBannerPNG:Class;
@@ -123,12 +119,55 @@ package resource.dev
 		[Embed(source="../../../resource/table/res_table.swf#bet.png")]
 		private static const BetPNG:Class;
 
-		private var _res:Dictionary;
+		//private var _res:Dictionary;
 
 		public function TableSceneRes()
 		{
-			_res = new Dictionary();
+			//_res = new Dictionary();
 			
+			super();
+
+			add("table.top_banner", new TopBannerPNG());
+			add("table.bg", new BgPNG());
+			add("table.bg_logo", new BgLogoPNG());
+			add("table.bottom_banner", new BottomBannerPNG());
+			add("table.notify_bg", new NotifyBgPNG());
+			add("table.name", new NamePNG());
+			add("table.chips", new ChipsPNG());
+			add("table.setting", new SettingPNG());
+			add("table.timer_0", new Timer0PNG());
+			add("table.timer_1", new Timer1PNG());
+			add("table.timer_2", new Timer2PNG());
+			add("table.timer_3", new Timer3PNG());
+			add("table.timer_4", new Timer4PNG());
+			add("table.timer_5", new Timer5PNG());
+			add("table.timer_6", new Timer6PNG());
+			add("table.timer_7", new Timer7PNG());
+			add("table.timer_8", new Timer8PNG());
+			add("table.timer_9", new Timer9PNG());
+			add("table.timer_bg", new TimerBgPNG());
+			add("table.ask_rob_no", new AskRobNobPNG());
+			add("table.ask_rob_1x", new AskRob1xPNG());
+			add("table.ask_rob_1x_disable", new AskRob1xDisablePNG());
+			add("table.ask_rob_2x", new AskRob2xPNG());
+			add("table.ask_rob_2x_disable", new AskRob2xDisablePNG());
+			add("table.ask_rob_4x", new AskRob4xPNG());
+			add("table.ask_rob_4x_disable", new AskRob4xDisablePNG());
+			add("table.notify_norob", new NotifyNorobPNG());
+			add("table.notify_rob", new NotifyRobPNG());
+			add("table.rob_1x", new Rob1xPNG());
+			add("table.rob_2x", new Rob2xPNG());
+			add("table.rob_4x", new Rob4xPNG());
+			add("table.vip_mall", new VipMallPNG());
+			add("table.wait_next", new WaitNextPNG());
+			add("table.wait_rob_dealer", new WaitRobDealerPNG());
+			add("table.wait_bet", new WaitBetPNG());
+			add("table.wait_give", new WaitGivePNG());
+			add("table.viewer", new ViewerPNG());
+			add("table.dealer", new DealerPNG());
+			add("table.bet", new BetPNG());
+			
+			/*
 			_res["table.top_banner"] = new TopBannerPNG();
 			_res["table.bg"] = new BgPNG();
 			_res["table.bg_logo"] = new BgLogoPNG();
@@ -168,8 +207,10 @@ package resource.dev
 			_res["table.viewer"] = new ViewerPNG();
 			_res["table.dealer"] = new DealerPNG();
 			_res["table.bet"] = new BetPNG();
+			*/
 		}
 
+		/*
 		public function getResource(id:String) : *
 		{
 			if (_res.hasOwnProperty(id))
@@ -181,5 +222,6 @@ package resource.dev
 				return null;
 			}
 		}
+		*/
 	}
 }

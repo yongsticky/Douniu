@@ -3,15 +3,10 @@ package view
 	import camu.errors.AbstractClassError;
 	import camu.logger.LEVEL;
 	
-	import controller.NiuNotification;
-	
-	import facade.NiuApplicationFacade;
-	import facade.NiuNotificationHandlerConstant;
-	
-	import server.NiuServerConnector;
-	
-	import starling.events.EnterFrameEvent;
-	
+	import controller.NiuNotification;	
+	import facade.NiuNotificationHandlerConstant;	
+	import server.NiuServerConnector;	
+	import starling.events.EnterFrameEvent;	
 	import view.framework.ExDirector;
 	
 	public class NiuDirector extends ExDirector

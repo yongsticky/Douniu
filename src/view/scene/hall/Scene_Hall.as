@@ -20,7 +20,7 @@ package view.scene.hall
 		{
 			addChild(new Layer_Background());
 			addChild(new Layer_TopBanner());
-			addChild(new Layer_RoomList());
+			addChild(new Layer_RoomList());			
 		}		
 	}
 }

@@ -1,8 +1,6 @@
 package resource.dev
 {
-	import flash.utils.Dictionary;
-
-	public class PokerCardRes
+	public class PokerCardRes extends Resource
 	{
 
 
@@ -118,12 +116,28 @@ package resource.dev
 		[Embed(source="../../../resource/poker/res_poker.swf#bei.png")]
 		private static const BeiPNG:Class;
 
-		private var _res:Dictionary;
+		//private var _res:Dictionary;
 
 		public function PokerCardRes()
 		{
-			_res = new Dictionary();
+			//_res = new Dictionary();
+			super();
 
+			add("poker.hei.1", new Hei1PNG());
+			add("poker.hei.2", new Hei2PNG());
+			add("poker.hei.3", new Hei3PNG());
+			add("poker.hei.4", new Hei4PNG());
+			add("poker.hei.5", new Hei5PNG());
+			add("poker.hei.6", new Hei6PNG());
+			add("poker.hei.7", new Hei7PNG());
+			add("poker.hei.8", new Hei8PNG());
+			add("poker.hei.9", new Hei9PNG());
+			add("poker.hei.10", new Hei10PNG());
+			add("poker.hei.11", new Hei11PNG());
+			add("poker.hei.12", new Hei12PNG());
+			add("poker.hei.13", new Hei13PNG());
+
+			/*
 			_res["poker.hei.1"] = new Hei1PNG();
 			_res["poker.hei.2"] = new Hei2PNG();
 			_res["poker.hei.3"] = new Hei3PNG();
@@ -137,8 +151,23 @@ package resource.dev
 			_res["poker.hei.11"] = new Hei11PNG();
 			_res["poker.hei.12"] = new Hei12PNG();
 			_res["poker.hei.13"] = new Hei13PNG();
+			*/
 
+			add("poker.hong.1", new Hong1PNG());
+			add("poker.hong.2", new Hong2PNG());
+			add("poker.hong.3", new Hong3PNG());
+			add("poker.hong.4", new Hong4PNG());
+			add("poker.hong.5", new Hong5PNG());
+			add("poker.hong.6", new Hong6PNG());
+			add("poker.hong.7", new Hong7PNG());
+			add("poker.hong.8", new Hong8PNG());
+			add("poker.hong.9", new Hong9PNG());
+			add("poker.hong.10", new Hong10PNG());
+			add("poker.hong.11", new Hong11PNG());
+			add("poker.hong.12", new Hong12PNG());
+			add("poker.hong.13", new Hong13PNG());
 
+			/*
 			_res["poker.hong.1"] = new Hong1PNG();
 			_res["poker.hong.2"] = new Hong2PNG();
 			_res["poker.hong.3"] = new Hong3PNG();
@@ -152,8 +181,23 @@ package resource.dev
 			_res["poker.hong.11"] = new Hong11PNG();
 			_res["poker.hong.12"] = new Hong12PNG();
 			_res["poker.hong.13"] = new Hong13PNG();
+			*/
 
-
+			add("poker.mei.1", new Mei1PNG());
+			add("poker.mei.2", new Mei2PNG());
+			add("poker.mei.3", new Mei3PNG());
+			add("poker.mei.4", new Mei4PNG());
+			add("poker.mei.5", new Mei5PNG());
+			add("poker.mei.6", new Mei6PNG());
+			add("poker.mei.7", new Mei7PNG());
+			add("poker.mei.8", new Mei8PNG());
+			add("poker.mei.9", new Mei9PNG());
+			add("poker.mei.10", new Mei10PNG());
+			add("poker.mei.11", new Mei11PNG());
+			add("poker.mei.12", new Mei12PNG());
+			add("poker.mei.13", new Mei13PNG());
+			
+			/*
 			_res["poker.mei.1"] = new Mei1PNG();
 			_res["poker.mei.2"] = new Mei2PNG();
 			_res["poker.mei.3"] = new Mei3PNG();
@@ -167,8 +211,23 @@ package resource.dev
 			_res["poker.mei.11"] = new Mei11PNG();
 			_res["poker.mei.12"] = new Mei12PNG();
 			_res["poker.mei.13"] = new Mei13PNG();
+			*/
 
+			add("poker.fang.1", new Fang1PNG());
+			add("poker.fang.2", new Fang2PNG());
+			add("poker.fang.3", new Fang3PNG());
+			add("poker.fang.4", new Fang4PNG());
+			add("poker.fang.5", new Fang5PNG());
+			add("poker.fang.6", new Fang6PNG());
+			add("poker.fang.7", new Fang7PNG());
+			add("poker.fang.8", new Fang8PNG());
+			add("poker.fang.9", new Fang9PNG());
+			add("poker.fang.10", new Fang10PNG());
+			add("poker.fang.11", new Fang11PNG());
+			add("poker.fang.12", new Fang12PNG());
+			add("poker.fang.13", new Fang13PNG());
 
+			/*
 			_res["poker.fang.1"] = new Fang1PNG();
 			_res["poker.fang.2"] = new Fang2PNG();
 			_res["poker.fang.3"] = new Fang3PNG();
@@ -182,10 +241,14 @@ package resource.dev
 			_res["poker.fang.11"] = new Fang11PNG();
 			_res["poker.fang.12"] = new Fang12PNG();
 			_res["poker.fang.13"] = new Fang13PNG();
+			*/
 
-			_res["poker.bei"] = new BeiPNG();
+			add("poker.bei", new BeiPNG());
+
+			//_res["poker.bei"] = new BeiPNG();
 		}
 
+		/*
 		public function getResource(id:String) : *
 		{
 			if (_res.hasOwnProperty(id))
@@ -197,5 +260,6 @@ package resource.dev
 				return null;
 			}
 		}
+		*/
 	}
 }

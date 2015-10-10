@@ -1,14 +1,12 @@
 package view.scene.startup.layer
-{
-	
-	import facade.NiuNotificationHandlerConstant;
-	
-	import resource.ResManager;
-	
+{	
 	import starling.display.Button;
 	import starling.events.Event;
 	import starling.textures.Texture;
 	
+	import facade.NiuNotificationHandlerConstant;	
+	import resource.ResManager;	
+	import sound.SoundManager;	
 	import view.NiuDirector;
 	import view.framework.ExLayer;
 	
@@ -41,8 +39,9 @@ package view.scene.startup.layer
 		
 		protected function onTriggered(event:Event) : void
 		{
-			var btn:Button = event.target as Button;
+			SoundManager.instance().playButtonClick();
 			
+			var btn:Button = event.target as Button;			
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_USER, int(btn.text));
 		}
 	}

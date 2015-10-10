@@ -8,6 +8,7 @@ package resource
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
+	import flash.media.Sound;
 	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
 	
@@ -17,6 +18,8 @@ package resource
 	
 	import resource.dev.HallSceneRes;
 	import resource.dev.PokerCardRes;
+	import resource.dev.Resource;
+	import resource.dev.SoundRes;
 	import resource.dev.TableSceneRes;
 		
 
@@ -28,9 +31,13 @@ package resource
 		private var _res:Dictionary;
 
 		// dev
+		/*
 		private var _resHallScene:HallSceneRes;
 		private var _resPokerCard:PokerCardRes;
 		private var _resGameScene:TableSceneRes;
+		*/
+
+		private var _resArr:Array;
 
 		public static const ID:String = "id";						// 资源的id，存取的唯一标识
 		public static const URL:String = "url";						// 资源的下载地址
@@ -59,9 +66,17 @@ package resource
 			_res = new Dictionary();
 			_loaders = new Vector.<Loader>();
 
+			/*
 			_resHallScene = new HallSceneRes();
 			_resPokerCard = new PokerCardRes();
 			_resGameScene = new TableSceneRes();
+			*/
+
+			_resArr = new Array();
+			_resArr.push(new HallSceneRes());
+			_resArr.push(new PokerCardRes());
+			_resArr.push(new TableSceneRes());
+			_resArr.push(new SoundRes());
 		}
 		
 		
@@ -110,8 +125,9 @@ package resource
 			return null;
 		}
 
-		public function getResourceDev(id:String) : BitmapData
+		public function getResourceDev(id:String) : *
 		{
+			/*
 			var res:* = _resHallScene.getResource(id);
 			if (!res)
 			{
@@ -119,14 +135,35 @@ package resource
 				if (!res)
 				{
 					res = _resGameScene.getResource(id);
+					if (!res)
+					{
+						
+					}
 				}
 			}
+			*/
+			
+			var res:* = null;
+			
+			for (var i:int = 0; i < _resArr.length; ++i)
+			{
+				res = (_resArr[i] as Resource).getResource(id);
+				if (res)
+				{
+					break;
+				}
+			}
+			
 			
 			if (res is Bitmap)
 			{
 				return Bitmap(res).bitmapData;
 			}
 			else if (res is BitmapData)
+			{
+				return res;
+			}
+			else if (res is Sound)
 			{
 				return res;
 			}
