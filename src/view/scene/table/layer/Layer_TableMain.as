@@ -1,6 +1,6 @@
 package view.scene.table.layer
 {	
-	import global.RuntimeSharedData;
+	import global.RuntimeExchangeData;
 	
 	import resource.ResManager;
 	
@@ -148,13 +148,13 @@ package view.scene.table.layer
 		public function setAnyPlayerAsDealer(seatId:int, multiple:int) : void
 		{
 			// 是自己抢到
-			if (seatId == RuntimeSharedData.instance().rsdPlayerData.seat_id)
+			if (seatId == RuntimeExchangeData.instance().redPlayerData.seat_id)
 			{
 				_player.playerDealerState.visible = true;
 			}
 			else
 			{
-				var seat:int = seatId - RuntimeSharedData.instance().rsdPlayerData.seat_id;
+				var seat:int = seatId - RuntimeExchangeData.instance().redPlayerData.seat_id;
 				if (seat < 0)
 				{
 					seat += MAX_OTHER_PLAYER_NUM;
@@ -177,14 +177,14 @@ package view.scene.table.layer
 		{
 			var resName:String = rob ? "table.notify_rob":"table.notify_norob";
 			
-			if (seatId == RuntimeSharedData.instance().rsdPlayerData.seat_id)
+			if (seatId == RuntimeExchangeData.instance().redPlayerData.seat_id)
 			{
 				_player.playerRobDealerState.res = ResManager.instance().getResourceDev(resName);
 				_player.playerRobDealerState.visible = true;
 			}
 			else
 			{
-				var seat:int = seatId - RuntimeSharedData.instance().rsdPlayerData.seat_id;
+				var seat:int = seatId - RuntimeExchangeData.instance().redPlayerData.seat_id;
 				if (seat < 0)
 				{
 					seat += MAX_OTHER_PLAYER_NUM;

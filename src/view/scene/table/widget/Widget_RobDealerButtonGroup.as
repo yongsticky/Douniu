@@ -4,6 +4,8 @@ package view.scene.table.widget
 	
 	import resource.ResManager;
 	
+	import sound.SoundManager;
+	
 	import starling.display.Button;
 	import starling.events.Event;
 	import starling.textures.Texture;
@@ -51,24 +53,32 @@ package view.scene.table.widget
 		
 		private function onBtnRobNoTriggered(event:Event) : void
 		{	
+			SoundManager.instance().playButtonClick();
+			
 			visible = false;
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, 0);
 		}
 		
 		private function onBtnRob1xTriggered(event:Event) : void
 		{	
+			SoundManager.instance().playButtonClick();
+			
 			visible = false;
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, 1);
 		}
 		
 		private function onBtnRob2xTriggered(event:Event) : void
-		{	
+		{
+			SoundManager.instance().playButtonClick();
+			
 			visible = false;
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, 3);
 		}
 		
 		private function onBtnRob4xTriggered(event:Event) : void
 		{	
+			SoundManager.instance().playButtonClick();
+			
 			visible = false;
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, 5);
 		}

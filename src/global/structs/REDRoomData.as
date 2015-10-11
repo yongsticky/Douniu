@@ -1,10 +1,10 @@
 package global.structs
 {
-	public class RSDRoomData
+	public class REDRoomData
 	{
 		public var room_id:int;
 		
-		public function RSDRoomData()
+		public function REDRoomData()
 		{
 		}
 	}

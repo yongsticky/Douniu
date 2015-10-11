@@ -8,6 +8,8 @@ package view.scene.table.widget
 	
 	import resource.ResManager;
 	
+	import sound.SoundManager;
+	
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
@@ -144,6 +146,8 @@ package view.scene.table.widget
 							pI.y = 0;	
 							pI.selected = false;
 							-- _selectedCount;
+							
+							SoundManager.instance().playSelectCard();
 						}
 						else
 						{
@@ -151,9 +155,11 @@ package view.scene.table.widget
 							{
 								pI.y = -15;
 								pI.selected = true;
-								++ _selectedCount;	
+								++ _selectedCount;
+								
+								SoundManager.instance().playSelectCard();
 							}							
-						}					
+						}				
 					}			
 				}
 			}

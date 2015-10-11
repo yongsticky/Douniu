@@ -6,26 +6,26 @@ package packet.game.message.Notify
 	
 	import factory.NiuObjectFactory;
 	
-	public class TGameEventDecoder
+	public class TRoomEventDecoder
 	{
-		public function TGameEventDecoder(inner:PrivateInner)
+		public function TRoomEventDecoder(inner:PrivateInner)
 		{
 		}
 		
-		private static var _instance:TGameEventDecoder = null;
-		public static function instance() : TGameEventDecoder
+		private static var _instance:TRoomEventDecoder = null;
+		public static function instance() : TRoomEventDecoder
 		{
 			if (!_instance)
 			{
-				_instance = new TGameEventDecoder(new PrivateInner());
+				_instance = new TRoomEventDecoder(new PrivateInner());
 			}
 			
 			return _instance;
 		}
 
-		public function decode(bytes:ByteArray) : TGameEvent
+		public function decode(bytes:ByteArray) : TRoomEvent
 		{
-			var gameEvent:TGameEvent = NiuObjectFactory.instance().createInstance(TGameEvent);
+			var gameEvent:TRoomEvent = NiuObjectFactory.instance().createInstance(TRoomEvent);
 			if (gameEvent)
 			{
 				if (!gameEvent.unpack(bytes))

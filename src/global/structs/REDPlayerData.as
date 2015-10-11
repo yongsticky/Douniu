@@ -1,6 +1,6 @@
 package global.structs
 {
-	public class RSDPlayerData
+	public class REDPlayerData
 	{
 		public var uin:uint;
 		public var player_id:int;
@@ -10,7 +10,7 @@ package global.structs
 		public var chips:int;
 		public var gender:int;
 		
-		public function RSDPlayerData()
+		public function REDPlayerData()
 		{
 		}
 	}

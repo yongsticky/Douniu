@@ -1,13 +1,17 @@
 package view.scene.table.widget
 {	
+	import facade.NiuNotificationHandlerConstant;
+	
+	import resource.ResManager;
+	
+	import sound.SoundManager;
+	
 	import starling.display.Button;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	
-	import facade.NiuNotificationHandlerConstant;
-	import resource.ResManager;
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
@@ -107,7 +111,9 @@ package view.scene.table.widget
 		}
 		
 		private function onTriggered(event:Event):void
-		{			
+		{	
+			SoundManager.instance().playButtonClick();
+			
 			if (_playerGiveButtonGroup.isGiveNiuButton(event.target as Button))
 			{
 				NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.USER_GIVE, _playerCards.getUserGivePokers());				

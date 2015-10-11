@@ -6,7 +6,8 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
-	import global.RuntimeSharedData;
+	import global.RuntimeExchangeData;
+	import global.UserSettings;
 	
 	import view.NiuDirector;
 	import view.scene.hall.Scene_Hall;
@@ -22,7 +23,13 @@ package controller.handler
 		{
 			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
 			
-			RuntimeSharedData.instance().rsdPlayerData.uin = uint(notification.getData());
+			RuntimeExchangeData.instance().redPlayerData.uin = uint(notification.getData());
+			
+			// TEST
+			if (RuntimeExchangeData.instance().redPlayerData.uin != 30000001)
+			{
+				UserSettings.instance().backgroundMusicMute = true;
+			}
 			
 			_logger.log(this, "User select User:[", uint(notification.getData()), "]", LEVEL.INFO);
 			

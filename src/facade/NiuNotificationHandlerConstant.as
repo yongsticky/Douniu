@@ -10,7 +10,7 @@ package facade
 		public static const LOGIN_SUCCESS:String = "handler.login_success";
 		public static const SELECT_ROOM:String = "handler.select_room";
 		public static const SITDOWN_SUCCESS:String = "handler.sitdown_success";
-		public static const GAME_EVENT:String = "handler.game_event";
+		public static const ROOM_EVENT:String = "handler.room_event";
 		public static const DOUNIU_EVENT:String = "handler.douniu_event";
 		public static const SELECT_ROB_DEALER_X:String = "handler.select_rob_dealer_x";
 		public static const SELECT_BET_X:String = "handler.select_bet_x";

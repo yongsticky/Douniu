@@ -2,6 +2,8 @@ package view.widget
 {
 	import resource.ResManager;
 	
+	import sound.SoundManager;
+	
 	import starling.animation.IAnimatable;
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
@@ -89,10 +91,12 @@ package view.widget
 			
 			_curTime = time;
 			
-			visible = true;
+			visible = true;			
 			
 			updateTimerTexture();
 			doAnimation();
+			
+			SoundManager.instance().playTimerWarning();
 		}
 		
 		public function stopTimer() : void
@@ -112,9 +116,11 @@ package view.widget
 		{				
 			if (_curTime > 0)
 			{
-				-- _curTime;				
+				SoundManager.instance().playTimerRun();
+				
+				-- _curTime;
 
-				updateTimerTexture();
+				updateTimerTexture();				
 				
 				doAnimation();				
 			}

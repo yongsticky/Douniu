@@ -47,7 +47,7 @@ package resource.dev
 			add("sound.game_lose", new PaiJuShiBaiSound());
 			add("sound.lottery", new ZhongJiangSound());
 			add("sound.timer_run", new JiShiShengSound());
-			add("sound.bet", new XiaZhuShengSound());
+			add("sound.notify_bet_detail", new XiaZhuShengSound());
 			add("sound.deal_card", new FaPaiShengSound());
 		}
 	}

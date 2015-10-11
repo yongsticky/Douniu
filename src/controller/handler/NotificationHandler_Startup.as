@@ -1,16 +1,21 @@
 package controller.handler
 {
-	import flash.events.Event;	
+	import flash.events.Event;
 	
 	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
 	import camu.net.ConnectorEvent;
 	
-	import controller.NiuNotificationHandler;	
+	import controller.NiuNotificationHandler;
+	
 	import facade.NiuNotificationHandlerConstant;
+	
+	import global.ProgramConfiguration;
+	
 	import server.NiuResponseReceiver;
-	import server.NiuServerConnector;	
+	import server.NiuServerConnector;
+	
 	import sound.SoundManager;
 	
 	public class NotificationHandler_Startup extends NiuNotificationHandler
@@ -27,18 +32,23 @@ package controller.handler
 			NiuResponseReceiver.instance().initReceivers();
 			
 			//sendNotification(NiuNotificationHandlerConstant.TEST_UI);
-				
+			
 			var connector:NiuServerConnector = NiuServerConnector.instance();	
-			connector.setTargetAddress("182.254.40.11", 8000);			
+			//connector.setTargetAddress("182.254.40.11", 8000);
+			var host:String = ProgramConfiguration.instance().serverHost;
+			var port:int = ProgramConfiguration.instance().serverPort;
+			connector.setTargetAddress(host, port);
 			connector.addEventListener(ConnectorEvent.CONNECTED, onConnect);
 			connector.connect();
+			
+			_logger.log(this, "Connect to Server[", host, ":", port, "].", LEVEL.INFO);						
 			
 			SoundManager.instance().playBgMusic();
 		}		
 		
 		protected function onConnect(event:Event):void
 		{			
-			_logger.log(this, "Connect Server Succ.", LEVEL.INFO);						
+			_logger.log(this, "Connect server succ.", LEVEL.INFO);						
 			sendNotification(NiuNotificationHandlerConstant.SERVER_CONNECTED);					
 		}
 	}

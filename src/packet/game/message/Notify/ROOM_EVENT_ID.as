@@ -2,7 +2,7 @@ package packet.game.message.Notify
 {
 	import camu.errors.AbstractClassError;
 
-	public class GAME_EVENT_ID
+	public class ROOM_EVENT_ID
 	{
 		public static const LOGIN:int = 1;
 		public static const LOGOUT:int = 2;
@@ -22,7 +22,7 @@ package packet.game.message.Notify
 		public static const PRESENT_BEAN_FAILED:int = 16;
 		public static const CANCEL_VIEW_SEAT:int = 17;
 		
-		public function GAME_EVENT_ID()
+		public function ROOM_EVENT_ID()
 		{
 			throw new AbstractClassError();		
 		}

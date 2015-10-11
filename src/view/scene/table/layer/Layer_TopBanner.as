@@ -4,6 +4,8 @@ package view.scene.table.layer
 	
 	import resource.ResManager;
 	
+	import sound.SoundManager;
+	
 	import starling.display.Button;
 	import starling.events.Event;
 	import starling.text.TextField;
@@ -55,7 +57,7 @@ package view.scene.table.layer
 		
 		private function onTrigered(event:Event) : void
 		{
-			//NiuDirector.instance().pushScene(new Scene_Setting());
+			SoundManager.instance().playButtonClick();
 			
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.USER_LOGOUT);
 		}

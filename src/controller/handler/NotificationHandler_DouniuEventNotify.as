@@ -7,7 +7,7 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
-	import global.RuntimeSharedData;
+	import global.RuntimeExchangeData;
 	
 	import packet.game.message.Notify.Notify_DouniuEvent;
 	import packet.game.tlv.TLVType;
@@ -15,6 +15,7 @@ package controller.handler
 	import packet.game.tlv.value.TTilesInfo;
 	import packet.game.tlv.value.TTimerInfo;
 	import packet.game.tv.TVType;
+	import packet.game.tv.value.FinishInfo;
 	import packet.game.tv.value.NotifyBet;
 	import packet.game.tv.value.NotifyBetDetail;
 	import packet.game.tv.value.NotifyDealerDetail;
@@ -22,6 +23,8 @@ package controller.handler
 	import packet.game.tv.value.NotifyGive;
 	import packet.game.tv.value.NotifyRobDealer;
 	import packet.game.tv.value.NotifyStartTimer;
+	
+	import sound.SoundManager;
 	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
@@ -112,6 +115,8 @@ package controller.handler
 						layer.showOtherPlayerCards(vec2);
 						vec2.length = 0;
 						vec2 = null;
+						
+						SoundManager.instance().playDealCard();
 					}
 				}
 			}			
@@ -136,7 +141,7 @@ package controller.handler
 			var dealerInfo:TDealerInfo = v.getTLVValue(TLVType.SO_UP_TLV_DEALER_KEY) as TDealerInfo;
 			if (dealerInfo)
 			{
-				RuntimeSharedData.instance().rsdTableData.dealer_seat_id = dealerInfo.dealer;
+				RuntimeExchangeData.instance().redTableData.dealer_seat_id = dealerInfo.dealer;
 				
 				layer.hideTimer();				
 				layer.hideDealerRobButtonGroup();				
@@ -159,8 +164,8 @@ package controller.handler
 				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layer)
 				{
-					if (RuntimeSharedData.instance().rsdTableData.dealer_seat_id != 
-						RuntimeSharedData.instance().rsdPlayerData.seat_id)
+					if (RuntimeExchangeData.instance().redTableData.dealer_seat_id != 
+						RuntimeExchangeData.instance().redPlayerData.seat_id)
 					{
 						layer.showBetButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);
 					}
@@ -182,7 +187,9 @@ package controller.handler
 			if (!v.getTLVValue(TLVType.SO_UP_TLV_MULTIPLE_KEY))
 			{
 				return;
-			}		
+			}	
+			
+			SoundManager.instance().playNotifyBetDetail();
 			
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
@@ -222,7 +229,7 @@ package controller.handler
 						if (tlInfo.tiles_num == 1)
 						{
 							layer.updatePlayerCard(4, int(tlInfo.tiles[0]));
-							layer.showPlayerGiveButtonGroup();
+							layer.showPlayerGiveButtonGroup();						
 						}
 						else
 						{
@@ -240,8 +247,10 @@ package controller.handler
 							vec2.length = 0;
 							vec2 = null;	
 							
-							layer.showPlayerGiveButtonGroup();
+							layer.showPlayerGiveButtonGroup();							
 						}
+						
+						SoundManager.instance().playGiveCard();
 					}
 				}
 			}	
@@ -251,6 +260,25 @@ package controller.handler
 		private function onNotify_Finish(v:NotifyFinish) : void
 		{
 			_logger.log(this, "onNotify_Finish Enter.", LEVEL.INFO);
+			
+			for (var i:int = 0; i < v.finish_info_num; ++i)
+			{
+				var info:FinishInfo = v.finish_info_vec[i];
+				if (info)
+				{
+					if (info.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
+					{
+						if (info.money.highPart > 0)
+						{
+							SoundManager.instance().playGameWin();
+						}
+						else
+						{
+							SoundManager.instance().playGameLose();
+						}
+					}
+				}
+			}
 			
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
@@ -265,7 +293,7 @@ package controller.handler
 					
 					layer.hideTimer();					
 					
-					RuntimeSharedData.instance().rsdTableData.dealer_seat_id = -1;					
+					RuntimeExchangeData.instance().redTableData.dealer_seat_id = -1;					
 				}
 			}
 		}

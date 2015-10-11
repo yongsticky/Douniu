@@ -6,7 +6,7 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;	
 	import factory.NiuObjectFactory;	
-	import global.RuntimeSharedData;	
+	import global.RuntimeExchangeData;	
 	import packet.game.message.Login.Request_Login;	
 	import server.NiuRequestSender;
 	
@@ -27,7 +27,7 @@ package controller.handler
 			
 			var loginRequest:Request_Login = NiuObjectFactory.instance().createInstance(Request_Login);			
 			loginRequest.room_id = roomId;
-			loginRequest.uin = loginRequest.csHeader.uin = RuntimeSharedData.instance().rsdPlayerData.uin;			
+			loginRequest.uin = loginRequest.csHeader.uin = RuntimeExchangeData.instance().redPlayerData.uin;			
 			loginRequest.request_src = 0;
 			loginRequest.login_life_style = 0;			
 			loginRequest.tlv_num = 0;

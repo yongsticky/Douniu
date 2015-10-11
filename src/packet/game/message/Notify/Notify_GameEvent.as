@@ -13,13 +13,13 @@ package packet.game.message.Notify
 	public class Notify_GameEvent extends NiuResponsePacket
 	{
 		public var game_event_num:int;						// short(2)
-		public var game_event_vec:Vector.<TGameEvent>;		// ?
+		public var game_event_vec:Vector.<TRoomEvent>;		// ?
 		
 		public function Notify_GameEvent()
 		{
 			super();
 			
-			game_event_vec = new Vector.<TGameEvent>();
+			game_event_vec = new Vector.<TRoomEvent>();
 		}
 		
 		override public function unpackMsgParam(bytes:ByteArray):void
@@ -27,10 +27,10 @@ package packet.game.message.Notify
 			game_event_num = bytes.readShort();
 			if (game_event_num > 0)
 			{
-				var decoder:TGameEventDecoder = TGameEventDecoder.instance();
+				var decoder:TRoomEventDecoder = TRoomEventDecoder.instance();
 				for (var i:int = 0; i < game_event_num; i++)
 				{
-					var gameEvent:TGameEvent = decoder.decode(bytes);
+					var gameEvent:TRoomEvent = decoder.decode(bytes);
 					game_event_vec.push(gameEvent);
 				}
 			}
@@ -41,7 +41,7 @@ package packet.game.message.Notify
 			super.onObjectRecycled();
 			
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
-			for each(var item:TGameEvent in game_event_vec)
+			for each(var item:TRoomEvent in game_event_vec)
 			{				
 				_factory.destroyInstance(item);
 			}
@@ -57,7 +57,7 @@ package packet.game.message.Notify
 			
 			logger.log(this, "game_event_num:", game_event_num, LEVEL.INFO);
 			
-			for each(var ge:TGameEvent in game_event_vec)
+			for each(var ge:TRoomEvent in game_event_vec)
 			{
 				logger.log(this, "TGameEvent.event_id:", ge.event_id, LEVEL.INFO);
 				logger.log(this, "TGameEvent.player_id:", ge.player_id, LEVEL.INFO);

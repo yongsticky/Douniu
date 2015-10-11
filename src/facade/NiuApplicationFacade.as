@@ -4,7 +4,7 @@ package facade
 	
 	import controller.NiuControllerMediator;
 	import controller.handler.NotificationHandler_DouniuEventNotify;
-	import controller.handler.NotificationHandler_GameEventNotify;
+	import controller.handler.NotificationHandler_RoomEventNotify;
 	import controller.handler.NotificationHandler_LoginSuccess;
 	import controller.handler.NotificationHandler_SelectBetX;
 	import controller.handler.NotificationHandler_SelectRobDealerX;
@@ -49,7 +49,7 @@ package facade
 			registerHandler(NiuNotificationHandlerConstant.LOGIN_SUCCESS, new NotificationHandler_LoginSuccess(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SELECT_ROOM, new NotificationHandler_SelectRoom(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SITDOWN_SUCCESS, new NotificationHandler_SitdownSuccess(_mediator));
-			registerHandler(NiuNotificationHandlerConstant.GAME_EVENT, new NotificationHandler_GameEventNotify(_mediator));
+			registerHandler(NiuNotificationHandlerConstant.ROOM_EVENT, new NotificationHandler_RoomEventNotify(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.DOUNIU_EVENT, new NotificationHandler_DouniuEventNotify(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SELECT_ROB_DEALER_X, new NotificationHandler_SelectRobDealerX(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SELECT_BET_X, new NotificationHandler_SelectBetX(_mediator));

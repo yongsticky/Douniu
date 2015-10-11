@@ -2,6 +2,8 @@ package view.scene.hall.layer
 {			
 	import resource.ResManager;
 	
+	import sound.SoundManager;
+	
 	import starling.display.Button;
 	import starling.display.Quad;
 	import starling.events.Event;
@@ -126,12 +128,16 @@ package view.scene.hall.layer
 		}
 				
 		protected function onSettingTriggered(event:Event) : void
-		{		
+		{	
+			SoundManager.instance().playButtonClick();
+			
 			NiuDirector.instance().pushScene(new Scene_Setting());			
 		}
 		
 		protected function onVipMallTriggered(event:Event) : void
 		{	
+			SoundManager.instance().playButtonClick();
+			
 			NiuDirector.instance().pushScene(new Scene_Mall());
 		}
 	}

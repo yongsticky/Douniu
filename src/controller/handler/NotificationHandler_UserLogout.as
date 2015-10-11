@@ -8,7 +8,7 @@ package controller.handler
 	
 	import factory.NiuObjectFactory;
 	
-	import global.RuntimeSharedData;
+	import global.RuntimeExchangeData;
 	
 	import packet.game.message.Logout.Request_Logout;
 	
@@ -30,8 +30,8 @@ package controller.handler
 			
 			var logoutReqeust:Request_Logout = NiuObjectFactory.instance().createInstance(Request_Logout);
 						
-			logoutReqeust.csHeader.uin = RuntimeSharedData.instance().rsdPlayerData.uin;
-			logoutReqeust.csHeader.dialog_id = RuntimeSharedData.instance().rsdPlayerData.player_id;			
+			logoutReqeust.csHeader.uin = RuntimeExchangeData.instance().redPlayerData.uin;
+			logoutReqeust.csHeader.dialog_id = RuntimeExchangeData.instance().redPlayerData.player_id;			
 			
 			logoutReqeust.reason = 0;
 			

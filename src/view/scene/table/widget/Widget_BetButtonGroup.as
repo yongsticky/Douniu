@@ -2,6 +2,8 @@ package view.scene.table.widget
 {
 	import facade.NiuNotificationHandlerConstant;
 	
+	import sound.SoundManager;
+	
 	import starling.display.Button;
 	import starling.events.Event;
 	import starling.textures.Texture;
@@ -50,18 +52,24 @@ package view.scene.table.widget
 		
 		private function onBtnRob1xTriggered(event:Event):void
 		{
+			SoundManager.instance().playButtonClick();
+			
 			visible = false;
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_BET_X, 1);
 		}
 				
 		private function onBtnRob2xTriggered(event:Event):void
 		{
+			SoundManager.instance().playButtonClick();
+			
 			visible = false;
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_BET_X, 3);
 		}
 		
 		private function onBtnRob4xTriggered(event:Event):void
-		{			
+		{
+			SoundManager.instance().playButtonClick();
+			
 			visible = false;
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_BET_X, 5);
 		}

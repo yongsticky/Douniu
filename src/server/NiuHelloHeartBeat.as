@@ -7,7 +7,7 @@ package server
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
 	
-	import global.RuntimeSharedData;
+	import global.RuntimeExchangeData;
 	
 	import packet.game.message.Hello.Request_Hello;
 	
@@ -60,7 +60,7 @@ package server
 		{
 			_logger.log(this, "Send Heart Beat Hello.", LEVEL.INFO);
 			
-			_request.csHeader.uin = RuntimeSharedData.instance().rsdPlayerData.uin;
+			_request.csHeader.uin = RuntimeExchangeData.instance().redPlayerData.uin;
 						
 			_request.time = _now.getTime() + 60*1000*_count;
 			

@@ -1,9 +1,13 @@
 package view.scene.hall.layer
 {	
-	import starling.events.Event;
-
-	import facade.NiuNotificationHandlerConstant;	
+	import facade.NiuNotificationHandlerConstant;
+	
 	import resource.ResManager;
+	
+	import sound.SoundManager;
+	
+	import starling.events.Event;
+	
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExLayer;
@@ -63,8 +67,10 @@ package view.scene.hall.layer
 
 		protected function onRoomTriggered(event:Event) : void
 		{
+			SoundManager.instance().playButtonClick();
+			
 			var room:Widget_Room = event.target as Widget_Room;				
-			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROOM, room.roomId);
+			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROOM, room.roomId);			
 		}
 	}
 }

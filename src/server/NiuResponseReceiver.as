@@ -150,7 +150,7 @@ package server
 		protected function onReceive_GameNotify(event:PacketEvent) : void
 		{
 			_logger.log(this, "onReceive_GameNotify Enter.", LEVEL.INFO);	
-			sendNotification(NiuNotificationHandlerConstant.GAME_EVENT, event.packet);
+			sendNotification(NiuNotificationHandlerConstant.ROOM_EVENT, event.packet);
 		}
 		
 		protected function onReceive_DouniuEvent(event:PacketEvent) : void

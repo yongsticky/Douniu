@@ -12,7 +12,7 @@ package factory
 	import packet.game.message.Logout.Response_Logout;
 	import packet.game.message.Notify.Notify_DouniuEvent;
 	import packet.game.message.Notify.Notify_GameEvent;
-	import packet.game.message.Notify.TGameEvent;
+	import packet.game.message.Notify.TRoomEvent;
 	import packet.game.message.Play.Request_Play;
 	import packet.game.message.Play.Response_Play;
 	import packet.game.message.Ready.Request_Ready;
@@ -104,7 +104,7 @@ package factory
 			registerClass(PlayerCapability);			
 			registerClass(T3DMJPlayInfo);			
 			registerClass(TDNPlayInfo);			
-			registerClass(TGameEvent);						
+			registerClass(TRoomEvent);						
 			
 			registerClass(UnionTV);
 			registerClass(RequestBet);

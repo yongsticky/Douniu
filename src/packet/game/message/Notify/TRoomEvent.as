@@ -8,7 +8,7 @@ package packet.game.message.Notify
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.UnionTLVDecoder;
 
-	public class TGameEvent implements IObjectRecycled
+	public class TRoomEvent implements IObjectRecycled
 	{	
 		public var event_id:int;						// int(4)
 		public var player_id:int;						// int(4)
@@ -18,7 +18,7 @@ package packet.game.message.Notify
 		public var other_info_num:int;					// short(2)
 		public var other_info_vec:Vector.<UnionTLV>;	// ?
 		
-		public function TGameEvent()
+		public function TRoomEvent()
 		{
 			other_info_vec = new Vector.<UnionTLV>();
 		}

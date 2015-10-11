@@ -6,24 +6,26 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
-	import global.RuntimeSharedData;
+	import global.RuntimeExchangeData;
 	
-	import packet.game.message.Notify.GAME_EVENT_ID;
 	import packet.game.message.Notify.Notify_GameEvent;
-	import packet.game.message.Notify.TGameEvent;
+	import packet.game.message.Notify.ROOM_EVENT_ID;
+	import packet.game.message.Notify.TRoomEvent;
 	import packet.game.tlv.TLVType;
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.value.ExitPlayerInfo;
 	import packet.game.tlv.value.PlayerDetailInfo;
 	import packet.game.tlv.value.PlayerMoneyChangeInfo;
 	
+	import sound.SoundManager;
+	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
 	import view.scene.table.layer.Layer_TableMain;
 	
-	public class NotificationHandler_GameEventNotify extends NiuNotificationHandler
+	public class NotificationHandler_RoomEventNotify extends NiuNotificationHandler
 	{
-		public function NotificationHandler_GameEventNotify(mediator:Mediator)
+		public function NotificationHandler_RoomEventNotify(mediator:Mediator)
 		{
 			super(mediator);
 		}
@@ -36,7 +38,7 @@ package controller.handler
 			
 			for (var i:int = 0; i < resp.game_event_num; ++i)
 			{
-				var event:TGameEvent = resp.game_event_vec[i];
+				var event:TRoomEvent = resp.game_event_vec[i];
 				if (event)
 				{
 					handleGameEvent(event);
@@ -44,7 +46,7 @@ package controller.handler
 			}
 		}
 		
-		private function handleGameEvent(event:TGameEvent) : void
+		private function handleGameEvent(event:TRoomEvent) : void
 		{
 			if (!checkRoomAndTable(event))
 			{
@@ -53,19 +55,19 @@ package controller.handler
 			
 			switch(event.event_id)
 			{
-				case GAME_EVENT_ID.SITDOWN:
+				case ROOM_EVENT_ID.SITDOWN:
 					onEvent_OtherPlayerSitdown(event);
 					break;
-				case GAME_EVENT_ID.STANDUP:
+				case ROOM_EVENT_ID.STANDUP:
 					onEvent_OtherPlayerStandup(event);
 					break;
-				case GAME_EVENT_ID.GAME_START:
+				case ROOM_EVENT_ID.GAME_START:
 					onEvent_GameStart(event);
 					break;
-				case GAME_EVENT_ID.GAME_END:
+				case ROOM_EVENT_ID.GAME_END:
 					onEvent_GameEnd(event);
 					break;
-				case GAME_EVENT_ID.MONEY_CHANGE:
+				case ROOM_EVENT_ID.MONEY_CHANGE:
 					onEvent_MoneyChange(event);
 					break;			
 				default:
@@ -74,24 +76,24 @@ package controller.handler
 			}			
 		}
 		
-		private function checkRoomAndTable(event:TGameEvent) : Boolean
+		private function checkRoomAndTable(event:TRoomEvent) : Boolean
 		{
-			if (event.room_id != RuntimeSharedData.instance().rsdRoomData.room_id)
+			if (event.room_id != RuntimeExchangeData.instance().redRoomData.room_id)
 			{
-				_logger.log(this, "NOT my ROOM event. my room id:[", RuntimeSharedData.instance().rsdRoomData.room_id, "], event room id:[", event.room_id, "].", LEVEL.WARNING);
+				_logger.log(this, "NOT my ROOM event. my room id:[", RuntimeExchangeData.instance().redRoomData.room_id, "], event room id:[", event.room_id, "].", LEVEL.WARNING);
 				return false;
 			}
 			
-			if (event.table_id != RuntimeSharedData.instance().rsdTableData.table_id)
+			if (event.table_id != RuntimeExchangeData.instance().redTableData.table_id)
 			{
-				_logger.log(this, "NOT my TABLE event. my table id:[", RuntimeSharedData.instance().rsdTableData.table_id, "], event table id:[", event.table_id, "].", LEVEL.WARNING);
+				_logger.log(this, "NOT my TABLE event. my table id:[", RuntimeExchangeData.instance().redTableData.table_id, "], event table id:[", event.table_id, "].", LEVEL.WARNING);
 				return false;
 			}
 			
 			return true;
 		}	
 		
-		private function onEvent_OtherPlayerSitdown(event:TGameEvent) : void
+		private function onEvent_OtherPlayerSitdown(event:TRoomEvent) : void
 		{	
 			_logger.log(this, "onEvent_OtherPlayerSitdown", LEVEL.INFO);
 			
@@ -107,11 +109,13 @@ package controller.handler
 			
 			if (playerDetail)
 			{
-				addPlayerToTable(playerDetail.player_uin.toString(), playerDetail.money.lowPart, playerDetail.seat_id);						
+				addPlayerToTable(playerDetail.player_uin.toString(), playerDetail.money.lowPart, playerDetail.seat_id);
+				
+				SoundManager.instance().playNotifyEnterRoom();
 			}			
 		}
 		
-		private function onEvent_OtherPlayerStandup(event:TGameEvent) : void
+		private function onEvent_OtherPlayerStandup(event:TRoomEvent) : void
 		{
 			_logger.log(this, "onEvent_OtherPlayerStandup", LEVEL.INFO);
 			
@@ -159,7 +163,7 @@ package controller.handler
 			}
 		}
 		
-		private function onEvent_GameStart(event:TGameEvent) : void
+		private function onEvent_GameStart(event:TRoomEvent) : void
 		{
 			_logger.log(this, "onEvent_GameStart", LEVEL.DEBUG);
 			
@@ -169,12 +173,14 @@ package controller.handler
 				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layer)
 				{										
-					layer.hideTimer();				
-				}
+					layer.hideTimer();
+					
+					SoundManager.instance().playNotifyStart();
+				}				
 			}
 		}
 		
-		private function onEvent_GameEnd(event:TGameEvent) : void
+		private function onEvent_GameEnd(event:TRoomEvent) : void
 		{
 			_logger.log(this, "onEvent_GameEnd", LEVEL.DEBUG);
 			
@@ -189,7 +195,7 @@ package controller.handler
 			}
 		}
 		
-		private function onEvent_MoneyChange(event:TGameEvent) : void
+		private function onEvent_MoneyChange(event:TRoomEvent) : void
 		{
 			_logger.log(this, "onEvent_MoneyChange", LEVEL.DEBUG);
 			
