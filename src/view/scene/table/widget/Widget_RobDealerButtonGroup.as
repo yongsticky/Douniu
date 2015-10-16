@@ -25,25 +25,25 @@ package view.scene.table.widget
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			var btnRobNo:Button = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.ask_rob_no")));
+			var btnRobNo:Button = new Button(Texture.fromBitmapData(resManager.getResource("table.ask_rob_no.png")));
 			btnRobNo.x = 0;
 			btnRobNo.y = 0;
 			btnRobNo.addEventListener(Event.TRIGGERED, onBtnRobNoTriggered);			
 			addChild(btnRobNo);
 			
-			var btnRob1x:Button = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.ask_rob_1x")));
+			var btnRob1x:Button = new Button(Texture.fromBitmapData(resManager.getResource("table.ask_rob_1x.png")));
 			btnRob1x.x = btnRobNo.x + btnRobNo.width - 10;
 			btnRob1x.y = btnRobNo.y;
 			btnRob1x.addEventListener(Event.TRIGGERED, onBtnRob1xTriggered);
 			addChild(btnRob1x);
 			
-			var btnRob2x:Button = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.ask_rob_2x")));
+			var btnRob2x:Button = new Button(Texture.fromBitmapData(resManager.getResource("table.ask_rob_2x.png")));
 			btnRob2x.x = btnRob1x.x + btnRob1x.width - 10;
 			btnRob2x.y = btnRobNo.y;
 			btnRob2x.addEventListener(Event.TRIGGERED, onBtnRob2xTriggered);
 			addChild(btnRob2x);
 			
-			var btnRob4x:Button = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.ask_rob_4x")));
+			var btnRob4x:Button = new Button(Texture.fromBitmapData(resManager.getResource("table.ask_rob_4x.png")));
 			btnRob4x.x = btnRob2x.x + btnRob2x.width - 10;
 			btnRob4x.y = btnRobNo.y;
 			btnRob4x.addEventListener(Event.TRIGGERED, onBtnRob4xTriggered);

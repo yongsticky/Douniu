@@ -82,7 +82,7 @@ package sound
 			
 			if (!_bgMusicSdc)
 			{
-				var sd:Sound = ResManager.instance().getResourceDev("sound.bg");
+				var sd:Sound = ResManager.instance().getResource("sound.bgsound");
 				if (sd)
 				{
 					_bgMusicSdc = sd.play(_bgMusicPlayPostion, 1, new SoundTransform(_bgMusicVolume));
@@ -111,57 +111,57 @@ package sound
 
 		public function playButtonClick() : void
 		{
-			playOnce("sound.button_click");			
+			playOnce("sound.button_click");
 		}
 
 		public function playTimerRun() : void
 		{
-			playOnce("sound.timer_run");
+			playOnce("sound.jishisheng");
 		}
 
 		public function playTimerWarning() : void
 		{
-			playOnce("sound.timer_warning");
+			playOnce("sound.daojishijingshi");
 		}
 
 		public function playNotifyStart() : void
 		{
-			playOnce("sound.notify_start");
+			playOnce("sound.kaishitishi");
 		}
 
 		public function playNotifyEnterRoom() : void
 		{
-			playOnce("sound.notify_enter_room");
+			playOnce("sound.jinfangjiantishiyin");
 		}
 
 		public function playSelectCard() : void
 		{
-			playOnce("sound.select_card");
+			playOnce("sound.xuanpaisheng");
 		}
 
 		public function playNotifyBetDetail() : void
 		{
-			playOnce("sound.notify_bet_detail");
+			playOnce("sound.xiazhusheng");
 		}
 
 		public function playDealCard() : void
 		{
-			playOnce("sound.deal_card");
+			playOnce("sound.fapaisheng");
 		}
 
 		public function playGiveCard() : void
 		{
-			playOnce("sound.give_card");
+			playOnce("sound.liangpai");
 		}
 
 		public function playGameWin() : void
 		{
-			playOnce("sound.game_win");
+			playOnce("sound.paijushengli");
 		}
 
 		public function playGameLose() : void
 		{
-			playOnce("sound.game_lose");
+			playOnce("sound.paijushibai");
 		}
 
 
@@ -169,7 +169,7 @@ package sound
 		{			
 			if (!_isEffSoundMute)
 			{
-				var sd:Sound = ResManager.instance().getResourceDev(id);
+				var sd:Sound = ResManager.instance().getResource(id);
 				if (sd)
 				{
 					if (!_effSoundTransform)

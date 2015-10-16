@@ -1,6 +1,7 @@
 package controller.handler
-{
+{	
 	import flash.events.Event;
+	import flash.net.Socket;
 	
 	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
@@ -31,25 +32,40 @@ package controller.handler
 			
 			NiuResponseReceiver.instance().initReceivers();
 			
-			//sendNotification(NiuNotificationHandlerConstant.TEST_UI);
+			//sendNotification(NiuNotificationHandlerConstant.TEST_UI);	
+						
 			
 			var connector:NiuServerConnector = NiuServerConnector.instance();	
-			//connector.setTargetAddress("182.254.40.11", 8000);
+			
 			var host:String = ProgramConfiguration.instance().serverHost;
 			var port:int = ProgramConfiguration.instance().serverPort;
 			connector.setTargetAddress(host, port);
 			connector.addEventListener(ConnectorEvent.CONNECTED, onConnect);
+			connector.addEventListener(ConnectorEvent.IO_ERROR, onIoError);
+			connector.addEventListener(ConnectorEvent.SECURITY_ERROR, onSecurityError);
+			connector.addEventListener(ConnectorEvent.SERVER_CLOSED, onServerClosed);
 			connector.connect();
-			
-			_logger.log(this, "Connect to Server[", host, ":", port, "].", LEVEL.INFO);						
-			
-			SoundManager.instance().playBgMusic();
+						
+			_logger.log(this, "Connect to Server[", host, ":", port, "].", LEVEL.INFO);			
 		}		
-		
+	
 		protected function onConnect(event:Event):void
 		{			
-			_logger.log(this, "Connect server succ.", LEVEL.INFO);						
-			sendNotification(NiuNotificationHandlerConstant.SERVER_CONNECTED);					
+			_logger.log(this, "Connect server succ.", LEVEL.INFO);			
+			sendNotification(NiuNotificationHandlerConstant.SERVER_CONNECTED);		
+		}
+		
+		protected function onIoError(event:ConnectorEvent):void
+		{						
+		}
+		
+		protected function onSecurityError(event:ConnectorEvent):void
+		{			
+		}
+		
+		protected function onServerClosed(event:ConnectorEvent):void
+		{
+							
 		}
 	}
 }

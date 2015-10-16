@@ -1,4 +1,4 @@
-package view.scene.startup.layer
+package view.scene.selectuser.layer
 {
 	import starling.display.Quad;
 	

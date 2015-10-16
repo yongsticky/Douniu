@@ -213,11 +213,11 @@ class PokerImage extends ExImage
 		var res:*;
 		if (c > 0)
 		{
-			res = ResManager.instance().getResourceDev("poker." + COLOR_TO_STR[NiuCard.getColor(c)] + "." + NiuCard.getNumber(c).toString());
+			res = ResManager.instance().getResource("poker." + COLOR_TO_STR[NiuCard.getColor(c)] + "_" + NiuCard.getNumber(c).toString() + ".png");
 		}
 		else
 		{
-			res = ResManager.instance().getResourceDev("poker.bei");
+			res = ResManager.instance().getResource("poker.bei.png");
 		}
 		
 		return res;

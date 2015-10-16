@@ -1,4 +1,4 @@
-package view.scene.startup.layer
+package view.scene.selectuser.layer
 {	
 	import starling.display.Button;
 	import starling.events.Event;
@@ -10,17 +10,17 @@ package view.scene.startup.layer
 	import view.NiuDirector;
 	import view.framework.ExLayer;
 	
-	public class Layer_Loading extends ExLayer
+	public class Layer_User extends ExLayer
 	{
 				
-		public function Layer_Loading(name:String=null)
+		public function Layer_User(name:String=null)
 		{
 			super(name);
 		}
 		
 		override protected function createChildren() : void
 		{
-			var texture:Texture = Texture.fromBitmapData(ResManager.instance().getResourceDev("hall.user"));
+			var texture:Texture = Texture.fromBitmapData(ResManager.instance().getResource("hall.user.png"));
 			var startX:int = 200;
 			for (var i:int = 0; i < 6; i++)
 			{

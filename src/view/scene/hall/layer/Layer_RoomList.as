@@ -30,12 +30,12 @@ package view.scene.hall.layer
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_classicRoomTitle = new ExImage(resManager.getResourceDev("hall.type1_room"));
+			_classicRoomTitle = new ExImage(resManager.getResource("hall.type1_room.png"));
 			_classicRoomTitle.x = (stage.stageWidth - _classicRoomTitle.width)/2 - 20;
 			_classicRoomTitle.y = 200;
 			addChild(_classicRoomTitle);
 			
-			_viewRoomTitle = new ExImage(resManager.getResourceDev("hall.type2_room"));
+			_viewRoomTitle = new ExImage(resManager.getResource("hall.type2_room.png"));
 			_viewRoomTitle.x = (stage.stageWidth - _classicRoomTitle.width)/2 - 20;
 			_viewRoomTitle.y = 400;
 			addChild(_viewRoomTitle);

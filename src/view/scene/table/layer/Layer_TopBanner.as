@@ -32,7 +32,7 @@ package view.scene.table.layer
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_bg = new ExImage(resManager.getResourceDev("table.top_banner"));
+			_bg = new ExImage(resManager.getResource("table.top_banner.png"));
 			_bg.x = _bg.y = 0;
 			addChild(_bg);
 			
@@ -48,7 +48,7 @@ package view.scene.table.layer
 			_broadcast.y = (_bg.height - _broadcast.height) >> 1;
 			addChild(_broadcast);
 			
-			_setting = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.setting")), "");
+			_setting = new Button(Texture.fromBitmapData(resManager.getResource("table.setting.png")), "");
 			_setting.x = _bg.width - _setting.width - 10;
 			_setting.y = (_bg.height - _setting.height) >> 1;
 			addChild(_setting);

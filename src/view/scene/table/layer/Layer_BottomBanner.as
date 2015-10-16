@@ -24,7 +24,7 @@ package view.scene.table.layer
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_bg = new ExImage(resManager.getResourceDev("table.bottom_banner"));
+			_bg = new ExImage(resManager.getResource("table.bottom_banner.png"));
 			_bg.y = stage.stageHeight - _bg.height;
 			_bg.width = stage.width;
 			addChild(_bg);
@@ -34,7 +34,7 @@ package view.scene.table.layer
 			_name.y = _bg.y + ((_bg.height - _name.height) >> 1);
 			addChild(_name);
 			
-			_vipMall = new Button(Texture.fromBitmapData(resManager.getResourceDev("table.vip_mall")), "");
+			_vipMall = new Button(Texture.fromBitmapData(resManager.getResource("table.vip_mall.png")), "");
 			_vipMall.x  = _bg.width - _vipMall.width - 10;
 			_vipMall.y = _bg.y + ((_bg.height - _vipMall.height)>>1);;
 			addChild(_vipMall);

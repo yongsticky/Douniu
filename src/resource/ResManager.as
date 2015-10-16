@@ -2,60 +2,26 @@ package resource
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.events.IOErrorEvent;
-	import flash.events.ProgressEvent;
-	import flash.events.SecurityErrorEvent;
 	import flash.media.Sound;
-	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
+	
+	import br.com.stimuli.loading.BulkLoader;
+	import br.com.stimuli.loading.BulkProgressEvent;
+	import br.com.stimuli.loading.loadingtypes.LoadingItem;
 	
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
-	
-	import resource.dev.HallSceneRes;
-	import resource.dev.PokerCardRes;
-	import resource.dev.Resource;
-	import resource.dev.SoundRes;
-	import resource.dev.TableSceneRes;
 		
 
 	public class ResManager extends EventDispatcher
 	{
-		protected var _logger:ILogger;		
+		protected var _logger:ILogger;	
 		
-		private var _loaders:Vector.<Loader>;
-		private var _res:Dictionary;
-
-		// dev
-		/*
-		private var _resHallScene:HallSceneRes;
-		private var _resPokerCard:PokerCardRes;
-		private var _resGameScene:TableSceneRes;
-		*/
-
-		private var _resArr:Array;
-
-		public static const ID:String = "id";						// 资源的id，存取的唯一标识
-		public static const URL:String = "url";						// 资源的下载地址
-		public static const TYPE:String = "type";					// 资源的类型，有image、movieclip、sound等
-		public static const PACK_TYPE:String = "packType";			// 打包类型，有zip、swf、none
-		public static const COMPLETE_HANDLER:String = "completeHandler";			// 完成通知
-		public static const ERROR_HANDLER:String = "errorHandler";					// 错误通知
-		public static const PROGRESS_HANDLER:String = "progressHandler";			// 进度通知
-
-		
-		private static const STATUS:String = "status";			// 0:未开始下载  1：正在下载  2：下载完成  3：下载失败
-		private static const PROPS:String = "props";
-		
-		
-		private static const S_INIT:int = 0;
-		private static const S_RUNNING:int = 1;
-		private static const S_COMPLETE:int = 2;
-		private static const S_FAILED:int = 3;
+		private var _jsonRootObj:Object = null;		
+		private var _res:Dictionary;		
 
 		public function ResManager(inner:PrivateInner)
 		{
@@ -63,20 +29,7 @@ package resource
 			
 			_logger = Logger.createLogger(ResManager, LEVEL.DEBUG);
 			
-			_res = new Dictionary();
-			_loaders = new Vector.<Loader>();
-
-			/*
-			_resHallScene = new HallSceneRes();
-			_resPokerCard = new PokerCardRes();
-			_resGameScene = new TableSceneRes();
-			*/
-
-			_resArr = new Array();
-			_resArr.push(new HallSceneRes());
-			_resArr.push(new PokerCardRes());
-			_resArr.push(new TableSceneRes());
-			_resArr.push(new SoundRes());
+			_res = new Dictionary();							
 		}
 		
 		
@@ -91,91 +44,102 @@ package resource
 			return _instance;
 		}
 
-		public function registerResource(id:String, props:Object) : void
+		public function loadResources() : void
 		{
-			if (!_get(id))
-			{
-				var res:Object = {};
-				res[ID] = id;
-				res[STATUS] = S_INIT;
-				res[PROPS] = props;
-
-				_set(res);
-			}
-			else
-			{
-				throw new Error("resource already register.");
-			}
-		}
-
-		public function loadResource(id:String) : void
+			var loader:BulkLoader = new BulkLoader("config_loader");			
+			loader.add("http://app.camu.com/game/douniu/resource/res.json", {"id":"preload", "preventCache":true});
+			loader.addEventListener(BulkProgressEvent.COMPLETE, onConfigFileLoadComplete);			
+			
+			loader.start();			
+		}		
+		
+		protected function onConfigFileLoadComplete(event:BulkProgressEvent):void
 		{
-			var res:Object = _get(id);
-			if (res)
+			_logger.log(this, "onConfigFileLoadComplete.", LEVEL.INFO);
+			(event.target as BulkLoader).removeEventListener(BulkProgressEvent.COMPLETE, onConfigFileLoadComplete);			
+			
+			var jsonStr:String = (event.target as BulkLoader).getText("preload");
+			_jsonRootObj = JSON.parse(jsonStr);
+			if (_jsonRootObj)
 			{
-				if (res[STATUS] == S_INIT || res[STATUS] == S_FAILED)		// 未下载或者下载失败
+				var loader:BulkLoader = new BulkLoader("res_loader");
+				loader.addEventListener(BulkProgressEvent.PROGRESS, onResLoadProgress);
+				loader.addEventListener(BulkProgressEvent.COMPLETE, onResLoadComplete);
+				
+				var server:String = _jsonRootObj["preload"]["server"];
+				for each(var item:Object in _jsonRootObj["preload"]["res_list"])
 				{
-					_startLoadResource(res);
-				}
+					var url:String = server+item["path"];					
+					var loadingItem:LoadingItem = loader.add(server+item["path"], {"id":item["id"], "weight":item["weight"], "preventCache":true});
+					loadingItem.addEventListener(BulkProgressEvent.COMPLETE, onResItemComplete);
+					
+					_logger.log(this, "add item: url:",url, LEVEL.INFO);
+				}				
+				
+				loader.start();
 			}
 		}
-
-		public function getResource(id:String) : BitmapData
-		{
-			return null;
-		}
-
-		public function getResourceDev(id:String) : *
-		{
-			/*
-			var res:* = _resHallScene.getResource(id);
-			if (!res)
-			{
-				res = _resPokerCard.getResource(id);
-				if (!res)
+		
+		protected function onResItemComplete(event:Event):void
+		{			
+			var item:LoadingItem = event.target as LoadingItem; 
+			item.removeEventListener(BulkProgressEvent.COMPLETE, onResItemComplete);
+			
+			
+			if (item.type == BulkLoader.TYPE_MOVIECLIP)
+			{				
+				var clsArr:Array = null;
+				for (var i:int in _jsonRootObj["preload"]["res_list"])
 				{
-					res = _resGameScene.getResource(id);
-					if (!res)
+					if (_jsonRootObj["preload"]["res_list"][i]["id"] == item.id)
 					{
-						
+						clsArr = _jsonRootObj["preload"]["res_list"][i]["classes"];
+						break;
 					}
 				}
-			}
-			*/
-			
-			var res:* = null;
-			
-			for (var i:int = 0; i < _resArr.length; ++i)
-			{
-				res = (_resArr[i] as Resource).getResource(id);
-				if (res)
+								
+				
+				for each(var clsName:String in clsArr)
 				{
-					break;
-				}
-			}
-			
-			
-			if (res is Bitmap)
-			{
-				return Bitmap(res).bitmapData;
-			}
-			else if (res is BitmapData)
-			{
-				return res;
-			}
-			else if (res is Sound)
-			{
-				return res;
-			}
-			else
-			{
-				throw new Error("No Found Resource["+id+"]");
+					var cls:Class = Object(item).loader.contentLoaderInfo.applicationDomain.getDefinition(clsName);
+					
+					var resId:String = item.id + "." + clsName;					
+					_res[resId] = new cls();					
+					
+					if (_res[resId] is Bitmap)
+					{						
+						_logger.log(this, "add res: id[", resId, "], clsName[", clsName, "], classType[Bitmap].",  LEVEL.INFO);
+					}
+					else if (_res[resId] is BitmapData)
+					{
+						_logger.log(this, "add res: id[", resId, "], clsName[", clsName, "], classType[BitmapData].",  LEVEL.INFO);
+					}
+					else if (_res[resId] is Sound)
+					{
+						_logger.log(this, "add res: id[", resId, "], clsName[", clsName, "], classType[Sound].",  LEVEL.INFO);
+					}
+					else
+					{
+						_logger.log(this, "add res: id[", resId, "], clsName[", clsName, "], classType[Unknown].",  LEVEL.INFO);
+					}
+				}				
 			}			
 		}
-
-
-
-		private function _get(id:String) : Object
+		
+		protected function onResLoadProgress(event:BulkProgressEvent):void
+		{
+			dispatchEvent(event);
+		}
+		
+		protected function onResLoadComplete(event:BulkProgressEvent):void
+		{
+			(event.target as BulkLoader).removeEventListener(BulkProgressEvent.PROGRESS, onResLoadProgress);
+			(event.target as BulkLoader).removeEventListener(BulkProgressEvent.COMPLETE, onResLoadComplete);
+			
+			dispatchEvent(event);		
+		}
+		
+		public function getResource(id:String) : *
 		{
 			if (_res.hasOwnProperty(id))
 			{
@@ -183,65 +147,13 @@ package resource
 			}
 			else
 			{
-				return null;
+				throw new Error("No Found Resource["+id+"]");
 			}
-		}
-
-		private function _set(res:Object) : void
-		{
-			_res[res[ID]] = res;
-		}
-				
-
-		private function _startLoadResource(res:Object) : void
-		{
-			_logger.log(this, "_startLoadResource Enter.", LEVEL.INFO);
-			
-			if (!res)
-			{
-				return;
-			}	
-			
-			var loader:Loader = new Loader();		
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
-			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIoError);
-			loader.contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
-			loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onProgress);
-			
-			
-			_logger.log(this, "_startLoadResource, URL=", res[PROPS][URL], LEVEL.INFO);
-			
-			res[STATUS] = S_RUNNING;
-			loader.load(new URLRequest(res[PROPS][URL]));	
-			
-			
-			_loaders.push(loader);
-						
-		}
-		
-		private function onComplete(event:Event) : void
-		{
-			_logger.log(this, "onComplete Enter.", LEVEL.INFO);	
-		}
-		
-		private function onIoError(event:IOErrorEvent) : void
-		{
-			_logger.log(this, "onIoError Enter.", LEVEL.INFO);
-		}
-		
-		private function onSecurityError(event:SecurityErrorEvent) : void
-		{
-			_logger.log(this, "onSecurityError Enter.", LEVEL.INFO);
-		}
-		
-		private function onProgress(event:ProgressEvent) : void
-		{
-			_logger.log(this, "onProgress Enter.", LEVEL.INFO);
-		}
+		}	
 	}
 }
 
 class PrivateInner
 {
-	
+
 }

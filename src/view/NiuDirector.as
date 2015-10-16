@@ -3,10 +3,16 @@ package view
 	import camu.errors.AbstractClassError;
 	import camu.logger.LEVEL;
 	
-	import controller.NiuNotification;	
-	import facade.NiuNotificationHandlerConstant;	
-	import server.NiuServerConnector;	
-	import starling.events.EnterFrameEvent;	
+	import controller.NiuNotification;
+	
+	import facade.NiuNotificationHandlerConstant;
+	
+	import resource.ResManager;
+	
+	import server.NiuServerConnector;
+	
+	import starling.events.EnterFrameEvent;
+	
 	import view.framework.ExDirector;
 	
 	public class NiuDirector extends ExDirector
@@ -49,7 +55,7 @@ package view
 			
 			_logger.log(this, "initialize called.", LEVEL.INFO);
 			
-			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
+			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);			
 			
 			sendNotification(NiuNotificationHandlerConstant.STARTUP);				
 		}

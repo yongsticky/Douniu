@@ -26,14 +26,14 @@ package view.scene.table.widget
 			_playerName = new TextField(117, 25, "N/A", "", 12, 0xFFFFFF);			
 			addChild(_playerName);
 			
-			_playerIcon = new ExImage(resManager.getResourceDev("hall.user"));
+			_playerIcon = new ExImage(resManager.getResource("hall.user.png"));
 			_playerIcon.x = 20;
 			_playerIcon.y = 24;			
 			addChild(_playerIcon);			
 			
 			_chips = new TextField(117, 25, "0", "", 12, 0xFFFFFF);
 			_chips.y = _playerIcon.y + _playerIcon.height + 2;
-			_chips.addChild(new ExImage(resManager.getResourceDev("table.chips")));
+			_chips.addChild(new ExImage(resManager.getResource("table.chips.png")));
 			addChild(_chips);
 		}
 		

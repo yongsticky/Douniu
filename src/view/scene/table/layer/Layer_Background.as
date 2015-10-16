@@ -19,11 +19,11 @@ package view.scene.table.layer
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_bg = new ExImage(resManager.getResourceDev("table.bg"));
+			_bg = new ExImage(resManager.getResource("table.bg.png"));
 			addChild(_bg);
 			
 			
-			_logo = new ExImage(resManager.getResourceDev("table.bg_logo"));
+			_logo = new ExImage(resManager.getResource("table.bg_logo.png"));
 			_logo.x = (stage.stageWidth - _logo.width) >> 1;
 			_logo.y = (stage.stageHeight - _logo.height) >> 1;
 			_logo.alpha = 0.1;

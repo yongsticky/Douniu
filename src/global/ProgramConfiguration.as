@@ -24,6 +24,7 @@ package global
 		private function initialize() : void
 		{
 			_serverHost = "114.119.36.221";
+			//_serverHost = "app.camu.com";
 			_serverPort = 8000;
 		}
 	

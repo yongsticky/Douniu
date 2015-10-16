@@ -47,12 +47,12 @@ package view.scene.hall.layer
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_userIcon = new ExImage(resManager.getResourceDev("hall.user"));
+			_userIcon = new ExImage(resManager.getResource("hall.user.png"));
 			_userIcon.x = 50;
 			_userIcon.y = 4;
 			addChild(_userIcon);
 			
-			_nameIcon = new ExImage(resManager.getResourceDev("hall.name"));
+			_nameIcon = new ExImage(resManager.getResource("hall.name.png"));
 			_nameIcon.x = _userIcon.x + _userIcon.width + 8;
 			_nameIcon.y = 12;
 			addChild(_nameIcon);
@@ -65,7 +65,7 @@ package view.scene.hall.layer
 			_nameText.addChild(new Quad(160, 24, 0xCC6A29));
 			addChild(_nameText);
 			
-			_coinIcon = new ExImage(resManager.getResourceDev("hall.chips"));
+			_coinIcon = new ExImage(resManager.getResource("hall.chips.png"));
 			_coinIcon.x = _nameIcon.x;
 			_coinIcon.y = _nameIcon.y + _nameIcon.height + 16;			
 			addChild(_coinIcon);
@@ -80,7 +80,7 @@ package view.scene.hall.layer
 			addChild(_coinText);
 			
 			
-			_ticketIcon = new ExImage(resManager.getResourceDev("hall.ticket"));
+			_ticketIcon = new ExImage(resManager.getResource("hall.ticket.png"));
 			_ticketIcon.x = _coinText.x + _coinText.width + 30;
 			_ticketIcon.y = _coinIcon.y + 2;
 			addChild(_ticketIcon);
@@ -113,14 +113,14 @@ package view.scene.hall.layer
 			_marquee.add("通知：Lisa和我的年龄差距最小的时刻！");
 			
 			
-			_settingBtn = new Button(Texture.fromBitmapData(resManager.getResourceDev("hall.setting")));
+			_settingBtn = new Button(Texture.fromBitmapData(resManager.getResource("hall.setting.png")));
 			_settingBtn.x = stage.stageWidth - _settingBtn.width - 50;
 			_settingBtn.y = _nameText.y + 6;
 			addChild(_settingBtn);
 			_settingBtn.addEventListener(Event.TRIGGERED, onSettingTriggered);
 			
-			_vipMallBtn = new Button(Texture.fromBitmapData(resManager.getResourceDev("hall.vip_mall")), 
-									"", null, Texture.fromBitmapData(resManager.getResourceDev("hall.vip_mall_hover")));
+			_vipMallBtn = new Button(Texture.fromBitmapData(resManager.getResource("hall.vip_mall.png")), 
+									"", null, Texture.fromBitmapData(resManager.getResource("hall.vip_mall_hover.png")));
 			_vipMallBtn.x = stage.stageWidth - _vipMallBtn.width - 20;
 			_vipMallBtn.y = this.height + 10;
 			addChild(_vipMallBtn);

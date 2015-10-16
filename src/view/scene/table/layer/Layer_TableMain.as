@@ -175,11 +175,11 @@ package view.scene.table.layer
 		}
 		public function setAnyPlayerRobDealerState(seatId:int, rob:Boolean) : void
 		{
-			var resName:String = rob ? "table.notify_rob":"table.notify_norob";
+			var resName:String = rob ? "table.notify_rob.png":"table.notify_norob.png";
 			
 			if (seatId == RuntimeExchangeData.instance().redPlayerData.seat_id)
 			{
-				_player.playerRobDealerState.res = ResManager.instance().getResourceDev(resName);
+				_player.playerRobDealerState.res = ResManager.instance().getResource(resName);
 				_player.playerRobDealerState.visible = true;
 			}
 			else
@@ -192,7 +192,7 @@ package view.scene.table.layer
 				
 				var p:Widget_OtherPlayer = _otherPlayers[seat];
 				
-				p.playerRobDealerState.res = ResManager.instance().getResourceDev(resName);
+				p.playerRobDealerState.res = ResManager.instance().getResource(resName);
 				p.playerRobDealerState.visible = true;
 			}
 		}

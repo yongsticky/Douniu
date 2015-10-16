@@ -15,7 +15,7 @@ package view.scene.table.widget
 		private var _timer:Widget_Timer;
 		
 		
-		private static const INDEX_2_RES:Array = ["table.wait_next", "table.wait_rob_dealer", "table.wait_bet", "table.wait_give"];
+		private static const INDEX_2_RES:Array = ["table.wait_next.png", "table.wait_rob.png", "table.wait_next.png", "table.wait_rob.png"];
 		
 		public static const INDEX_WAIT_NEXT:int = 0;
 		public static const INDEX_WAIT_ROB_DEALER:int = 1;
@@ -60,7 +60,7 @@ package view.scene.table.widget
 			
 			visible = true;
 			
-			_text.res = ResManager.instance().getResourceDev(INDEX_2_RES[index]);
+			_text.res = ResManager.instance().getResource(INDEX_2_RES[index]);
 			
 			_timer.startTimer(time);		
 		}

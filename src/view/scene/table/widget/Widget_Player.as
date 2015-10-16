@@ -53,7 +53,7 @@ package view.scene.table.widget
 			_playerCards.addEventListener(TouchEvent.TOUCH, onTouch);
 			addChild(_playerCards);
 						
-			_playerRobDealerState = new ExImage(/*resManager.getResourceDev("table.notify_norob")*/);
+			_playerRobDealerState = new ExImage();
 			_playerRobDealerState.x = 120;
 			_playerRobDealerState.visible = false;			
 			addChild(_playerRobDealerState);
@@ -64,7 +64,7 @@ package view.scene.table.widget
 			_playerRobDealerButtonGroup.visible = false;
 			addChild(_playerRobDealerButtonGroup);
 			
-			_playerDealerState = new ExImage(resManager.getResourceDev("table.dealer"));
+			_playerDealerState = new ExImage(resManager.getResource("table.banker.png"));
 			_playerDealerState.x = 0;
 			_playerDealerState.y = 60;
 			_playerDealerState.visible = false;

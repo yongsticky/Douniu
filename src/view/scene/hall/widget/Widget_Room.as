@@ -24,7 +24,7 @@ package view.scene.hall.widget
 		{
 			if (upState == null)
 			{
-				upState = Texture.fromBitmapData(ResManager.instance().getResourceDev("hall.room_bg"));
+				upState = Texture.fromBitmapData(ResManager.instance().getResource("hall.room_bg.png"));
 			}
 			
 			super(upState, text, downState, overState, disabledState);
