@@ -1,7 +1,8 @@
 package view.scene.selectuser
 {
-	import view.framework.ExScene;
-	import view.scene.selectuser.layer.Layer_Background;
+	import starling.display.Quad;
+	
+	import view.framework.ExScene;	
 	import view.scene.selectuser.layer.Layer_User;
 	
 	public class Scene_SelectUser extends ExScene
@@ -13,7 +14,9 @@ package view.scene.selectuser
 		
 		override protected function createChildren() : void
 		{
-			addChild(new Layer_Background());
+			var qd:Quad = new Quad(stage.stageWidth, stage.stageHeight, 0x222222);			
+			addChild(qd);
+			
 			addChild(new Layer_User());
 		}
 	}

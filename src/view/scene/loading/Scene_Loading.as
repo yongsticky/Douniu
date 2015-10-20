@@ -1,7 +1,8 @@
 package view.scene.loading
 {
-	import view.framework.ExScene;
-	import view.scene.loading.layer.Layer_Background;
+	import starling.display.Quad;
+	
+	import view.framework.ExScene;	
 	import view.scene.loading.layer.Layer_Loading;
 	
 	public class Scene_Loading extends ExScene
@@ -13,7 +14,10 @@ package view.scene.loading
 		
 		override protected function createChildren():void
 		{
-			addChild(new Layer_Background());
+			var qd:Quad = new Quad(stage.stageWidth, stage.stageHeight, 0x222222);			
+			addChild(qd);
+			
+			
 			addChild(new Layer_Loading("loading"));
 		}
 	}

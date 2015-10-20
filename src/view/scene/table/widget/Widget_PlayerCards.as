@@ -10,6 +10,7 @@ package view.scene.table.widget
 	
 	import sound.SoundManager;
 	
+	import starling.animation.Tween;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
@@ -46,6 +47,7 @@ package view.scene.table.widget
 				
 				pI.x = startX;
 				pI.addEventListener(TouchEvent.TOUCH, onTouch);
+				pI.visible = false;
 				addChild(pI);
 				
 				_pokers[i] = pI;
@@ -93,6 +95,47 @@ package view.scene.table.widget
 			pI.y = 0;
 				
 			_giveCards[index] = card;
+		}
+		
+		private var _aniCurIndex:int = 0;
+		public function doGiveAnimation() : void
+		{			
+			var pI:PokerImage = _pokers[_aniCurIndex];
+			pI.visible = true;
+			
+			var dstX:Number = pI.x;
+			var dstY:Number = pI.y;
+						
+			pI.x = 80;
+			pI.y = -250;
+			
+			var tween:Tween = new Tween(pI, 0.1);
+			tween.moveTo(dstX, dstY);
+			tween.onComplete =  onGiveAnimationComplete;
+			
+			getOwnerLayer().juggler.add(tween);
+		}
+		
+		private function onGiveAnimationComplete() : void
+		{
+				++ _aniCurIndex;
+				
+				if (_aniCurIndex < MAX_POKER_NUM)
+				{
+					doGiveAnimation();
+				}
+				else
+				{
+					_aniCurIndex = 0;
+				}
+		}
+		
+		public function hideAllPokers() : void
+		{
+			for (var i:int = 0; i < MAX_POKER_NUM; ++i)
+			{
+				_pokers[i].visible = false;
+			}
 		}
 		
 		public function get selectedCount() : int

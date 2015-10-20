@@ -24,9 +24,7 @@ package view.scene.table.layer
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_bg = new ExImage(resManager.getResource("table.bottom_banner.png"));
-			_bg.y = stage.stageHeight - _bg.height;
-			_bg.width = stage.width;
+			_bg = new ExImage(resManager.getResource("table.bottom_banner.png"));			
 			addChild(_bg);
 			
 			_name = new TextField(150, 24, "绝对的河蟹: 1000金币", "", 14, 0xFFFFFF, true);
@@ -37,8 +35,15 @@ package view.scene.table.layer
 			_vipMall = new Button(Texture.fromBitmapData(resManager.getResource("table.vip_mall.png")), "");
 			_vipMall.x  = _bg.width - _vipMall.width - 10;
 			_vipMall.y = _bg.y + ((_bg.height - _vipMall.height)>>1);;
-			addChild(_vipMall);
+			addChild(_vipMall);			
+		}
+		
+		override protected function layoutChildren() : void
+		{
+			_bg.width = stage.stageWidth;
+			_bg.y = stage.stageHeight - _bg.height;
 			
+			super.layoutChildren();
 		}
 	}
 }

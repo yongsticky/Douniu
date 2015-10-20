@@ -13,8 +13,7 @@ package view.scene.table.layer
 	
 	import view.NiuDirector;
 	import view.framework.ExImage;
-	import view.framework.ExLayer;
-	import view.scene.setting.Scene_Setting;
+	import view.framework.ExLayer;	
 	
 	public class Layer_TopBanner extends ExLayer
 	{
@@ -53,7 +52,14 @@ package view.scene.table.layer
 			_setting.y = (_bg.height - _setting.height) >> 1;
 			addChild(_setting);
 			_setting.addEventListener(Event.TRIGGERED, onTrigered);
-		}	
+		}
+		
+		override protected function layoutChildren():void
+		{
+			_bg.width = stage.stageWidth;
+			
+			super.layoutChildren();
+		}
 		
 		private function onTrigered(event:Event) : void
 		{

@@ -220,19 +220,21 @@ package view.scene.table.layer
 		}
 		
 		public function showPlayerCards(cards:Vector.<int>) : void
-		{
+		{			
 			_player.playerCards.setPokers(cards);
+			_player.playerCards.doGiveAnimation();
 			_player.playerCards.visible = true;			
 		}
 		
 		public function updatePlayerCard(index:int, card:int) : void
-		{
+		{			
 			_player.playerCards.updatePoker(index, card);
 		}
 		
 		public function hidePlayerCards() : void
 		{
-			_player.playerCards.visible = false;			
+			_player.playerCards.visible = false;
+			_player.playerCards.hideAllPokers();
 		}
 		
 		public function showPlayerGiveButtonGroup() : void
@@ -280,6 +282,6 @@ package view.scene.table.layer
 			var player:Widget_OtherPlayer = _otherPlayers[seat];
 			
 			player.playerHeader.setPlayerInfo(null, current, null);			
-		}
+		}		
 	}
 }

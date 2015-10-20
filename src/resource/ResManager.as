@@ -70,7 +70,7 @@ package resource
 				for each(var item:Object in _jsonRootObj["preload"]["res_list"])
 				{
 					var url:String = server+item["path"];					
-					var loadingItem:LoadingItem = loader.add(server+item["path"], {"id":item["id"], "weight":item["weight"], "preventCache":true});
+					var loadingItem:LoadingItem = loader.add(server+item["path"], {"id":item["id"], "weight":item["weight"], "preventCache":false});
 					loadingItem.addEventListener(BulkProgressEvent.COMPLETE, onResItemComplete);
 					
 					_logger.log(this, "add item: url:",url, LEVEL.INFO);

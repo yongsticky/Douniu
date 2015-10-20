@@ -1,10 +1,14 @@
 package view.framework
 {	
+	import flash.geom.Rectangle;
+	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.events.Event;
 	import starling.events.ResizeEvent;
+	
+	import camu.logger.LEVEL;
 
 	public class ExDirector extends ExSprite
 	{			
@@ -22,14 +26,23 @@ package view.framework
 		
 		protected function onWindowResize(event:ResizeEvent) : void
 		{
-			stage.stageWidth = event.width;
-			stage.stageHeight = event.height;
+			var newWidth:int = event.width;
+			var newHeight:int = event.height;					
+						
+			Starling.all[0].viewPort = new Rectangle(0, 0, newWidth, newHeight);
+			
+			stage.stageWidth = newWidth;
+			stage.stageHeight = newHeight;
+			
+			_logger.log(this, "newWidth:",newWidth, "newHeight:",newHeight,LEVEL.DEBUG);
+			_logger.log(this, "stageWidth:",stage.stageWidth, "stageHeight:",stage.stageHeight, LEVEL.DEBUG);			
+			_logger.log(this, "width:",stage.width, "height:",stage.height, LEVEL.DEBUG);		
 			
 			var topScene:ExScene = this.topScene;
 			if (topScene) 
 			{
 				topScene.onStageResize();
-			}				
+			}			
 		}
 		
 		override public function dispose() : void
@@ -46,6 +59,7 @@ package view.framework
 			}
 
 			addChild(scene);
+			scene.onStageResize();
 			
 			setSceneFadeInOut(scene, 0, 1, 0.3, Transitions.EASE_IN, function () : void {
 					while(numChildren > 1){removeChildren(0, numChildren-2, true);}					

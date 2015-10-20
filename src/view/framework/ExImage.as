@@ -11,7 +11,10 @@ package view.framework
 	public class ExImage extends ExSprite
 	{
 		protected var _texture:Texture;
-		protected var _starlingImage:Image;		
+		protected var _imager:Image;	
+		
+		protected var _width:Number;
+		protected var _height:Number;
 		
 		
 		public function ExImage(res:* = null)
@@ -24,13 +27,25 @@ package view.framework
 		override protected function createChildren():void
 		{			
 		}
+		
+		override public function set width(value:Number) : void
+		{
+			_width = value;
+			updateTexture();
+		}
+		
+		override public function set height(value:Number) : void
+		{
+			_height = value;
+			updateTexture();
+		}
 				  
 		
 		public function set res(res:*) : void
 		{	
 			if (res == null)
 			{
-				destoryStarlingImage();
+				destoryTexture();
 				_texture = null;
 			}
 			else
@@ -49,38 +64,41 @@ package view.framework
 				}
 				else
 				{
-					throw new UnhandledBranchError();					
+					throw new UnhandledBranchError();
 				}
 				
-				updateStarlingImage();
+				_width = _texture.width;
+				_height = _texture.height;
+				
+				updateTexture();
 			}
-		}
+		}		
 	
-		protected function updateStarlingImage() : void
+		protected function updateTexture() : void
 		{			
 			if (_texture)
 			{				
-				if (!_starlingImage)
+				if (!_imager)
 				{
-					_starlingImage = new Image(_texture);
-					addChild(_starlingImage);
+					_imager = new Image(_texture);
+					addChild(_imager);
 				}
 				else
-				{					
-					_starlingImage.width = _texture.width;
-					_starlingImage.height = _texture.height;
-					
-					_starlingImage.texture = _texture;
-				}				
+				{	
+					_imager.texture = _texture;								
+				}
+				
+				_imager.width = _width;
+				_imager.height = _height;
 			}
 		}
 		
-		protected function destoryStarlingImage() : void
+		protected function destoryTexture() : void
 		{
-			if (_starlingImage)
+			if (_imager)
 			{
-				removeChild(_starlingImage, true);				
-				_starlingImage = null;
+				removeChild(_imager, true);				
+				_imager = null;
 			}
 		}		
 	}

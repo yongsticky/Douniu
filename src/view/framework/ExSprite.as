@@ -17,10 +17,7 @@ package view.framework
 	public class ExSprite extends Sprite
 	{
 		protected var _logger:ILogger;
-		
-		//protected var _width:Number;
-		//protected var _height:Number;
-		
+				
 		public function ExSprite(name:String = null)
 		{
 			super();
@@ -60,52 +57,7 @@ package view.framework
 					ExSprite(child).layoutChildren();
 				}
 			}
-		}	
-		
-		/*
-		override public function set width(value:Number) : void
-		{
-			_width = value;
-			
-			if (numChildren > 0)
-			{
-				super.width = value;				
-			}			
-		}
-		
-		override public function get width():Number
-		{
-			if (numChildren > 0)
-			{
-				return super.width;
-			}
-			else
-			{
-				return _width;
-			}
-		}
-		
-		override public function set height(value:Number) : void
-		{
-			_height = value;
-			
-			if (numChildren > 0)
-			{
-				super.height = value;
-			}			
-		}	
-		
-		override public function get height():Number
-		{
-			if (numChildren > 0)
-			{
-				return super.height;
-			}
-			else
-			{
-				return _height;
-			}
-		}*/
+		}		
 	
 		public function getOwnerLayer() : ExLayer
 		{

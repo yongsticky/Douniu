@@ -1,9 +1,6 @@
 package view.framework
-{		
-	import starling.display.DisplayObject;
-	
+{	
 	import view.NiuDirector;
-
 
 	public class ExScene extends ExSprite
 	{		
@@ -14,8 +11,8 @@ package view.framework
 		
 		override protected function initialize() : void
 		{
-			super.initialize();			
-		}
+			super.initialize();	
+		}		
 		
 		public function onStageResize() : void
 		{			
