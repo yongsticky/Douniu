@@ -16,6 +16,8 @@ package view.scene.table.widget
 		private var _firstBet:Button;
 		private var _secondBet:Button;
 		private var _thirdBet:Button;
+
+		private var _multiples:Array = new Array();
 		
 		public function Widget_BetButtonGroup(name:String=null)
 		{
@@ -27,51 +29,45 @@ package view.scene.table.widget
 			if (_firstBet)
 			{
 				_firstBet.text = x1.toString() + " 倍";
+				_multiples[0] = x1;
 				_secondBet.text = x2.toString() + " 倍";
+				_multiples[1] = x2;
 				_thirdBet.text = x3.toString() + " 倍";
+				_multiples[2] = x3;
 			}
 		}
 		
 		override protected function createChildren() : void
 		{			
 			_firstBet = new Button(Texture.fromColor(100, 48, 0xFF0000FF), "");
+			_firstBet.name = "0";
 			_firstBet.x = 60;
-			_firstBet.addEventListener(Event.TRIGGERED, onBtnRob1xTriggered);
+			_firstBet.addEventListener(Event.TRIGGERED, onBtnRobTriggered);
 			addChild(_firstBet);
 			
 			_secondBet = new Button(Texture.fromColor(100, 48, 0xFF0000FF), "");
+			_secondBet.name = "1";
 			_secondBet.x = _firstBet.x + _firstBet.width + 5;
-			_secondBet.addEventListener(Event.TRIGGERED, onBtnRob2xTriggered);
+			_secondBet.addEventListener(Event.TRIGGERED, onBtnRobTriggered);
 			addChild(_secondBet);
 			
 			_thirdBet = new Button(Texture.fromColor(100, 48, 0xFF0000FF), "");
+			_thirdBet.name = "2";
 			_thirdBet.x = _secondBet.x + _secondBet.width + 5;
-			_thirdBet.addEventListener(Event.TRIGGERED, onBtnRob4xTriggered);
+			_thirdBet.addEventListener(Event.TRIGGERED, onBtnRobTriggered);
 			addChild(_thirdBet);				
 		}
 		
-		private function onBtnRob1xTriggered(event:Event):void
+		private function onBtnRobTriggered(event:Event):void
 		{
-			SoundManager.instance().playButtonClick();
-			
 			visible = false;
-			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_BET_X, 1);
-		}
-				
-		private function onBtnRob2xTriggered(event:Event):void
-		{
-			SoundManager.instance().playButtonClick();
+
+			SoundManager.instance().playButtonClick();		
 			
-			visible = false;
-			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_BET_X, 3);
-		}
-		
-		private function onBtnRob4xTriggered(event:Event):void
-		{
-			SoundManager.instance().playButtonClick();
-			
-			visible = false;
-			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_BET_X, 5);
-		}
+			var btn:Button = event.target as Button;
+			var multiple:int = _multiples[int(btn.name)];				
+
+			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_BET_X, multiple);	
+		}		
 	}
 }

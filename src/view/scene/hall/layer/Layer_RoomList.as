@@ -30,21 +30,22 @@ package view.scene.hall.layer
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_classicRoomTitle = new ExImage(resManager.getResource("hall.type1_room.png"));
+			_classicRoomTitle = new ExImage(resManager.getResource("hall.type2_room.png"));
 			_classicRoomTitle.x = (stage.stageWidth - _classicRoomTitle.width)/2 - 20;
 			_classicRoomTitle.y = 200;
 			addChild(_classicRoomTitle);
 			
-			_viewRoomTitle = new ExImage(resManager.getResource("hall.type2_room.png"));
+			_viewRoomTitle = new ExImage(resManager.getResource("hall.type1_room.png"));
 			_viewRoomTitle.x = (stage.stageWidth - _classicRoomTitle.width)/2 - 20;
-			_viewRoomTitle.y = 400;
+			_viewRoomTitle.y = 560;
 			addChild(_viewRoomTitle);
-
+			
+			
 			var xStart:int = 120;			
 			for (var i:int = 0; i < MAX_ROOM_NUM_PER_TYPE; i++)
 			{
 				var classicRoom:Widget_Room = new Widget_Room();
-				classicRoom.roomName = "经典场";
+				classicRoom.roomName = "经典房";
 				classicRoom.roomDesc = ((i+1)*100).toString() + "金币可进入";
 				classicRoom.roomId = 76;
 				classicRoom.x = xStart;
@@ -53,16 +54,25 @@ package view.scene.hall.layer
 				addChild(classicRoom);
 				
 				var viewRoom:Widget_Room = new Widget_Room();			
-				viewRoom.roomName = "看牌场";
+				viewRoom.roomName = "看牌房";
 				viewRoom.roomDesc = ((i+1)*500).toString() + "金币可进入";
 				viewRoom.roomId = 81;
 				viewRoom.x = xStart;
-				viewRoom.y = 460;				
+				viewRoom.y = 400;				
 				viewRoom.addEventListener(Event.TRIGGERED, onRoomTriggered);
 				addChild(viewRoom);
 				
+				var huanleRoom:Widget_Room = new Widget_Room();			
+				huanleRoom.roomName = "欢乐房";
+				huanleRoom.roomDesc = ((i+1)*10).toString() + "欢乐券可进入";
+				huanleRoom.roomId = 84;
+				huanleRoom.x = xStart;
+				huanleRoom.y = 620;				
+				huanleRoom.addEventListener(Event.TRIGGERED, onRoomTriggered);
+				addChild(huanleRoom);				
+				
 				xStart += classicRoom.width + 40;
-			}
+			}			
 		}		
 
 		protected function onRoomTriggered(event:Event) : void

@@ -8,7 +8,7 @@ package view.framework
 	import starling.events.Event;
 	import starling.events.ResizeEvent;
 	
-	import camu.logger.LEVEL;
+	//import camu.logger.LEVEL;
 
 	public class ExDirector extends ExSprite
 	{			
@@ -34,9 +34,9 @@ package view.framework
 			stage.stageWidth = newWidth;
 			stage.stageHeight = newHeight;
 			
-			_logger.log(this, "newWidth:",newWidth, "newHeight:",newHeight,LEVEL.DEBUG);
-			_logger.log(this, "stageWidth:",stage.stageWidth, "stageHeight:",stage.stageHeight, LEVEL.DEBUG);			
-			_logger.log(this, "width:",stage.width, "height:",stage.height, LEVEL.DEBUG);		
+			//_logger.log(this, "newWidth:",newWidth, "newHeight:",newHeight,LEVEL.DEBUG);
+			//_logger.log(this, "stageWidth:",stage.stageWidth, "stageHeight:",stage.stageHeight, LEVEL.DEBUG);			
+			//_logger.log(this, "width:",stage.width, "height:",stage.height, LEVEL.DEBUG);		
 			
 			var topScene:ExScene = this.topScene;
 			if (topScene) 

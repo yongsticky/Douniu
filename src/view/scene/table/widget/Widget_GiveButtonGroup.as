@@ -22,7 +22,7 @@ package view.scene.table.widget
 			_giveNiu = new Button(Texture.fromColor(100, 48, 0xFF00FF00), "有牛");			
 			addChild(_giveNiu);
 			
-			_giveNone = new Button(Texture.fromColor(100, 48, 0xFFFF0000), "没有牛");
+			_giveNone = new Button(Texture.fromColor(100, 48, 0xFFFF0000), "自动");
 			_giveNone.y = 58;			
 			addChild(_giveNone);
 		}

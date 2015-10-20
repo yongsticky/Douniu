@@ -20,6 +20,8 @@ package controller.handler
 	import sound.SoundManager;
 	
 	import view.NiuDirector;
+	import view.scene.huanle.Scene_HuanLeTable;
+	import view.scene.huanle.layer.Layer_Main;
 	import view.scene.table.Scene_Table;
 	import view.scene.table.layer.Layer_TableMain;
 	
@@ -191,6 +193,20 @@ package controller.handler
 				if (layer)
 				{										
 					layer.showWaitNextTimer(8);				
+				}
+			}
+			else
+			{
+				
+				
+				var scene2:Scene_HuanLeTable = NiuDirector.instance().topScene as Scene_HuanLeTable;
+				if (scene2)
+				{
+					var layer2:Layer_Main = scene2.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
+					if (layer2)
+					{						
+						layer2.startNewGame();
+					}
 				}
 			}
 		}

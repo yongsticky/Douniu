@@ -20,6 +20,7 @@ package controller.handler
 	import server.NiuRequestSender;
 	
 	import view.NiuDirector;
+	import view.scene.huanle.Scene_HuanLeTable;
 	import view.scene.table.Scene_Table;
 	
 	public class NotificationHandler_LoginSuccess extends NiuNotificationHandler
@@ -67,7 +68,15 @@ package controller.handler
 						
 			NiuRequestSender.instance().sendRequest(sitdownRequest);
 			
-			NiuDirector.instance().switchToScene(new Scene_Table());
+			if (resp.room_id == 84)
+			{
+				NiuDirector.instance().switchToScene(new Scene_HuanLeTable());
+			}
+			else
+			{
+				NiuDirector.instance().switchToScene(new Scene_Table());
+			}
+			
 		}
 	}
 }

@@ -10,7 +10,7 @@ package
 	import facade.NiuApplicationFacade;	
 	import view.NiuDirector;
 	
-	[SWF(width="1220", height="900", frameRate="60", backgroundColor="#222222")]
+	[SWF(width="1120", height="780", frameRate="60", backgroundColor="#222222")]
 	//[SWF(width="640", height="480", frameRate="60", backgroundColor="#ffffff")]
 	public class douniu extends Sprite
 	{		

@@ -120,7 +120,7 @@ package view.scene.table.widget
 			}
 			else
 			{
-				NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.USER_GIVE, _playerCards.getDefaultPokers());
+				NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.USER_GIVE, _playerCards.getAutoPokers());
 			}
 						
 			_playerGiveButtonGroup.visible = false;

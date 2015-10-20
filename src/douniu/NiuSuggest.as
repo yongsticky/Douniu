@@ -53,10 +53,10 @@ package douniu
 			// 穷举排列	
 			for each(var seq:Array in SEQUENCE_ENUM)
 			{
-				var sum2:int = (cards[seq[0][0]].value+cards[seq[0][1]].value) % 10;
+				var sum2:int = (NiuCard.getValue(cards[seq[0][0]]) + NiuCard.getValue(cards[seq[0][1]])) % 10;
 				if (sum == sum2)
 				{
-					var sum3:int = (cards[1][0].value+cards[1][1].value+cards[1][2].value) % 10;
+					var sum3:int = (NiuCard.getValue(cards[seq[1][0]]) + NiuCard.getValue(cards[seq[1][1]]) + NiuCard.getValue(cards[seq[1][2]])) % 10;
 					sum3 %= 10;
 					if (sum3 == 0)
 					{						

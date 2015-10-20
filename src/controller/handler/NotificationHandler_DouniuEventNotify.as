@@ -1,5 +1,7 @@
 package controller.handler
-{
+{	
+	import flash.utils.ByteArray;
+	
 	import camu.errors.NullObjectError;
 	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
@@ -27,6 +29,8 @@ package controller.handler
 	import sound.SoundManager;
 	
 	import view.NiuDirector;
+	import view.scene.huanle.Scene_HuanLeTable;
+	import view.scene.huanle.layer.Layer_Main;
 	import view.scene.table.Scene_Table;
 	import view.scene.table.layer.Layer_TableMain;
 	
@@ -182,22 +186,22 @@ package controller.handler
 		
 		private function onNotify_BetDetail(v:NotifyBetDetail) : void
 		{
-			_logger.log(this, "onNotify_BetDetail Enter.", LEVEL.INFO);
-						
-			if (!v.getTLVValue(TLVType.SO_UP_TLV_MULTIPLE_KEY))
-			{
-				return;
-			}	
+			_logger.log(this, "onNotify_BetDetail Enter.", LEVEL.INFO);				
+
 			
 			SoundManager.instance().playNotifyBetDetail();
 			
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
+			var scene:Scene_HuanLeTable = NiuDirector.instance().topScene as Scene_HuanLeTable;
 			if (scene)
 			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:Layer_Main = scene.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
 				if (layer)
-				{					
-					//layer.hideBetButtonGroup();					
+				{	
+					var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
+					if (tmInfo)
+					{
+						layer.showTimer(tmInfo.time_);	
+					}					
 				}
 			}
 						
@@ -261,28 +265,30 @@ package controller.handler
 		{
 			_logger.log(this, "onNotify_Finish Enter.", LEVEL.INFO);
 			
-			for (var i:int = 0; i < v.finish_info_num; ++i)
-			{
-				var info:FinishInfo = v.finish_info_vec[i];
-				if (info)
-				{
-					if (info.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
-					{
-						if (info.money.highPart > 0)
-						{
-							SoundManager.instance().playGameWin();
-						}
-						else
-						{
-							SoundManager.instance().playGameLose();
-						}
-					}
-				}
-			}
 			
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
+				for (var i:int = 0; i < v.finish_info_num; ++i)
+				{
+					var info:FinishInfo = v.finish_info_vec[i];
+					if (info)
+					{
+						if (info.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
+						{
+							if (info.money.highPart > 0)
+							{
+								SoundManager.instance().playGameWin();
+							}
+							else
+							{
+								SoundManager.instance().playGameLose();
+							}
+						}
+					}
+				}
+				
+				
 				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layer)
 				{		
@@ -294,6 +300,27 @@ package controller.handler
 					layer.hideTimer();					
 					
 					RuntimeExchangeData.instance().redTableData.dealer_seat_id = -1;					
+				}
+			}
+			else
+			{
+				var scene2:Scene_HuanLeTable = NiuDirector.instance().topScene as Scene_HuanLeTable;
+				if (scene2)
+				{
+					var layer2:Layer_Main = scene2.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
+					
+					var vec:Vector.<FinishInfo> = new Vector.<FinishInfo>(v.finish_info_num);
+					for (var j:int = 0; j < v.finish_info_num; ++j)
+					{
+						var info2:FinishInfo = v.finish_info_vec[j];
+						if (info2)
+						{
+							vec[j] = info2;
+						}
+					}
+					
+					layer2.hideTimer();
+					layer2.updatePokers(vec);
 				}
 			}
 		}

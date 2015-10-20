@@ -16,6 +16,7 @@ package view.scene.table
 		private static const TABLEMAIN:String = "table.main";
 		
 		protected var _bg:ExImage;
+		protected var _logo:ExImage;
 		
 		public function Scene_Table(name:String = null)
 		{
@@ -29,11 +30,9 @@ package view.scene.table
 			_bg = new ExImage(resManager.getResource("table.bg.png"));
 			addChild(_bg);
 			
-			var logo:ExImage = new ExImage(resManager.getResource("table.bg_logo.png"));
-			logo.x = (stage.stageWidth - logo.width) >> 1;
-			logo.y = (stage.stageHeight - logo.height) >> 1;
-			logo.alpha = 0.1;
-			addChild(logo);
+			_logo = new ExImage(resManager.getResource("table.bg_logo.png"));			
+			_logo.alpha = 0.1;
+			addChild(_logo);
 			
 			
 			addChild(new Layer_TopBanner(TOPBANNER));
@@ -45,6 +44,9 @@ package view.scene.table
 		{
 			_bg.width = stage.stageWidth;
 			_bg.height = stage.stageHeight;
+			
+			_logo.x = (stage.stageWidth - _logo.width) >> 1;
+			_logo.y = (stage.stageHeight - _logo.height) >> 1;
 			
 			super.layoutChildren();
 		}

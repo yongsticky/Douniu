@@ -3,8 +3,10 @@ package view.scene.table.widget
 	import camu.errors.IndexOutOfRangeError;
 	import camu.errors.NullObjectError;
 	import camu.errors.UnexpectedLengthError;
+	import camu.logger.LEVEL;
 	
 	import douniu.NiuCard;
+	import douniu.NiuSuggest;
 	
 	import resource.ResManager;
 	
@@ -143,10 +145,21 @@ package view.scene.table.widget
 			return _selectedCount;
 		}
 		
-		public function getDefaultPokers() : Vector.<int>
+		public function getAutoPokers() : Vector.<int>
 		{
+			var o:Object = NiuSuggest.getSuggestObject(_giveCards);
+			
+			var i:int = 0;
+			for each(var index:int in o.cardSequence)
+			{
+				_giveCards[i] = _pokers[index].card;
+				++i;
+			}		
+			
+			_logger.log(this, "auto give cards:", _giveCards.join(","), LEVEL.DEBUG);
 			return _giveCards;
 		}
+				
 		
 		public function getUserGivePokers() : Vector.<int>
 		{			
@@ -170,6 +183,7 @@ package view.scene.table.widget
 				}
 			}
 			
+			_logger.log(this, "user give cards:", _giveCards.join(","), LEVEL.DEBUG);
 			return _giveCards;
 		}				
 		

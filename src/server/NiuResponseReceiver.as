@@ -6,13 +6,9 @@ package server
 	import camu.net.PacketEvent;
 	import camu.net.PacketEventTypeUtil;
 	
-	import controller.NiuNotification;
-	
-	import facade.NiuApplicationFacade;
-	import facade.NiuNotificationHandlerConstant;
-	
-	import factory.NiuObjectFactory;
-	
+	import controller.NiuNotification;	
+	import facade.NiuNotificationHandlerConstant;	
+	import factory.NiuObjectFactory;	
 	import packet.game.message.Login.Response_Login;
 	import packet.game.message.Logout.Request_Logout;
 	import packet.game.message.Logout.Response_Logout;
@@ -60,7 +56,7 @@ package server
 			addReceiver(Response_Ready, onReceive_Ready);
 			addReceiver(Response_Standup, onReceive_Standup);
 			addReceiver(Response_Play, onReceive_Play);
-			addReceiver(Notify_GameEvent, onReceive_GameNotify);
+			addReceiver(Notify_GameEvent, onReceive_RoomEvent);
 			addReceiver(Notify_DouniuEvent, onReceive_DouniuEvent);
 		}
 			
@@ -147,9 +143,9 @@ package server
 		}
 		
 		
-		protected function onReceive_GameNotify(event:PacketEvent) : void
+		protected function onReceive_RoomEvent(event:PacketEvent) : void
 		{
-			_logger.log(this, "onReceive_GameNotify Enter.", LEVEL.INFO);	
+			_logger.log(this, "onReceive_RoomEvent Enter.", LEVEL.INFO);	
 			sendNotification(NiuNotificationHandlerConstant.ROOM_EVENT, event.packet);
 		}
 		
