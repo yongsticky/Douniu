@@ -22,6 +22,7 @@ package resource
 		
 		private var _jsonRootObj:Object = null;		
 		private var _res:Dictionary;		
+				
 
 		public function ResManager(inner:PrivateInner)
 		{
@@ -103,7 +104,9 @@ package resource
 				{
 					var cls:Class = Object(item).loader.contentLoaderInfo.applicationDomain.getDefinition(clsName);
 					
-					var resId:String = item.id + "." + clsName;					
+					var last:int = clsName.lastIndexOf(".");					
+					var resId:String = item.id + "." +  (last>0 ? clsName.slice(0, last):clsName);
+					
 					_res[resId] = new cls();					
 					
 					if (_res[resId] is Bitmap)

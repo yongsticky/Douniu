@@ -61,13 +61,7 @@ package view.scene.huanle.widget
 		{
 			return _seatId;
 		}
-		
-		public function set seatId(value:int) : void
-		{
-			_seatId = value;	
-		}
 				
-		
 		public function set sepWidth(value:int) : void
 		{
 			_sepWidth = value;

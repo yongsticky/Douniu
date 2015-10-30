@@ -5,17 +5,13 @@ package view.scene.hall
 	import view.framework.ExImage;
 	import view.framework.ExScene;
 	import view.scene.hall.layer.Layer_RoomList;
-	import view.scene.hall.layer.Layer_TopBanner;
+	import view.scene.hall.layer.Layer_Top;
 	
 
 	public final class Scene_Hall extends ExScene
 	{			
-		public static const BACKGROUND:String = "hall.background";			// 背景层
-		public static const BANNER:String = "hall.topbanner";				// 顶部栏
-		public static const ROOMLIST:String = "hall.roomlist";				// 房间列表
-		
 		private var _bg:ExImage;
-		private var _topBanner:ExImage;
+		private var _rooms:Layer_RoomList;
 				
 		public function Scene_Hall(name:String = null)
 		{
@@ -26,22 +22,21 @@ package view.scene.hall
 		{
 			var resManager:ResManager = ResManager.instance();			
 			
-			_bg = new ExImage(resManager.getResource("hall.bg.png"));			
+			_bg = new ExImage(resManager.getResource("ui.hall_bg"));			
 			addChild(_bg);					
-			
-			_topBanner = new ExImage(resManager.getResource("hall.top_banner.png"));
-			addChild(_topBanner);
-			
-			addChild(new Layer_TopBanner());
-			addChild(new Layer_RoomList());			
+								
+			addChild(new Layer_Top());
+			_rooms = new Layer_RoomList();
+			addChild(_rooms);
 		}
 		
 		override protected function layoutChildren() : void
 		{
 			_bg.width = stage.stageWidth;
-			_bg.height = stage.stageHeight;
+			_bg.height = stage.stageHeight;			
 			
-			_topBanner.width = stage.stageWidth;
+			_rooms.x = (stage.stageWidth-_rooms.width)/2 + 16;
+			_rooms.y = 120;
 			
 			super.layoutChildren();
 		}

@@ -21,14 +21,15 @@ package view.framework
 		{
 			super.initialize();
 
-			stage.addEventListener(Event.RESIZE, onWindowResize);				
+			stage.addEventListener(Event.RESIZE, onResize);				
 		}
 		
-		protected function onWindowResize(event:ResizeEvent) : void
+		protected function onResize(event:ResizeEvent) : void
 		{
 			var newWidth:int = event.width;
-			var newHeight:int = event.height;					
-						
+			var newHeight:int = event.height;
+
+			
 			Starling.all[0].viewPort = new Rectangle(0, 0, newWidth, newHeight);
 			
 			stage.stageWidth = newWidth;
@@ -36,13 +37,9 @@ package view.framework
 			
 			//_logger.log(this, "newWidth:",newWidth, "newHeight:",newHeight,LEVEL.DEBUG);
 			//_logger.log(this, "stageWidth:",stage.stageWidth, "stageHeight:",stage.stageHeight, LEVEL.DEBUG);			
-			//_logger.log(this, "width:",stage.width, "height:",stage.height, LEVEL.DEBUG);		
+			//_logger.log(this, "width:",stage.width, "height:",stage.height, LEVEL.DEBUG);
 			
-			var topScene:ExScene = this.topScene;
-			if (topScene) 
-			{
-				topScene.onStageResize();
-			}			
+			layoutChildren();
 		}
 		
 		override public function dispose() : void
@@ -58,8 +55,7 @@ package view.framework
 				return;
 			}
 
-			addChild(scene);
-			scene.onStageResize();
+			addChild(scene);			
 			
 			setSceneFadeInOut(scene, 0, 1, 0.3, Transitions.EASE_IN, function () : void {
 					while(numChildren > 1){removeChildren(0, numChildren-2, true);}					

@@ -12,12 +12,7 @@ package view.framework
 		override protected function initialize() : void
 		{
 			super.initialize();	
-		}		
-		
-		public function onStageResize() : void
-		{			
-			layoutChildren();		
-		}	
+		}
 
 		public function get isOnTop() : Boolean
 		{			

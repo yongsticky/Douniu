@@ -22,16 +22,13 @@ package view.widget
 		private var _delayCall:IAnimatable;
 		
 		private const MAX_TIMER_NUM:int = 9;
-		
-		
-		private var _running:Boolean;
+				
 		
 		public function Widget_Timer(name:String = null)
 		{
 			super(name);
 			
 			_tween = null;
-			_running = false;
 		}
 		
 		override protected function createChildren() : void
@@ -48,12 +45,7 @@ package view.widget
 			 
 			addChild(_num);
 		}
-		
-		public function get running() : Boolean
-		{
-			return _running;
-		}
-				
+						
 		public function startTimer(time:int) : void
 		{	
 			if (_delayCall)
@@ -71,15 +63,7 @@ package view.widget
 			else
 			{
 				_startTimer(time, 0);
-			}
-			
-			//_curTime = time<=MAX_TIMER_NUM ? time:MAX_TIMER_NUM;
-			
-			
-			
-			//updateTimerTexture();
-			
-			//doAnimation();					
+			}		
 		}
 		
 		private function _startTimer(time:int, caller:int) : void
@@ -92,8 +76,7 @@ package view.widget
 			_curTime = time;
 			
 			visible = true;			
-			
-			updateTimerTexture();
+						
 			doAnimation();
 			
 			SoundManager.instance().playTimerWarning();
@@ -120,25 +103,17 @@ package view.widget
 				
 				-- _curTime;
 
-				updateTimerTexture();				
-				
-				doAnimation();				
-			}
-			else
-			{				
-				_running = false;
-			}
+				doAnimation();
+			}			
 		}
-		
-		protected function updateTimerTexture() : void
-		{			
+				
+		protected function doAnimation() : void
+		{
 			var resId:String = "table.timer_" + _curTime + ".png";
 			_num.res =  ResManager.instance().getResource(resId); 
 			_num.scaleX = _num.scaleY = 1;
-		}
-		
-		protected function doAnimation() : void
-		{
+
+
 			if (_tween)
 			{
 				_tween.reset(_num, 1, Transitions.EASE_IN_OUT_ELASTIC);
@@ -147,13 +122,11 @@ package view.widget
 			{
 				_tween = new Tween(_num, 1, Transitions.EASE_IN_OUT_ELASTIC);
 			}
-						
+					
 			_tween.scaleTo(0.8);	
 			_tween.onComplete = onAnimationComplete;
 			
 			getOwnerLayer().juggler.add(_tween);
-			
-			_running = true;
 		}
 		
 	}

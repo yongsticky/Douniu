@@ -33,7 +33,7 @@ package
 			
 			_starling = new Starling(NiuDirector, stage);			
 			_starling.start();			
-			_starling.showStats = true;
+			_starling.showStats = true;			
 			_starling.antiAliasing = 2;
 		}
 	}

@@ -6,7 +6,9 @@ package view.scene.hall.layer
 	
 	import sound.SoundManager;
 	
+	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.textures.Texture;
 	
 	import view.NiuDirector;
 	import view.framework.ExImage;
@@ -14,12 +16,12 @@ package view.scene.hall.layer
 	import view.scene.hall.widget.Widget_Room;
 	
 	public class Layer_RoomList extends ExLayer
-	{
-		private var _classicRoomTitle:ExImage;		
-		private var _viewRoomTitle:ExImage;
-
+	{			
+		private var _douniuRoomTitle:ExImage;		
+		private var _huanleRoomTitle:ExImage;
 		
-		private static const MAX_ROOM_NUM_PER_TYPE:int = 4;
+		
+		private static const MAX_ROOM_NUM_PER_TYPE:int = 3;
 		
 		public function Layer_RoomList(name:String = null)
 		{
@@ -30,49 +32,59 @@ package view.scene.hall.layer
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_classicRoomTitle = new ExImage(resManager.getResource("hall.type2_room.png"));
-			_classicRoomTitle.x = (stage.stageWidth - _classicRoomTitle.width)/2 - 20;
-			_classicRoomTitle.y = 200;
-			addChild(_classicRoomTitle);
+			_douniuRoomTitle = new ExImage(resManager.getResource("ui.room_type_text_douniu"));			
+			addChild(_douniuRoomTitle);
 			
-			_viewRoomTitle = new ExImage(resManager.getResource("hall.type1_room.png"));
-			_viewRoomTitle.x = (stage.stageWidth - _classicRoomTitle.width)/2 - 20;
-			_viewRoomTitle.y = 560;
-			addChild(_viewRoomTitle);
+			_huanleRoomTitle = new ExImage(resManager.getResource("ui.room_type_text_huanle"));			
+			addChild(_huanleRoomTitle);
 			
-			
-			var xStart:int = 120;			
+			var xStart:int = 0;
 			for (var i:int = 0; i < MAX_ROOM_NUM_PER_TYPE; i++)
 			{
-				var classicRoom:Widget_Room = new Widget_Room();
-				classicRoom.roomName = "经典房";
-				classicRoom.roomDesc = ((i+1)*100).toString() + "金币可进入";
-				classicRoom.roomId = 76;
-				classicRoom.x = xStart;
-				classicRoom.y = 260;			
-				classicRoom.addEventListener(Event.TRIGGERED, onRoomTriggered);
-				addChild(classicRoom);
+				var cr:Widget_Room = new Widget_Room(Texture.fromBitmapData(resManager.getResource("ui.room_icon_basic")));
+				cr.roomDescTextFontFace = "Microsoft YaHei";
+				cr.roomDescTextFontSize = 12;
+				cr.roomDescTextFontColor = 0xFDBC2A;
+				cr.roomDesc = ((i+1)*100).toString() + "金币可进入";
+				cr.roomId = 76;								
+				cr.x = xStart;
+				cr.y = 40;
+				addChild(cr);				
+				cr.addEventListener(Event.TRIGGERED, onRoomTriggered);
 				
-				var viewRoom:Widget_Room = new Widget_Room();			
-				viewRoom.roomName = "看牌房";
-				viewRoom.roomDesc = ((i+1)*500).toString() + "金币可进入";
-				viewRoom.roomId = 81;
-				viewRoom.x = xStart;
-				viewRoom.y = 400;				
-				viewRoom.addEventListener(Event.TRIGGERED, onRoomTriggered);
-				addChild(viewRoom);
 				
-				var huanleRoom:Widget_Room = new Widget_Room();			
-				huanleRoom.roomName = "欢乐房";
-				huanleRoom.roomDesc = ((i+1)*10).toString() + "欢乐券可进入";
-				huanleRoom.roomId = 84;
-				huanleRoom.x = xStart;
-				huanleRoom.y = 620;				
-				huanleRoom.addEventListener(Event.TRIGGERED, onRoomTriggered);
-				addChild(huanleRoom);				
+				var ar:Widget_Room = new Widget_Room(Texture.fromBitmapData(resManager.getResource("ui.room_icon_advance")));
+				ar.roomDescTextFontFace = "Microsoft YaHei";
+				ar.roomDescTextFontSize = 12;
+				ar.roomDescTextFontColor = 0xFDBC2A;
+				ar.roomDesc = ((i+1)*500).toString() + "金币可进入";
+				ar.roomId = 81;			
+				ar.x = xStart;
+				ar.y = 180;
+				addChild(ar);				
+				ar.addEventListener(Event.TRIGGERED, onRoomTriggered);
 				
-				xStart += classicRoom.width + 40;
-			}			
+				
+				var hr:Widget_Room = new Widget_Room(Texture.fromBitmapData(resManager.getResource("ui.room_icon_betting")));
+				hr.roomDescTextFontFace = "Microsoft YaHei";
+				hr.roomDescTextFontSize = 12;
+				hr.roomDescTextFontColor = 0xFDBC2A;
+				hr.roomDesc = ((i+1)*10).toString() + "欢乐券可进入";
+				hr.roomId = 84;								
+				hr.x = xStart;
+				hr.y = 400;
+				addChild(hr);				
+				hr.addEventListener(Event.TRIGGERED, onRoomTriggered);
+				
+				
+				xStart += 320;
+			}				
+			
+			_douniuRoomTitle.x = (width - _douniuRoomTitle.width)/2;
+			_douniuRoomTitle.y = 0;
+			
+			_huanleRoomTitle.x = _douniuRoomTitle.x; 
+			_huanleRoomTitle.y = 360;			
 		}		
 
 		protected function onRoomTriggered(event:Event) : void

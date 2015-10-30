@@ -20,6 +20,8 @@ package view.scene.huanle.layer
 		private var _players:Vector.<Widget_Robot>;
 		private var _timer:Widget_Timer;
 		
+		private var _selectedSeatId:int;
+		
 		public function Layer_Main(name:String=null)
 		{
 			super(name);
@@ -50,21 +52,7 @@ package view.scene.huanle.layer
 			var robot:Widget_Robot =  event.target["parent"] as Widget_Robot;
 			if (robot)
 			{
-				var oldSeatId:int = robot.seatId;
-				if (oldSeatId != 0)
-				{
-					
-					
-					for each(var r:Widget_Robot in _players)
-					{
-						if (r.seatId == 0)
-						{
-							r.seatId = oldSeatId;
-						}
-					}					
-						
-					robot.seatId = 0;
-				}				
+				_selectedSeatId = robot.seatId;								
 			}
 			
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.HUANLE_BET);
@@ -113,7 +101,8 @@ package view.scene.huanle.layer
 		
 		
 		public function updatePokers(v:vector.<FinishInfo>) : void
-		{			
+		{	
+			var seatIndex:int = 0;
 			for each(var info:FinishInfo in v)
 			{
 				if (info)
@@ -123,14 +112,25 @@ package view.scene.huanle.layer
 					{
 						vec[i] = int(info.tiles[i]);	
 					}
-					
+															
 					if (info.seat_id == 4)
 					{						
 						_dealer.setPokers(vec);
 					}
+					else if (info.seat_id == 0)
+					{
+						_players[_selectedSeatId].setPokers(vec);
+					}
 					else
 					{
-						_players[info.seat_id].setPokers(vec);	
+						if (seatIndex == _selectedSeatId)
+						{
+							++ seatIndex;
+						}
+						
+						_players[seatIndex].setPokers(vec);
+						
+						++seatIndex;
 					}					
 				}
 			}
@@ -145,8 +145,7 @@ package view.scene.huanle.layer
 		{		
 			_dealer.setPokers([0, 0, 0, 0, 0]);
 			for (var i:int = 0; i < 4; ++i)
-			{
-				_players[i].seatId = i;
+			{				
 				_players[i].setPokers([0, 0, 0, 0, 0]);
 				_players[i].betButton.visible = true;
 			}

@@ -56,7 +56,7 @@ package view
 		}
 		
 		override protected function createChildren() : void
-		{			
+		{
 		}
 		
 		private function onEnterFrame(event:EnterFrameEvent):void

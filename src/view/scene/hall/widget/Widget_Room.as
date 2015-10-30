@@ -1,7 +1,5 @@
 package view.scene.hall.widget
-{		
-	import resource.ResManager;
-	
+{	
 	import starling.display.Button;
 	import starling.text.TextField;
 	import starling.textures.Texture;
@@ -21,12 +19,7 @@ package view.scene.hall.widget
 		private var _roomDescTextFontColor:uint = 0x308014;
 		
 		public function Widget_Room(upState:Texture=null, text:String="", downState:Texture=null, overState:Texture=null, disabledState:Texture=null)
-		{
-			if (upState == null)
-			{
-				upState = Texture.fromBitmapData(ResManager.instance().getResource("hall.room_bg.png"));
-			}
-			
+		{		
 			super(upState, text, downState, overState, disabledState);
 		}	
 		
@@ -73,8 +66,9 @@ package view.scene.hall.widget
 		{
 			var descTF:TextField = new TextField(width, 28, value, _roomDescTextFontFace, _roomDescTextFontSize, _roomDescTextFontColor);		
 			descTF.vAlign = VAlign.CENTER;
-			descTF.hAlign = HAlign.CENTER;
-			descTF.y = 60;
+			descTF.hAlign = HAlign.LEFT;
+			descTF.x = 30;
+			descTF.y = 100;			
 			addChild(descTF);
 		}
 		

@@ -205,7 +205,7 @@ package controller.handler
 					var layer2:Layer_Main = scene2.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
 					if (layer2)
 					{						
-						layer2.startNewGame();
+						//layer2.startNewGame();
 					}
 				}
 			}

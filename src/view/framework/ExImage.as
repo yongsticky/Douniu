@@ -32,14 +32,13 @@ package view.framework
 		{
 			_width = value;
 			updateTexture();
-		}
+		}		
 		
 		override public function set height(value:Number) : void
 		{
 			_height = value;
 			updateTexture();
-		}
-				  
+		}							  
 		
 		public function set res(res:*) : void
 		{	

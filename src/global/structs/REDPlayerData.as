@@ -10,6 +10,9 @@ package global.structs
 		public var chips:int;
 		public var gender:int;
 		
+		public var coin:int = 180000;
+		public var note:int = 2000;
+		
 		public function REDPlayerData()
 		{
 		}
