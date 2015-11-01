@@ -41,7 +41,7 @@ package view
 		
 		public function sendNotification(name:String, data:Object = null) : void
 		{			
-			_mediator.sendNotification(NiuNotification.createNotification(name, data));			
+			_mediator.sendNotification(NiuNotification.createNotification(name, data));
 		}
 		
 		override protected function initialize() : void

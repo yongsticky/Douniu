@@ -14,13 +14,12 @@ package view.scene.huanle
 	import view.framework.ExImage;
 	import view.framework.ExScene;
 	import view.scene.huanle.layer.Layer_Main;
+	import view.scene.table.layer.Layer_Bottom;
 	
 	public class Scene_HuanLeTable extends ExScene
 	{
-		protected var _bg:ExImage;
-		protected var _logo:ExImage;
-		
-		protected var _exitButton:Button;
+		protected var _bg:ExImage;				
+		protected var _quit:Button;
 		
 		public static const LAYER_MAIN:String = "main_layer";
 		
@@ -34,39 +33,36 @@ package view.scene.huanle
 		{
 			var resManager:ResManager = ResManager.instance();			
 			
-			_bg = new ExImage(resManager.getResource("table.bg.png"));
+			_bg = new ExImage(resManager.getResource("ui.table_bg"));
 			addChild(_bg);
 			
-			_logo = new ExImage(resManager.getResource("table.bg_logo.png"));			
-			_logo.alpha = 0.1;
-			addChild(_logo);
+			addChild(new Layer_Bottom());
 			
-			_exitButton = new Button(Texture.fromColor(60, 40, 0xFFFF0000), "退出>>");
-			_exitButton.addEventListener(Event.TRIGGERED, onTriggered);			
-			addChild(_exitButton);
+			_quit = new Button(Texture.fromBitmapData(resManager.getResource("ui.button_quit")));
+			_quit.addEventListener(Event.TRIGGERED, onQuit);
+			addChild(_quit);
+						
 			
 			addChild(new Layer_Main(LAYER_MAIN));
-		}
-		
-		private function onTriggered(event:Event):void
-		{			
-			SoundManager.instance().playButtonClick();
-			
-			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.USER_LOGOUT);
-		}
+		}	
 		
 		override protected function layoutChildren() : void
 		{
 			_bg.width = stage.stageWidth;
 			_bg.height = stage.stageHeight;
+						
 			
-			_logo.x = (stage.stageWidth - _logo.width) >> 1;
-			_logo.y = (stage.stageHeight - _logo.height) >> 1;
-			
-			_exitButton.x = stage.stageWidth - _exitButton.width - 10;
-			_exitButton.y = 10;
+			_quit.x = stage.stageWidth - _quit.width - 10;
+			_quit.y = 10;
 			
 			super.layoutChildren();
+		}
+		
+		private function onQuit(event:Event):void
+		{			
+			SoundManager.instance().playButtonClick();
+			
+			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.USER_LOGOUT);
 		}
 	}
 }

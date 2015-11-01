@@ -11,13 +11,13 @@ package view.scene.huanle.layer
 	
 	import view.NiuDirector;
 	import view.framework.ExLayer;
-	import view.scene.huanle.widget.Widget_Robot;
+	import view.scene.huanle.cell.Robot;
 	import view.widget.Widget_Timer;
 	
 	public class Layer_Main extends ExLayer
 	{
-		private var _dealer:Widget_Robot;		
-		private var _players:Vector.<Widget_Robot>;
+		private var _dealer:Robot;		
+		private var _players:Vector.<Robot>;
 		private var _timer:Widget_Timer;
 		
 		private var _selectedSeatId:int;
@@ -29,15 +29,15 @@ package view.scene.huanle.layer
 		
 		override protected function createChildren():void
 		{
-			_dealer = new Widget_Robot(4);
+			_dealer = new Robot(4);
 			_dealer.sepWidth = 70;
 			addChild(_dealer);
 			_dealer.betButton.visible = false;
 			
-			_players = new Vector.<Widget_Robot>(4);
+			_players = new Vector.<Robot>(4);
 			for (var i:int = 0; i < 4; ++i)
 			{
-				_players[i] = new Widget_Robot(i);	
+				_players[i] = new Robot(i);	
 				_players[i].addEventListener(Event.TRIGGERED, onTriggered);
 				addChild(_players[i]);
 			}	
@@ -49,7 +49,7 @@ package view.scene.huanle.layer
 		
 		private function onTriggered(event:Event) : void
 		{			
-			var robot:Widget_Robot =  event.target["parent"] as Widget_Robot;
+			var robot:Robot =  event.target["parent"] as Robot;
 			if (robot)
 			{
 				_selectedSeatId = robot.seatId;								

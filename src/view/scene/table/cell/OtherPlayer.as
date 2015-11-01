@@ -1,22 +1,22 @@
-package view.scene.table.widget
+package view.scene.table.cell
 {
 	import resource.ResManager;
 	
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
-	public class Widget_OtherPlayer extends ExSprite
+	public class OtherPlayer extends ExSprite
 	{
 		private var _seat:int;									// 座位号 从玩家开始 左手边为0 顺时针至4
 		
-		private var _playerHeader:Widget_PlayerHeader;			// 头像信息
-		private var _playerCards:Widget_OtherPlayerCards;		// 手牌
+		private var _playerHeader:PlayerHeader;			// 头像信息
+		private var _playerCards:OtherPlayerCards;		// 手牌
 		private var _playerRobDealerState:ExImage;					// 抢庄状态
 		private var _playerRobDealerMultiple:ExImage;				// 抢庄倍数
 		private var _playerDealerState:ExImage;				// 庄家状态
 		
 		
-		public function Widget_OtherPlayer(seat:int, name:String = null)
+		public function OtherPlayer(seat:int, name:String = null)
 		{
 			super(name);
 			
@@ -25,28 +25,26 @@ package view.scene.table.widget
 		
 		override protected function createChildren() : void
 		{				
-			_playerHeader = new Widget_PlayerHeader();
+			_playerHeader = new PlayerHeader();
 			addChild(_playerHeader);
 			
 			
-			_playerCards = new Widget_OtherPlayerCards();
-			if (_seat == 2)
+			_playerCards = new OtherPlayerCards();
+			if (_seat > 2)
 			{
-				_playerCards.x = 0;
-				_playerCards.y = 150;
+				_playerCards.x = -160;				
 			}
 			else
 			{
-				_playerCards.x = 120;
-				_playerCards.y = 30;
+				_playerCards.x = 100;				
 			}
 			_playerCards.visible = false;
 			addChild(_playerCards);
 			
 			
-			_playerDealerState = new ExImage(ResManager.instance().getResource("table.banker.png"));
-			_playerDealerState.x = 140;
-			_playerDealerState.y = 30;
+			_playerDealerState = new ExImage(ResManager.instance().getResource("ui.dealer"));
+			_playerDealerState.x = 20;
+			_playerDealerState.y = -50;
 			_playerDealerState.visible = false;
 			addChild(_playerDealerState);
 			
@@ -54,17 +52,17 @@ package view.scene.table.widget
 			_playerRobDealerState.x = 50;
 			_playerRobDealerState.y = -40;
 			_playerRobDealerState.visible = false;
-			addChild(_playerRobDealerState);
+			//addChild(_playerRobDealerState);
 			
 		}	
 		
 		
-		public function get playerHeader() : Widget_PlayerHeader
+		public function get playerHeader() : PlayerHeader
 		{
 			return _playerHeader;
 		}
 		
-		public function get playerCards() : Widget_OtherPlayerCards
+		public function get playerCards() : OtherPlayerCards
 		{
 			return _playerCards;
 		}

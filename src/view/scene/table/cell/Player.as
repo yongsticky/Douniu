@@ -1,4 +1,4 @@
-package view.scene.table.widget
+package view.scene.table.cell
 {	
 	import facade.NiuNotificationHandlerConstant;
 	
@@ -16,22 +16,24 @@ package view.scene.table.widget
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
-	public class Widget_Player extends ExSprite
+	public class Player extends ExSprite
 	{
-		private var _playerHeader:Widget_PlayerHeader;						// 玩家头像
-		private var _playerCards:Widget_PlayerCards;						// 玩家手牌
+		private var _playerHeader:PlayerHeader;						// 玩家头像
+		private var _playerCards:PlayerCards;							// 玩家手牌
+		
+		private var _playerReadyButtonGroup:ReadyButtonGroup;			// 换桌和退出
 
 		private var _playerRobDealerState:ExImage;								// 玩家抢庄状态
 		private var _playerDealerState:ExImage;							// 玩家获得庄家状态
-		private var _playerRobDealerButtonGroup:Widget_RobDealerButtonGroup;			// 玩家抢庄倍数操作按钮组
+		private var _playerRobDealerButtonGroup:RobDealerButtonGroup;			// 玩家抢庄倍数操作按钮组
 		
-		private var _playerBetButtonGroup:Widget_BetButtonGroup;			// 玩家押注倍数操作按钮
+		private var _playerBetButtonGroup:BetButtonGroup;			// 玩家押注倍数操作按钮
 		
-		private var _playerGiveButtonGroup:Widget_GiveButtonGroup;		// 玩家提交结果按钮组
-		private var _playerGiveCalculater:Widget_GiveCalculater;		// 玩家算牛辅助框
+		private var _playerGiveButtonGroup:GiveButtonGroup;		// 玩家提交结果按钮组
+		private var _cardCalculater:CardCalculater;		// 玩家算牛辅助框
 		
 		
-		public function Widget_Player(name:String = null)
+		public function Player(name:String = null)
 		{
 			super(name);
 		}
@@ -40,55 +42,64 @@ package view.scene.table.widget
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_playerHeader = new Widget_PlayerHeader();
-			_playerHeader.x = 52;
-			_playerHeader.y = 30;
+			_playerHeader = new PlayerHeader();			
+			_playerHeader.y = 100;
 			_playerHeader.visible = false;
 			addChild(_playerHeader);
 			
-			_playerCards = new Widget_PlayerCards();
-			_playerCards.x = 220;
-			_playerCards.y = 80;
+			_playerCards = new PlayerCards();
+			_playerCards.x = 140;
+			_playerCards.y = 100;
 			_playerCards.visible = false;
 			_playerCards.addEventListener(TouchEvent.TOUCH, onTouch);
 			addChild(_playerCards);
-						
-			_playerRobDealerState = new ExImage();
-			_playerRobDealerState.x = 120;
-			_playerRobDealerState.visible = false;			
-			addChild(_playerRobDealerState);
 			
-			_playerRobDealerButtonGroup = new Widget_RobDealerButtonGroup();
-			_playerRobDealerButtonGroup.x = 180;
-			_playerRobDealerButtonGroup.y = 0;
+			_playerReadyButtonGroup = new ReadyButtonGroup();
+			_playerReadyButtonGroup.visible = false;
+			_playerReadyButtonGroup. x = 140;
+			_playerReadyButtonGroup.y = 120;
+			addChild(_playerReadyButtonGroup);
+						
+			/*
+			_playerRobDealerState = new ExImage();
+			_playerRobDealerState.x = 76;
+			_playerRobDealerState.y = 130;
+			_playerRobDealerState.visible = false;			
+			addChild(_playerRobDealerState);			
+			*/
+			
+			
+			_playerRobDealerButtonGroup = new RobDealerButtonGroup();
+			_playerRobDealerButtonGroup.x = 140;
+			_playerRobDealerButtonGroup.y = 120;
 			_playerRobDealerButtonGroup.visible = false;
 			addChild(_playerRobDealerButtonGroup);
 			
-			_playerDealerState = new ExImage(resManager.getResource("table.banker.png"));
-			_playerDealerState.x = 0;
-			_playerDealerState.y = 60;
+			_playerDealerState = new ExImage(resManager.getResource("ui.dealer"));
+			_playerDealerState.x = 76;
+			_playerDealerState.y = 130;
 			_playerDealerState.visible = false;
 			addChild(_playerDealerState);
 			
-			_playerBetButtonGroup = new Widget_BetButtonGroup();
-			_playerBetButtonGroup.x = 180;
-			_playerBetButtonGroup.y = 0;
+			_playerBetButtonGroup = new BetButtonGroup();
+			_playerBetButtonGroup.x = 140;
+			_playerBetButtonGroup.y = 120;
 			_playerBetButtonGroup.visible = false;
 			addChild(_playerBetButtonGroup);
 			
-			_playerGiveButtonGroup = new Widget_GiveButtonGroup();
+			_playerGiveButtonGroup = new GiveButtonGroup();
 			_playerGiveButtonGroup.visible = false;
-			_playerGiveButtonGroup.x = 620;
-			_playerGiveButtonGroup.y = 60;
+			_playerGiveButtonGroup.x = 520;
+			_playerGiveButtonGroup.y = 90;
 			_playerGiveButtonGroup.addEventListener(Event.TRIGGERED, onTriggered);
 			addChild(_playerGiveButtonGroup);
 			
-			_playerGiveCalculater = new Widget_GiveCalculater();
-			_playerGiveCalculater.visible = false;
-			addChild(_playerGiveCalculater);			
+			_cardCalculater = new CardCalculater();
+			_cardCalculater.x = 180;			
+			_cardCalculater.visible = false;
+			addChild(_cardCalculater);
 		}
-		
-		
+				
 		protected function onTouch(event:TouchEvent) : void
 		{			
 			var touchObj:Touch = event.getTouch(_playerCards);
@@ -104,11 +115,22 @@ package view.scene.table.widget
 					{
 						_playerGiveButtonGroup.setGiveNiuEnabled(false);
 					}
+					
+					var v:Vector.<int> = new <int>[0,0,0,0,0];
+					var selVec:Vector.<int> = _playerCards.getCurrentSelectedPokers();
+					for (var i:int = 0; i < selVec.length; ++i)
+					{
+						v[i] = selVec[i];
+					}
+					
+					_cardCalculater.update(v);
 				}
 				
 				event.stopImmediatePropagation();
 			}						
 		}
+		
+		
 		
 		private function onTriggered(event:Event):void
 		{	
@@ -127,17 +149,22 @@ package view.scene.table.widget
 			_playerCards.visible = false;
 		}
 		
-		public function get playerHeader() : Widget_PlayerHeader
+		public function get playerHeader() : PlayerHeader
 		{
 			return _playerHeader;
 		}
 		
-		public function get playerCards() : Widget_PlayerCards
+		public function get playerCards() : PlayerCards
 		{
 			return _playerCards;
-		}		
+		}	
 		
-		public function get playerRobDealerButtonGroup() : Widget_RobDealerButtonGroup
+		public function get playerReadyButtonGroup() : ReadyButtonGroup
+		{
+			return _playerReadyButtonGroup;
+		}
+		
+		public function get playerRobDealerButtonGroup() : RobDealerButtonGroup
 		{
 			return _playerRobDealerButtonGroup;
 		}
@@ -152,19 +179,19 @@ package view.scene.table.widget
 			return _playerDealerState;
 		}
 		
-		public function get playerBetButtonGroup() : Widget_BetButtonGroup
+		public function get playerBetButtonGroup() : BetButtonGroup
 		{
 			return _playerBetButtonGroup;
 		}
 		
-		public function get playerGiveButtonGroup() : Widget_GiveButtonGroup
+		public function get playerGiveButtonGroup() : GiveButtonGroup
 		{
 			return _playerGiveButtonGroup;
 		}
 		
-		public function get playerGiveCalculater() : Widget_GiveCalculater
+		public function get cardCalculater() : CardCalculater
 		{
-			return _playerGiveCalculater;
+			return _cardCalculater;
 		}
 	}
 }

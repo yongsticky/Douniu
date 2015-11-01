@@ -1,7 +1,6 @@
 package facade 
 {
 	import camu.mvc.Facade;
-	import camu.mvc.Notification;
 	
 	import controller.NiuControllerMediator;
 	import controller.handler.NotificationHandler_DouniuEventNotify;
@@ -18,8 +17,7 @@ package facade
 	import controller.handler.NotificationHandler_TestUI;
 	import controller.handler.NotificationHandler_UserGive;
 	import controller.handler.NotificationHandler_UserLogout;
-	
-	import view.NiuViewMediator;
+
 	
 	public class NiuApplicationFacade extends Facade
 	{

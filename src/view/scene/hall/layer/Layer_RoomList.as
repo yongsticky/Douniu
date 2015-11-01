@@ -13,7 +13,7 @@ package view.scene.hall.layer
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExLayer;
-	import view.scene.hall.widget.Widget_Room;
+	import view.scene.hall.cell.RoomItem;
 	
 	public class Layer_RoomList extends ExLayer
 	{			
@@ -41,7 +41,7 @@ package view.scene.hall.layer
 			var xStart:int = 0;
 			for (var i:int = 0; i < MAX_ROOM_NUM_PER_TYPE; i++)
 			{
-				var cr:Widget_Room = new Widget_Room(Texture.fromBitmapData(resManager.getResource("ui.room_icon_basic")));
+				var cr:RoomItem = new RoomItem(Texture.fromBitmapData(resManager.getResource("ui.room_icon_basic")));
 				cr.roomDescTextFontFace = "Microsoft YaHei";
 				cr.roomDescTextFontSize = 12;
 				cr.roomDescTextFontColor = 0xFDBC2A;
@@ -53,7 +53,7 @@ package view.scene.hall.layer
 				cr.addEventListener(Event.TRIGGERED, onRoomTriggered);
 				
 				
-				var ar:Widget_Room = new Widget_Room(Texture.fromBitmapData(resManager.getResource("ui.room_icon_advance")));
+				var ar:RoomItem = new RoomItem(Texture.fromBitmapData(resManager.getResource("ui.room_icon_advance")));
 				ar.roomDescTextFontFace = "Microsoft YaHei";
 				ar.roomDescTextFontSize = 12;
 				ar.roomDescTextFontColor = 0xFDBC2A;
@@ -65,7 +65,7 @@ package view.scene.hall.layer
 				ar.addEventListener(Event.TRIGGERED, onRoomTriggered);
 				
 				
-				var hr:Widget_Room = new Widget_Room(Texture.fromBitmapData(resManager.getResource("ui.room_icon_betting")));
+				var hr:RoomItem = new RoomItem(Texture.fromBitmapData(resManager.getResource("ui.room_icon_betting")));
 				hr.roomDescTextFontFace = "Microsoft YaHei";
 				hr.roomDescTextFontSize = 12;
 				hr.roomDescTextFontColor = 0xFDBC2A;
@@ -91,7 +91,7 @@ package view.scene.hall.layer
 		{
 			SoundManager.instance().playButtonClick();
 			
-			var room:Widget_Room = event.target as Widget_Room;				
+			var room:RoomItem = event.target as RoomItem;				
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROOM, room.roomId);			
 		}
 	}

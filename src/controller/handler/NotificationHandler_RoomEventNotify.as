@@ -144,7 +144,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
 				{					
 					layer.showOtherPlayer(nick, chips, seatId);										
@@ -157,7 +157,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
 				{					
 					layer.hideOtherPlayer(seatId);										
@@ -172,10 +172,11 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
 				{										
 					layer.hideTimer();
+					layer.hidePlayerReadyButtonGroup();
 					
 					SoundManager.instance().playNotifyStart();
 				}				
@@ -189,23 +190,23 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
-				{										
+				{
+					layer.hideCardCalculater();
+					layer.showPlayerReadyButtonGroup();
 					layer.showWaitNextTimer(8);				
 				}
 			}
 			else
-			{
-				
-				
+			{				
 				var scene2:Scene_HuanLeTable = NiuDirector.instance().topScene as Scene_HuanLeTable;
 				if (scene2)
 				{
 					var layer2:Layer_Main = scene2.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
 					if (layer2)
 					{						
-						//layer2.startNewGame();
+						layer2.startNewGame();
 					}
 				}
 			}
@@ -218,7 +219,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
 				{
 					for each(var tlv:UnionTLV in event.other_info_vec)

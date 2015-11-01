@@ -4,19 +4,15 @@ package view.scene.table
 	
 	import view.framework.ExImage;
 	import view.framework.ExScene;
-	import view.scene.table.layer.Layer_BottomBanner;
+	import view.scene.table.layer.Layer_Bottom;
 	import view.scene.table.layer.Layer_TableMain;
 	import view.scene.table.layer.Layer_TopBanner;
 	
 	public class Scene_Table extends ExScene
 	{		
-		private static const BACKGROUND:String = "table.background";
-		private static const TOPBANNER:String = "table.topbanner";
-		private static const BOTTOMBANNER:String = "table.bottombanner";
-		private static const TABLEMAIN:String = "table.main";
-		
 		protected var _bg:ExImage;
-		protected var _logo:ExImage;
+		
+		private var _tableMain:Layer_TableMain;
 		
 		public function Scene_Table(name:String = null)
 		{
@@ -27,17 +23,14 @@ package view.scene.table
 		{
 			var resManager:ResManager = ResManager.instance();			
 		
-			_bg = new ExImage(resManager.getResource("table.bg.png"));
+			_bg = new ExImage(resManager.getResource("ui.table_bg"));
 			addChild(_bg);
 			
-			_logo = new ExImage(resManager.getResource("table.bg_logo.png"));			
-			_logo.alpha = 0.1;
-			addChild(_logo);
+			addChild(new Layer_TopBanner());
+			addChild(new Layer_Bottom());
 			
-			
-			addChild(new Layer_TopBanner(TOPBANNER));
-			addChild(new Layer_BottomBanner(BOTTOMBANNER));
-			addChild(new Layer_TableMain(TABLEMAIN));			
+			_tableMain = new Layer_TableMain("table.main"); 
+			addChild(_tableMain);			
 		}
 		
 		override protected function layoutChildren() : void
@@ -45,8 +38,6 @@ package view.scene.table
 			_bg.width = stage.stageWidth;
 			_bg.height = stage.stageHeight;
 			
-			_logo.x = (stage.stageWidth - _logo.width) >> 1;
-			_logo.y = (stage.stageHeight - _logo.height) >> 1;
 			
 			super.layoutChildren();
 		}

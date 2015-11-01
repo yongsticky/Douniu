@@ -1,4 +1,4 @@
-package view.scene.table.widget
+package view.scene.table.cell
 {
 	import camu.errors.NullObjectError;
 	import camu.errors.UnexpectedLengthError;
@@ -10,7 +10,7 @@ package view.scene.table.widget
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
-	public class Widget_OtherPlayerCards extends ExSprite
+	public class OtherPlayerCards extends ExSprite
 	{		
 		private static const MAX_POKER_NUM:int = 5;
 		
@@ -18,7 +18,7 @@ package view.scene.table.widget
 		
 		private var _pokers:Vector.<ExImage>;
 		
-		public function Widget_OtherPlayerCards(name:String = null)
+		public function OtherPlayerCards(name:String = null)
 		{
 			super(name);
 			
@@ -66,11 +66,11 @@ package view.scene.table.widget
 			var res:*;
 			if (c > 0)
 			{
-				res = ResManager.instance().getResource("poker." + COLOR_TO_STR[NiuCard.getColor(c)] + "_" + NiuCard.getNumber(c).toString() + ".png");
+				res = ResManager.instance().getResource("poker." + COLOR_TO_STR[NiuCard.getColor(c)] + "_" + NiuCard.getNumber(c).toString());
 			}
 			else
 			{
-				res = ResManager.instance().getResource("poker.bei.png");
+				res = ResManager.instance().getResource("poker.bei");
 			}
 			
 			return res;

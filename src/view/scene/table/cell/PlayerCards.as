@@ -1,4 +1,4 @@
-package view.scene.table.widget
+package view.scene.table.cell
 {
 	import camu.errors.IndexOutOfRangeError;
 	import camu.errors.NullObjectError;
@@ -20,22 +20,24 @@ package view.scene.table.widget
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
-	public class Widget_PlayerCards extends ExSprite
+	public class PlayerCards extends ExSprite
 	{		
 		private static const MAX_POKER_NUM:int = 5;
 		
 		private var _pokers:Vector.<PokerImage>;
 		private var _giveCards:Vector.<int>;
+		private var _currentSelectedCards:Vector.<int>;
 		private var _selectedCount:int;
 				
 		
-		public function Widget_PlayerCards(name:String = null)
+		public function PlayerCards(name:String = null)
 		{
 			super(name);
 			
 			_selectedCount = 0;
 			
-			_giveCards = new <int>[0, 0, 0, 0, 0];			
+			_giveCards = new <int>[0, 0, 0, 0, 0];		
+			_currentSelectedCards = new Vector.<int>();
 		}
 		
 		override protected function createChildren() : void
@@ -181,11 +183,29 @@ package view.scene.table.widget
 						++ curUnselectedIndex;
 					}
 				}
+				
+				_logger.log(this, "user give cards:", _giveCards.join(","), LEVEL.DEBUG);
+			}			
+			
+			return _giveCards;
+		}
+		
+		public function getCurrentSelectedPokers() : Vector.<int>
+		{
+			_currentSelectedCards.length = 0;			
+			
+			for (var i:int = 0; i < MAX_POKER_NUM; ++i)
+			{
+				var pI:PokerImage = _pokers[i];				
+				if (pI.selected)
+				{
+					_currentSelectedCards.push(pI.card);					
+				}				
 			}
 			
-			_logger.log(this, "user give cards:", _giveCards.join(","), LEVEL.DEBUG);
-			return _giveCards;
-		}				
+			return _currentSelectedCards;
+			
+		}
 		
 		protected function onTouch(event:TouchEvent):void
 		{
@@ -270,11 +290,11 @@ class PokerImage extends ExImage
 		var res:*;
 		if (c > 0)
 		{
-			res = ResManager.instance().getResource("poker." + COLOR_TO_STR[NiuCard.getColor(c)] + "_" + NiuCard.getNumber(c).toString() + ".png");
+			res = ResManager.instance().getResource("poker." + COLOR_TO_STR[NiuCard.getColor(c)] + "_" + NiuCard.getNumber(c).toString());
 		}
 		else
 		{
-			res = ResManager.instance().getResource("poker.bei.png");
+			res = ResManager.instance().getResource("poker.bei");
 		}
 		
 		return res;

@@ -1,6 +1,8 @@
-package view.scene.huanle.widget
+package view.scene.huanle.cell
 {
 	import facade.NiuNotificationHandlerConstant;
+	
+	import resource.ResManager;
 	
 	import starling.display.Button;
 	import starling.events.Event;
@@ -9,7 +11,7 @@ package view.scene.huanle.widget
 	import view.NiuDirector;
 	import view.framework.ExSprite;
 	
-	public class Widget_Robot extends ExSprite
+	public class Robot extends ExSprite
 	{
 		protected var _pokers:Vector.<PokerImage>;
 		protected var _betButton:Button;
@@ -20,7 +22,7 @@ package view.scene.huanle.widget
 		
 		private static const MAX_POKER_NUM:int = 5;
 		
-		public function Widget_Robot(seatId:int, name:String=null)
+		public function Robot(seatId:int, name:String=null)
 		{	
 			_seatId = seatId;
 			
@@ -46,7 +48,7 @@ package view.scene.huanle.widget
 				startX += _sepWidth;
 			}
 			
-			_betButton = new Button(Texture.fromColor(100, 60, 0xFFFF00FF), "押注");
+			_betButton = new Button(Texture.fromBitmapData(ResManager.instance().getResource("ui.button_bg_orange")), "押注");
 			_betButton.x = (width - _betButton.width)>>1;
 			_betButton.y = 120;			
 			addChild(_betButton);
@@ -116,11 +118,11 @@ class PokerImage extends ExImage
 		var res:*;
 		if (c > 0)
 		{
-			res = ResManager.instance().getResource("poker." + COLOR_TO_STR[NiuCard.getColor(c)] + "_" + NiuCard.getNumber(c).toString() + ".png");
+			res = ResManager.instance().getResource("poker." + COLOR_TO_STR[NiuCard.getColor(c)] + "_" + NiuCard.getNumber(c).toString());
 		}
 		else
 		{
-			res = ResManager.instance().getResource("poker.bei.png");
+			res = ResManager.instance().getResource("poker.bei");
 		}
 		
 		return res;

@@ -1,4 +1,4 @@
-package view.scene.hall.widget
+package view.scene.hall.cell
 {	
 	import starling.display.Button;
 	import starling.text.TextField;
@@ -6,7 +6,7 @@ package view.scene.hall.widget
 	import starling.utils.HAlign;
 	import starling.utils.VAlign;
 	
-	public class Widget_Room extends Button
+	public class RoomItem extends Button
 	{
 		private var _roomId:int;
 		
@@ -18,7 +18,7 @@ package view.scene.hall.widget
 		private var _roomDescTextFontSize:int = 14;
 		private var _roomDescTextFontColor:uint = 0x308014;
 		
-		public function Widget_Room(upState:Texture=null, text:String="", downState:Texture=null, overState:Texture=null, disabledState:Texture=null)
+		public function RoomItem(upState:Texture=null, text:String="", downState:Texture=null, overState:Texture=null, disabledState:Texture=null)
 		{		
 			super(upState, text, downState, overState, disabledState);
 		}	

@@ -10,6 +10,8 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
+	import facade.NiuNotificationHandlerConstant;
+	
 	import resource.ResManager;
 	
 	import view.NiuDirector;
@@ -43,6 +45,9 @@ package controller.handler
 		protected function onComplete(event:BulkProgressEvent):void
 		{
 			_logger.log(this, "onComplete", LEVEL.INFO);
+			
+			
+			//sendNotification(NiuNotificationHandlerConstant.TEST_UI);
 			
 			NiuDirector.instance().switchToScene(new Scene_SelectUser());
 		}

@@ -90,10 +90,10 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
-				{					
-					layer.showDealerRobButtonGroup(0, v.multiple[0], v.multiple[1], v.multiple[2]);
+				{						
+					layer.showRobDealerButtonGroup(0, v.multiple[0], v.multiple[1], v.multiple[2]);
 					
 					var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
 					if (tmInfo)
@@ -136,7 +136,7 @@ package controller.handler
 				throw new NullObjectError();
 			}
 			
-			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+			var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 			if (!layer)
 			{
 				throw new NullObjectError();
@@ -165,7 +165,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
 				{
 					if (RuntimeExchangeData.instance().redTableData.dealer_seat_id != 
@@ -214,7 +214,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
 				{		
 					layer.hideTimer();
@@ -225,6 +225,8 @@ package controller.handler
 					{
 						layer.showWaitGiveTimer(tmInfo.time_);	
 					}
+					
+					layer.showCardCalculater();
 					
 					
 					var tlInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY) as TTilesInfo;
@@ -289,7 +291,7 @@ package controller.handler
 				}
 				
 				
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
 				{		
 					layer.hidePlayerCards();
@@ -332,7 +334,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
 				{	
 					if (v.flag == 1)

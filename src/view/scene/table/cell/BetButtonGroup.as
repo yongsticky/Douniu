@@ -1,6 +1,8 @@
-package view.scene.table.widget
+package view.scene.table.cell
 {
 	import facade.NiuNotificationHandlerConstant;
+	
+	import resource.ResManager;
 	
 	import sound.SoundManager;
 	
@@ -11,7 +13,7 @@ package view.scene.table.widget
 	import view.NiuDirector;
 	import view.framework.ExSprite;
 	
-	public class Widget_BetButtonGroup extends ExSprite
+	public class BetButtonGroup extends ExSprite
 	{
 		private var _firstBet:Button;
 		private var _secondBet:Button;
@@ -19,7 +21,7 @@ package view.scene.table.widget
 
 		private var _multiples:Array = new Array();
 		
-		public function Widget_BetButtonGroup(name:String=null)
+		public function BetButtonGroup(name:String=null)
 		{
 			super(name);
 		}
@@ -39,19 +41,22 @@ package view.scene.table.widget
 		
 		override protected function createChildren() : void
 		{			
-			_firstBet = new Button(Texture.fromColor(100, 48, 0xFF0000FF), "");
+			var resManager:ResManager = ResManager.instance();
+			var tBg:Texture = Texture.fromBitmapData(resManager.getResource("ui.button_bg_orange"));
+			
+			_firstBet = new Button(tBg);
 			_firstBet.name = "0";
 			_firstBet.x = 60;
 			_firstBet.addEventListener(Event.TRIGGERED, onBtnRobTriggered);
 			addChild(_firstBet);
 			
-			_secondBet = new Button(Texture.fromColor(100, 48, 0xFF0000FF), "");
+			_secondBet = new Button(tBg);
 			_secondBet.name = "1";
 			_secondBet.x = _firstBet.x + _firstBet.width + 5;
 			_secondBet.addEventListener(Event.TRIGGERED, onBtnRobTriggered);
 			addChild(_secondBet);
 			
-			_thirdBet = new Button(Texture.fromColor(100, 48, 0xFF0000FF), "");
+			_thirdBet = new Button(tBg);
 			_thirdBet.name = "2";
 			_thirdBet.x = _secondBet.x + _secondBet.width + 5;
 			_thirdBet.addEventListener(Event.TRIGGERED, onBtnRobTriggered);

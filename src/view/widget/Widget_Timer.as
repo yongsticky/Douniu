@@ -33,7 +33,7 @@ package view.widget
 		
 		override protected function createChildren() : void
 		{		
-			_bg = new ExImage( ResManager.instance().getResource("table.timer_bg.png"));				
+			_bg = new ExImage( ResManager.instance().getResource("ui.timer_bg"));				
 			addChild(_bg);
 						
 			// 70*80
@@ -109,7 +109,7 @@ package view.widget
 				
 		protected function doAnimation() : void
 		{
-			var resId:String = "table.timer_" + _curTime + ".png";
+			var resId:String = "ui.timer_" + _curTime;
 			_num.res =  ResManager.instance().getResource(resId); 
 			_num.scaleX = _num.scaleY = 1;
 

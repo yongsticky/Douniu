@@ -71,7 +71,7 @@ package resource
 				for each(var item:Object in _jsonRootObj["preload"]["res_list"])
 				{
 					var url:String = server+item["path"];					
-					var loadingItem:LoadingItem = loader.add(server+item["path"], {"id":item["id"], "weight":item["weight"], "preventCache":false});
+					var loadingItem:LoadingItem = loader.add(server+item["path"], {"id":item["id"], "weight":item["weight"], "preventCache":true});
 					loadingItem.addEventListener(BulkProgressEvent.COMPLETE, onResItemComplete);
 					
 					_logger.log(this, "add item: url:",url, LEVEL.INFO);
@@ -101,13 +101,14 @@ package resource
 								
 				
 				for each(var clsName:String in clsArr)
-				{
+				{					
 					var cls:Class = Object(item).loader.contentLoaderInfo.applicationDomain.getDefinition(clsName);
 					
 					var last:int = clsName.lastIndexOf(".");					
 					var resId:String = item.id + "." +  (last>0 ? clsName.slice(0, last):clsName);
 					
 					_res[resId] = new cls();					
+					
 					
 					if (_res[resId] is Bitmap)
 					{						
@@ -124,7 +125,7 @@ package resource
 					else
 					{
 						_logger.log(this, "add res: id[", resId, "], clsName[", clsName, "], classType[Unknown].",  LEVEL.INFO);
-					}
+					}					
 				}				
 			}			
 		}

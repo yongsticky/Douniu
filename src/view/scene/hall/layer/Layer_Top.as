@@ -11,7 +11,7 @@ package view.scene.hall.layer
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExLayer;
-	import view.scene.hall.widget.Widget_PlayerInfo;
+	import view.scene.hall.cell.PlayerInfo;
 	import view.scene.mall.Scene_Mall;
 	import view.scene.setting.Scene_Setting;
 	
@@ -19,7 +19,7 @@ package view.scene.hall.layer
 	public class Layer_Top extends ExLayer
 	{
 		private var _bg:ExImage;		
-		private var _playerInfo:Widget_PlayerInfo;
+		private var _playerInfo:PlayerInfo;
 		private var _setting:Button;
 		private var _mall:Button;		
 		private var _notice_bg:ExImage;		
@@ -37,7 +37,7 @@ package view.scene.hall.layer
 			addChild(_bg);
 			
 			
-			_playerInfo = new Widget_PlayerInfo();
+			_playerInfo = new PlayerInfo();
 			_playerInfo.x = 10;
 			_playerInfo.y = 8;
 			addChild(_playerInfo);
@@ -49,10 +49,12 @@ package view.scene.hall.layer
 			_setting = new Button(Texture.fromBitmapData(resManager.getResource("ui.round_button_setting_in_hall")));
 			_setting.y = 17;
 			addChild(_setting);
+			_setting.addEventListener(Event.TRIGGERED, onSettingTriggered);
 			
 			_mall = new Button(Texture.fromBitmapData(resManager.getResource("ui.round_button_vip_mall_in_hall")));
 			_mall.y = 80;
-			addChild(_mall);			
+			addChild(_mall);
+			_mall.addEventListener(Event.TRIGGERED, onMallTriggered);
 		}
 		
 		override protected function layoutChildren():void
@@ -71,7 +73,7 @@ package view.scene.hall.layer
 			NiuDirector.instance().pushScene(new Scene_Setting());			
 		}
 		
-		protected function onVipMallTriggered(event:Event) : void
+		protected function onMallTriggered(event:Event) : void
 		{	
 			SoundManager.instance().playButtonClick();
 			

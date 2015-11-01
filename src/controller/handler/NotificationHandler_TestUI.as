@@ -34,15 +34,49 @@ package controller.handler
 			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");			
 			
 			layer.showPlayer("3000011", 10000, 0);
-			layer.showOtherPlayer("3000012", 12000, 1);
-			//layer.showBetButtonGroup(1, 3, 5);
-			//layer.showWaitRobDealerTimer(5);
-						
 			
-			var timer:Timer = new Timer(3000, 1);
+			layer.showPlayerReadyButtonGroup();
+			
+			
+			/*
+			layer.showPlayerCards(new <int>[11,21,31,33,35]);
+			
+			
+			
+			layer.setAnyPlayerAsDealer(0, 5);
+			layer.showPlayerGiveButtonGroup();
+			layer.showCardCalculater();
+			layer.showOtherPlayer("3000012", 12000, 1);
+			layer.showOtherPlayerCards(new <int>[11,21,31,33,35], 1);
+			
+			layer.showOtherPlayer("3000013", 12000, 2);
+			layer.showOtherPlayerCards(new <int>[0,0,0,0,0], 2);			
+			
+			
+			layer.showOtherPlayer("3000014", 12000, 3);
+			layer.showOtherPlayerCards(new <int>[0,0,0,0,0], 3);
+			
+			layer.showOtherPlayer("3000015", 12000, 4);
+			layer.showOtherPlayerCards(new <int>[0,0,0,0,0], 4);
+			layer.showOtherPlayer("3000016", 12000, 5);		
+			layer.showOtherPlayerCards(new <int>[0,0,0,0,0], 5);
+			
+			layer.setAnyPlayerAsDealer(1, 2);
+			layer.setAnyPlayerAsDealer(2, 2);
+			layer.setAnyPlayerAsDealer(3, 2);
+			layer.setAnyPlayerAsDealer(4, 2);
+			layer.setAnyPlayerAsDealer(5, 2);
+			
+			
+			
+			
+			layer.showWaitNextTimer(8);
+			*/
+			
+			/*var timer:Timer = new Timer(3000, 1);
 			timer.addEventListener(TimerEvent.TIMER, onTimer);			
 			timer.start();
-			
+			*/			
 		}
 		
 		protected function onTimer(event:TimerEvent):void

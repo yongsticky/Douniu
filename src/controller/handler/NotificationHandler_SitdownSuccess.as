@@ -57,10 +57,11 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layerTable:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layerTable)
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				if (layer)
 				{					
-					layerTable.showPlayer(resp.csHeader.uin.toString(), RuntimeExchangeData.instance().redPlayerData.chips, resp.seat_id);
+					layer.showPlayer(resp.csHeader.uin.toString(), RuntimeExchangeData.instance().redPlayerData.chips, resp.seat_id);
+					layer.showPlayerReadyButtonGroup();
 				}
 			}
 		}

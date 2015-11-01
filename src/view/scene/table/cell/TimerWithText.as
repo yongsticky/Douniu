@@ -1,15 +1,14 @@
-package view.scene.table.widget
+package view.scene.table.cell
 {
 	import camu.errors.IndexOutOfRangeError;
-	import camu.logger.LEVEL;
-	
+		
 	import resource.ResManager;
 	
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	import view.widget.Widget_Timer;
 
-	public class Widget_TimerWithText extends ExSprite
+	public class TimerWithText extends ExSprite
 	{
 		private var _text:ExImage;
 		private var _timer:Widget_Timer;
@@ -25,7 +24,7 @@ package view.scene.table.widget
 		
 		
 		
-		public function Widget_TimerWithText(name:String = null)
+		public function TimerWithText(name:String = null)
 		{
 			super(name);
 		}
@@ -60,7 +59,7 @@ package view.scene.table.widget
 			
 			visible = true;
 			
-			_text.res = ResManager.instance().getResource(INDEX_2_RES[index]);
+			//_text.res = ResManager.instance().getResource(INDEX_2_RES[index]);
 			
 			_timer.startTimer(time);		
 		}

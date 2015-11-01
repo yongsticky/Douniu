@@ -30,10 +30,9 @@ package controller.handler
 		{
 			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
 			
-			NiuResponseReceiver.instance().initReceivers();
+			NiuResponseReceiver.instance().initReceivers();			
 			
-			//sendNotification(NiuNotificationHandlerConstant.TEST_UI);	
-						
+			
 			
 			var connector:NiuServerConnector = NiuServerConnector.instance();	
 			
