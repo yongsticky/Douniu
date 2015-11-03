@@ -43,6 +43,6 @@ package view.framework
 					layer.resumeAnimation();
 				}
 			}
-		}		
+		}
 	}
 }

@@ -14,7 +14,7 @@ package view.scene.table.layer
 	import view.framework.ExLayer;
 	
 	
-	public class Layer_Mask extends ExLayer
+	public class Layer_TableMask extends ExLayer
 	{
 		private var _bg:ExImage;
 		
@@ -22,7 +22,7 @@ package view.scene.table.layer
 		
 		private var _num2:TextField;
 		
-		public function Layer_Mask(name:String=null)
+		public function Layer_TableMask(name:String=null)
 		{
 			super(name);
 		}

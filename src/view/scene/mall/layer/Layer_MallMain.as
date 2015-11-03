@@ -2,9 +2,9 @@ package view.scene.mall.layer
 {
 	import view.framework.ExLayer;
 
-	public class Layer_Mall extends ExLayer
+	public class Layer_MallMain extends ExLayer
 	{
-		public function Layer_Mall(name:String = null)
+		public function Layer_MallMain(name:String = null)
 		{
 			super(name);
 		}

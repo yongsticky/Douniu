@@ -13,7 +13,7 @@ package view.scene.table.layer
 	import view.widget.Widget_TimerWithText;
 
 	public class Layer_TableMain extends ExLayer
-	{		
+	{			
 		private static const MAX_OTHER_PLAYER_NUM:int = 5;	
 		
 		private var _player:Player;		

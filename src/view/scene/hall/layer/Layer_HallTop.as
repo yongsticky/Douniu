@@ -16,7 +16,7 @@ package view.scene.hall.layer
 	import view.scene.setting.Scene_Setting;
 	
 	
-	public class Layer_Top extends ExLayer
+	public class Layer_HallTop extends ExLayer
 	{
 		private var _bg:ExImage;		
 		private var _playerInfo:PlayerInfo;
@@ -24,7 +24,7 @@ package view.scene.hall.layer
 		private var _mall:Button;		
 		private var _notice_bg:ExImage;		
 		
-		public function Layer_Top(name:String = null)
+		public function Layer_HallTop(name:String = null)
 		{
 			super(name);
 		}

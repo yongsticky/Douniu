@@ -9,7 +9,7 @@ package view.scene.loading
 	
 	import view.framework.ExImage;
 	import view.framework.ExScene;
-	import view.scene.loading.layer.Layer_Loading;
+	import view.scene.loading.layer.Layer_LoadingMain;
 	
 	
 	
@@ -39,7 +39,7 @@ package view.scene.loading
 			_logo = new ExImage(new Logo());
 			addChild(_logo);
 			
-			addChild(new Layer_Loading("loading"));
+			addChild(new Layer_LoadingMain("loading"));
 		}
 		
 		override protected function layoutChildren():void

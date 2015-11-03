@@ -1,14 +1,18 @@
 package view
 {
-	import starling.events.EnterFrameEvent;
-	
 	import camu.errors.AbstractClassError;
 	import camu.logger.LEVEL;
 	
-	import controller.NiuNotification;	
-	import facade.NiuNotificationHandlerConstant;	
-	import server.NiuServerConnector;		
+	import controller.NiuNotification;
+	
+	import facade.NiuNotificationHandlerConstant;
+	
+	import server.NiuServerConnector;
+	
+	import starling.events.EnterFrameEvent;
+	
 	import view.framework.ExDirector;
+	import view.framework.ExLayer;
 	
 	public class NiuDirector extends ExDirector
 	{		
@@ -37,7 +41,19 @@ package view
 			}
 			
 			return _instance;
-		}		
+		}	
+		
+		public function getLayerInCurrentTopScene(layerName:String) : ExLayer
+		{
+			if (topScene)
+			{
+				return topScene.getChildByName(layerName) as ExLayer;
+			}
+			else
+			{
+				return null;
+			}
+		}
 		
 		public function sendNotification(name:String, data:Object = null) : void
 		{			

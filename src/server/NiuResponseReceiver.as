@@ -104,7 +104,7 @@ package server
 		protected function onReceive_Sitdown(event:PacketEvent) : void
 		{
 			_logger.log(this, "onReceive_Sitdown Enter.", LEVEL.INFO);
-						
+			
 			sendNotification(NiuNotificationHandlerConstant.SITDOWN_SUCCESS, event.packet);			
 		}
 		
@@ -125,8 +125,7 @@ package server
 		{
 			_logger.log(this, "onReceive_Standup Enter.", LEVEL.INFO);
 			
-			var resp:NiuResponsePacket = event.packet as NiuResponsePacket;			
-			
+			var resp:NiuResponsePacket = event.packet as NiuResponsePacket;				
 			var logoutReqeust:Request_Logout = NiuObjectFactory.instance().createInstance(Request_Logout);
 			logoutReqeust.csHeader.copy(resp.csHeader);
 			logoutReqeust.reason = 0;

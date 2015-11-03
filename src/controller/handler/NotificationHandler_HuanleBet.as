@@ -18,7 +18,7 @@ package controller.handler
 	
 	import view.NiuDirector;
 	import view.scene.huanle.Scene_HuanLeTable;
-	import view.scene.huanle.layer.Layer_Main;
+	import view.scene.huanle.layer.Layer_HuanleMain;
 	
 	public class NotificationHandler_HuanleBet extends NiuNotificationHandler
 	{
@@ -51,7 +51,7 @@ package controller.handler
 			var scene:Scene_HuanLeTable = NiuDirector.instance().topScene as Scene_HuanLeTable;
 			if (scene)
 			{
-				var layer:Layer_Main = scene.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
+				var layer:Layer_HuanleMain = scene.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_HuanleMain;
 				if (layer)
 				{					
 					layer.hideBetButton();

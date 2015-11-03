@@ -48,15 +48,12 @@ package controller.handler
 			
 			NiuRequestSender.instance().sendRequest(requestPlay);	
 			
-			var sceneTable:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (sceneTable)
-			{
-				var layerTable:Layer_TableMain = sceneTable.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layerTable)
-				{					
-					layerTable.hideBetButtonGroup();
-					layerTable.hideTimer();				
-				}
+
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
+			if (layer)
+			{					
+				layer.hideBetButtonGroup();
+				layer.hideTimer();				
 			}
 		}
 	}

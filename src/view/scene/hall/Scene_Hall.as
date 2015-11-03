@@ -4,14 +4,14 @@ package view.scene.hall
 	
 	import view.framework.ExImage;
 	import view.framework.ExScene;
-	import view.scene.hall.layer.Layer_RoomList;
-	import view.scene.hall.layer.Layer_Top;
+	import view.scene.hall.layer.Layer_HallMain;
+	import view.scene.hall.layer.Layer_HallTop;
 	
 
 	public final class Scene_Hall extends ExScene
 	{			
 		private var _bg:ExImage;
-		private var _rooms:Layer_RoomList;
+		private var _rooms:Layer_HallMain;
 				
 		public function Scene_Hall(name:String = null)
 		{
@@ -25,8 +25,8 @@ package view.scene.hall
 			_bg = new ExImage(resManager.getResource("ui.hall_bg"));			
 			addChild(_bg);					
 								
-			addChild(new Layer_Top());
-			_rooms = new Layer_RoomList();
+			addChild(new Layer_HallTop());
+			_rooms = new Layer_HallMain();
 			addChild(_rooms);
 		}
 		

@@ -12,13 +12,13 @@ package view.scene.table.layer
 	import view.scene.mall.Scene_Mall;	
 	import view.scene.table.cell.PlayerInfo;
 	
-	public class Layer_Bottom extends ExLayer
+	public class Layer_TableBottom extends ExLayer
 	{
 		private var _bg:ExImage;		
 		private var _playerInfo:PlayerInfo;
 		internal var _mall:Button;
 		
-		public function Layer_Bottom(name:String = null)
+		public function Layer_TableBottom(name:String = null)
 		{
 			super(name);
 		}

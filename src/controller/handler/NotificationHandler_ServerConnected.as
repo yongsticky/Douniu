@@ -13,7 +13,7 @@ package controller.handler
 	
 	import view.NiuDirector;
 	import view.scene.loading.Scene_Loading;
-	import view.scene.loading.layer.Layer_Loading;
+	import view.scene.loading.layer.Layer_LoadingMain;
 	import view.scene.selectuser.Scene_SelectUser;
 	
 	import facade.NiuNotificationHandlerConstant;
@@ -56,7 +56,7 @@ package controller.handler
 			var scene:Scene_Loading = NiuDirector.instance().topScene as Scene_Loading;
 			if (scene)
 			{
-				var layer:Layer_Loading = scene.getChildByName("loading") as Layer_Loading;
+				var layer:Layer_LoadingMain = scene.getChildByName("loading") as Layer_LoadingMain;
 				if (layer)
 				{				
 					layer.updatePercent(event._weightPercent*100);

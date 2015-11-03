@@ -13,13 +13,13 @@ package view.scene.table.layer
 	import view.framework.ExLayer;
 	import view.scene.setting.Scene_Setting;
 	
-	public class Layer_TopBanner extends ExLayer
+	public class Layer_TableTop extends ExLayer
 	{
 		private var _bg:ExImage;
 				
 		private var _setting:Button;
 		
-		public function Layer_TopBanner(name:String = null)
+		public function Layer_TableTop(name:String = null)
 		{
 			super(name);
 		}

@@ -30,8 +30,7 @@ package controller.handler
 			var scene:Scene_Table = new Scene_Table();
 			NiuDirector.instance().switchToScene(scene);
 						
-			
-			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");			
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			
 			layer.showPlayer("3000011", 10000, 0);
 			layer.getPlayer().setMoneyChange(3000);
@@ -93,7 +92,7 @@ package controller.handler
 		protected function onTimer(event:TimerEvent):void
 		{
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			
 			layer.setAnyPlayerRobDealerState(1, false);
 		}
@@ -102,7 +101,7 @@ package controller.handler
 		protected function onTimer(event:TimerEvent):void
 		{
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");
+		var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 	
 
 			if (_first)
@@ -129,7 +128,7 @@ package controller.handler
 		protected function onTimer2(event:TimerEvent):void
 		{
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");
+		var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			
 			layer.showWaitGiveTimer(5);
 		}

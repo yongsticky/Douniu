@@ -3,7 +3,7 @@ package view.scene.selectuser
 	import starling.display.Quad;
 	
 	import view.framework.ExScene;	
-	import view.scene.selectuser.layer.Layer_User;
+	import view.scene.selectuser.layer.Layer_SelectUserMain;
 	
 	public class Scene_SelectUser extends ExScene
 	{
@@ -17,7 +17,7 @@ package view.scene.selectuser
 			var qd:Quad = new Quad(stage.stageWidth, stage.stageHeight, 0x222222);			
 			addChild(qd);
 			
-			addChild(new Layer_User());
+			addChild(new Layer_SelectUserMain());
 		}
 	}
 }

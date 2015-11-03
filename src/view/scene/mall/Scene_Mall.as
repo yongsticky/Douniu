@@ -9,7 +9,7 @@ package view.scene.mall
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExScene;
-	import view.scene.mall.layer.Layer_Mall;
+	import view.scene.mall.layer.Layer_MallMain;
 	
 	public class Scene_Mall extends ExScene
 	{
@@ -33,7 +33,7 @@ package view.scene.mall
 			addChild(_close);
 			
 			
-			addChild(new Layer_Mall());		
+			addChild(new Layer_MallMain());		
 		}
 		
 		override protected function layoutChildren():void

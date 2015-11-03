@@ -21,7 +21,7 @@ package controller.handler
 	
 	import view.NiuDirector;
 	import view.scene.huanle.Scene_HuanLeTable;
-	import view.scene.huanle.layer.Layer_Main;
+	import view.scene.huanle.layer.Layer_HuanleMain;
 	import view.scene.table.Scene_Table;
 	import view.scene.table.layer.Layer_TableMain;
 	
@@ -104,19 +104,14 @@ package controller.handler
 				return;
 			}
 			
-			var playerDetail:PlayerDetailInfo = null;
-			for each(var tlv:UnionTLV in event.other_info_vec)
-			{
-				if (tlv.valueType == TLVType.DN_TLV_PLAYERDETAIL)
-				{
-					playerDetail = tlv.value as PlayerDetailInfo;
-					break;
-				}
-			}
-			
+			var playerDetail:PlayerDetailInfo = event.getTLVValue(TLVType.DN_TLV_PLAYERDETAIL) as PlayerDetailInfo;						
 			if (playerDetail)
-			{
-				addPlayerToTable(playerDetail.player_uin.toString(), playerDetail.money.lowPart, playerDetail.seat_id);
+			{			
+				var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
+				if (layer)
+				{					
+					layer.showOtherPlayer(playerDetail.player_uin.toString(), playerDetail.money.lowPart, playerDetail.seat_id);										
+				}	
 				
 				SoundManager.instance().playNotifyEnterRoom();
 			}			
@@ -126,47 +121,16 @@ package controller.handler
 		{
 			_logger.log(this, "onEvent_OtherPlayerStandup", LEVEL.INFO);
 			
-			var exitPlayerInfo:ExitPlayerInfo = null;
-			for each(var tlv:UnionTLV in event.other_info_vec)
-			{
-				if (tlv.valueType == TLVType.DN_TLV_EXIT_PLAYER_INFO)
-				{
-					exitPlayerInfo = tlv.value as ExitPlayerInfo;
-					break;
-				}
-			}
-			
+			var exitPlayerInfo:ExitPlayerInfo = event.getTLVValue(TLVType.DN_TLV_EXIT_PLAYER_INFO) as ExitPlayerInfo;
 			if (exitPlayerInfo)
 			{
 				_logger.log(this, "Player Standup, Reason:[",exitPlayerInfo.standup_reason,"]",  LEVEL.INFO);
 			}
-			 
-			removePlayerFromTable(event.seat_id);
-		}
-		
-		private function addPlayerToTable(nick:String, chips:int, seatId:int) : void
-		{
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
-			{
-				var layer:Layer_TableMain = scene.getChildByName("table.main") as Layer_TableMain;
-				if (layer)
-				{					
-					layer.showOtherPlayer(nick, chips, seatId);										
-				}
-			}
-		}	
-		
-		private function removePlayerFromTable(seatId:int) : void
-		{
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
-			{
-				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
-				if (layer)
-				{					
-					layer.hideOtherPlayer(seatId);										
-				}
+			
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
+			if (layer)
+			{					
+				layer.hideOtherPlayer(event.seat_id);										
 			}
 		}
 		
@@ -174,49 +138,36 @@ package controller.handler
 		{
 			_logger.log(this, "onEvent_GameStart", LEVEL.DEBUG);
 			
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
-			{
-				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
-				if (layer)
-				{	
-					layer.hidePlayerCards();					
-					layer.hideOtherPlayerCards();
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;				
+			if (layer)
+			{	
+				layer.hidePlayerCards();					
+				layer.hideOtherPlayerCards();
 					
+				layer.hideTimer();
+				layer.hidePlayerReadyButtonGroup();					
 					
-					layer.hideTimer();
-					layer.hidePlayerReadyButtonGroup();					
-					
-					SoundManager.instance().playNotifyStart();
-				}				
+				SoundManager.instance().playNotifyStart();
 			}
 		}
 		
 		private function onEvent_GameEnd(event:TRoomEvent) : void
 		{
 			_logger.log(this, "onEvent_GameEnd", LEVEL.DEBUG);
-			
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
-			{
-				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
-				if (layer)
-				{					
-					layer.showPlayerReadyButtonGroup();
-					
-					layer.showWaitNextGameTimer(8);
-				}
+
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
+			if (layer)
+			{					
+				layer.showPlayerReadyButtonGroup();
+				layer.showWaitNextGameTimer(8);
 			}
 			else
 			{				
-				var scene2:Scene_HuanLeTable = NiuDirector.instance().topScene as Scene_HuanLeTable;
-				if (scene2)
-				{
-					var layer2:Layer_Main = scene2.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
-					if (layer2)
-					{						
-						layer2.startNewGame();
-					}
+				
+				var layer2:Layer_HuanleMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_HuanLeTable.LAYER_MAIN) as Layer_HuanleMain;
+				if (layer2)
+				{						
+					layer2.startNewGame();
 				}
 			}
 		}
@@ -225,34 +176,28 @@ package controller.handler
 		{
 			_logger.log(this, "onEvent_MoneyChange", LEVEL.DEBUG);
 			
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
+			if (layer)
 			{
-				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
-				if (layer)
+				for each(var tlv:UnionTLV in event.other_info_vec)
 				{
-					for each(var tlv:UnionTLV in event.other_info_vec)
+					if (tlv.valueType == TLVType.DN_TLV_MONEY_CHANGE_INFO)
 					{
-						if (tlv.valueType == TLVType.DN_TLV_MONEY_CHANGE_INFO)
+						var mcInfo:PlayerMoneyChangeInfo = tlv.value as PlayerMoneyChangeInfo;
+						if (mcInfo)
 						{
-							var mcInfo:PlayerMoneyChangeInfo = tlv.value as PlayerMoneyChangeInfo;
-							if (mcInfo)
+							if (mcInfo.money_change_value.highPart > 0)
 							{
-								if (mcInfo.money_change_value.highPart > 0)
-								{
-									layer.PlayerMoneyChange(event.seat_id,  mcInfo.money_change_value.lowPart, mcInfo.money_cur_value.lowPart);
-								}
-								else
-								{
-									layer.PlayerMoneyChange(event.seat_id,  -mcInfo.money_change_value.lowPart, mcInfo.money_cur_value.lowPart);
-								}
-							}						
-						}
+								layer.PlayerMoneyChange(event.seat_id,  mcInfo.money_change_value.lowPart, mcInfo.money_cur_value.lowPart);
+							}
+							else
+							{
+								layer.PlayerMoneyChange(event.seat_id,  -mcInfo.money_change_value.lowPart, mcInfo.money_cur_value.lowPart);
+							}
+						}						
 					}
 				}
 			}
-		}
-		
-		
+		}	
 	}
 }

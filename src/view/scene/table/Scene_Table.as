@@ -4,15 +4,17 @@ package view.scene.table
 	
 	import view.framework.ExImage;
 	import view.framework.ExScene;
-	import view.scene.table.layer.Layer_Bottom;
-	import view.scene.table.layer.Layer_Mask;
+	import view.scene.table.layer.Layer_TableBottom;
+	import view.scene.table.layer.Layer_TableMask;
 	import view.scene.table.layer.Layer_TableMain;
-	import view.scene.table.layer.Layer_TopBanner;
+	import view.scene.table.layer.Layer_TableTop;
 	
 	public class Scene_Table extends ExScene
-	{		
+	{	
+		public static const LAYER_MAIN:String = "layer.table.main"; 
+		
 		private var _bg:ExImage;
-		private var _mask:Layer_Mask;
+		private var _mask:Layer_TableMask;
 		
 		private var _tableMain:Layer_TableMain;
 		
@@ -28,10 +30,10 @@ package view.scene.table
 			_bg = new ExImage(resManager.getResource("ui.table_bg"));
 			addChild(_bg);
 			
-			addChild(new Layer_TopBanner());
-			addChild(new Layer_Bottom());
+			addChild(new Layer_TableTop());
+			addChild(new Layer_TableBottom());
 			
-			_tableMain = new Layer_TableMain("table.main"); 
+			_tableMain = new Layer_TableMain(LAYER_MAIN); 
 			addChild(_tableMain);		
 			
 			//_mask = new Layer_Mask();

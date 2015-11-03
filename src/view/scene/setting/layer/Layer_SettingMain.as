@@ -2,9 +2,9 @@ package view.scene.setting.layer
 {
 	import view.framework.ExLayer;
 
-	public class Layer_Settings extends ExLayer
+	public class Layer_SettingMain extends ExLayer
 	{		
-		public function Layer_Settings(name:String = null)
+		public function Layer_SettingMain(name:String = null)
 		{
 			super(name);
 		}

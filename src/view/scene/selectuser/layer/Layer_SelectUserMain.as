@@ -10,10 +10,10 @@ package view.scene.selectuser.layer
 	import view.NiuDirector;
 	import view.framework.ExLayer;
 	
-	public class Layer_User extends ExLayer
+	public class Layer_SelectUserMain extends ExLayer
 	{
 				
-		public function Layer_User(name:String=null)
+		public function Layer_SelectUserMain(name:String=null)
 		{
 			super(name);
 		}

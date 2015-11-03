@@ -10,7 +10,6 @@ package controller.handler
 	import global.RuntimeExchangeData;
 	
 	import packet.game.message.Notify.Notify_DouniuEvent;
-	import packet.game.message.Notify.TRoomEvent;
 	import packet.game.tlv.TLVType;
 	import packet.game.tlv.value.TDealerInfo;
 	import packet.game.tlv.value.TTilesInfo;
@@ -29,7 +28,7 @@ package controller.handler
 	
 	import view.NiuDirector;
 	import view.scene.huanle.Scene_HuanLeTable;
-	import view.scene.huanle.layer.Layer_Main;
+	import view.scene.huanle.layer.Layer_HuanleMain;
 	import view.scene.table.Scene_Table;
 	import view.scene.table.layer.Layer_TableMain;
 	
@@ -84,42 +83,38 @@ package controller.handler
 		private function onNotify_RobDealer(v:NotifyRobDealer) : void
 		{
 			_logger.log(this, "onNotify_RobDealer Enter.", LEVEL.INFO);
-			
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
-			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-				if (layer)
-				{						
-					layer.showRobDealerButtonGroup(0, v.multiple[0], v.multiple[1], v.multiple[2]);
+						
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
+			if (layer)
+			{						
+				layer.showRobDealerButtonGroup(0, v.multiple[0], v.multiple[1], v.multiple[2]);
 					
-					var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
-					if (tmInfo)
-					{
-						layer.showWaitRobDealerTimer(tmInfo.time_);
-					}
+				var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
+				if (tmInfo)
+				{
+					layer.showWaitRobDealerTimer(tmInfo.time_);
+				}
 					
-					// 如果有牌，说明是看牌场
-					var tlInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY) as TTilesInfo;
-					if (tlInfo)
+				// 如果有牌，说明是看牌场
+				var tlInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY) as TTilesInfo;
+				if (tlInfo)
+				{
+					var vec:Vector.<int> = new <int>[0, 0, 0, 0, 0];
+					for (var i:int = 0; i < tlInfo.tiles_num; ++i)
 					{
-						var vec:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-						for (var i:int = 0; i < tlInfo.tiles_num; ++i)
-						{
-							vec[i] = int(tlInfo.tiles[i]);
-						}
-						
-						layer.showPlayerCards(vec);	
-						vec.length = 0;
-						vec = null;
-						
-						var vec2:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-						layer.showOtherPlayerCards(vec2);
-						vec2.length = 0;
-						vec2 = null;
-						
-						SoundManager.instance().playDealCard();
+						vec[i] = int(tlInfo.tiles[i]);
 					}
+						
+					layer.showPlayerCards(vec);	
+					vec.length = 0;
+					vec = null;
+						
+					var vec2:Vector.<int> = new <int>[0, 0, 0, 0, 0];
+					layer.showOtherPlayerCards(vec2);
+					vec2.length = 0;
+					vec2 = null;
+						
+					SoundManager.instance().playDealCard();
 				}
 			}			
 		}
@@ -127,172 +122,141 @@ package controller.handler
 		private function onNotify_DealerDetail(v:NotifyDealerDetail) : void
 		{
 			_logger.log(this, "onNotify_DealerDetail Enter.", LEVEL.INFO);	
-
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (!scene)
+		
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;			
+			if (layer)
 			{
-				throw new NullObjectError();
-			}
-			
-			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
-			if (!layer)
-			{
-				throw new NullObjectError();
-			}
-			
-			var dealerInfo:TDealerInfo = v.getTLVValue(TLVType.SO_UP_TLV_DEALER_KEY) as TDealerInfo;
-			if (dealerInfo)
-			{
-				RuntimeExchangeData.instance().redTableData.dealer_seat_id = dealerInfo.dealer;
-				
-				layer.hideTimer();				
-				layer.hideDealerRobButtonGroup();				
-				layer.setAnyPlayerAsDealer(v.seat_id, v.multiple);
-				layer.clearAllPlayerRobDealerState();
-			}
-			else
-			{				
-				if (v.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
+				var dealerInfo:TDealerInfo = v.getTLVValue(TLVType.SO_UP_TLV_DEALER_KEY) as TDealerInfo;
+				if (dealerInfo)
 				{
-					layer.showWaitOtherRobDealerTimer();
+					RuntimeExchangeData.instance().redTableData.dealer_seat_id = dealerInfo.dealer;
+					
+					layer.hideTimer();				
+					layer.hideDealerRobButtonGroup();				
+					layer.setAnyPlayerAsDealer(v.seat_id, v.multiple);
+					layer.clearAllPlayerRobDealerState();
 				}
-				
-				layer.setAnyPlayerRobDealerState(v.seat_id, (v.multiple!=0));
-			}			
+				else
+				{				
+					if (v.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
+					{
+						layer.showWaitOtherRobDealerTimer();
+					}
+					
+					layer.setAnyPlayerRobDealerState(v.seat_id, (v.multiple!=0));
+				}
+			}				
 		}
 		
 		private function onNotify_Bet(v:NotifyBet) : void
 		{
 			_logger.log(this, "onNotify_Bet Enter.", LEVEL.INFO);			
 			
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
-			{
-				var layer:Layer_TableMain = scene.getChildByName("table.main") as Layer_TableMain;
-				if (layer)
-				{					
-					var tInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
-					if (tInfo)
-					{
-						layer.showWaitBetTimer(tInfo.time_);	
-					}
-					
-					
-					var red:RuntimeExchangeData = RuntimeExchangeData.instance(); 
-					if (red.redTableData.dealer_seat_id != red.redPlayerData.seat_id)
-					{
-						layer.showBetButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);						
-					}
-					else
-					{
-						layer.showWaitOtherBetTimer();
-					}					
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
+			if (layer)
+			{					
+				var tInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
+				if (tInfo)
+				{
+					layer.showWaitBetTimer(tInfo.time_);	
 				}
+					
+				var red:RuntimeExchangeData = RuntimeExchangeData.instance(); 
+				if (red.redTableData.dealer_seat_id != red.redPlayerData.seat_id)
+				{
+					layer.showBetButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);						
+				}
+				else
+				{
+					layer.showWaitOtherBetTimer();
+				}					
 			}
 		}
 		
 		private function onNotify_BetDetail(v:NotifyBetDetail) : void
 		{
-			_logger.log(this, "onNotify_BetDetail Enter.", LEVEL.INFO);				
-
+			_logger.log(this, "onNotify_BetDetail Enter.", LEVEL.INFO);	
 			
 			SoundManager.instance().playNotifyBetDetail();
-						
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
+			
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
+			if (layer)
 			{
-				var layer:Layer_TableMain = scene.getChildByName("table.main") as Layer_TableMain;
-				if (layer)
+				if (v.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
 				{
-					if (v.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
-					{
-						layer.showWaitOtherBetTimer();
-					}
-				}
-			}
-			else
-			{
-				var scene2:Scene_HuanLeTable = NiuDirector.instance().topScene as Scene_HuanLeTable;
-				if (scene2)
-				{
-					var layer2:Layer_Main = scene2.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
-					if (layer2)
-					{	
-						var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
-						if (tmInfo)
-						{
-							layer2.showTimer(tmInfo.time_);						
-						}				
-					}
+					layer.showWaitOtherBetTimer();
 				}
 			}			
-						
+			else
+			{
+				var layer2:Layer_HuanleMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_HuanLeTable.LAYER_MAIN) as Layer_HuanleMain;
+				if (layer2)
+				{	
+					var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
+					if (tmInfo)
+					{
+						layer2.showTimer(tmInfo.time_);						
+					}				
+				}
+			}						
 		}
 		
 		private function onNotify_Give(v:NotifyGive) : void
 		{
-			_logger.log(this, "onNotify_Give Enter.", LEVEL.INFO);
+			_logger.log(this, "onNotify_Give Enter.", LEVEL.INFO);			
 			
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
-			{
-				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
-				if (layer)
-				{		
-					layer.hideTimer();
-					layer.hideBetButtonGroup();
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
+			if (layer)
+			{		
+				layer.hideTimer();
+				layer.hideBetButtonGroup();
 					
-					var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
-					if (tmInfo)
+				var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
+				if (tmInfo)
+				{
+					layer.showWaitGiveTimer(tmInfo.time_);	
+				}
+					
+				layer.showCardCalculater();
+					
+					
+				var tlInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY) as TTilesInfo;
+				if (tlInfo)
+				{	
+					if (tlInfo.tiles_num == 1)
 					{
-						layer.showWaitGiveTimer(tmInfo.time_);	
+						layer.updatePlayerCard(4, int(tlInfo.tiles[0]));
+						layer.showPlayerGiveButtonGroup();						
 					}
-					
-					layer.showCardCalculater();
-					
-					
-					var tlInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY) as TTilesInfo;
-					if (tlInfo)
-					{	
-						if (tlInfo.tiles_num == 1)
+					else
+					{
+						var vec:Vector.<int> = new <int>[0, 0, 0, 0, 0];
+						for (var i:int = 0; i < tlInfo.tiles_num; ++i)
 						{
-							layer.updatePlayerCard(4, int(tlInfo.tiles[0]));
-							layer.showPlayerGiveButtonGroup();						
-						}
-						else
-						{
-							var vec:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-							for (var i:int = 0; i < tlInfo.tiles_num; ++i)
-							{
-								vec[i] = tlInfo.tiles[i];
-							}																								
-							layer.showPlayerCards(vec);
-							vec.length = 0;
-							vec = null;
+							vec[i] = tlInfo.tiles[i];
+						}																								
+						layer.showPlayerCards(vec);
+						vec.length = 0;
+						vec = null;
 													
-							var vec2:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-							layer.showOtherPlayerCards(vec2);
-							vec2.length = 0;
-							vec2 = null;	
-							
-							layer.showPlayerGiveButtonGroup();							
-						}
+						var vec2:Vector.<int> = new <int>[0, 0, 0, 0, 0];
+						layer.showOtherPlayerCards(vec2);
+						vec2.length = 0;
+						vec2 = null;	
 						
-						SoundManager.instance().playGiveCard();
+						layer.showPlayerGiveButtonGroup();							
 					}
+					
+					SoundManager.instance().playGiveCard();
 				}
 			}	
-			
 		}
 		
 		private function onNotify_Finish(v:NotifyFinish) : void
 		{
-			_logger.log(this, "onNotify_Finish Enter.", LEVEL.INFO);
-			
-			
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;			
-			var layer:Layer_TableMain = scene ? (scene.getChildByName("table.main") as Layer_TableMain):null;
-			
+			_logger.log(this, "onNotify_Finish Enter.", LEVEL.INFO);			
+						
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			if (layer)
 			{					
 				for (var i:int = 0; i < v.finish_info_num; ++i)
@@ -311,9 +275,7 @@ package controller.handler
 							{
 								SoundManager.instance().playGameLose();
 								layer.getPlayer().setMoneyChange(0-info.money.lowPart);
-							}
-							
-							
+							}							
 						}
 						else
 						{
@@ -329,26 +291,20 @@ package controller.handler
 					}					
 				}
 												
-				if (layer)
-				{		
-					//layer.hidePlayerCards();
-					//layer.hideOtherPlayerCards();
-					layer.hideCardCalculater();					
-					layer.hidePlayerGiveButtonGroup();					
-					layer.clearAnyPlayerAsDealer();
+				
+				layer.hideCardCalculater();					
+				layer.hidePlayerGiveButtonGroup();					
+				layer.clearAnyPlayerAsDealer();
 					
-					layer.hideTimer();					
+				layer.hideTimer();					
 					
-					RuntimeExchangeData.instance().redTableData.dealer_seat_id = -1;					
-				}
+				RuntimeExchangeData.instance().redTableData.dealer_seat_id = -1;					
 			}
 			else
-			{
-				var scene2:Scene_HuanLeTable = NiuDirector.instance().topScene as Scene_HuanLeTable;
-				if (scene2)
+			{				
+				var layer2:Layer_HuanleMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_HuanLeTable.LAYER_MAIN) as Layer_HuanleMain;
+				if (layer2)
 				{
-					var layer2:Layer_Main = scene2.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
-					
 					var vec:Vector.<FinishInfo> = new Vector.<FinishInfo>(v.finish_info_num);
 					for (var k:int = 0; k < v.finish_info_num; ++k)
 					{
@@ -367,26 +323,22 @@ package controller.handler
 		
 		private function onNotify_StartTimer(v:NotifyStartTimer) : void
 		{
-			_logger.log(this, "onNotify_StartTimer Enter.", LEVEL.INFO);			
+			_logger.log(this, "onNotify_StartTimer Enter.", LEVEL.INFO);
 			
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
-			{
-				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
-				if (layer)
-				{	
-					if (v.flag == 1)
-					{
-						var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
-						if (tmInfo)
-						{							
-							layer.showWaitNextGameTimer(tmInfo.time_);
-						}
+			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
+			if (layer)
+			{	
+				if (v.flag == 1)
+				{
+					var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
+					if (tmInfo)
+					{							
+						layer.showWaitNextGameTimer(tmInfo.time_);
 					}
-					else
-					{
-						layer.hideTimer();
-					}
+				}
+				else
+				{
+					layer.hideTimer();
 				}
 			}		
 		}

@@ -15,7 +15,7 @@ package view.scene.hall.layer
 	import view.framework.ExLayer;
 	import view.scene.hall.cell.RoomItem;
 	
-	public class Layer_RoomList extends ExLayer
+	public class Layer_HallMain extends ExLayer
 	{			
 		private var _douniuRoomTitle:ExImage;		
 		private var _huanleRoomTitle:ExImage;
@@ -23,7 +23,7 @@ package view.scene.hall.layer
 		
 		private static const MAX_ROOM_NUM_PER_TYPE:int = 3;
 		
-		public function Layer_RoomList(name:String = null)
+		public function Layer_HallMain(name:String = null)
 		{
 			super(name);
 		}

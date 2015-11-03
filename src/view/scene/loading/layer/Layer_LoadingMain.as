@@ -5,12 +5,12 @@ package view.scene.loading.layer
 	import view.framework.ExLayer;
 	import view.scene.loading.cell.Progress;
 	
-	public class Layer_Loading extends ExLayer
+	public class Layer_LoadingMain extends ExLayer
 	{	
 		private var _progress:Progress;		
 		private var _tip:TextField;		
 		
-		public function Layer_Loading(name:String=null)
+		public function Layer_LoadingMain(name:String=null)
 		{
 			super(name);
 		}

@@ -13,15 +13,15 @@ package view.scene.huanle
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExScene;
-	import view.scene.huanle.layer.Layer_Main;
-	import view.scene.table.layer.Layer_Bottom;
+	import view.scene.huanle.layer.Layer_HuanleMain;
+	import view.scene.table.layer.Layer_TableBottom;
 	
 	public class Scene_HuanLeTable extends ExScene
 	{
 		protected var _bg:ExImage;				
 		protected var _quit:Button;
 		
-		public static const LAYER_MAIN:String = "main_layer";
+		public static const LAYER_MAIN:String = "layer.huanle.main";
 		
 		
 		public function Scene_HuanLeTable(name:String=null)
@@ -36,14 +36,14 @@ package view.scene.huanle
 			_bg = new ExImage(resManager.getResource("ui.table_bg"));
 			addChild(_bg);
 			
-			addChild(new Layer_Bottom());
+			addChild(new Layer_TableBottom());
 			
 			_quit = new Button(Texture.fromBitmapData(resManager.getResource("ui.button_quit")));
 			_quit.addEventListener(Event.TRIGGERED, onQuit);
 			addChild(_quit);
 						
 			
-			addChild(new Layer_Main(LAYER_MAIN));
+			addChild(new Layer_HuanleMain(LAYER_MAIN));
 		}	
 		
 		override protected function layoutChildren() : void

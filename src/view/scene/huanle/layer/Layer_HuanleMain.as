@@ -14,7 +14,7 @@ package view.scene.huanle.layer
 	import view.scene.huanle.cell.Robot;
 	import view.widget.Widget_Timer;
 	
-	public class Layer_Main extends ExLayer
+	public class Layer_HuanleMain extends ExLayer
 	{
 		private var _dealer:Robot;		
 		private var _players:Vector.<Robot>;
@@ -22,7 +22,7 @@ package view.scene.huanle.layer
 		
 		private var _selectedSeatId:int;
 		
-		public function Layer_Main(name:String=null)
+		public function Layer_HuanleMain(name:String=null)
 		{
 			super(name);
 		}

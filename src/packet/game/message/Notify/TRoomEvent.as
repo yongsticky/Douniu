@@ -4,9 +4,12 @@ package packet.game.message.Notify
 	
 	import camu.object.interfaces.IObjectRecycled;
 	
-	import factory.NiuObjectFactory;	
+	import factory.NiuObjectFactory;
+	
+	import packet.game.tlv.TLVType;
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.UnionTLVDecoder;
+	import packet.game.tlv.value.PlayerDetailInfo;
 
 	public class TRoomEvent implements IObjectRecycled
 	{	
@@ -21,6 +24,19 @@ package packet.game.message.Notify
 		public function TRoomEvent()
 		{
 			other_info_vec = new Vector.<UnionTLV>();
+		}
+		
+		public function getTLVValue(tlvType:int) : *
+		{
+			for each(var tlv:UnionTLV in other_info_vec)
+			{
+				if (tlv.valueType == tlvType)
+				{
+					return tlv;					
+				}
+			}
+			
+			return null;
 		}
 		
 		public function unpack(bytes:ByteArray) : Boolean
@@ -54,7 +70,6 @@ package packet.game.message.Notify
 			
 			other_info_num = 0;
 			other_info_vec.length = 0;
-		}
-		  
+		}		  
 	}
 }
