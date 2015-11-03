@@ -4,7 +4,6 @@ package packet.game.tlv
 	
 	import camu.errors.UnexpectedLengthError;
 	import camu.logger.ILogger;
-	import camu.logger.Logger;
 	import camu.object.interfaces.IObjectRecycled;
 
 

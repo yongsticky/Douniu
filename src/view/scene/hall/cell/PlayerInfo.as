@@ -41,7 +41,7 @@ package view.scene.hall.cell
 			_coinIcon.y = height/2 + 6;
 			addChild(_coinIcon);
 			
-			_coinNum = new TextField(60, 24, RuntimeExchangeData.instance().redPlayerData.coin.toString(), "Microsoft YaHei", 12, 0xFDBC2A);
+			_coinNum = new TextField(60, 24, RuntimeExchangeData.instance().redPlayerData.money.toString(), "Microsoft YaHei", 12, 0xFDBC2A);
 			_coinNum.hAlign = "left";
 			_coinNum.x = _coinIcon.x + _coinIcon.width + 2;
 			_coinNum.y = _coinIcon.y;			

@@ -32,7 +32,7 @@ package packet.game.message.Notify
 			{
 				if (tlv.valueType == tlvType)
 				{
-					return tlv;					
+					return tlv.value;					
 				}
 			}
 			

@@ -61,6 +61,14 @@ package view.scene.table.cell
 			}
 		}
 		
+		public function setPokersNull() : void
+		{
+			for (var i:int = 0; i < MAX_POKER_NUM; ++i)
+			{
+				_pokers[i].res = getPokerResource(0);
+			}
+		}
+		
 		private function getPokerResource(c:int) : *
 		{
 			var res:*;

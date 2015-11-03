@@ -33,13 +33,14 @@ package view.widget
 		
 		override protected function createChildren() : void
 		{		
+			// 82*82
 			_bg = new ExImage( ResManager.instance().getResource("ui.timer_bg"));				
 			addChild(_bg);
 						
-			// 70*80
+			// 37*33
 			_num = new ExImage();
-			_num.pivotX = 35; 
-			_num.pivotY = 40;
+			_num.pivotX = 18.5; 
+			_num.pivotY = 16.5;
 			_num.x = _bg.width>>1;
 			_num.y = _bg.height>>1;
 			 
@@ -111,7 +112,7 @@ package view.widget
 		{
 			var resId:String = "ui.timer_" + _curTime;
 			_num.res =  ResManager.instance().getResource(resId); 
-			_num.scaleX = _num.scaleY = 1;
+			_num.scaleX = _num.scaleY = 1.4;
 
 
 			if (_tween)
@@ -123,7 +124,7 @@ package view.widget
 				_tween = new Tween(_num, 1, Transitions.EASE_IN_OUT_ELASTIC);
 			}
 					
-			_tween.scaleTo(0.8);	
+			_tween.scaleTo(1);	
 			_tween.onComplete = onAnimationComplete;
 			
 			getOwnerLayer().juggler.add(_tween);

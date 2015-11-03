@@ -111,7 +111,7 @@ package resource
 					_res[resId] = new cls();					
 					
 					
-					/*
+					
 					if (_res[resId] is Bitmap)
 					{						
 						_logger.log(this, "add res: id[", resId, "], clsName[", clsName, "], classType[Bitmap].",  LEVEL.INFO);
@@ -128,7 +128,7 @@ package resource
 					{
 						_logger.log(this, "add res: id[", resId, "], clsName[", clsName, "], classType[Unknown].",  LEVEL.INFO);
 					}
-					*/
+					
 				}				
 			}			
 		}

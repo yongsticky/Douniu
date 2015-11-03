@@ -104,20 +104,31 @@ package view.scene.table.cell
 		}
 		
 		private var _aniCurIndex:int = 0;
-		public function doGiveAnimation() : void
-		{			
-			var pI:PokerImage = _pokers[_aniCurIndex];
-			pI.visible = true;
+		public function show(cards:Vector.<int>) : void
+		{	
+			visible = true;		
 			
-			var dstX:Number = pI.x;
-			var dstY:Number = pI.y;
+			if (cards)
+			{
+				setPokers(cards);
+				animateShowIt(_pokers[_aniCurIndex]);
+			}			
+		}
+		
+		private function animateShowIt(pi:PokerImage) : void
+		{
+			
+			pi.visible = true;
+			
+			var dstX:Number = pi.x;
+			var dstY:Number = pi.y;
 			
 			var srcPt:Point = new Point();
 			globalToLocal(new Point(stage.stageWidth/2, stage.stageHeight/2), srcPt);			
-			pI.x = srcPt.x;
-			pI.y = srcPt.y;
+			pi.x = srcPt.x;
+			pi.y = srcPt.y;
 			
-			var tween:Tween = new Tween(pI, 0.1);
+			var tween:Tween = new Tween(pi, 0.1);
 			tween.moveTo(dstX, dstY);
 			tween.onComplete =  onGiveAnimationComplete;
 			
@@ -126,16 +137,16 @@ package view.scene.table.cell
 		
 		private function onGiveAnimationComplete() : void
 		{
-				++ _aniCurIndex;
-				
-				if (_aniCurIndex < MAX_POKER_NUM)
-				{
-					doGiveAnimation();
-				}
-				else
-				{
-					_aniCurIndex = 0;
-				}
+			++ _aniCurIndex;
+			
+			if (_aniCurIndex < MAX_POKER_NUM)
+			{
+				animateShowIt(_pokers[_aniCurIndex]);
+			}
+			else
+			{
+				_aniCurIndex = 0;
+			}
 		}
 		
 		public function hideAllPokers() : void

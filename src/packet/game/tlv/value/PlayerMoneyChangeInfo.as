@@ -1,7 +1,10 @@
 package packet.game.tlv.value
 {
 	import flash.utils.ByteArray;
-		
+	
+	import camu.logger.ILogger;
+	import camu.logger.LEVEL;
+	
 	import packet.game.tlv.TLVValue;
 	import packet.util.Int64;
 
@@ -26,8 +29,6 @@ package packet.game.tlv.value
 			bytes.writeShort(money_change_reason);
 			money_change_value.writeToBytes(bytes);
 			money_cur_value.writeToBytes(bytes);	
-			
-
 		}
 		
 		override public function unpack(bytes:ByteArray) : void
@@ -36,9 +37,20 @@ package packet.game.tlv.value
 
 			money_change_reason = bytes.readShort();
 			money_change_value.readFromBytes(bytes);
-			money_cur_value.readFromBytes(bytes);	
+			money_cur_value.readFromBytes(bytes);
+		}
+		
+		override public function printValue(logger:ILogger):void
+		{
+			logger.log(this, "**************************************************", LEVEL.INFO);
+			logger.log(this, "print PlayerMoneyChangeInfo value", LEVEL.INFO);
+			logger.log(this, "money_change_reason:", money_change_reason, LEVEL.INFO);
+			logger.log(this, "money_change_value.highPart:", money_change_value.highPart, LEVEL.INFO);
+			logger.log(this, "money_change_value.lowPart:", money_change_value.lowPart, LEVEL.INFO);
+			logger.log(this, "money_cur_value.highPart:", money_cur_value.highPart, LEVEL.INFO);
+			logger.log(this, "money_cur_value.lowPart:", money_cur_value.lowPart, LEVEL.INFO);
 			
-
+			logger.log(this, "**************************************************", LEVEL.INFO);
 		}
 	}
 }

@@ -52,7 +52,7 @@ package controller.handler
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			if (layer)
 			{					
-				layer.hideBetButtonGroup();
+				layer.getPlayer().hideBetButtonGroup();
 				layer.hideTimer();				
 			}
 		}

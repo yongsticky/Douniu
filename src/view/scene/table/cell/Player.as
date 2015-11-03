@@ -27,9 +27,7 @@ package view.scene.table.cell
 	public class Player extends ExSprite
 	{
 		private var _playerHeader:PlayerHeader;						// 玩家头像
-		private var _playerCards:PlayerCards;							// 玩家手牌
-		
-		
+		private var _playerCards:PlayerCards;							// 玩家手牌		
 
 		private var _playerRobDealerState:ExImage;								// 玩家抢庄状态
 		private var _playerDealerState:ExImage;							// 玩家获得庄家状态
@@ -53,8 +51,9 @@ package view.scene.table.cell
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_playerHeader = new PlayerHeader();			
+			_playerHeader = new PlayerHeader(null, false);			
 			_playerHeader.y = 100;
+			
 			_playerHeader.visible = false;
 			addChild(_playerHeader);
 			
@@ -149,9 +148,7 @@ package view.scene.table.cell
 				
 				event.stopImmediatePropagation();
 			}						
-		}
-		
-		
+		}		
 		
 		private function onTriggered(event:Event):void
 		{	
@@ -217,6 +214,35 @@ package view.scene.table.cell
 			return _cardCalculater;
 		}
 		
+		public function show(nickName:String, coin:int, headerIcon:int) : void
+		{
+			visible = true;
+			
+			_playerHeader.visible = true;
+			_playerHeader.setPlayerInfo(nickName, coin, headerIcon);
+		}
+		
+		public function showReadyButtonGoroup() : void
+		{
+			_playerReadyButtonGroup.visible = true;
+		}
+		
+		public function hideReadyButtonGroup() : void
+		{
+			_playerReadyButtonGroup.visible = false;
+		}
+		
+		public function showRobDealerButtonGroup(x1:int, x2:int, x3:int) : void
+		{
+			_playerRobDealerButtonGroup.visible = true;
+			_playerRobDealerButtonGroup.updateMultiple(x1, x2, x3);			
+		}
+		
+		public function hideRobDealerButtonGroup() : void
+		{
+			_playerRobDealerButtonGroup.visible = false;
+		}
+		
 		public function setAsDealer(): void
 		{
 			var tn:Tween = new Tween(_playerDealerState, 0.4);
@@ -234,8 +260,63 @@ package view.scene.table.cell
 			
 			getOwnerLayer().juggler.add(tn);			
 		}
+		
+		public function unsetAsDealer() : void
+		{
+			_playerDealerState.visible = false;
+		}
+		
+		public function showBetButtonGroup(x1:int, x2:int, x3:int) : void
+		{
+			_playerBetButtonGroup.visible = true;
+			_playerBetButtonGroup.setBetMultiple(x1, x2, x3);
+		}
+		
+		public function hideBetButtonGroup() : void
+		{
+			_playerBetButtonGroup.visible = false;
+		}
+		
+		public function showCards(cards:Vector.<int>) : void
+		{
+			_playerCards.show(cards);
+		}
+		
+		public function setCard(index:int, card:int) : void
+		{
+			_playerCards.updatePoker(index, card);
+		}
+		
+		public function hideCards() : void
+		{
+			_playerCards.visible = false;
+			_playerCards.hideAllPokers();
+		}
+		
+		public function showGiveButtonGroup() : void
+		{
+			_playerGiveButtonGroup.visible = true;
+			
+			_playerGiveButtonGroup.setGiveNiuEnabled(false);
+		}
+		
+		public function hideGiveButtonGroup() : void
+		{
+			_playerGiveButtonGroup.visible = false;
+		}
+		
+		public function showAssistCalculater() : void
+		{
+			_cardCalculater.visible = true;
+		}
+		
+		public function hideAssistCalculater() : void
+		{
+			_cardCalculater.reset();
+			_cardCalculater.visible = false;
+		}
 	
-		public function setMoneyChange(change:int) : void
+		public function flowMoneyChangeText(change:int) : void
 		{
 			if (change < 0)
 			{
@@ -256,17 +337,21 @@ package view.scene.table.cell
 			var tn:Tween = new Tween(_moneyChange, 2, Transitions.EASE_IN);
 			tn.moveTo(_moneyChange.x, _moneyChange.y-32);
 			tn.fadeTo(0);
-			tn.onComplete = onMoneyChangeAnimationComplete;
+			tn.onComplete = onFlowAnimationComplete;
 			
 			getOwnerLayer().juggler.add(tn);
 			
 		}
 		
-		private function onMoneyChangeAnimationComplete() : void
+		private function onFlowAnimationComplete() : void
 		{
 			_moneyChange.visible = false;
 		}
 	
+		public function updateMoney(current:int) : void
+		{
+			_playerHeader.setPlayerInfo(null, current, null);
+		}		
 	}
 	
 	

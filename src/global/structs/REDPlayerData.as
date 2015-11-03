@@ -7,10 +7,9 @@ package global.structs
 		public var seat_id:int;
 		
 		public var nick:String;
-		public var chips:int;
 		public var gender:int;
 		
-		public var coin:int = 180000;
+		public var money:int = 180000;
 		public var note:int = 2000;
 		
 		public function REDPlayerData()

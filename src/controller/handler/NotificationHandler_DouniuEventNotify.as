@@ -86,8 +86,8 @@ package controller.handler
 						
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			if (layer)
-			{						
-				layer.showRobDealerButtonGroup(0, v.multiple[0], v.multiple[1], v.multiple[2]);
+			{	
+				layer.getPlayer().showRobDealerButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);
 					
 				var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
 				if (tmInfo)
@@ -104,16 +104,13 @@ package controller.handler
 					{
 						vec[i] = int(tlInfo.tiles[i]);
 					}
-						
-					layer.showPlayerCards(vec);	
+
+					layer.getPlayer().showCards(vec);
 					vec.length = 0;
 					vec = null;
 						
-					var vec2:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-					layer.showOtherPlayerCards(vec2);
-					vec2.length = 0;
-					vec2 = null;
-						
+					layer.showAllOtherPlayersCardsNull();
+					
 					SoundManager.instance().playDealCard();
 				}
 			}			
@@ -132,8 +129,18 @@ package controller.handler
 					RuntimeExchangeData.instance().redTableData.dealer_seat_id = dealerInfo.dealer;
 					
 					layer.hideTimer();				
-					layer.hideDealerRobButtonGroup();				
-					layer.setAnyPlayerAsDealer(v.seat_id, v.multiple);
+					layer.getPlayer().hideRobDealerButtonGroup();			
+					
+					
+					if (dealerInfo.dealer == RuntimeExchangeData.instance().redPlayerData.seat_id)
+					{
+						layer.getPlayer().setAsDealer();
+					}
+					else
+					{
+						layer.getOtherPlayer(dealerInfo.dealer).setAsDealer();
+					}					
+					
 					layer.clearAllPlayerRobDealerState();
 				}
 				else
@@ -164,7 +171,7 @@ package controller.handler
 				var red:RuntimeExchangeData = RuntimeExchangeData.instance(); 
 				if (red.redTableData.dealer_seat_id != red.redPlayerData.seat_id)
 				{
-					layer.showBetButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);						
+					layer.getPlayer().showBetButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);					
 				}
 				else
 				{
@@ -209,7 +216,7 @@ package controller.handler
 			if (layer)
 			{		
 				layer.hideTimer();
-				layer.hideBetButtonGroup();
+				layer.getPlayer().hideBetButtonGroup();
 					
 				var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
 				if (tmInfo)
@@ -217,16 +224,16 @@ package controller.handler
 					layer.showWaitGiveTimer(tmInfo.time_);	
 				}
 					
-				layer.showCardCalculater();
+				layer.getPlayer().showAssistCalculater();
 					
 					
 				var tlInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY) as TTilesInfo;
 				if (tlInfo)
 				{	
 					if (tlInfo.tiles_num == 1)
-					{
-						layer.updatePlayerCard(4, int(tlInfo.tiles[0]));
-						layer.showPlayerGiveButtonGroup();						
+					{	
+						layer.getPlayer().setCard(4, int(tlInfo.tiles[0]));
+						layer.getPlayer().showGiveButtonGroup();						
 					}
 					else
 					{
@@ -235,16 +242,13 @@ package controller.handler
 						{
 							vec[i] = tlInfo.tiles[i];
 						}																								
-						layer.showPlayerCards(vec);
+						layer.getPlayer().showCards(vec);
 						vec.length = 0;
 						vec = null;
 													
-						var vec2:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-						layer.showOtherPlayerCards(vec2);
-						vec2.length = 0;
-						vec2 = null;	
+						layer.showAllOtherPlayersCardsNull();
 						
-						layer.showPlayerGiveButtonGroup();							
+						layer.getPlayer().showGiveButtonGroup();						
 					}
 					
 					SoundManager.instance().playGiveCard();
@@ -269,12 +273,12 @@ package controller.handler
 							if (info.money.highPart > 0)
 							{
 								SoundManager.instance().playGameWin();
-								layer.getPlayer().setMoneyChange(info.money.lowPart);
+								layer.getPlayer().flowMoneyChangeText(info.money.lowPart);
 							}
 							else
 							{
 								SoundManager.instance().playGameLose();
-								layer.getPlayer().setMoneyChange(0-info.money.lowPart);
+								layer.getPlayer().flowMoneyChangeText(0-info.money.lowPart);
 							}							
 						}
 						else
@@ -283,18 +287,17 @@ package controller.handler
 							for (var j:int = 0; j < info.tiles_num; ++j)
 							{
 								cards[j] = int(info.tiles[j]);
-								layer.showOtherPlayerCards(cards, info.seat_id);
-								
-								layer.getOtherPlayer(info.seat_id).setMoneyChange(info.money.lowPart);
-							}							
+								layer.getOtherPlayer(info.seat_id).showCards(cards);							
+							}
+							
+							layer.getOtherPlayer(info.seat_id).flowMoneyChangeText(info.money.lowPart);
 						}
 					}					
 				}
-												
-				
-				layer.hideCardCalculater();					
-				layer.hidePlayerGiveButtonGroup();					
-				layer.clearAnyPlayerAsDealer();
+
+				layer.getPlayer().hideAssistCalculater();
+				layer.getPlayer().hideGiveButtonGroup();			
+				layer.unsetAllAsDealer();
 					
 				layer.hideTimer();					
 					

@@ -28,7 +28,7 @@ package view.scene.table.cell
 		{			
 			var resManager:ResManager = ResManager.instance();
 			
-			_niu = new Button(Texture.fromBitmapData(resManager.getResource("ui.round_button_bg_red")));			
+			_niu = new Button(Texture.fromBitmapData(resManager.getResource("ui.round_button_bg_red")), "", null, Texture.fromBitmapData(resManager.getResource("ui.round_button_bg_grey")));			
 			_niu.fontBold = true;
 			_niu.text = "有牛";
 			_niu.fontSize = 16;

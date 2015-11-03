@@ -43,7 +43,7 @@ package view.scene.table.cell
 			_coinIcon.y = _name.y + 2;
 			addChild(_coinIcon);
 			
-			_coinNum = new TextField(60, 24, RuntimeExchangeData.instance().redPlayerData.coin.toString(), "Microsoft YaHei", 12, 0xFDBC2A);
+			_coinNum = new TextField(60, 24, RuntimeExchangeData.instance().redPlayerData.money.toString(), "Microsoft YaHei", 12, 0xFDBC2A);
 			_coinNum.hAlign = "left";
 			_coinNum.x = _coinIcon.x + _coinIcon.width + 2;
 			_coinNum.y = _coinIcon.y;

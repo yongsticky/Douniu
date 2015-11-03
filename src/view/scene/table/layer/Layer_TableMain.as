@@ -19,7 +19,6 @@ package view.scene.table.layer
 		private var _player:Player;		
 		private var _otherPlayers:Vector.<OtherPlayer>;		
 		private var _timer:Widget_TimerWithText;		
-		private var _playerSeatId:int;		
 		
 		public function Layer_TableMain(name:String = null) 
 		{
@@ -60,11 +59,11 @@ package view.scene.table.layer
 			
 			var p1:OtherPlayer = _otherPlayers[0];
 			p1.x = 40;
-			p1.y = (stage.stageHeight - 80) / 3;
+			p1.y = (stage.stageHeight - 80) * 2 / 3;
 			
 			var p2:OtherPlayer = _otherPlayers[1];
 			p2.x = 40;
-			p2.y = (stage.stageHeight - 80) * 2 / 3;
+			p2.y = (stage.stageHeight - 80) / 3;
 			
 			var p3:OtherPlayer = _otherPlayers[2];
 			p3.x = (stage.stageWidth - p3.width) * 0.45;
@@ -80,18 +79,31 @@ package view.scene.table.layer
 			
 			
 			super.layoutChildren();
-		}		
-		
-		
-		public function showPlayer(name:String, chips:int, seat_id:int = 0) : void
-		{
-			_playerSeatId = seat_id;
-			
-			_player.visible = true;
-			_player.playerHeader.visible = true;
-			
-			_player.playerHeader.setPlayerInfo(name, chips, null);			
 		}
+		
+		public function getPlayer() : Player
+		{
+			return _player;
+		}
+		
+		public function getOtherPlayer(seatId:int) : OtherPlayer
+		{
+			var seat:int = seatId - RuntimeExchangeData.instance().redPlayerData.seat_id;
+			if (seat < 0)
+			{
+				seat += MAX_OTHER_PLAYER_NUM;
+			}
+			
+			if (seat > 0)
+			{
+				return _otherPlayers[seat-1];
+			}
+			else
+			{		
+				_logger.log(this, "seat=",seat, LEVEL.ERROR);
+				throw new IndexOutOfRangeError();
+			}
+		}		
 		
 		public function showWaitRobDealerTimer(time:int) : void
 		{
@@ -138,22 +150,7 @@ package view.scene.table.layer
 			_timer.hide();
 		}
 		
-		public function showOtherPlayer(nick:String, chips:int, seatId:int) : void
-		{			
-			if (seatId >= 0 && seatId < MAX_OTHER_PLAYER_NUM)
-			{			
-				var other:OtherPlayer = getOtherPlayer(seatId); // _otherPlayers[seat-1];
-												
-				other.visible = true;
-				other.playerHeader.setPlayerInfo(nick, chips, 0);
-			}
-		}
-		
-		public function hideOtherPlayer(seatId:int) : void
-		{			
-			getOtherPlayer(seatId).visible = false;			
-		}
-		
+		/*
 		public function showPlayerReadyButtonGroup() : void
 		{
 			if (_player.playerCards.visible)
@@ -164,46 +161,27 @@ package view.scene.table.layer
 			_player.playerReadyButtonGroup.visible = true;
 		}
 		
+		
 		public function hidePlayerReadyButtonGroup() : void
 		{
 			_player.playerCards.filter = null;		
 			
 			_player.playerReadyButtonGroup.visible = false;
 		}
+		*/		
 		
-		public function showRobDealerButtonGroup(x1:int, x2:int, x3:int, x4:int) : void
+		public function unsetAllAsDealer() : void
 		{
-			_player.playerRobDealerButtonGroup.updateMultiple(x2, x3, x4);
-			_player.playerRobDealerButtonGroup.visible = true;	
-		}
-		
-		public function hideDealerRobButtonGroup() : void
-		{
-			_player.playerRobDealerButtonGroup.visible = false;
-		}
-		
-		public function setAnyPlayerAsDealer(seatId:int, multiple:int) : void
-		{
-			// 是自己抢到
-			if (seatId == RuntimeExchangeData.instance().redPlayerData.seat_id)
-			{				
-				_player.setAsDealer();
-			}
-			else
-			{
-				getOtherPlayer(seatId).setAsDealer();
-			}		
-		}
-		
-		public function clearAnyPlayerAsDealer() : void
-		{
-			_player.playerDealerState.visible = false;
+			_player.unsetAsDealer();
 			
-			for each(var other:OtherPlayer in _otherPlayers)
+			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; ++i)
 			{
-				other.playerDealerState.visible = false;
+				_otherPlayers[i].unsetAsDealer();
 			}
 		}
+		
+		
+		
 		public function setAnyPlayerRobDealerState(seatId:int, rob:Boolean) : void
 		{		
 			/*
@@ -242,83 +220,19 @@ package view.scene.table.layer
 			*/
 		}
 		
-		
-		public function showBetButtonGroup(x1:int, x2:int, x3:int) : void
+		public function showAllOtherPlayersCardsNull() : void
 		{
-			_player.playerBetButtonGroup.setBetMultiple(x1, x2, x3);
-			_player.playerBetButtonGroup.visible = true;
-		}
-		
-		public function hideBetButtonGroup() : void
-		{
-			_player.playerBetButtonGroup.visible = false;
-		}
-		
-		public function showPlayerCards(cards:Vector.<int>) : void
-		{			
-			_player.playerCards.setPokers(cards);
-			_player.playerCards.doGiveAnimation();
-			_player.playerCards.visible = true;			
-		}
-		
-		public function updatePlayerCard(index:int, card:int) : void
-		{			
-			_player.playerCards.updatePoker(index, card);
-		}
-		
-		public function hidePlayerCards() : void
-		{
-			_player.playerCards.visible = false;
-			_player.playerCards.hideAllPokers();
-		}
-		
-		public function showPlayerGiveButtonGroup() : void
-		{
-			_player.playerGiveButtonGroup.setGiveNiuEnabled(false);
-			_player.playerGiveButtonGroup.visible = true;
-		}
-		
-		public function showCardCalculater() : void
-		{
-			_player.cardCalculater.visible = true;
-		}
-		
-		public function hideCardCalculater() : void
-		{
-			_player.cardCalculater.update(new <int>[0, 0, 0, 0]);
-			_player.cardCalculater.visible = false;
-		}
-		
-		public function hidePlayerGiveButtonGroup() : void
-		{
-			_player.playerGiveButtonGroup.visible = false;
-		}
-		
-		public function showOtherPlayerCards(cards:Vector.<int>, seatId:int = 0) : void
-		{
-			if (seatId == 0)
+			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; ++i)
 			{
-				for each(var other:OtherPlayer in _otherPlayers)
+				if (_otherPlayers[i].visible)
 				{
-					if (other.playerHeader.visible)
-					{
-						other.playerCards.setPokers(cards);
-						other.playerCards.visible = true;
-					}
+					_otherPlayers[i].visible = true;
+					_otherPlayers[i].showCards(null);
 				}
 			}
-			else
-			{				
-				other = getOtherPlayer(seatId);// _otherPlayers[seat-1];
-				if (other.playerHeader.visible)
-				{
-					other.playerCards.setPokers(cards);
-					other.playerCards.visible = true;
-				}
-			}			
 		}
-		
-		public function hideOtherPlayerCards() : void
+				
+		public function hideAllOtherPlayersCards() : void
 		{
 			for each(var other:OtherPlayer in _otherPlayers)
 			{
@@ -329,9 +243,10 @@ package view.scene.table.layer
 			}			
 		}
 		
+		/*
 		public function PlayerMoneyChange(seatId:int, changed:int, current:int) : void
 		{				
-			if (seatId != _playerSeatId)
+			if (seatId != RuntimeExchangeData.instance().redPlayerData.seat_id)
 			{			
 				getOtherPlayer(seatId).playerHeader.setPlayerInfo(null, current, null);				
 			}
@@ -340,29 +255,7 @@ package view.scene.table.layer
 				_player.playerHeader.setPlayerInfo(null, current, null);	
 			}					
 		}
+		*/
 		
-		public function getPlayer() : Player
-		{
-			return _player;
-		}
-		
-		public function getOtherPlayer(seatId:int) : OtherPlayer
-		{
-			var seat:int = seatId - _playerSeatId;
-			if (seat < 0)
-			{
-				seat += MAX_OTHER_PLAYER_NUM;
-			}
-			
-			if (seat > 0)
-			{
-				return _otherPlayers[seat-1];
-			}
-			else
-			{		
-				_logger.log(this, "seat=",seat, LEVEL.ERROR);
-				throw new IndexOutOfRangeError();
-			}
-		}
 	}
 }

@@ -45,8 +45,7 @@ package view.scene.table.cell
 		}		
 			
 		public function update(data:Vector.<int>) : void
-		{
-			
+		{			
 			var count:int = 0;
 			for (var i:int = 0; i < SIZE-1; ++i)
 			{
@@ -75,6 +74,19 @@ package view.scene.table.cell
 			{
 				countNum.visible = false;
 			}
-		}	
+		}
+		
+		public function reset() : void
+		{
+			for (var i:int = 0; i < SIZE; ++i)
+			{
+				var num:TextField = _numbers[i] as TextField;
+				if (num)
+				{
+					num.text = "";
+					num.visible = false;
+				}			
+			}
+		}
 	}
 }

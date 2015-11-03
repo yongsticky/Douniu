@@ -47,7 +47,7 @@ package controller.handler
 					{
 						rsd.redPlayerData.nick = plInfo.nick;
 						rsd.redPlayerData.gender = plInfo.gender;
-						rsd.redPlayerData.chips = plInfo.money.lowPart;						
+						rsd.redPlayerData.money = plInfo.money.lowPart;						
 					}
 				}
 			}

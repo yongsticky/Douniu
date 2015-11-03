@@ -32,61 +32,28 @@ package controller.handler
 						
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			
-			layer.showPlayer("3000011", 10000, 0);
-			layer.getPlayer().setMoneyChange(3000);
+			layer.getPlayer().show("3000011", 10000, 0);
+			layer.getPlayer().flowMoneyChangeText(3000);
 			
-			layer.showOtherPlayer("3000012", 12000, 3);
-			layer.showOtherPlayerCards(new <int>[11,21,31,33,35], 3);
-			layer.getOtherPlayer(3).setMoneyChange(-3000);
+			layer.getOtherPlayer(1).show("11111111", 12000, 0);
+			//layer.getOtherPlayer(1).showCards(new <int>[11,21,31,33,35]);
+			layer.getOtherPlayer(1).flowMoneyChangeText(-3000);	
+			layer.getOtherPlayer(1).setAsDealer();
 			
+			layer.getOtherPlayer(2).show("222222", 12000, 0);
+			//layer.getOtherPlayer(1).showCards(new <int>[11,21,31,33,35]);
+			layer.getOtherPlayer(2).flowMoneyChangeText(-3000);	
+			layer.getOtherPlayer(3).show("333333", 12000, 0);
+			//layer.getOtherPlayer(1).showCards(new <int>[11,21,31,33,35]);
+			layer.getOtherPlayer(3).flowMoneyChangeText(-3000);	
 			
-			//layer.showPlayerCards(new <int>[11,21,31,33,35]);
+			layer.getOtherPlayer(4).show("44444444", 12000, 0);
+			//layer.getOtherPlayer(1).showCards(new <int>[11,21,31,33,35]);
+			layer.getOtherPlayer(4).flowMoneyChangeText(-3000);
 			
-			//layer.getPlayer().setMoneyChange(1000);
-			
-			
-			//layer.showPlayerReadyButtonGroup();
-			
-			
-			/*
-			layer.showPlayerCards(new <int>[11,21,31,33,35]);
-			
-			
-			
-			layer.setAnyPlayerAsDealer(0, 5);
-			layer.showPlayerGiveButtonGroup();
-			layer.showCardCalculater();
-			layer.showOtherPlayer("3000012", 12000, 1);
-			layer.showOtherPlayerCards(new <int>[11,21,31,33,35], 1);
-			
-			layer.showOtherPlayer("3000013", 12000, 2);
-			layer.showOtherPlayerCards(new <int>[0,0,0,0,0], 2);			
-			
-			
-			layer.showOtherPlayer("3000014", 12000, 3);
-			layer.showOtherPlayerCards(new <int>[0,0,0,0,0], 3);
-			
-			layer.showOtherPlayer("3000015", 12000, 4);
-			layer.showOtherPlayerCards(new <int>[0,0,0,0,0], 4);
-			layer.showOtherPlayer("3000016", 12000, 5);		
-			layer.showOtherPlayerCards(new <int>[0,0,0,0,0], 5);
-			
-			layer.setAnyPlayerAsDealer(1, 2);
-			layer.setAnyPlayerAsDealer(2, 2);
-			layer.setAnyPlayerAsDealer(3, 2);
-			layer.setAnyPlayerAsDealer(4, 2);
-			layer.setAnyPlayerAsDealer(5, 2);
-			
-			
-			
-			
-			layer.showWaitNextTimer(8);
-			*/
-			
-			/*var timer:Timer = new Timer(3000, 1);
-			timer.addEventListener(TimerEvent.TIMER, onTimer);			
-			timer.start();
-			*/			
+			layer.getOtherPlayer(5).show("55555555", 12000, 0);
+			//layer.getOtherPlayer(1).showCards(new <int>[11,21,31,33,35]);
+			layer.getOtherPlayer(5).flowMoneyChangeText(-3000);
 		}
 		
 		protected function onTimer(event:TimerEvent):void
@@ -95,43 +62,6 @@ package controller.handler
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			
 			layer.setAnyPlayerRobDealerState(1, false);
-		}
-		
-		/*
-		protected function onTimer(event:TimerEvent):void
-		{
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-		var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
-	
-
-			if (_first)
-			{				
-				layer.showPlayerCards(new <int>[1, 2, 3, 4, 5]);
-				layer.showOtherPlayerCards(new <int>[0, 0, 0, 0, 0]);
-				
-				layer.hideTimer();
-				
-				layer.showWaitBetTimer(8);
-				
-				_first = false;
-				
-				var timer:Timer = new Timer(200, 1);
-				timer.addEventListener(TimerEvent.TIMER, onTimer2);				
-			}
-			else
-			{
-				layer.showPlayerCards(new <int>[21, 32, 33, 34, 0]);
-				layer.showOtherPlayerCards(new <int>[30, 31, 32, 33, 34]);
-			}			
-		}
-		
-		protected function onTimer2(event:TimerEvent):void
-		{
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-		var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
-			
-			layer.showWaitGiveTimer(5);
-		}
-		*/
+		}		
 	}
 }

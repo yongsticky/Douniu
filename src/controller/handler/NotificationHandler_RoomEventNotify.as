@@ -23,6 +23,7 @@ package controller.handler
 	import view.scene.huanle.Scene_HuanLeTable;
 	import view.scene.huanle.layer.Layer_HuanleMain;
 	import view.scene.table.Scene_Table;
+	import view.scene.table.cell.OtherPlayer;
 	import view.scene.table.layer.Layer_TableMain;
 	
 	public class NotificationHandler_RoomEventNotify extends NiuNotificationHandler
@@ -101,6 +102,7 @@ package controller.handler
 			
 			if (event.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
 			{
+				_logger.log(this, "it's not other player, but myself!", LEVEL.ERROR);
 				return;
 			}
 			
@@ -110,7 +112,11 @@ package controller.handler
 				var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 				if (layer)
 				{					
-					layer.showOtherPlayer(playerDetail.player_uin.toString(), playerDetail.money.lowPart, playerDetail.seat_id);										
+					var op:OtherPlayer = layer.getOtherPlayer(playerDetail.seat_id);
+					if (op)
+					{
+						op.show(playerDetail.player_uin.toString(), playerDetail.money.lowPart, 0);
+					}
 				}	
 				
 				SoundManager.instance().playNotifyEnterRoom();
@@ -129,8 +135,12 @@ package controller.handler
 			
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			if (layer)
-			{					
-				layer.hideOtherPlayer(event.seat_id);										
+			{	
+				var op:OtherPlayer = layer.getOtherPlayer(event.seat_id);
+				if (op)
+				{
+					op.hide();
+				}									
 			}
 		}
 		
@@ -141,11 +151,11 @@ package controller.handler
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;				
 			if (layer)
 			{	
-				layer.hidePlayerCards();					
-				layer.hideOtherPlayerCards();
+				layer.getPlayer().hideCards();					
+				layer.hideAllOtherPlayersCards();
 					
 				layer.hideTimer();
-				layer.hidePlayerReadyButtonGroup();					
+				layer.getPlayer().hideReadyButtonGroup();					
 					
 				SoundManager.instance().playNotifyStart();
 			}
@@ -157,9 +167,9 @@ package controller.handler
 
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			if (layer)
-			{					
-				layer.showPlayerReadyButtonGroup();
-				layer.showWaitNextGameTimer(8);
+			{		
+				layer.getPlayer().showReadyButtonGoroup();
+				//layer.showWaitNextGameTimer(8);
 			}
 			else
 			{				
@@ -179,22 +189,20 @@ package controller.handler
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			if (layer)
 			{
-				for each(var tlv:UnionTLV in event.other_info_vec)
+				var mcInfo:PlayerMoneyChangeInfo = event.getTLVValue(TLVType.DN_TLV_MONEY_CHANGE_INFO) as PlayerMoneyChangeInfo;
+				if (mcInfo)
 				{
-					if (tlv.valueType == TLVType.DN_TLV_MONEY_CHANGE_INFO)
+					if (event.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
 					{
-						var mcInfo:PlayerMoneyChangeInfo = tlv.value as PlayerMoneyChangeInfo;
-						if (mcInfo)
+						layer.getPlayer().updateMoney(mcInfo.money_cur_value.lowPart);
+					}
+					else
+					{
+						var op:OtherPlayer = layer.getOtherPlayer(event.seat_id);
+						if (op)
 						{
-							if (mcInfo.money_change_value.highPart > 0)
-							{
-								layer.PlayerMoneyChange(event.seat_id,  mcInfo.money_change_value.lowPart, mcInfo.money_cur_value.lowPart);
-							}
-							else
-							{
-								layer.PlayerMoneyChange(event.seat_id,  -mcInfo.money_change_value.lowPart, mcInfo.money_cur_value.lowPart);
-							}
-						}						
+							op.updateMoney(mcInfo.money_cur_value.lowPart);
+						}
 					}
 				}
 			}
