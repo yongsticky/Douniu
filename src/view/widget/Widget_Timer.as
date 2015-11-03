@@ -21,7 +21,7 @@ package view.widget
 		
 		private var _delayCall:IAnimatable;
 		
-		private const MAX_TIMER_NUM:int = 9;
+		private const MAX_TIMER_NUM:int = 5;
 				
 		
 		public function Widget_Timer(name:String = null)

@@ -1,27 +1,35 @@
 package view.scene.table.cell
 {	
+	import flash.geom.Point;
+	
 	import facade.NiuNotificationHandlerConstant;
 	
 	import resource.ResManager;
 	
 	import sound.SoundManager;
 	
+	import starling.animation.Transitions;
+	import starling.animation.Tween;
 	import starling.display.Button;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.filters.BlurFilter;
+	import starling.text.TextField;
+	import starling.utils.HAlign;
 	
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
+	import view.scene.table.layer.Layer_TableMain;
 	
 	public class Player extends ExSprite
 	{
 		private var _playerHeader:PlayerHeader;						// 玩家头像
 		private var _playerCards:PlayerCards;							// 玩家手牌
 		
-		private var _playerReadyButtonGroup:ReadyButtonGroup;			// 换桌和退出
+		
 
 		private var _playerRobDealerState:ExImage;								// 玩家抢庄状态
 		private var _playerDealerState:ExImage;							// 玩家获得庄家状态
@@ -32,6 +40,9 @@ package view.scene.table.cell
 		private var _playerGiveButtonGroup:GiveButtonGroup;		// 玩家提交结果按钮组
 		private var _cardCalculater:CardCalculater;		// 玩家算牛辅助框
 		
+		private var _playerReadyButtonGroup:ReadyButtonGroup;			// 换桌和退出
+		
+		private var _moneyChange:TextField;
 		
 		public function Player(name:String = null)
 		{
@@ -54,11 +65,7 @@ package view.scene.table.cell
 			_playerCards.addEventListener(TouchEvent.TOUCH, onTouch);
 			addChild(_playerCards);
 			
-			_playerReadyButtonGroup = new ReadyButtonGroup();
-			_playerReadyButtonGroup.visible = false;
-			_playerReadyButtonGroup. x = 140;
-			_playerReadyButtonGroup.y = 120;
-			addChild(_playerReadyButtonGroup);
+			
 						
 			/*
 			_playerRobDealerState = new ExImage();
@@ -98,6 +105,20 @@ package view.scene.table.cell
 			_cardCalculater.x = 180;			
 			_cardCalculater.visible = false;
 			addChild(_cardCalculater);
+			
+			_playerReadyButtonGroup = new ReadyButtonGroup();
+			_playerReadyButtonGroup.visible = false;
+			_playerReadyButtonGroup. x = 160;
+			_playerReadyButtonGroup.y = 120;
+			addChild(_playerReadyButtonGroup);
+			
+			_moneyChange = new TextField(320, 60, "", "Arial", 32, 0xcd0000, true);
+			_moneyChange.hAlign = HAlign.LEFT;
+			_moneyChange.x = 200;
+			_moneyChange.y = 20;			
+			_moneyChange.filter = BlurFilter.createDropShadow();
+			_moneyChange.visible = false;
+			addChild(_moneyChange);
 		}
 				
 		protected function onTouch(event:TouchEvent) : void
@@ -146,7 +167,9 @@ package view.scene.table.cell
 			}
 						
 			_playerGiveButtonGroup.visible = false;
-			_playerCards.visible = false;
+			
+			(getOwnerLayer() as Layer_TableMain).showWaitOtherGiveTimer();
+			//_playerCards.visible = false;
 		}
 		
 		public function get playerHeader() : PlayerHeader
@@ -193,5 +216,58 @@ package view.scene.table.cell
 		{
 			return _cardCalculater;
 		}
+		
+		public function setAsDealer(): void
+		{
+			var tn:Tween = new Tween(_playerDealerState, 0.4);
+			
+			var dstX:Number = _playerDealerState.x;
+			var dstY:Number = _playerDealerState.y;			
+			
+			var srcPt:Point = new Point();
+			globalToLocal(new Point(stage.stageWidth/2, stage.stageHeight/2), srcPt);
+			_playerDealerState.x = srcPt.x;
+			_playerDealerState.y = srcPt.y;
+			_playerDealerState.visible = true;
+			
+			tn.moveTo(dstX, dstY);
+			
+			getOwnerLayer().juggler.add(tn);			
+		}
+	
+		public function setMoneyChange(change:int) : void
+		{
+			if (change < 0)
+			{
+				_moneyChange.color = 0xCD0000;
+				_moneyChange.text = change.toString();
+			}
+			else
+			{
+				_moneyChange.color = 0xE96F0F;
+				_moneyChange.text = "+" + change.toString();
+			}			
+			
+			_moneyChange.y += 32;
+			_moneyChange.alpha = 255;
+			_moneyChange.visible = true;
+			
+			
+			var tn:Tween = new Tween(_moneyChange, 2, Transitions.EASE_IN);
+			tn.moveTo(_moneyChange.x, _moneyChange.y-32);
+			tn.fadeTo(0);
+			tn.onComplete = onMoneyChangeAnimationComplete;
+			
+			getOwnerLayer().juggler.add(tn);
+			
+		}
+		
+		private function onMoneyChangeAnimationComplete() : void
+		{
+			_moneyChange.visible = false;
+		}
+	
 	}
+	
+	
 }

@@ -1,13 +1,16 @@
 package view.scene.table.layer
 {	
 	import camu.errors.IndexOutOfRangeError;
+	import camu.logger.LEVEL;
 	
 	import global.RuntimeExchangeData;
+	
+	import starling.filters.BlurFilter;
 	
 	import view.framework.ExLayer;
 	import view.scene.table.cell.OtherPlayer;
 	import view.scene.table.cell.Player;
-	import view.scene.table.cell.TimerWithText;
+	import view.widget.Widget_TimerWithText;
 
 	public class Layer_TableMain extends ExLayer
 	{		
@@ -15,7 +18,7 @@ package view.scene.table.layer
 		
 		private var _player:Player;		
 		private var _otherPlayers:Vector.<OtherPlayer>;		
-		private var _timer:TimerWithText;		
+		private var _timer:Widget_TimerWithText;		
 		private var _playerSeatId:int;		
 		
 		public function Layer_TableMain(name:String = null) 
@@ -38,9 +41,9 @@ package view.scene.table.layer
 				
 				other.visible = false;				
 				addChild(other);				
-			}
+			}					
 										
-			_timer = new TimerWithText();
+			_timer = new Widget_TimerWithText();
 			_timer.visible = false;			
 			addChild(_timer);
 					
@@ -52,7 +55,7 @@ package view.scene.table.layer
 			_player.y = stage.stageHeight - _player.height - 60;
 			
 			_timer.x = (stage.stageWidth - _timer.width)/2;
-			_timer.y = (stage.stageHeight - _timer.height - 80)/2;			
+			_timer.y = (stage.stageHeight - _timer.height - 120)/2;			
 
 			
 			var p1:OtherPlayer = _otherPlayers[0];
@@ -92,23 +95,43 @@ package view.scene.table.layer
 		
 		public function showWaitRobDealerTimer(time:int) : void
 		{
-			_timer.show(TimerWithText.INDEX_WAIT_ROB_DEALER, time);
+			_timer.show("请抢庄", time);
+		}
+		
+		public function showWaitOtherRobDealerTimer() : void
+		{
+			_timer.show("等待其他玩家抢庄", 0);
 		}
 		
 		public function showWaitBetTimer(time:int) : void
 		{
-			_timer.show(TimerWithText.INDEX_WAIT_BET, time);
+			_timer.show("请押注", time);
+		}
+		
+		public function showWaitOtherBetTimer() : void
+		{
+			_timer.show("等待其他玩家押注", 0);
 		}
 		
 		public function showWaitGiveTimer(time:int) : void
 		{
-			_timer.show(TimerWithText.INDEX_WAIT_GIVE, time);
+			_timer.show("请出牌", time);
 		}
 		
-		public function showWaitNextTimer(time:int) : void
+		public function showWaitOtherGiveTimer() : void
 		{
-			_timer.show(TimerWithText.INDEX_WAIT_NEXT, time);
-		}	
+			_timer.show("等待其他玩家出牌", 0);
+		}
+		
+		public function showWaitNextGameTimer(time:int) : void
+		{
+			_timer.show("游戏即将开始", time);
+		}
+		
+		public function showWaitOtherEnter() : void
+		{
+			_timer.show("等待其他玩家加入", 0);
+		}
 		
 		public function hideTimer(): void
 		{
@@ -118,13 +141,7 @@ package view.scene.table.layer
 		public function showOtherPlayer(nick:String, chips:int, seatId:int) : void
 		{			
 			if (seatId >= 0 && seatId < MAX_OTHER_PLAYER_NUM)
-			{
-				/*var seat:int = seatId - _playerSeatId;
-				if (seat < 0)
-				{
-					seat += MAX_OTHER_PLAYER_NUM;
-				}*/
-				
+			{			
 				var other:OtherPlayer = getOtherPlayer(seatId); // _otherPlayers[seat-1];
 												
 				other.visible = true;
@@ -133,38 +150,30 @@ package view.scene.table.layer
 		}
 		
 		public function hideOtherPlayer(seatId:int) : void
-		{
-			/*
-			if (seatId >= 0 && seatId < MAX_OTHER_PLAYER_NUM)
-			{
-				var seat:int = seatId - _playerSeatId;
-				if (seat < 0)
-				{
-					seat += MAX_OTHER_PLAYER_NUM;
-				}
-				
-				var other:OtherPlayer = _otherPlayers[seat-1];
-				
-				
-				other.visible = false;				
-			}
-			*/
-			
+		{			
 			getOtherPlayer(seatId).visible = false;			
 		}
 		
 		public function showPlayerReadyButtonGroup() : void
 		{
+			if (_player.playerCards.visible)
+			{
+				_player.playerCards.filter = new BlurFilter();				
+			}
+			
 			_player.playerReadyButtonGroup.visible = true;
 		}
 		
 		public function hidePlayerReadyButtonGroup() : void
 		{
+			_player.playerCards.filter = null;		
+			
 			_player.playerReadyButtonGroup.visible = false;
 		}
 		
 		public function showRobDealerButtonGroup(x1:int, x2:int, x3:int, x4:int) : void
 		{
+			_player.playerRobDealerButtonGroup.updateMultiple(x2, x3, x4);
 			_player.playerRobDealerButtonGroup.visible = true;	
 		}
 		
@@ -177,22 +186,12 @@ package view.scene.table.layer
 		{
 			// 是自己抢到
 			if (seatId == RuntimeExchangeData.instance().redPlayerData.seat_id)
-			{
-				_player.playerDealerState.visible = true;
+			{				
+				_player.setAsDealer();
 			}
 			else
 			{
-				/*
-				var seat:int = seatId - RuntimeExchangeData.instance().redPlayerData.seat_id;
-				if (seat < 0)
-				{
-					seat += MAX_OTHER_PLAYER_NUM;
-				}
-				
-				_otherPlayers[seat-1].playerDealerState.visible = true;
-				*/
-				
-				getOtherPlayer(seatId).playerDealerState.visible = true;
+				getOtherPlayer(seatId).setAsDealer();
 			}		
 		}
 		
@@ -206,7 +205,7 @@ package view.scene.table.layer
 			}
 		}
 		public function setAnyPlayerRobDealerState(seatId:int, rob:Boolean) : void
-		{
+		{		
 			/*
 			var resName:String = rob ? "ui.bet_text_bg":"ui.no_rob_dealer";
 			
@@ -286,6 +285,7 @@ package view.scene.table.layer
 		
 		public function hideCardCalculater() : void
 		{
+			_player.cardCalculater.update(new <int>[0, 0, 0, 0]);
 			_player.cardCalculater.visible = false;
 		}
 		
@@ -309,13 +309,6 @@ package view.scene.table.layer
 			}
 			else
 			{				
-				/*var seat:int = seatId - _playerSeatId;
-				if (seat < 0)
-				{
-					seat += 5;
-				}*/
-				
-				
 				other = getOtherPlayer(seatId);// _otherPlayers[seat-1];
 				if (other.playerHeader.visible)
 				{
@@ -348,7 +341,12 @@ package view.scene.table.layer
 			}					
 		}
 		
-		private function getOtherPlayer(seatId:int) : OtherPlayer
+		public function getPlayer() : Player
+		{
+			return _player;
+		}
+		
+		public function getOtherPlayer(seatId:int) : OtherPlayer
 		{
 			var seat:int = seatId - _playerSeatId;
 			if (seat < 0)
@@ -361,7 +359,8 @@ package view.scene.table.layer
 				return _otherPlayers[seat-1];
 			}
 			else
-			{				
+			{		
+				_logger.log(this, "seat=",seat, LEVEL.ERROR);
 				throw new IndexOutOfRangeError();
 			}
 		}

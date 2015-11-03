@@ -58,13 +58,13 @@ package packet.util
 			if (bytes.bytesAvailable >= 8)
 			{
 				if (bytes.endian == Endian.BIG_ENDIAN)
-				{	
-					// 先读的是低位
+				{						
 					_highPart = bytes.readInt();
 					_lowPart = bytes.readUnsignedInt();					
 				}
 				else if (bytes.endian == Endian.LITTLE_ENDIAN)
 				{
+					// 先读的是低位
 					_lowPart = bytes.readUnsignedInt();
 					_highPart = bytes.readInt();
 				}

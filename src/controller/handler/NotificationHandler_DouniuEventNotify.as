@@ -1,7 +1,5 @@
 package controller.handler
 {	
-	import flash.utils.ByteArray;
-	
 	import camu.errors.NullObjectError;
 	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
@@ -12,6 +10,7 @@ package controller.handler
 	import global.RuntimeExchangeData;
 	
 	import packet.game.message.Notify.Notify_DouniuEvent;
+	import packet.game.message.Notify.TRoomEvent;
 	import packet.game.tlv.TLVType;
 	import packet.game.tlv.value.TDealerInfo;
 	import packet.game.tlv.value.TTilesInfo;
@@ -39,7 +38,7 @@ package controller.handler
 		public function NotificationHandler_DouniuEventNotify(mediator:Mediator)
 		{
 			super(mediator);
-		}
+		}		
 		
 		override public function execute(notification:Notification) : void
 		{
@@ -79,9 +78,8 @@ package controller.handler
 			else
 			{				
 				throw new NullObjectError();
-			}
-				
-		}
+			}			
+		}		
 		
 		private function onNotify_RobDealer(v:NotifyRobDealer) : void
 		{
@@ -90,7 +88,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
+				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 				if (layer)
 				{						
 					layer.showRobDealerButtonGroup(0, v.multiple[0], v.multiple[1], v.multiple[2]);
@@ -136,7 +134,7 @@ package controller.handler
 				throw new NullObjectError();
 			}
 			
-			var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
+			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
 			if (!layer)
 			{
 				throw new NullObjectError();
@@ -153,7 +151,12 @@ package controller.handler
 				layer.clearAllPlayerRobDealerState();
 			}
 			else
-			{
+			{				
+				if (v.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
+				{
+					layer.showWaitOtherRobDealerTimer();
+				}
+				
 				layer.setAnyPlayerRobDealerState(v.seat_id, (v.multiple!=0));
 			}			
 		}
@@ -165,21 +168,25 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
+				var layer:Layer_TableMain = scene.getChildByName("table.main") as Layer_TableMain;
 				if (layer)
-				{
-					if (RuntimeExchangeData.instance().redTableData.dealer_seat_id != 
-						RuntimeExchangeData.instance().redPlayerData.seat_id)
-					{
-						layer.showBetButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);
-					}
-					
+				{					
 					var tInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
 					if (tInfo)
 					{
 						layer.showWaitBetTimer(tInfo.time_);	
 					}
 					
+					
+					var red:RuntimeExchangeData = RuntimeExchangeData.instance(); 
+					if (red.redTableData.dealer_seat_id != red.redPlayerData.seat_id)
+					{
+						layer.showBetButtonGroup(v.multiple[0], v.multiple[1], v.multiple[2]);						
+					}
+					else
+					{
+						layer.showWaitOtherBetTimer();
+					}					
 				}
 			}
 		}
@@ -190,20 +197,35 @@ package controller.handler
 
 			
 			SoundManager.instance().playNotifyBetDetail();
-			
-			var scene:Scene_HuanLeTable = NiuDirector.instance().topScene as Scene_HuanLeTable;
+						
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:Layer_Main = scene.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
+				var layer:Layer_TableMain = scene.getChildByName("table.main") as Layer_TableMain;
 				if (layer)
-				{	
-					var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
-					if (tmInfo)
+				{
+					if (v.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
 					{
-						layer.showTimer(tmInfo.time_);	
-					}					
+						layer.showWaitOtherBetTimer();
+					}
 				}
 			}
+			else
+			{
+				var scene2:Scene_HuanLeTable = NiuDirector.instance().topScene as Scene_HuanLeTable;
+				if (scene2)
+				{
+					var layer2:Layer_Main = scene2.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
+					if (layer2)
+					{	
+						var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
+						if (tmInfo)
+						{
+							layer2.showTimer(tmInfo.time_);						
+						}				
+					}
+				}
+			}			
 						
 		}
 		
@@ -268,35 +290,51 @@ package controller.handler
 			_logger.log(this, "onNotify_Finish Enter.", LEVEL.INFO);
 			
 			
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			if (scene)
-			{
+			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;			
+			var layer:Layer_TableMain = scene ? (scene.getChildByName("table.main") as Layer_TableMain):null;
+			
+			if (layer)
+			{					
 				for (var i:int = 0; i < v.finish_info_num; ++i)
 				{
 					var info:FinishInfo = v.finish_info_vec[i];
 					if (info)
-					{
+					{							
 						if (info.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
 						{
 							if (info.money.highPart > 0)
 							{
 								SoundManager.instance().playGameWin();
+								layer.getPlayer().setMoneyChange(info.money.lowPart);
 							}
 							else
 							{
 								SoundManager.instance().playGameLose();
+								layer.getPlayer().setMoneyChange(0-info.money.lowPart);
 							}
+							
+							
 						}
-					}
+						else
+						{
+							var cards:Vector.<int> = new <int>[0, 0, 0, 0, 0];
+							for (var j:int = 0; j < info.tiles_num; ++j)
+							{
+								cards[j] = int(info.tiles[j]);
+								layer.showOtherPlayerCards(cards, info.seat_id);
+								
+								layer.getOtherPlayer(info.seat_id).setMoneyChange(info.money.lowPart);
+							}							
+						}
+					}					
 				}
-				
-				
-				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
+												
 				if (layer)
 				{		
-					layer.hidePlayerCards();
-					layer.hidePlayerGiveButtonGroup();
-					layer.hideOtherPlayerCards();
+					//layer.hidePlayerCards();
+					//layer.hideOtherPlayerCards();
+					layer.hideCardCalculater();					
+					layer.hidePlayerGiveButtonGroup();					
 					layer.clearAnyPlayerAsDealer();
 					
 					layer.hideTimer();					
@@ -312,12 +350,12 @@ package controller.handler
 					var layer2:Layer_Main = scene2.getChildByName(Scene_HuanLeTable.LAYER_MAIN) as Layer_Main;
 					
 					var vec:Vector.<FinishInfo> = new Vector.<FinishInfo>(v.finish_info_num);
-					for (var j:int = 0; j < v.finish_info_num; ++j)
+					for (var k:int = 0; k < v.finish_info_num; ++k)
 					{
-						var info2:FinishInfo = v.finish_info_vec[j];
+						var info2:FinishInfo = v.finish_info_vec[k];
 						if (info2)
 						{
-							vec[j] = info2;
+							vec[k] = info2;
 						}
 					}
 					
@@ -342,7 +380,7 @@ package controller.handler
 						var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
 						if (tmInfo)
 						{							
-							layer.showWaitNextTimer(tmInfo.time_);		
+							layer.showWaitNextGameTimer(tmInfo.time_);
 						}
 					}
 					else

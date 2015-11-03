@@ -34,8 +34,19 @@ package controller.handler
 			var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main");			
 			
 			layer.showPlayer("3000011", 10000, 0);
+			layer.getPlayer().setMoneyChange(3000);
 			
-			layer.showPlayerReadyButtonGroup();
+			layer.showOtherPlayer("3000012", 12000, 3);
+			layer.showOtherPlayerCards(new <int>[11,21,31,33,35], 3);
+			layer.getOtherPlayer(3).setMoneyChange(-3000);
+			
+			
+			//layer.showPlayerCards(new <int>[11,21,31,33,35]);
+			
+			//layer.getPlayer().setMoneyChange(1000);
+			
+			
+			//layer.showPlayerReadyButtonGroup();
 			
 			
 			/*

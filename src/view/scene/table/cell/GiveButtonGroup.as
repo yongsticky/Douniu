@@ -29,14 +29,22 @@ package view.scene.table.cell
 			var resManager:ResManager = ResManager.instance();
 			
 			_niu = new Button(Texture.fromBitmapData(resManager.getResource("ui.round_button_bg_red")));			
+			_niu.fontBold = true;
 			_niu.text = "有牛";
-			_niu.fontSize = 18;			
+			_niu.fontSize = 16;
+			_niu.fontColor = 0x671515;
+			_niu.fontName = "Microsoft YaHei";
+			
 			addChild(_niu);
 			
 			_auto = new Button(Texture.fromBitmapData(resManager.getResource("ui.round_button_bg_yellow")));			
-			_auto.text = "自动";
-			_auto.fontSize = 18;
 			_auto.y = 51;
+			_auto.fontBold = true;
+			_auto.text = "自动";
+			_auto.fontSize = 16;
+			_auto.fontColor = 0x671515;
+			_auto.fontName = "Microsoft YaHei";
+			
 			addChild(_auto);
 		}
 		

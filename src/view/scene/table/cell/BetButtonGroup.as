@@ -30,11 +30,11 @@ package view.scene.table.cell
 		{
 			if (_firstBet)
 			{
-				_firstBet.text = x1.toString() + " 倍";
+				_firstBet.text = "压" + x1.toString() + " 倍";
 				_multiples[0] = x1;
-				_secondBet.text = x2.toString() + " 倍";
+				_secondBet.text = "压" + x2.toString() + " 倍";
 				_multiples[1] = x2;
-				_thirdBet.text = x3.toString() + " 倍";
+				_thirdBet.text = "压" + x3.toString() + " 倍";
 				_multiples[2] = x3;
 			}
 		}
@@ -47,18 +47,24 @@ package view.scene.table.cell
 			_firstBet = new Button(tBg);
 			_firstBet.name = "0";
 			_firstBet.x = 60;
+			_firstBet.fontSize = 18;
+			_firstBet.fontColor = 0xFFFFFF;
 			_firstBet.addEventListener(Event.TRIGGERED, onBtnRobTriggered);
 			addChild(_firstBet);
 			
 			_secondBet = new Button(tBg);
 			_secondBet.name = "1";
 			_secondBet.x = _firstBet.x + _firstBet.width + 5;
+			_secondBet.fontSize = 18;
+			_secondBet.fontColor = 0xFFFFFF;
 			_secondBet.addEventListener(Event.TRIGGERED, onBtnRobTriggered);
 			addChild(_secondBet);
 			
 			_thirdBet = new Button(tBg);
 			_thirdBet.name = "2";
 			_thirdBet.x = _secondBet.x + _secondBet.width + 5;
+			_thirdBet.fontSize = 18;
+			_thirdBet.fontColor = 0xFFFFFF;
 			_thirdBet.addEventListener(Event.TRIGGERED, onBtnRobTriggered);
 			addChild(_thirdBet);				
 		}

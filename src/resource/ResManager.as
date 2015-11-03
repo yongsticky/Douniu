@@ -101,7 +101,8 @@ package resource
 								
 				
 				for each(var clsName:String in clsArr)
-				{					
+				{			
+					//_logger.log(this, "class name:[",clsName,"]", LEVEL.DEBUG);
 					var cls:Class = Object(item).loader.contentLoaderInfo.applicationDomain.getDefinition(clsName);
 					
 					var last:int = clsName.lastIndexOf(".");					
@@ -110,6 +111,7 @@ package resource
 					_res[resId] = new cls();					
 					
 					
+					/*
 					if (_res[resId] is Bitmap)
 					{						
 						_logger.log(this, "add res: id[", resId, "], clsName[", clsName, "], classType[Bitmap].",  LEVEL.INFO);
@@ -125,7 +127,8 @@ package resource
 					else
 					{
 						_logger.log(this, "add res: id[", resId, "], clsName[", clsName, "], classType[Unknown].",  LEVEL.INFO);
-					}					
+					}
+					*/
 				}				
 			}			
 		}

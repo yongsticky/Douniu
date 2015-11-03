@@ -36,7 +36,7 @@ package view.scene.table.cell
 				addChild(cI);
 				_pokers[i] = cI;
 				
-				startX += 16;
+				startX += 18;
 			}
 		}
 		

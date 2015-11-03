@@ -74,7 +74,8 @@ package packet.game.message.Sitdown
 			logger.log(this, "***********************************************", LEVEL.INFO);
 			logger.log(this, "print Response_Sitdown.", LEVEL.INFO);			
 			
-			logger.log(this, "result:", rresult.result_id, LEVEL.INFO);			
+			logger.log(this, "result:", rresult.result_id, LEVEL.INFO);
+			logger.log(this, "result_str:", rresult.result_str, LEVEL.INFO);
 			logger.log(this, "room_id:", room_id, LEVEL.INFO);
 			logger.log(this, "table_id:",table_id, LEVEL.INFO);
 			logger.log(this, "seat_id:", seat_id, LEVEL.INFO);

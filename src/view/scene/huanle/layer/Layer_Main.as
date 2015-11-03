@@ -30,7 +30,7 @@ package view.scene.huanle.layer
 		override protected function createChildren():void
 		{
 			_dealer = new Robot(4);
-			_dealer.sepWidth = 70;
+			_dealer.sepWidth = 60;
 			addChild(_dealer);
 			_dealer.betButton.visible = false;
 			

@@ -1,7 +1,5 @@
 package controller.handler
-{		
-	import flash.events.Event;
-	
+{	
 	import br.com.stimuli.loading.BulkProgressEvent;
 	
 	import camu.logger.LEVEL;
@@ -10,7 +8,6 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
-	import facade.NiuNotificationHandlerConstant;
 	
 	import resource.ResManager;
 	
@@ -18,6 +15,8 @@ package controller.handler
 	import view.scene.loading.Scene_Loading;
 	import view.scene.loading.layer.Layer_Loading;
 	import view.scene.selectuser.Scene_SelectUser;
+	
+	import facade.NiuNotificationHandlerConstant;
 	
 	public class NotificationHandler_ServerConnected extends NiuNotificationHandler
 	{
@@ -57,7 +56,7 @@ package controller.handler
 			var scene:Scene_Loading = NiuDirector.instance().topScene as Scene_Loading;
 			if (scene)
 			{
-				var layer:Layer_Loading = scene.getChildByNameWithRecursive("loading");
+				var layer:Layer_Loading = scene.getChildByName("loading") as Layer_Loading;
 				if (layer)
 				{				
 					layer.updatePercent(event._weightPercent*100);

@@ -99,6 +99,11 @@ package controller.handler
 		{	
 			_logger.log(this, "onEvent_OtherPlayerSitdown", LEVEL.INFO);
 			
+			if (event.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
+			{
+				return;
+			}
+			
 			var playerDetail:PlayerDetailInfo = null;
 			for each(var tlv:UnionTLV in event.other_info_vec)
 			{
@@ -144,7 +149,7 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
+				var layer:Layer_TableMain = scene.getChildByName("table.main") as Layer_TableMain;
 				if (layer)
 				{					
 					layer.showOtherPlayer(nick, chips, seatId);										
@@ -174,9 +179,13 @@ package controller.handler
 			{
 				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
-				{										
+				{	
+					layer.hidePlayerCards();					
+					layer.hideOtherPlayerCards();
+					
+					
 					layer.hideTimer();
-					layer.hidePlayerReadyButtonGroup();
+					layer.hidePlayerReadyButtonGroup();					
 					
 					SoundManager.instance().playNotifyStart();
 				}				
@@ -192,10 +201,10 @@ package controller.handler
 			{
 				var layer:view.scene.table.layer.Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as view.scene.table.layer.Layer_TableMain;
 				if (layer)
-				{
-					layer.hideCardCalculater();
+				{					
 					layer.showPlayerReadyButtonGroup();
-					layer.showWaitNextTimer(8);				
+					
+					layer.showWaitNextGameTimer(8);
 				}
 			}
 			else

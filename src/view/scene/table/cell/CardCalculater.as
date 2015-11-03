@@ -34,6 +34,7 @@ package view.scene.table.cell
 			for (var i:int = 0; i < SIZE; ++i)
 			{
 				var num:TextField = new TextField(38, 38, "", "", 24, 0x00000000); 
+				num.fontName = "Arial";
 				_numbers[i] = num;
 				
 				num.x = POS_DATA[i].x;

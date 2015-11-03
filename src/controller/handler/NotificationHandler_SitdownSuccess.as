@@ -29,11 +29,22 @@ package controller.handler
 		{
 			_logger.log(this, "execute Enter.", LEVEL.DEBUG);			
 			
-			var resp:Response_Sitdown = notification.getData() as Response_Sitdown;			
+			var resp:Response_Sitdown = notification.getData() as Response_Sitdown;		
+			
+			if (resp.rresult.result_id != 0)
+			{
+				_logger.log(this, "Sitdown Failed.", LEVEL.ERROR);
+				
+				return;
+			}
+			
+			
 			RuntimeExchangeData.instance().redTableData.table_id = resp.table_id;
 			RuntimeExchangeData.instance().redPlayerData.seat_id = resp.seat_id;
 			
 			AddPlayer(resp);
+			
+			
 			
 			for each(var tlv:UnionTLV in resp.tlv_vec)
 			{
@@ -57,11 +68,12 @@ package controller.handler
 			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
 			if (scene)
 			{
-				var layer:Layer_TableMain = scene.getChildByNameWithRecursive("table.main") as Layer_TableMain;
+				var layer:Layer_TableMain = scene.getChildByName("table.main") as Layer_TableMain;
 				if (layer)
 				{					
 					layer.showPlayer(resp.csHeader.uin.toString(), RuntimeExchangeData.instance().redPlayerData.chips, resp.seat_id);
 					layer.showPlayerReadyButtonGroup();
+					layer.showWaitOtherEnter();
 				}
 			}
 		}

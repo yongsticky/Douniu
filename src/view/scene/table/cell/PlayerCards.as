@@ -1,5 +1,7 @@
 package view.scene.table.cell
 {
+	import flash.geom.Point;
+	
 	import camu.errors.IndexOutOfRangeError;
 	import camu.errors.NullObjectError;
 	import camu.errors.UnexpectedLengthError;
@@ -56,7 +58,7 @@ package view.scene.table.cell
 				
 				_pokers[i] = pI;
 				
-				startX += 73;
+				startX += 61;
 			}		
 		}
 				
@@ -109,9 +111,11 @@ package view.scene.table.cell
 			
 			var dstX:Number = pI.x;
 			var dstY:Number = pI.y;
-						
-			pI.x = 80;
-			pI.y = -250;
+			
+			var srcPt:Point = new Point();
+			globalToLocal(new Point(stage.stageWidth/2, stage.stageHeight/2), srcPt);			
+			pI.x = srcPt.x;
+			pI.y = srcPt.y;
 			
 			var tween:Tween = new Tween(pI, 0.1);
 			tween.moveTo(dstX, dstY);

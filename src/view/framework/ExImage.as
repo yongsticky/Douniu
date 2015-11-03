@@ -2,6 +2,7 @@ package view.framework
 {	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.geom.Point;
 	
 	import camu.errors.UnhandledBranchError;
 	
@@ -38,7 +39,17 @@ package view.framework
 		{
 			_height = value;
 			updateTexture();
-		}							  
+		}
+		
+		public function get image() : Image
+		{
+			return _imager;
+		}
+		
+		public function get texture() : Texture
+		{
+			return _texture;
+		}
 		
 		public function set res(res:*) : void
 		{	

@@ -17,6 +17,8 @@ package facade
 		public static const USER_GIVE:String = "handler.user_give";	
 		public static const HUANLE_BET:String = "handler.huanle_bet";
 		
+		public static const ANOTHER_DESK:String = "handler.another_desk";
+		
 		public static const USER_LOGOUT:String = "handler.user_logout";		
 		public static const TEST_UI:String = "handler.test_ui";				
 				
