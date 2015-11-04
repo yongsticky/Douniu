@@ -23,14 +23,15 @@ package view.scene.table.cell
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	import view.scene.table.layer.Layer_TableMain;
+	import view.widget.Widget_ImageTextField;
 	
 	public class Player extends ExSprite
 	{
 		private var _playerHeader:PlayerHeader;						// 玩家头像
 		private var _playerCards:PlayerCards;							// 玩家手牌		
 
-		private var _playerRobDealerState:ExImage;								// 玩家抢庄状态
-		private var _playerDealerState:ExImage;							// 玩家获得庄家状态
+		private var _playerRobDealerNotify:Widget_ImageTextField;		// 玩家抢庄通知
+		private var _playerAsDealer:ExImage;								// 玩家获得庄家状态
 		private var _playerRobDealerButtonGroup:RobDealerButtonGroup;			// 玩家抢庄倍数操作按钮组
 		
 		private var _playerBetButtonGroup:BetButtonGroup;			// 玩家押注倍数操作按钮
@@ -40,7 +41,7 @@ package view.scene.table.cell
 		
 		private var _playerReadyButtonGroup:ReadyButtonGroup;			// 换桌和退出
 		
-		private var _moneyChange:TextField;
+		private var _flowMoneyChangeText:TextField;
 		
 		public function Player(name:String = null)
 		{
@@ -65,27 +66,26 @@ package view.scene.table.cell
 			addChild(_playerCards);
 			
 			
-						
-			/*
-			_playerRobDealerState = new ExImage();
-			_playerRobDealerState.x = 76;
-			_playerRobDealerState.y = 130;
-			_playerRobDealerState.visible = false;			
-			addChild(_playerRobDealerState);			
-			*/
+			_playerRobDealerNotify = new Widget_ImageTextField();
+			_playerRobDealerNotify.x = -10;
+			_playerRobDealerNotify.y = 60;
+			_playerRobDealerNotify.setTextAnchor(0, 5);
+			_playerRobDealerNotify.visible = false;
+			//_playerRobDealerNotify.setBackground(resManager.getResource("ui.tips_bg_yellow_l"));
+			addChild(_playerRobDealerNotify);		
 			
-			
+				
 			_playerRobDealerButtonGroup = new RobDealerButtonGroup();
 			_playerRobDealerButtonGroup.x = 140;
 			_playerRobDealerButtonGroup.y = 120;
 			_playerRobDealerButtonGroup.visible = false;
 			addChild(_playerRobDealerButtonGroup);
 			
-			_playerDealerState = new ExImage(resManager.getResource("ui.dealer"));
-			_playerDealerState.x = 76;
-			_playerDealerState.y = 130;
-			_playerDealerState.visible = false;
-			addChild(_playerDealerState);
+			_playerAsDealer = new ExImage(resManager.getResource("ui.dealer"));
+			_playerAsDealer.x = 76;
+			_playerAsDealer.y = 130;
+			_playerAsDealer.visible = false;
+			addChild(_playerAsDealer);
 			
 			_playerBetButtonGroup = new BetButtonGroup();
 			_playerBetButtonGroup.x = 140;
@@ -111,13 +111,13 @@ package view.scene.table.cell
 			_playerReadyButtonGroup.y = 120;
 			addChild(_playerReadyButtonGroup);
 			
-			_moneyChange = new TextField(320, 60, "", "Arial", 32, 0xcd0000, true);
-			_moneyChange.hAlign = HAlign.LEFT;
-			_moneyChange.x = 200;
-			_moneyChange.y = 20;			
-			_moneyChange.filter = BlurFilter.createDropShadow();
-			_moneyChange.visible = false;
-			addChild(_moneyChange);
+			_flowMoneyChangeText = new TextField(320, 60, "", "Arial", 32, 0xcd0000, true);
+			_flowMoneyChangeText.hAlign = HAlign.LEFT;
+			_flowMoneyChangeText.x = 200;
+			_flowMoneyChangeText.y = 20;			
+			_flowMoneyChangeText.filter = BlurFilter.createDropShadow();
+			_flowMoneyChangeText.visible = false;
+			addChild(_flowMoneyChangeText);
 		}
 				
 		protected function onTouch(event:TouchEvent) : void
@@ -169,51 +169,6 @@ package view.scene.table.cell
 			//_playerCards.visible = false;
 		}
 		
-		public function get playerHeader() : PlayerHeader
-		{
-			return _playerHeader;
-		}
-		
-		public function get playerCards() : PlayerCards
-		{
-			return _playerCards;
-		}	
-		
-		public function get playerReadyButtonGroup() : ReadyButtonGroup
-		{
-			return _playerReadyButtonGroup;
-		}
-		
-		public function get playerRobDealerButtonGroup() : RobDealerButtonGroup
-		{
-			return _playerRobDealerButtonGroup;
-		}
-		
-		public function get playerRobDealerState() : ExImage
-		{
-			return _playerRobDealerState;
-		}
-		
-		public function get playerDealerState() : ExImage
-		{
-			return _playerDealerState;
-		}
-		
-		public function get playerBetButtonGroup() : BetButtonGroup
-		{
-			return _playerBetButtonGroup;
-		}
-		
-		public function get playerGiveButtonGroup() : GiveButtonGroup
-		{
-			return _playerGiveButtonGroup;
-		}
-		
-		public function get cardCalculater() : CardCalculater
-		{
-			return _cardCalculater;
-		}
-		
 		public function show(nickName:String, coin:int, headerIcon:int) : void
 		{
 			visible = true;
@@ -243,18 +198,39 @@ package view.scene.table.cell
 			_playerRobDealerButtonGroup.visible = false;
 		}
 		
+		public function showRobDealerNotify(rob:Boolean) : void
+		{	
+			_playerRobDealerNotify.visible = true;
+			
+			if (rob)
+			{
+				_playerRobDealerNotify.setText("抢庄!");
+				_playerRobDealerNotify.setBackground(ResManager.instance().getResource("ui.tips_bg_yellow_l"));
+			}
+			else
+			{
+				_playerRobDealerNotify.setText("不抢!");
+				_playerRobDealerNotify.setBackground(ResManager.instance().getResource("ui.tips_bg_blue_l"));	
+			}
+		}
+		
+		public function hideRobDealerNotify() : void
+		{
+			_playerRobDealerNotify.visible = false;
+		}
+		
 		public function setAsDealer(): void
 		{
-			var tn:Tween = new Tween(_playerDealerState, 0.4);
+			var tn:Tween = new Tween(_playerAsDealer, 0.4);
 			
-			var dstX:Number = _playerDealerState.x;
-			var dstY:Number = _playerDealerState.y;			
+			var dstX:Number = _playerAsDealer.x;
+			var dstY:Number = _playerAsDealer.y;			
 			
 			var srcPt:Point = new Point();
 			globalToLocal(new Point(stage.stageWidth/2, stage.stageHeight/2), srcPt);
-			_playerDealerState.x = srcPt.x;
-			_playerDealerState.y = srcPt.y;
-			_playerDealerState.visible = true;
+			_playerAsDealer.x = srcPt.x;
+			_playerAsDealer.y = srcPt.y;
+			_playerAsDealer.visible = true;
 			
 			tn.moveTo(dstX, dstY);
 			
@@ -263,7 +239,7 @@ package view.scene.table.cell
 		
 		public function unsetAsDealer() : void
 		{
-			_playerDealerState.visible = false;
+			_playerAsDealer.visible = false;
 		}
 		
 		public function showBetButtonGroup(x1:int, x2:int, x3:int) : void
@@ -320,22 +296,22 @@ package view.scene.table.cell
 		{
 			if (change < 0)
 			{
-				_moneyChange.color = 0xCD0000;
-				_moneyChange.text = change.toString();
+				_flowMoneyChangeText.color = 0xCD0000;
+				_flowMoneyChangeText.text = change.toString();
 			}
 			else
 			{
-				_moneyChange.color = 0xE96F0F;
-				_moneyChange.text = "+" + change.toString();
+				_flowMoneyChangeText.color = 0xE96F0F;
+				_flowMoneyChangeText.text = "+" + change.toString();
 			}			
 			
-			_moneyChange.y += 32;
-			_moneyChange.alpha = 255;
-			_moneyChange.visible = true;
+			_flowMoneyChangeText.y += 32;
+			_flowMoneyChangeText.alpha = 255;
+			_flowMoneyChangeText.visible = true;
 			
 			
-			var tn:Tween = new Tween(_moneyChange, 2, Transitions.EASE_IN);
-			tn.moveTo(_moneyChange.x, _moneyChange.y-32);
+			var tn:Tween = new Tween(_flowMoneyChangeText, 2, Transitions.EASE_IN);
+			tn.moveTo(_flowMoneyChangeText.x, _flowMoneyChangeText.y-32);
 			tn.fadeTo(0);
 			tn.onComplete = onFlowAnimationComplete;
 			
@@ -345,7 +321,7 @@ package view.scene.table.cell
 		
 		private function onFlowAnimationComplete() : void
 		{
-			_moneyChange.visible = false;
+			_flowMoneyChangeText.visible = false;
 		}
 	
 		public function updateMoney(current:int) : void

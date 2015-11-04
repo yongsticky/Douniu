@@ -94,7 +94,7 @@ package view.framework
 					addChild(_imager);
 				}
 				else
-				{	
+				{						
 					_imager.texture = _texture;								
 				}
 				

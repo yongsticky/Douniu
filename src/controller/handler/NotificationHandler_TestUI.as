@@ -33,35 +33,35 @@ package controller.handler
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			
 			layer.getPlayer().show("3000011", 10000, 0);
-			layer.getPlayer().flowMoneyChangeText(3000);
+			//layer.getPlayer().flowMoneyChangeText(3000);
+			layer.getPlayer().showRobDealerNotify(false);
+			
 			
 			layer.getOtherPlayer(1).show("11111111", 12000, 0);
+			layer.getOtherPlayer(1).showRobDealerNotify(true);
 			//layer.getOtherPlayer(1).showCards(new <int>[11,21,31,33,35]);
-			layer.getOtherPlayer(1).flowMoneyChangeText(-3000);	
-			layer.getOtherPlayer(1).setAsDealer();
+			//layer.getOtherPlayer(1).flowMoneyChangeText(-3000);	
+			//layer.getOtherPlayer(1).setAsDealer();
 			
-			layer.getOtherPlayer(2).show("222222", 12000, 0);
+			//layer.getOtherPlayer(2).show("222222", 12000, 0);
 			//layer.getOtherPlayer(1).showCards(new <int>[11,21,31,33,35]);
-			layer.getOtherPlayer(2).flowMoneyChangeText(-3000);	
+			//layer.getOtherPlayer(2).flowMoneyChangeText(-3000);
+			
+			
+			
 			layer.getOtherPlayer(3).show("333333", 12000, 0);
+			layer.getOtherPlayer(3).showRobDealerNotify(false);
 			//layer.getOtherPlayer(1).showCards(new <int>[11,21,31,33,35]);
-			layer.getOtherPlayer(3).flowMoneyChangeText(-3000);	
+			//layer.getOtherPlayer(3).flowMoneyChangeText(-3000);	
 			
 			layer.getOtherPlayer(4).show("44444444", 12000, 0);
+			layer.getOtherPlayer(4).showRobDealerNotify(true);
 			//layer.getOtherPlayer(1).showCards(new <int>[11,21,31,33,35]);
-			layer.getOtherPlayer(4).flowMoneyChangeText(-3000);
+			//layer.getOtherPlayer(4).flowMoneyChangeText(-3000);
 			
-			layer.getOtherPlayer(5).show("55555555", 12000, 0);
+			//layer.getOtherPlayer(5).show("55555555", 12000, 0);
 			//layer.getOtherPlayer(1).showCards(new <int>[11,21,31,33,35]);
-			layer.getOtherPlayer(5).flowMoneyChangeText(-3000);
-		}
-		
-		protected function onTimer(event:TimerEvent):void
-		{
-			var scene:Scene_Table = NiuDirector.instance().topScene as Scene_Table;
-			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
-			
-			layer.setAnyPlayerRobDealerState(1, false);
-		}		
+			//layer.getOtherPlayer(5).flowMoneyChangeText(-3000);
+		}			
 	}
 }

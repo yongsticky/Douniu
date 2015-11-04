@@ -52,7 +52,7 @@ package controller.handler
 					onNotify_RobDealer(resp.tv_data.value as NotifyRobDealer);
 					break;
 				case TVType.SO_NOTIFY_DEALER_DETAIL:
-					onNotify_DealerDetail(resp.tv_data.value as NotifyDealerDetail);	
+					onNotify_RobDealerDetail(resp.tv_data.value as NotifyDealerDetail);	
 					break;
 				case TVType.SO_NOTIFY_BET:
 					onNotify_Bet(resp.tv_data.value as NotifyBet);
@@ -116,9 +116,9 @@ package controller.handler
 			}			
 		}
 		
-		private function onNotify_DealerDetail(v:NotifyDealerDetail) : void
+		private function onNotify_RobDealerDetail(v:NotifyDealerDetail) : void
 		{
-			_logger.log(this, "onNotify_DealerDetail Enter.", LEVEL.INFO);	
+			_logger.log(this, "onNotify_RobDealerDetail Enter.", LEVEL.INFO);	
 		
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;			
 			if (layer)
@@ -141,16 +141,19 @@ package controller.handler
 						layer.getOtherPlayer(dealerInfo.dealer).setAsDealer();
 					}					
 					
-					layer.clearAllPlayerRobDealerState();
+					layer.hideAllRobDealerNotify();
 				}
 				else
 				{				
 					if (v.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
 					{
 						layer.showWaitOtherRobDealerTimer();
+						layer.getPlayer().showRobDealerNotify(v.multiple>0);
 					}
-					
-					layer.setAnyPlayerRobDealerState(v.seat_id, (v.multiple!=0));
+					else
+					{
+						layer.getOtherPlayer(v.seat_id).showRobDealerNotify(v.multiple>0);
+					}				
 				}
 			}				
 		}

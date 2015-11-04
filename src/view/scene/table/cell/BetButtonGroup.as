@@ -42,7 +42,7 @@ package view.scene.table.cell
 		override protected function createChildren() : void
 		{			
 			var resManager:ResManager = ResManager.instance();
-			var tBg:Texture = Texture.fromBitmapData(resManager.getResource("ui.button_bg_orange"));
+			var tBg:Texture = resManager.getResource("ui.button_bg_orange");
 			
 			_firstBet = new Button(tBg);
 			_firstBet.name = "0";

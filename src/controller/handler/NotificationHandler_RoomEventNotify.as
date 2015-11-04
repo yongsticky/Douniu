@@ -152,10 +152,12 @@ package controller.handler
 			if (layer)
 			{	
 				layer.getPlayer().hideCards();					
+				layer.getPlayer().hideReadyButtonGroup();
+				
 				layer.hideAllOtherPlayersCards();
 					
 				layer.hideTimer();
-				layer.getPlayer().hideReadyButtonGroup();					
+				
 					
 				SoundManager.instance().playNotifyStart();
 			}

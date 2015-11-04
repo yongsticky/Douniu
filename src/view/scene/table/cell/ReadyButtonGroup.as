@@ -27,7 +27,7 @@ package view.scene.table.cell
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			_quit = new Button(Texture.fromBitmapData(resManager.getResource("ui.button_bg_orange")), "离开");			
+			_quit = new Button(resManager.getResource("ui.button_bg_orange"), "离开");			
 			_quit.fontBold = true;
 			_quit.fontColor = 0xFFFFFF;
 			_quit.fontSize = 16;
@@ -35,7 +35,7 @@ package view.scene.table.cell
 			_quit.addEventListener(Event.TRIGGERED, onQuit);
 			addChild(_quit);
 			
-			_another = new Button(Texture.fromBitmapData(resManager.getResource("ui.button_bg_blue")), "换桌");
+			_another = new Button(resManager.getResource("ui.button_bg_blue"), "换桌");
 			_another.x = _quit.x + _quit.width + 10;
 			_another.fontBold = true;
 			_another.fontColor = 0xFFFFFF;
@@ -44,7 +44,7 @@ package view.scene.table.cell
 			_another.addEventListener(Event.TRIGGERED, onAnother);
 			addChild(_another);
 			
-			_continue = new Button(Texture.fromBitmapData(resManager.getResource("ui.button_bg_blue")), "继续");
+			_continue = new Button(resManager.getResource("ui.button_bg_blue"), "继续");
 			_continue.x = _another.x + _another.width + 10;
 			_continue.fontBold = true;
 			_continue.fontColor = 0xFFFFFF;

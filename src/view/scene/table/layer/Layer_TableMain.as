@@ -5,8 +5,6 @@ package view.scene.table.layer
 	
 	import global.RuntimeExchangeData;
 	
-	import starling.filters.BlurFilter;
-	
 	import view.framework.ExLayer;
 	import view.scene.table.cell.OtherPlayer;
 	import view.scene.table.cell.Player;
@@ -103,7 +101,7 @@ package view.scene.table.layer
 				_logger.log(this, "seat=",seat, LEVEL.ERROR);
 				throw new IndexOutOfRangeError();
 			}
-		}		
+		}
 		
 		public function showWaitRobDealerTimer(time:int) : void
 		{
@@ -148,28 +146,8 @@ package view.scene.table.layer
 		public function hideTimer(): void
 		{
 			_timer.hide();
-		}
-		
-		/*
-		public function showPlayerReadyButtonGroup() : void
-		{
-			if (_player.playerCards.visible)
-			{
-				_player.playerCards.filter = new BlurFilter();				
-			}
+		}		
 			
-			_player.playerReadyButtonGroup.visible = true;
-		}
-		
-		
-		public function hidePlayerReadyButtonGroup() : void
-		{
-			_player.playerCards.filter = null;		
-			
-			_player.playerReadyButtonGroup.visible = false;
-		}
-		*/		
-		
 		public function unsetAllAsDealer() : void
 		{
 			_player.unsetAsDealer();
@@ -179,45 +157,18 @@ package view.scene.table.layer
 				_otherPlayers[i].unsetAsDealer();
 			}
 		}
-		
-		
-		
-		public function setAnyPlayerRobDealerState(seatId:int, rob:Boolean) : void
-		{		
-			/*
-			var resName:String = rob ? "ui.bet_text_bg":"ui.no_rob_dealer";
-			
-			if (seatId == RuntimeExchangeData.instance().redPlayerData.seat_id)
-			{
-				_player.playerRobDealerState.res = ResManager.instance().getResource(resName);
-				_player.playerRobDealerState.visible = true;
-			}
-			else
-			{
-				var seat:int = seatId - RuntimeExchangeData.instance().redPlayerData.seat_id;
-				if (seat < 0)
-				{
-					seat += MAX_OTHER_PLAYER_NUM;
-				}
-				
-				var p:OtherPlayer = _otherPlayers[seat];
-				
-				p.playerRobDealerState.res = ResManager.instance().getResource(resName);
-				p.playerRobDealerState.visible = true;
-			}
-			*/
-		}
-		
-		public function clearAllPlayerRobDealerState() : void
+					
+		public function hideAllRobDealerNotify() : void
 		{
-			/*
-			_player.playerRobDealerState.visible = false;
+			_player.hideRobDealerNotify();
 			
-			for each(var p:OtherPlayer in _otherPlayers)
+			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; ++i)
 			{
-				p.playerRobDealerState.visible = false;
-			}
-			*/
+				if (_otherPlayers[i].visible)
+				{
+					_otherPlayers[i].hideRobDealerNotify();
+				}
+			}			
 		}
 		
 		public function showAllOtherPlayersCardsNull() : void
@@ -233,29 +184,14 @@ package view.scene.table.layer
 		}
 				
 		public function hideAllOtherPlayersCards() : void
-		{
-			for each(var other:OtherPlayer in _otherPlayers)
+		{			
+			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; ++i)
 			{
-				if (other.playerHeader.visible)
-				{					
-					other.playerCards.visible = false;
+				if (_otherPlayers[i].visible)
+				{
+					_otherPlayers[i].hideCards();
 				}
 			}			
-		}
-		
-		/*
-		public function PlayerMoneyChange(seatId:int, changed:int, current:int) : void
-		{				
-			if (seatId != RuntimeExchangeData.instance().redPlayerData.seat_id)
-			{			
-				getOtherPlayer(seatId).playerHeader.setPlayerInfo(null, current, null);				
-			}
-			else
-			{
-				_player.playerHeader.setPlayerInfo(null, current, null);	
-			}					
-		}
-		*/
-		
+		}	
 	}
 }

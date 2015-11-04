@@ -14,6 +14,8 @@ package resource
 	import camu.logger.ILogger;
 	import camu.logger.LEVEL;
 	import camu.logger.Logger;
+	
+	import starling.textures.Texture;
 		
 
 	public class ResManager extends EventDispatcher
@@ -108,7 +110,22 @@ package resource
 					var last:int = clsName.lastIndexOf(".");					
 					var resId:String = item.id + "." +  (last>0 ? clsName.slice(0, last):clsName);
 					
-					_res[resId] = new cls();					
+					
+					var res:* = new cls();
+					if (res is BitmapData)
+					{
+						_res[resId] = Texture.fromBitmapData(res);
+					}
+					else if (res is Bitmap)
+					{
+						_res[resId] = Texture.fromBitmap(res);
+					}
+					else 
+					{
+						_res[resId] = res;
+					}
+					
+					//_res[resId] = new cls();					
 					
 					
 					

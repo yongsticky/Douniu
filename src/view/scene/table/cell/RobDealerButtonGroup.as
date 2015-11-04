@@ -28,7 +28,7 @@ package view.scene.table.cell
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			var btnRobNo:Button = new Button(Texture.fromBitmapData(resManager.getResource("ui.button_bg_blue")));			
+			var btnRobNo:Button = new Button(resManager.getResource("ui.button_bg_blue"));			
 			btnRobNo.addEventListener(Event.TRIGGERED, onBtnRobNoTriggered);
 			btnRobNo.fontBold = true;
 			btnRobNo.fontSize = 16;
@@ -37,7 +37,7 @@ package view.scene.table.cell
 			btnRobNo.fontName = "Microsoft YaHei";
 			addChild(btnRobNo);
 			
-			var tBg:Texture = Texture.fromBitmapData(resManager.getResource("ui.button_bg_orange"));
+			var tBg:Texture = resManager.getResource("ui.button_bg_orange");
 			
 			
 			_btnRob1x = new Button(tBg);

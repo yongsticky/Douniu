@@ -28,7 +28,7 @@ package view.scene.table.cell
 		{			
 			var resManager:ResManager = ResManager.instance();
 			
-			_niu = new Button(Texture.fromBitmapData(resManager.getResource("ui.round_button_bg_red")), "", null, Texture.fromBitmapData(resManager.getResource("ui.round_button_bg_grey")));			
+			_niu = new Button(resManager.getResource("ui.round_button_bg_red"), "", null, resManager.getResource("ui.round_button_bg_grey"));			
 			_niu.fontBold = true;
 			_niu.text = "有牛";
 			_niu.fontSize = 16;
@@ -37,7 +37,7 @@ package view.scene.table.cell
 			
 			addChild(_niu);
 			
-			_auto = new Button(Texture.fromBitmapData(resManager.getResource("ui.round_button_bg_yellow")));			
+			_auto = new Button(resManager.getResource("ui.round_button_bg_yellow"));			
 			_auto.y = 51;
 			_auto.fontBold = true;
 			_auto.text = "自动";

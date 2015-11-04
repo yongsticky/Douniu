@@ -48,7 +48,7 @@ package view.scene.huanle.cell
 				startX += _sepWidth;
 			}
 			
-			_betButton = new Button(Texture.fromBitmapData(ResManager.instance().getResource("ui.button_bg_orange")), "押注");
+			_betButton = new Button(ResManager.instance().getResource("ui.button_bg_orange"), "押注");
 			_betButton.x = (width - _betButton.width)>>1;
 			_betButton.y = 120;			
 			addChild(_betButton);

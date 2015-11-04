@@ -12,16 +12,17 @@ package view.scene.table.cell
 	
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
+	import view.widget.Widget_ImageTextField;
 	
 	public class OtherPlayer extends ExSprite
 	{
-		private var _seat:int;									// 座位号 从玩家开始 左手边为0 顺时针至4
+		private var _seat:int;											// 座位号 从玩家开始 左手边为0 顺时针至4
 		
-		private var _playerHeader:PlayerHeader;			// 头像信息
-		private var _playerCards:OtherPlayerCards;		// 手牌
-		private var _playerRobDealerState:ExImage;					// 抢庄状态
-		private var _playerRobDealerMultiple:ExImage;				// 抢庄倍数
-		private var _playerDealerState:ExImage;				// 庄家状态
+		private var _playerHeader:PlayerHeader;						// 头像信息
+		private var _playerCards:OtherPlayerCards;						// 手牌
+		private var _playerRobDealerNotify:Widget_ImageTextField;		// 抢庄状态
+		private var _playerRobDealerMultiple:ExImage;					// 抢庄倍数
+		private var _playerDealerState:ExImage;						// 庄家状态
 		
 		private var _flowMoneyChangeText:TextField;
 		
@@ -50,11 +51,13 @@ package view.scene.table.cell
 			_playerDealerState.visible = false;
 			addChild(_playerDealerState);
 			
-			_playerRobDealerState = new ExImage();
-			_playerRobDealerState.x = 50;
-			_playerRobDealerState.y = -40;
-			_playerRobDealerState.visible = false;
-			//addChild(_playerRobDealerState);
+			_playerRobDealerNotify = new Widget_ImageTextField();
+			_playerRobDealerNotify.x = _seat < 3 ? -10:5;
+			_playerRobDealerNotify.y = - 40;
+			_playerRobDealerNotify.setTextAnchor(0, 5);
+			_playerRobDealerNotify.visible = false;			
+			addChild(_playerRobDealerNotify);		
+			
 			
 			_flowMoneyChangeText = new TextField(320, 60, "", "Arial", 28, 0xcd0000, true);
 			_flowMoneyChangeText.hAlign = HAlign.LEFT;
@@ -75,33 +78,7 @@ package view.scene.table.cell
 				_flowMoneyChangeText.x = 120;				
 			}			
 		}	
-		
-		
-		public function get playerHeader() : PlayerHeader
-		{
-			return _playerHeader;
-		}
-		
-		public function get playerCards() : OtherPlayerCards
-		{
-			return _playerCards;
-		}
-		
-		public function get playerDealerState() : ExImage
-		{
-			return _playerDealerState;
-		}
-		
-		public function get playerRobDealerState() : ExImage
-		{
-			return _playerRobDealerState;
-		}
-		
-		public function get playerRobDealerMultiple() : ExImage
-		{
-			return _playerRobDealerMultiple;
-		}
-		
+				
 		public function show(nickName:String, money:int, headerIcon:int) : void
 		{
 			visible = true;
@@ -112,6 +89,27 @@ package view.scene.table.cell
 		public function hide() : void
 		{
 			visible = false;
+		}
+		
+		public function showRobDealerNotify(rob:Boolean) : void
+		{		
+			_playerRobDealerNotify.visible = true;
+			
+			if (rob)
+			{
+				_playerRobDealerNotify.setText("抢庄!");
+				_playerRobDealerNotify.setBackground(ResManager.instance().getResource(_seat < 3 ? "ui.tips_bg_yellow_l":"ui.tips_bg_yellow_r"));
+			}
+			else
+			{
+				_playerRobDealerNotify.setText("不抢!");
+				_playerRobDealerNotify.setBackground(ResManager.instance().getResource(_seat < 3 ? "ui.tips_bg_blue_l":"ui.tips_bg_blue_r"));	
+			}
+		}
+		
+		public function hideRobDealerNotify() : void
+		{
+			_playerRobDealerNotify.visible = false;
 		}
 		
 		public function setAsDealer(): void
@@ -148,6 +146,11 @@ package view.scene.table.cell
 			{
 				_playerCards.setPokersNull();
 			}
+		}
+		
+		public function hideCards() : void
+		{
+			_playerCards.visible = false;
 		}
 		
 		public function flowMoneyChangeText(change:int) : void

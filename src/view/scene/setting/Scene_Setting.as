@@ -27,7 +27,7 @@ package view.scene.setting
 			_bg = new ExImage(resManager.getResource("ui.setting_bg"));
 			addChild(_bg);
 			
-			_close = new Button(Texture.fromBitmapData(resManager.getResource("ui.button_close")));
+			_close = new Button(resManager.getResource("ui.button_close"));
 			_close.addEventListener(Event.TRIGGERED, onClose);
 			addChild(_close);
 		}

@@ -38,7 +38,7 @@ package view.scene.huanle
 			
 			addChild(new Layer_TableBottom());
 			
-			_quit = new Button(Texture.fromBitmapData(resManager.getResource("ui.button_quit")));
+			_quit = new Button(resManager.getResource("ui.button_quit"));
 			_quit.addEventListener(Event.TRIGGERED, onQuit);
 			addChild(_quit);
 						

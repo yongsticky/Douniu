@@ -46,12 +46,12 @@ package view.scene.hall.layer
 			_notice_bg.y = 18;
 			addChild(_notice_bg);
 					
-			_setting = new Button(Texture.fromBitmapData(resManager.getResource("ui.round_button_setting_in_hall")));
+			_setting = new Button(resManager.getResource("ui.round_button_setting_in_hall"));
 			_setting.y = 17;
 			addChild(_setting);
 			_setting.addEventListener(Event.TRIGGERED, onSettingTriggered);
 			
-			_mall = new Button(Texture.fromBitmapData(resManager.getResource("ui.round_button_vip_mall_in_hall")));
+			_mall = new Button(resManager.getResource("ui.round_button_vip_mall_in_hall"));
 			_mall.y = 80;
 			addChild(_mall);
 			_mall.addEventListener(Event.TRIGGERED, onMallTriggered);

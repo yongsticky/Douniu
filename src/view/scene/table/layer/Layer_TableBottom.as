@@ -34,7 +34,7 @@ package view.scene.table.layer
 			addChild(_playerInfo);
 			
 			
-			_mall = new Button(Texture.fromBitmapData(resManager.getResource("ui.button_vip_mall")));		
+			_mall = new Button(resManager.getResource("ui.button_vip_mall"));		
 			addChild(_mall);
 			_mall.addEventListener(Event.TRIGGERED, onMall);
 		}

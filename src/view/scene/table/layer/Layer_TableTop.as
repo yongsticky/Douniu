@@ -32,7 +32,7 @@ package view.scene.table.layer
 			_bg.x = _bg.y = 0;
 			addChild(_bg);
 			
-			_setting = new Button(Texture.fromBitmapData(resManager.getResource("ui.setting")));
+			_setting = new Button(resManager.getResource("ui.setting"));
 			_setting.y = 4;
 			addChild(_setting);
 			_setting.addEventListener(Event.TRIGGERED, onSetting);

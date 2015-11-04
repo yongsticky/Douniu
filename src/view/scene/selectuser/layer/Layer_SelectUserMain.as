@@ -20,7 +20,7 @@ package view.scene.selectuser.layer
 		
 		override protected function createChildren() : void
 		{
-			var texture:Texture = Texture.fromBitmapData(ResManager.instance().getResource("ui.player_header_icon"));
+			var texture:Texture = ResManager.instance().getResource("ui.player_header_icon");
 			var startX:int = 200;
 			for (var i:int = 0; i < 6; i++)
 			{
