@@ -37,7 +37,10 @@ package view.widget
 			
 			_created = true;
 			
-			apply();
+			if (_bgRes)
+			{
+				apply();
+			}
 		}
 		
 		public function setBackground(res:*) : void

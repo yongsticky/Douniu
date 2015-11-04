@@ -5,6 +5,7 @@ package view.scene.table.cell
 	import facade.NiuNotificationHandlerConstant;
 	
 	import resource.ResManager;
+	import resource.font.FontColor;
 	
 	import sound.SoundManager;
 	
@@ -35,6 +36,7 @@ package view.scene.table.cell
 		private var _playerRobDealerButtonGroup:RobDealerButtonGroup;			// 玩家抢庄倍数操作按钮组
 		
 		private var _playerBetButtonGroup:BetButtonGroup;			// 玩家押注倍数操作按钮
+		private var _playerBetNotify:Widget_ImageTextField;		// 玩家押注通知
 		
 		private var _playerGiveButtonGroup:GiveButtonGroup;		// 玩家提交结果按钮组
 		private var _cardCalculater:CardCalculater;		// 玩家算牛辅助框
@@ -63,15 +65,13 @@ package view.scene.table.cell
 			_playerCards.y = 100;
 			_playerCards.visible = false;
 			_playerCards.addEventListener(TouchEvent.TOUCH, onTouch);
-			addChild(_playerCards);
-			
+			addChild(_playerCards);			
 			
 			_playerRobDealerNotify = new Widget_ImageTextField();
 			_playerRobDealerNotify.x = -10;
 			_playerRobDealerNotify.y = 60;
 			_playerRobDealerNotify.setTextAnchor(0, 5);
-			_playerRobDealerNotify.visible = false;
-			//_playerRobDealerNotify.setBackground(resManager.getResource("ui.tips_bg_yellow_l"));
+			_playerRobDealerNotify.visible = false;			
 			addChild(_playerRobDealerNotify);		
 			
 				
@@ -92,6 +92,18 @@ package view.scene.table.cell
 			_playerBetButtonGroup.y = 120;
 			_playerBetButtonGroup.visible = false;
 			addChild(_playerBetButtonGroup);
+			
+			
+			_playerBetNotify = new Widget_ImageTextField();
+			_playerBetNotify.x = 42;
+			_playerBetNotify.y = 96;
+			_playerBetNotify.setTextAnchor(0, 5);
+			_playerBetNotify.setBackground(ResManager.instance().getResource("ui.tips_bg_white_r"));
+			_playerBetNotify.visible = false;			
+			addChild(_playerBetNotify);
+			
+			// !!必须在addChild后面，因为createChilren实在initialize中触发的（不合理）
+			_playerBetNotify.textField.color = FontColor.DARKRED;			
 			
 			_playerGiveButtonGroup = new GiveButtonGroup();
 			_playerGiveButtonGroup.visible = false;
@@ -216,7 +228,7 @@ package view.scene.table.cell
 		
 		public function hideRobDealerNotify() : void
 		{
-			_playerRobDealerNotify.visible = false;
+			_playerRobDealerNotify.visible = false;	
 		}
 		
 		public function setAsDealer(): void
@@ -251,6 +263,18 @@ package view.scene.table.cell
 		public function hideBetButtonGroup() : void
 		{
 			_playerBetButtonGroup.visible = false;
+		}
+		
+		public function showBetNotify(x:int) : void
+		{
+			_playerBetNotify.visible = true;
+			
+			_playerBetNotify.setText("压"+x.toString()+"倍!");			
+		}
+		
+		public function hideBetNotify() : void
+		{
+			_playerBetNotify.visible = false;
 		}
 		
 		public function showCards(cards:Vector.<int>) : void

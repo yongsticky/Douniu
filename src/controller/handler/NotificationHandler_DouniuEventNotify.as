@@ -194,7 +194,13 @@ package controller.handler
 			{
 				if (v.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
 				{
+					layer.getPlayer().showBetNotify(v.multiple);
+					
 					layer.showWaitOtherBetTimer();
+				}
+				else
+				{
+					layer.getOtherPlayer(v.seat_id).showBetNotify(v.multiple);
 				}
 			}			
 			else
@@ -220,6 +226,7 @@ package controller.handler
 			{		
 				layer.hideTimer();
 				layer.getPlayer().hideBetButtonGroup();
+				layer.hideAllBetNotify();
 					
 				var tmInfo:TTimerInfo = v.getTLVValue(TLVType.SO_UP_TLV_TIMER_KEY) as TTimerInfo;
 				if (tmInfo)

@@ -3,6 +3,7 @@ package view.scene.table.cell
 	import flash.geom.Point;
 	
 	import resource.ResManager;
+	import resource.font.FontColor;
 	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
@@ -22,7 +23,8 @@ package view.scene.table.cell
 		private var _playerCards:OtherPlayerCards;						// 手牌
 		private var _playerRobDealerNotify:Widget_ImageTextField;		// 抢庄状态
 		private var _playerRobDealerMultiple:ExImage;					// 抢庄倍数
-		private var _playerDealerState:ExImage;						// 庄家状态
+		private var _playerAsDealer:ExImage;							// 庄家状态
+		private var _playerBetNotify:Widget_ImageTextField;			// 押注通知
 		
 		private var _flowMoneyChangeText:TextField;
 		
@@ -37,26 +39,35 @@ package view.scene.table.cell
 		override protected function createChildren() : void
 		{				
 			_playerHeader = new PlayerHeader();
-			addChild(_playerHeader);
-			
+			addChild(_playerHeader);			
 			
 			_playerCards = new OtherPlayerCards();
 			_playerCards.visible = false;
 			addChild(_playerCards);
-			
-			
-			_playerDealerState = new ExImage(ResManager.instance().getResource("ui.dealer"));
-			_playerDealerState.x = 20;
-			_playerDealerState.y = -50;
-			_playerDealerState.visible = false;
-			addChild(_playerDealerState);
 			
 			_playerRobDealerNotify = new Widget_ImageTextField();
 			_playerRobDealerNotify.x = _seat < 3 ? -10:5;
 			_playerRobDealerNotify.y = - 40;
 			_playerRobDealerNotify.setTextAnchor(0, 5);
 			_playerRobDealerNotify.visible = false;			
-			addChild(_playerRobDealerNotify);		
+			addChild(_playerRobDealerNotify);			
+			
+			_playerAsDealer = new ExImage(ResManager.instance().getResource("ui.dealer"));
+			_playerAsDealer.x = 20;
+			_playerAsDealer.y = -50;
+			_playerAsDealer.visible = false;
+			addChild(_playerAsDealer);			
+			
+			_playerBetNotify = new Widget_ImageTextField();
+			_playerBetNotify.x = _seat < 3 ? 42:-58;
+			_playerBetNotify.y = -2;
+			_playerBetNotify.setTextAnchor(0, 5);
+			_playerBetNotify.setBackground(ResManager.instance().getResource(_seat < 3 ? "ui.tips_bg_white_r":"ui.tips_bg_white_l"));
+			_playerBetNotify.visible = false;			
+			addChild(_playerBetNotify);
+			
+			// !!必须在addChild后面，因为createChilren实在initialize中触发的（不合理）
+			_playerBetNotify.textField.color = FontColor.DARKRED;
 			
 			
 			_flowMoneyChangeText = new TextField(320, 60, "", "Arial", 28, 0xcd0000, true);
@@ -108,22 +119,22 @@ package view.scene.table.cell
 		}
 		
 		public function hideRobDealerNotify() : void
-		{
+		{			
 			_playerRobDealerNotify.visible = false;
 		}
 		
 		public function setAsDealer(): void
 		{
-			var tn:Tween = new Tween(_playerDealerState, 0.4);
+			var tn:Tween = new Tween(_playerAsDealer, 0.4);
 			
-			var dstX:Number = _playerDealerState.x;
-			var dstY:Number = _playerDealerState.y;			
+			var dstX:Number = _playerAsDealer.x;
+			var dstY:Number = _playerAsDealer.y;			
 			
 			var srcPt:Point = new Point();
 			globalToLocal(new Point(stage.stageWidth/2, stage.stageHeight/2), srcPt);
-			_playerDealerState.x = srcPt.x;
-			_playerDealerState.y = srcPt.y;
-			_playerDealerState.visible = true;
+			_playerAsDealer.x = srcPt.x;
+			_playerAsDealer.y = srcPt.y;
+			_playerAsDealer.visible = true;
 			
 			tn.moveTo(dstX, dstY);
 			
@@ -132,8 +143,21 @@ package view.scene.table.cell
 		
 		public function unsetAsDealer() : void
 		{
-			_playerDealerState.visible = false;
+			_playerAsDealer.visible = false;
 		}
+		
+		public function showBetNotify(x:int) : void
+		{
+			_playerBetNotify.visible = true;
+			
+			_playerBetNotify.setText("压"+x.toString()+"倍!");			
+		}
+		
+		public function hideBetNotify() : void
+		{
+			_playerBetNotify.visible = false;
+		}
+		
 		
 		public function showCards(cards:Vector.<int>) : void
 		{

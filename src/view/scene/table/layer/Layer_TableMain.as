@@ -86,21 +86,21 @@ package view.scene.table.layer
 		
 		public function getOtherPlayer(seatId:int) : OtherPlayer
 		{
-			var seat:int = seatId - RuntimeExchangeData.instance().redPlayerData.seat_id;
-			if (seat < 0)
+			if (seatId > MAX_OTHER_PLAYER_NUM)
 			{
-				seat += MAX_OTHER_PLAYER_NUM;
+				return null;
 			}
 			
-			if (seat > 0)
+			var base:int = RuntimeExchangeData.instance().redPlayerData.seat_id;
+						
+			if (seatId > base)
 			{
-				return _otherPlayers[seat-1];
+				return _otherPlayers[seatId - base - 1];
 			}
 			else
-			{		
-				_logger.log(this, "seat=",seat, LEVEL.ERROR);
-				throw new IndexOutOfRangeError();
-			}
+			{
+				return _otherPlayers[seatId - base + MAX_OTHER_PLAYER_NUM];
+			}			
 		}
 		
 		public function showWaitRobDealerTimer(time:int) : void
@@ -160,6 +160,11 @@ package view.scene.table.layer
 					
 		public function hideAllRobDealerNotify() : void
 		{
+			juggler.delayCall(hideAllRobDealerNotifyDelayFunction, 1);
+		}
+		
+		private function hideAllRobDealerNotifyDelayFunction() : void
+		{
 			_player.hideRobDealerNotify();
 			
 			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; ++i)
@@ -168,7 +173,25 @@ package view.scene.table.layer
 				{
 					_otherPlayers[i].hideRobDealerNotify();
 				}
-			}			
+			}
+		}
+		
+		public function hideAllBetNotify() : void
+		{
+			juggler.delayCall(hideAllBetNotifyDelayFunction, 1);	
+		}
+		
+		public function hideAllBetNotifyDelayFunction() : void
+		{
+			_player.hideBetNotify();
+			
+			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; ++i)
+			{
+				if (_otherPlayers[i].visible)
+				{
+					_otherPlayers[i].hideBetNotify();
+				}
+			}
 		}
 		
 		public function showAllOtherPlayersCardsNull() : void

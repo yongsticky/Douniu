@@ -124,12 +124,13 @@ package resource
 					{
 						_res[resId] = res;
 					}
+										
 					
-					//_res[resId] = new cls();					
-					
-					
-					
-					if (_res[resId] is Bitmap)
+					if (_res[resId] is Texture)
+					{
+						_logger.log(this, "add res: id[", resId, "], clsName[", clsName, "], classType[Texture].",  LEVEL.INFO);
+					}
+					else if (_res[resId] is Bitmap)
 					{						
 						_logger.log(this, "add res: id[", resId, "], clsName[", clsName, "], classType[Bitmap].",  LEVEL.INFO);
 					}

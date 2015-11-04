@@ -43,8 +43,7 @@ package controller.handler
 		
 		protected function onComplete(event:BulkProgressEvent):void
 		{
-			_logger.log(this, "onComplete", LEVEL.INFO);
-			
+			_logger.log(this, "onComplete", LEVEL.INFO);	
 			
 			//sendNotification(NiuNotificationHandlerConstant.TEST_UI);
 			

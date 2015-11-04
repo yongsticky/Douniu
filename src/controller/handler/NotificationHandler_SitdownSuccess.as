@@ -49,11 +49,13 @@ package controller.handler
 				layer.getPlayer().showReadyButtonGoroup();
 				layer.showWaitOtherEnter();	
 				
-				for each(var tlv:UnionTLV in resp.tlv_vec)
+				//for each(var tlv:UnionTLV in resp.tlv_vec)
+				for (var i:int = 0; i < resp.tlv_num; ++i)				
 				{
+					var tlv:UnionTLV = resp.tlv_vec[i];
 					if (tlv.valueType == TLVType.DN_TLV_PLAYERDETAIL)
 					{
-						var v:PlayerDetailInfo = tlv.value as PlayerDetailInfo;
+						var v:PlayerDetailInfo = tlv.value as PlayerDetailInfo;						
 						var op:OtherPlayer = layer.getOtherPlayer(v.seat_id);
 						if (op)
 						{
