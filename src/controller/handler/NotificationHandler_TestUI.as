@@ -10,6 +10,8 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
+	import douniu.NiuSuggest;
+	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
 	import view.scene.table.layer.Layer_TableMain;
@@ -34,13 +36,26 @@ package controller.handler
 			
 			layer.getPlayer().show("3000011", 10000, 0);
 			//layer.getPlayer().flowMoneyChangeText(3000);
-			layer.getPlayer().showBetNotify(5);
+			//layer.getPlayer().showBetNotify(5);
+			var tiles:ByteArray = new ByteArray();
+			tiles[0] = 9;
+			tiles[1] = 15;
+			tiles[2] = 10;
+			tiles[3] = 27;
+			tiles[4] = 52;
+			layer.getPlayer().showCards(tiles);
+			//layer.getPlayer().showNiuResult(NiuSuggest.getSuggestObject(tiles)["niuType"]);
+			//layer.getPlayer().showReadyButtonGoroup();
+			
+			layer.getPlayer().showBetMultiple(4);
 			
 			
-			//layer.getOtherPlayer(1).show("11111111", 12000, 0);
+			layer.getOtherPlayer(1).show("11111111", 12000, 0);
 			//layer.getOtherPlayer(1).showBetNotify(10);
 			//layer.getOtherPlayer(1).showRobDealerNotify(true);
-			//layer.getOtherPlayer(1).showCards(new <int>[11,21,31,33,35]);
+			layer.getOtherPlayer(1).showCards(tiles);
+			layer.getOtherPlayer(1).showBetMultiple(8);
+			//layer.getOtherPlayer(1).showNiuResult(NiuSuggest.getSuggestObject(tiles)["niuType"]);
 			//layer.getOtherPlayer(1).flowMoneyChangeText(-3000);	
 			//layer.getOtherPlayer(1).setAsDealer();
 			
@@ -62,9 +77,11 @@ package controller.handler
 			//layer.getOtherPlayer(4).showCards(new <int>[11,21,31,33,35]);
 			//layer.getOtherPlayer(4).flowMoneyChangeText(-3000);
 			
-			//layer.getOtherPlayer(5).show("55555555", 12000, 0);
-			//layer.getOtherPlayer(5).showCards(new <int>[11,21,31,33,35]);
+			layer.getOtherPlayer(5).show("55555555", 12000, 0);
+			layer.getOtherPlayer(5).showCards(tiles);			
+			layer.getOtherPlayer(5).showBetMultiple(99);
 			//layer.getOtherPlayer(5).flowMoneyChangeText(-3000);
+			//layer.getOtherPlayer(5).showNiuResult(NiuSuggest.getSuggestObject(tiles)["niuType"]);
 		}			
 	}
 }

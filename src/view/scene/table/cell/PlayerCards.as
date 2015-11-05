@@ -1,24 +1,20 @@
 package view.scene.table.cell
 {
 	import flash.geom.Point;
-	
-	import camu.errors.IndexOutOfRangeError;
-	import camu.errors.NullObjectError;
-	import camu.errors.UnexpectedLengthError;
-	import camu.logger.LEVEL;
-	
-	import douniu.NiuCard;
-	import douniu.NiuSuggest;
-	
-	import resource.ResManager;
-	
-	import sound.SoundManager;
+	import flash.utils.ByteArray;
 	
 	import starling.animation.Tween;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	
+		
+	import camu.errors.IndexOutOfRangeError;
+	import camu.errors.NullObjectError;
+	import camu.errors.UnexpectedLengthError;	
+	import sound.SoundManager;
+	import douniu.NiuCard;
+	import douniu.NiuSuggest;	
+	import resource.ResManager;	
 	import view.framework.ExImage;
 	import view.framework.ExSprite;
 	
@@ -27,7 +23,7 @@ package view.scene.table.cell
 		private static const MAX_POKER_NUM:int = 5;
 		
 		private var _pokers:Vector.<PokerImage>;
-		private var _giveCards:Vector.<int>;
+		private var _giveCards:ByteArray;
 		private var _currentSelectedCards:Vector.<int>;
 		private var _selectedCount:int;
 				
@@ -38,7 +34,8 @@ package view.scene.table.cell
 			
 			_selectedCount = 0;
 			
-			_giveCards = new <int>[0, 0, 0, 0, 0];		
+			_giveCards = new ByteArray();
+			_giveCards.length = 5;
 			_currentSelectedCards = new Vector.<int>();
 		}
 		
@@ -62,27 +59,36 @@ package view.scene.table.cell
 			}		
 		}
 				
-		public function setPokers(cards:Vector.<int>) : void
+		public function setPokers(tiles:ByteArray) : void
 		{				
-			if (!cards)
+			if (!tiles)
 			{
 				throw new NullObjectError();
 			}
 			
-			if (cards.length != MAX_POKER_NUM)
+			if (tiles.length != MAX_POKER_NUM && tiles.length != MAX_POKER_NUM-1)
 			{
 				throw new UnexpectedLengthError();
 			}
 			
-			var maxIndex:int = cards.length;
+			var maxIndex:int = tiles.length;
 			for (var i:int = 0; i < maxIndex; ++i)
 			{
 				var pI:PokerImage = _pokers[i];
-				pI.card = cards[i];	
+				pI.card = int(tiles[i]);	
 				pI.selected = false;
 				pI.y = 0;
 				
-				_giveCards[i] = cards[i];				
+				_giveCards[i] = tiles[i];				
+			}
+			
+			if (maxIndex != MAX_POKER_NUM)
+			{
+				_pokers[maxIndex-1].card = 0;
+				_pokers[maxIndex-1].selected = false;
+				_pokers[maxIndex-1].y = 0;
+				
+				_giveCards[maxIndex-1] = 0;
 			}
 			
 			_selectedCount = 0;
@@ -104,20 +110,19 @@ package view.scene.table.cell
 		}
 		
 		private var _aniCurIndex:int = 0;
-		public function show(cards:Vector.<int>) : void
+		public function show(tiles:ByteArray) : void
 		{	
 			visible = true;		
 			
-			if (cards)
+			if (tiles)
 			{
-				setPokers(cards);
+				setPokers(tiles);
 				animateShowIt(_pokers[_aniCurIndex]);
 			}			
 		}
 		
 		private function animateShowIt(pi:PokerImage) : void
-		{
-			
+		{			
 			pi.visible = true;
 			
 			var dstX:Number = pi.x;
@@ -162,7 +167,7 @@ package view.scene.table.cell
 			return _selectedCount;
 		}
 		
-		public function getAutoPokers() : Vector.<int>
+		public function getAutoPokers() : ByteArray
 		{
 			var o:Object = NiuSuggest.getSuggestObject(_giveCards);
 			
@@ -172,13 +177,12 @@ package view.scene.table.cell
 				_giveCards[i] = _pokers[index].card;
 				++i;
 			}		
-			
-			_logger.log(this, "auto give cards:", _giveCards.join(","), LEVEL.DEBUG);
+									
 			return _giveCards;
 		}
 				
 		
-		public function getUserGivePokers() : Vector.<int>
+		public function getUserGivePokers() : ByteArray
 		{			
 			if (_selectedCount == 3)
 			{
@@ -199,7 +203,6 @@ package view.scene.table.cell
 					}
 				}
 				
-				_logger.log(this, "user give cards:", _giveCards.join(","), LEVEL.DEBUG);
 			}			
 			
 			return _giveCards;

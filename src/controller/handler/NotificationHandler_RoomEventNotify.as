@@ -108,7 +108,9 @@ package controller.handler
 			
 			var playerDetail:PlayerDetailInfo = event.getTLVValue(TLVType.DN_TLV_PLAYERDETAIL) as PlayerDetailInfo;						
 			if (playerDetail)
-			{			
+			{	
+				++ RuntimeExchangeData.instance().redTableData.player_num; 
+				
 				var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 				if (layer)
 				{					
@@ -117,7 +119,9 @@ package controller.handler
 					{
 						op.show(playerDetail.player_uin.toString(), playerDetail.money.lowPart, 0);
 					}
-				}	
+					
+					layer.getPlayer().showReadyButtonGoroup();
+				}
 				
 				SoundManager.instance().playNotifyEnterRoom();
 			}			
@@ -132,6 +136,8 @@ package controller.handler
 			{
 				_logger.log(this, "Player Standup, Reason:[",exitPlayerInfo.standup_reason,"]",  LEVEL.INFO);
 			}
+			
+			-- RuntimeExchangeData.instance().redTableData.player_num;			
 			
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			if (layer)
@@ -150,14 +156,11 @@ package controller.handler
 			
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;				
 			if (layer)
-			{	
-				layer.getPlayer().hideCards();					
-				layer.getPlayer().hideReadyButtonGroup();
-				
-				layer.hideAllOtherPlayersCards();
-					
-				layer.hideTimer();
-				
+			{								
+				layer.getPlayer().hideReadyButtonGroup();				
+				layer.hideAllPlayersCards();
+				layer.hideAllBetMultiple();
+				layer.hideTimer();				
 					
 				SoundManager.instance().playNotifyStart();
 			}
@@ -170,12 +173,10 @@ package controller.handler
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			if (layer)
 			{		
-				layer.getPlayer().showReadyButtonGoroup();
-				//layer.showWaitNextGameTimer(8);
+				layer.getPlayer().showReadyButtonGoroup(true);				
 			}
 			else
-			{				
-				
+			{					
 				var layer2:Layer_HuanleMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_HuanLeTable.LAYER_MAIN) as Layer_HuanleMain;
 				if (layer2)
 				{						

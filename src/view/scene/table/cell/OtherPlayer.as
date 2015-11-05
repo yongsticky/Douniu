@@ -1,6 +1,7 @@
 package view.scene.table.cell
 {
 	import flash.geom.Point;
+	import flash.utils.ByteArray;
 	
 	import resource.ResManager;
 	import resource.font.FontColor;
@@ -25,8 +26,11 @@ package view.scene.table.cell
 		private var _playerRobDealerMultiple:ExImage;					// 抢庄倍数
 		private var _playerAsDealer:ExImage;							// 庄家状态
 		private var _playerBetNotify:Widget_ImageTextField;			// 押注通知
+		private var _playerBetMultiple:Widget_ImageTextField;		// 玩家押注的倍数
 		
+		private var _playerNiuResult:ExImage;				// 牛的结果
 		private var _flowMoneyChangeText:TextField;
+		
 		
 		
 		public function OtherPlayer(seat:int, name:String = null)
@@ -38,6 +42,8 @@ package view.scene.table.cell
 		
 		override protected function createChildren() : void
 		{				
+			var resManager:ResManager = ResManager.instance();
+			
 			_playerHeader = new PlayerHeader();
 			addChild(_playerHeader);			
 			
@@ -52,7 +58,7 @@ package view.scene.table.cell
 			_playerRobDealerNotify.visible = false;			
 			addChild(_playerRobDealerNotify);			
 			
-			_playerAsDealer = new ExImage(ResManager.instance().getResource("ui.dealer"));
+			_playerAsDealer = new ExImage(resManager.getResource("ui.dealer"));
 			_playerAsDealer.x = 20;
 			_playerAsDealer.y = -50;
 			_playerAsDealer.visible = false;
@@ -62,12 +68,27 @@ package view.scene.table.cell
 			_playerBetNotify.x = _seat < 3 ? 42:-58;
 			_playerBetNotify.y = -2;
 			_playerBetNotify.setTextAnchor(0, 5);
-			_playerBetNotify.setBackground(ResManager.instance().getResource(_seat < 3 ? "ui.tips_bg_white_r":"ui.tips_bg_white_l"));
+			_playerBetNotify.setBackground(resManager.getResource(_seat < 3 ? "ui.tips_bg_white_r":"ui.tips_bg_white_l"));
 			_playerBetNotify.visible = false;			
 			addChild(_playerBetNotify);
 			
 			// !!必须在addChild后面，因为createChilren实在initialize中触发的（不合理）
 			_playerBetNotify.textField.color = FontColor.DARKRED;
+						
+			
+			_playerBetMultiple = new Widget_ImageTextField();			
+			_playerBetMultiple.y = 65;
+			_playerBetMultiple.setTextAnchor(0, 2);
+			_playerBetMultiple.setBackground(resManager.getResource("ui.bet_text_bg"));
+			_playerBetMultiple.visible = false;
+			addChild(_playerBetMultiple);
+			_playerBetMultiple.textField.fontSize = 12;			
+						
+			
+			_playerNiuResult = new ExImage();
+			_playerNiuResult.x = _seat > 2 ? -130:130;
+			_playerNiuResult.y = -40;
+			addChild(_playerNiuResult);
 			
 			
 			_flowMoneyChangeText = new TextField(320, 60, "", "Arial", 28, 0xcd0000, true);
@@ -78,14 +99,15 @@ package view.scene.table.cell
 			
 			if (_seat > 2)
 			{
-				_playerCards.x = -160;				
+				_playerCards.x = -160;
+				_playerBetMultiple.x = -160;
 				_flowMoneyChangeText.x = - 140;
 				
 			}
 			else
 			{
 				_playerCards.x = 100;
-				
+				_playerBetMultiple.x = 100;
 				_flowMoneyChangeText.x = 120;				
 			}			
 		}	
@@ -156,15 +178,27 @@ package view.scene.table.cell
 		public function hideBetNotify() : void
 		{
 			_playerBetNotify.visible = false;
+		}		
+		
+		public function showBetMultiple(x:int) : void
+		{
+			_playerBetMultiple.visible = true;
+			_playerBetMultiple.setText(x.toString() + "倍");
+		}
+		
+		public function hideBetMultiple() : void
+		{
+			_playerBetMultiple.visible = false;			
 		}
 		
 		
-		public function showCards(cards:Vector.<int>) : void
+		public function showCards(tiles:ByteArray) : void
 		{
 			_playerCards.visible = true;
-			if (cards)
+			
+			if (tiles)
 			{
-				_playerCards.setPokers(cards);
+				_playerCards.setPokers(tiles);
 			}
 			else
 			{
@@ -175,6 +209,18 @@ package view.scene.table.cell
 		public function hideCards() : void
 		{
 			_playerCards.visible = false;
+		}
+		
+		
+		public function showNiuResult(type:int) : void
+		{				
+			_playerNiuResult.res = ResManager.instance().getResource("ui.niu_"+type);
+			_playerNiuResult.visible = true;
+		}	
+		
+		public function hideNiuResult() : void
+		{
+			_playerNiuResult.visible = false;	
 		}
 		
 		public function flowMoneyChangeText(change:int) : void

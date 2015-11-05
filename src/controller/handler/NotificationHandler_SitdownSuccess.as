@@ -13,6 +13,7 @@ package controller.handler
 	import packet.game.tlv.TLVType;
 	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.value.PlayerDetailInfo;
+	import packet.game.tlv.value.TableSimpleInfo;
 	
 	import view.NiuDirector;
 	import view.scene.table.Scene_Table;
@@ -48,8 +49,7 @@ package controller.handler
 		
 				layer.getPlayer().showReadyButtonGoroup();
 				layer.showWaitOtherEnter();	
-				
-				//for each(var tlv:UnionTLV in resp.tlv_vec)
+								
 				for (var i:int = 0; i < resp.tlv_num; ++i)				
 				{
 					var tlv:UnionTLV = resp.tlv_vec[i];
@@ -64,7 +64,11 @@ package controller.handler
 					}
 					else if (tlv.valueType == TLVType.DN_TLV_TABLE_SIMPLE_INFO)
 					{
-						
+						var tsInfo:TableSimpleInfo = tlv.value as TableSimpleInfo;
+						if (tsInfo)
+						{
+							RuntimeExchangeData.instance().redTableData.player_num = tsInfo.cur_player_num;
+						}
 					}
 					else
 					{					

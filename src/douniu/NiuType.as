@@ -1,5 +1,7 @@
 package douniu
 {
+	import flash.utils.ByteArray;
+
 	public class NiuType
 	{
 		public static const NIU_ERROR:int = -1;			// error
@@ -27,21 +29,21 @@ package douniu
 		{
 		}
 
-		public static function verifyNormal(cards:Vector.<int>) : int
+		public static function verifyNormal(tiles:ByteArray) : int
 		{			
-			if (!cards || cards.length != 5)
+			if (!tiles || tiles.length != 5)
 			{
 				return NIU_ERROR;
 			}		
 	
-			var result:int = NiuCard.getValue(cards[0]) + NiuCard.getValue(cards[1]) + NiuCard.getValue(cards[2]);
+			var result:int = NiuCard.getValue(tiles[0]) + NiuCard.getValue(tiles[1]) + NiuCard.getValue(tiles[2]);
 			if (result%10 != 0)
 			{
 				return NIU_0;
 			}
 			else
 			{
-				result = NiuCard.getValue(cards[3]) + NiuCard.getValue(cards[4]);
+				result = NiuCard.getValue(tiles[3]) + NiuCard.getValue(tiles[4]);
 
 				return result>10 ? (result-10):result;
 			}
@@ -50,23 +52,35 @@ package douniu
 			
 		}
 
-		public static function verifySpecial(cards:Vector.<int>) : int
+		public static function verifySpecial(tiles:ByteArray) : int
 		{
-			if (!cards || cards.length != 5)
+			if (!tiles || tiles.length != 5)
 			{
 				return NIU_ERROR;
 			}
 			
+			
+			var arr:Array = new Array();
+			arr.push(tiles[0]);
+			arr.push(tiles[1]);
+			arr.push(tiles[2]);
+			arr.push(tiles[3]);
+			arr.push(tiles[4]);
+			arr.sort(Array.NUMERIC);
+			if (arr[0] == arr[3] || arr[1] == arr[4])
+			{
+				return NIU_BOMB;
+			}
+			
+			
 			var isSilver:Boolean = true;
 			var isGold:Boolean = true;
 			var isLittle:Boolean = true;
-			var isBomb:Boolean = true;
-
 			var sum:int = 0;
-			var c0:int = NiuCard.getNumber(c);
-			var c1:int = -1;
-			for each(var c:int in cards)
+			var c:int = 0;
+			for (var i:int = 0; i < tiles.length; ++i)
 			{
+				c = int(tiles[i]);
 				if (isSilver)
 				{
 					if (NiuCard.getNumber(c) < NiuCard.NUMBER_10)
@@ -91,28 +105,7 @@ package douniu
 					{
 						isLittle = false;
 					}
-				}
-
-				
-				if (isBomb)
-				{
-					if (NiuCard.getNumber(c) != c0 && NiuCard.getNumber(c) != c1)
-					{
-						if (c1 != -1)
-						{
-							isBomb = false;
-						}
-						else
-						{
-							c1 = NiuCard.getNumber(c);
-						}
-					}
-				}				
-			}
-
-			if (isBomb)
-			{
-				return NIU_BOMB;
+				}			
 			}
 
 			if (isLittle)

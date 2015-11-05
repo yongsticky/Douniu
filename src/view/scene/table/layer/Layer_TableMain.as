@@ -206,8 +206,10 @@ package view.scene.table.layer
 			}
 		}
 				
-		public function hideAllOtherPlayersCards() : void
+		public function hideAllPlayersCards() : void
 		{			
+			_player.hideCards();
+			
 			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; ++i)
 			{
 				if (_otherPlayers[i].visible)
@@ -215,6 +217,37 @@ package view.scene.table.layer
 					_otherPlayers[i].hideCards();
 				}
 			}			
-		}	
+		}
+		
+		public function hideAllBetMultiple() : void
+		{
+			_player.hideBetMultiple();
+			
+			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; ++i)
+			{
+				if (_otherPlayers[i].visible)
+				{
+					_otherPlayers[i].hideBetMultiple();
+				}
+			}
+		}
+		
+		public function hideAllNiuResult() : void
+		{
+			juggler.delayCall(hideAllNiuResultDelayFunction, 2);
+		}
+		
+		public function hideAllNiuResultDelayFunction() : void
+		{
+			_player.hideNiuResult();
+			
+			for (var i:int = 0; i < MAX_OTHER_PLAYER_NUM; ++i)
+			{
+				if (_otherPlayers[i].visible)
+				{
+					_otherPlayers[i].hideNiuResult();
+				}
+			}
+		}
 	}
 }

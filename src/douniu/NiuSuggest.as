@@ -1,5 +1,7 @@
 package douniu
 {
+	import flash.utils.ByteArray;
+
 	public class NiuSuggest
 	{
 		public function NiuSuggest()
@@ -21,12 +23,12 @@ package douniu
 		];
 
 
-		public static function getSuggestObject(cards:Vector.<int>) : Object
+		public static function getSuggestObject(tiles:ByteArray) : Object
 		{
 			var result:Object = {};
 
 			// 先看下是否是特殊的牌型			
-			var vs:int = NiuType.verifySpecial(cards);
+			var vs:int = NiuType.verifySpecial(tiles);
 			if (vs != NiuType.NIU_ERROR)
 			{				
 				result.niuType = vs;
@@ -37,30 +39,23 @@ package douniu
 
 			// 先计算一下，如果有牛的话，是牛几
 			var sum:int = 0;
-			for each(var c:int in cards)
-			{
-				if (c)
-				{
-					sum += NiuCard.getValue(c);
-				}
-				else
-				{
-					return null;
-				}
+			for (var i:int = 0; i < tiles.length; ++i)
+			{			
+				sum += NiuCard.getValue(tiles[i]);			
 			}
 			sum %= 10;
 
 			// 穷举排列	
 			for each(var seq:Array in SEQUENCE_ENUM)
 			{
-				var sum2:int = (NiuCard.getValue(cards[seq[0][0]]) + NiuCard.getValue(cards[seq[0][1]])) % 10;
+				var sum2:int = (NiuCard.getValue(tiles[seq[0][0]]) + NiuCard.getValue(tiles[seq[0][1]])) % 10;
 				if (sum == sum2)
 				{
-					var sum3:int = (NiuCard.getValue(cards[seq[1][0]]) + NiuCard.getValue(cards[seq[1][1]]) + NiuCard.getValue(cards[seq[1][2]])) % 10;
+					var sum3:int = (NiuCard.getValue(tiles[seq[1][0]]) + NiuCard.getValue(tiles[seq[1][1]]) + NiuCard.getValue(tiles[seq[1][2]])) % 10;
 					sum3 %= 10;
 					if (sum3 == 0)
 					{						
-						result.niuType = (sum==0 ? sum:NiuType.NIU_10);
+						result.niuType = (sum==0 ? NiuType.NIU_10:sum);
 						var seqence:Vector.<int> = new <int>[seq[1][0], seq[1][1], seq[1][2], seq[0][0], seq[0][1]];												
 						result.cardSequence = seqence;
 

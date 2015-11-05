@@ -5,9 +5,9 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
-	public class NotificationHandler_AnotherDesk extends NiuNotificationHandler
+	public class NotificationHandler_SwitchDesk extends NiuNotificationHandler
 	{
-		public function NotificationHandler_AnotherDesk(mediator:Mediator)
+		public function NotificationHandler_SwitchDesk(mediator:Mediator)
 		{
 			super(mediator);
 		}

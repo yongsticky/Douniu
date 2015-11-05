@@ -7,6 +7,9 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
+	import douniu.NiuSuggest;
+	import douniu.NiuType;
+	
 	import global.RuntimeExchangeData;
 	
 	import packet.game.message.Notify.Notify_DouniuEvent;
@@ -98,17 +101,8 @@ package controller.handler
 				// 如果有牌，说明是看牌场
 				var tlInfo:TTilesInfo = v.getTLVValue(TLVType.SO_UP_TLV_TILES_KEY) as TTilesInfo;
 				if (tlInfo)
-				{
-					var vec:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-					for (var i:int = 0; i < tlInfo.tiles_num; ++i)
-					{
-						vec[i] = int(tlInfo.tiles[i]);
-					}
-
-					layer.getPlayer().showCards(vec);
-					vec.length = 0;
-					vec = null;
-						
+				{				
+					layer.getPlayer().showCards(tlInfo.tiles);											
 					layer.showAllOtherPlayersCardsNull();
 					
 					SoundManager.instance().playDealCard();
@@ -195,12 +189,14 @@ package controller.handler
 				if (v.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
 				{
 					layer.getPlayer().showBetNotify(v.multiple);
+					layer.getPlayer().showBetMultiple(v.multiple);
 					
 					layer.showWaitOtherBetTimer();
 				}
 				else
 				{
 					layer.getOtherPlayer(v.seat_id).showBetNotify(v.multiple);
+					layer.getOtherPlayer(v.seat_id).showBetMultiple(v.multiple);
 				}
 			}			
 			else
@@ -242,20 +238,12 @@ package controller.handler
 				{	
 					if (tlInfo.tiles_num == 1)
 					{	
-						layer.getPlayer().setCard(4, int(tlInfo.tiles[0]));
+						layer.getPlayer().setCard(4, int(tlInfo.tiles[0]));						
 						layer.getPlayer().showGiveButtonGroup();						
 					}
 					else
-					{
-						var vec:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-						for (var i:int = 0; i < tlInfo.tiles_num; ++i)
-						{
-							vec[i] = tlInfo.tiles[i];
-						}																								
-						layer.getPlayer().showCards(vec);
-						vec.length = 0;
-						vec = null;
-													
+					{																				
+						layer.getPlayer().showCards(tlInfo.tiles);													
 						layer.showAllOtherPlayersCardsNull();
 						
 						layer.getPlayer().showGiveButtonGroup();						
@@ -279,7 +267,9 @@ package controller.handler
 					if (info)
 					{							
 						if (info.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
-						{
+						{	
+							layer.getPlayer().showNiuResult(NiuSuggest.getSuggestObject(info.tiles)["niuType"]);
+							
 							if (info.money.highPart > 0)
 							{
 								SoundManager.instance().playGameWin();
@@ -292,24 +282,19 @@ package controller.handler
 							}							
 						}
 						else
-						{
-							var cards:Vector.<int> = new <int>[0, 0, 0, 0, 0];
-							for (var j:int = 0; j < info.tiles_num; ++j)
-							{
-								cards[j] = int(info.tiles[j]);
-								layer.getOtherPlayer(info.seat_id).showCards(cards);							
-							}
+						{	
+							layer.getOtherPlayer(info.seat_id).showNiuResult(NiuSuggest.getSuggestObject(info.tiles)["niuType"]);
 							
-							layer.getOtherPlayer(info.seat_id).flowMoneyChangeText(info.money.lowPart);
+							layer.getOtherPlayer(info.seat_id).showCards(info.tiles);							
+							layer.getOtherPlayer(info.seat_id).flowMoneyChangeText(info.money.lowPart);							
 						}
 					}					
 				}
 
 				layer.getPlayer().hideAssistCalculater();
 				layer.getPlayer().hideGiveButtonGroup();			
-				layer.unsetAllAsDealer();
-					
-				layer.hideTimer();					
+				layer.unsetAllAsDealer();					
+				layer.hideTimer();			
 					
 				RuntimeExchangeData.instance().redTableData.dealer_seat_id = -1;					
 			}
@@ -347,10 +332,12 @@ package controller.handler
 					if (tmInfo)
 					{							
 						layer.showWaitNextGameTimer(tmInfo.time_);
+						layer.getPlayer().showReadyButtonGoroup(true);
 					}
 				}
 				else
 				{
+					layer.getPlayer().showReadyButtonGoroup();
 					layer.hideTimer();
 				}
 			}		

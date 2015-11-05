@@ -48,8 +48,7 @@ package view.scene.loading.cell
 			
 			_outerClipRect = new Rectangle(0, 0, 0, 16);
 			_outerLeft = new ExImage(new ProgressOuterLeft());
-			_outerLeft.y = 32;
-			_outerLeft.width = 0;
+			_outerLeft.y = 32;			
 			_outerLeft.clipRect = _outerClipRect;
 			addChild(_outerLeft);
 			
@@ -67,14 +66,14 @@ package view.scene.loading.cell
 		}
 		
 		public function updatePercent(percent:int) : void
-		{
+		{				
 			_percent.text = percent.toString() + "%";
 						
-			_outerLeft.clipRect.width = 400*percent/100 - 8;
-			_inner.clipRect.width = 400*percent/100 - 8;
+			_outerLeft.clipRect.width = 400*percent/100 - 4*2;
+			_inner.clipRect.width = 400*percent/100 - 4*2;
 			
-			if (percent > 0)
-			{
+			if (percent > 4)
+			{				
 				_outerRight.x = _outerLeft.x + _outerLeft.clipRect.width;
 				_outerRight.visible = true;
 			}

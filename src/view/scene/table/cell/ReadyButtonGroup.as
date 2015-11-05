@@ -10,6 +10,7 @@ package view.scene.table.cell
 	
 	import view.NiuDirector;
 	import view.framework.ExSprite;
+	import view.scene.table.layer.Layer_TableMain;
 	
 	public class ReadyButtonGroup extends ExSprite
 	{
@@ -41,7 +42,7 @@ package view.scene.table.cell
 			_another.fontColor = 0xFFFFFF;
 			_another.fontSize = 16;
 			_another.fontName = "Microsoft YaHei";
-			_another.addEventListener(Event.TRIGGERED, onAnother);
+			_another.addEventListener(Event.TRIGGERED, onSwitch);
 			addChild(_another);
 			
 			_continue = new Button(resManager.getResource("ui.button_bg_blue"), "继续");
@@ -54,19 +55,31 @@ package view.scene.table.cell
 			addChild(_continue);			
 		}
 		
+		public function showContinue(show:Boolean) : void
+		{
+			_continue.visible = show;
+		}		
+		
 		private function onQuit(event:Event):void
 		{			
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.USER_LOGOUT);	
 		}
 		
-		private function onAnother(event:Event):void
+		private function onSwitch(event:Event):void
 		{			
 			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.ANOTHER_DESK);
 		}
 		
 		private function onContinue(event:Event):void
 		{			
-			visible = false;	
+			visible = false;
+										
+			var layer:Layer_TableMain = getOwnerLayer() as Layer_TableMain; 
+			if (layer)
+			{
+				layer.hideAllPlayersCards();
+				layer.hideAllBetMultiple();
+			}
 		}
 	}
 }

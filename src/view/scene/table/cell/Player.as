@@ -1,6 +1,9 @@
 package view.scene.table.cell
 {	
 	import flash.geom.Point;
+	import flash.utils.ByteArray;
+	
+	import douniu.NiuType;
 	
 	import facade.NiuNotificationHandlerConstant;
 	
@@ -37,13 +40,16 @@ package view.scene.table.cell
 		
 		private var _playerBetButtonGroup:BetButtonGroup;			// 玩家押注倍数操作按钮
 		private var _playerBetNotify:Widget_ImageTextField;		// 玩家押注通知
+		private var _playerBetMultiple:Widget_ImageTextField;		// 玩家押注的倍数
 		
 		private var _playerGiveButtonGroup:GiveButtonGroup;		// 玩家提交结果按钮组
-		private var _cardCalculater:CardCalculater;		// 玩家算牛辅助框
+		private var _cardCalculater:CardCalculater;				// 玩家算牛辅助框
 		
 		private var _playerReadyButtonGroup:ReadyButtonGroup;			// 换桌和退出
 		
-		private var _flowMoneyChangeText:TextField;
+		private var _playerNiuResult:ExImage;				// 牛的结果
+		
+		private var _flowMoneyChangeText:TextField;	// 输赢浮动数字
 		
 		public function Player(name:String = null)
 		{
@@ -98,12 +104,22 @@ package view.scene.table.cell
 			_playerBetNotify.x = 42;
 			_playerBetNotify.y = 96;
 			_playerBetNotify.setTextAnchor(0, 5);
-			_playerBetNotify.setBackground(ResManager.instance().getResource("ui.tips_bg_white_r"));
+			_playerBetNotify.setBackground(resManager.getResource("ui.tips_bg_white_r"));
 			_playerBetNotify.visible = false;			
 			addChild(_playerBetNotify);
 			
 			// !!必须在addChild后面，因为createChilren实在initialize中触发的（不合理）
-			_playerBetNotify.textField.color = FontColor.DARKRED;			
+			_playerBetNotify.textField.color = FontColor.DARKRED;	
+			
+			
+			_playerBetMultiple = new Widget_ImageTextField();
+			_playerBetMultiple.x = 76;
+			_playerBetMultiple.y = 130;			
+			_playerBetMultiple.setTextAnchor(0, 2);
+			_playerBetMultiple.setBackground(resManager.getResource("ui.bet_text_bg"));
+			_playerBetMultiple.visible = false;
+			addChild(_playerBetMultiple);
+			_playerBetMultiple.textField.fontSize = 12;			
 			
 			_playerGiveButtonGroup = new GiveButtonGroup();
 			_playerGiveButtonGroup.visible = false;
@@ -121,7 +137,12 @@ package view.scene.table.cell
 			_playerReadyButtonGroup.visible = false;
 			_playerReadyButtonGroup. x = 160;
 			_playerReadyButtonGroup.y = 120;
-			addChild(_playerReadyButtonGroup);
+			addChild(_playerReadyButtonGroup);			
+			
+			_playerNiuResult = new ExImage();
+			_playerNiuResult.x = 260;
+			_playerNiuResult.y = 40;
+			addChild(_playerNiuResult);
 			
 			_flowMoneyChangeText = new TextField(320, 60, "", "Arial", 32, 0xcd0000, true);
 			_flowMoneyChangeText.hAlign = HAlign.LEFT;
@@ -177,8 +198,7 @@ package view.scene.table.cell
 						
 			_playerGiveButtonGroup.visible = false;
 			
-			(getOwnerLayer() as Layer_TableMain).showWaitOtherGiveTimer();
-			//_playerCards.visible = false;
+			(getOwnerLayer() as Layer_TableMain).showWaitOtherGiveTimer();			
 		}
 		
 		public function show(nickName:String, coin:int, headerIcon:int) : void
@@ -189,9 +209,10 @@ package view.scene.table.cell
 			_playerHeader.setPlayerInfo(nickName, coin, headerIcon);
 		}
 		
-		public function showReadyButtonGoroup() : void
+		public function showReadyButtonGoroup(showContinue:Boolean = false) : void
 		{
 			_playerReadyButtonGroup.visible = true;
+			_playerReadyButtonGroup.showContinue(showContinue);
 		}
 		
 		public function hideReadyButtonGroup() : void
@@ -277,9 +298,20 @@ package view.scene.table.cell
 			_playerBetNotify.visible = false;
 		}
 		
-		public function showCards(cards:Vector.<int>) : void
+		public function showCards(tiles:ByteArray) : void
 		{
-			_playerCards.show(cards);
+			_playerCards.show(tiles);
+		}
+		
+		public function showBetMultiple(x:int) : void
+		{
+			_playerBetMultiple.visible = true;
+			_playerBetMultiple.setText(x.toString() + "倍");
+		}
+		
+		public function hideBetMultiple() : void
+		{
+			_playerBetMultiple.visible = false;			
 		}
 		
 		public function setCard(index:int, card:int) : void
@@ -314,6 +346,17 @@ package view.scene.table.cell
 		{
 			_cardCalculater.reset();
 			_cardCalculater.visible = false;
+		}
+		
+		public function showNiuResult(type:int) : void
+		{				
+			_playerNiuResult.res = ResManager.instance().getResource("ui.niu_"+type);
+			_playerNiuResult.visible = true;
+		}	
+		
+		public function hideNiuResult() : void
+		{
+			_playerNiuResult.visible = false;	
 		}
 	
 		public function flowMoneyChangeText(change:int) : void

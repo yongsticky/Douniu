@@ -1,5 +1,7 @@
 package view.scene.table.cell
 {
+	import flash.utils.ByteArray;
+	
 	import camu.errors.NullObjectError;
 	import camu.errors.UnexpectedLengthError;
 	
@@ -40,24 +42,23 @@ package view.scene.table.cell
 			}
 		}
 		
-		public function setPokers(cards:Vector.<int>) : void
+		public function setPokers(tiles:ByteArray) : void
 		{
-			if (!cards)
+			if (!tiles)
 			{
 				throw new NullObjectError();
 			}
 			
-			if (cards.length != MAX_POKER_NUM)
+			if (tiles.length != MAX_POKER_NUM)
 			{
 				throw new UnexpectedLengthError();
 			}
 			
-			var maxIndex:int = cards.length;
-			
+			var maxIndex:int = tiles.length;			
 			for (var i:int = 0; i < maxIndex; ++i)
 			{
 				var cI:ExImage = _pokers[i];
-				cI.res = getPokerResource(cards[i]);
+				cI.res = getPokerResource(tiles[i]);
 			}
 		}
 		

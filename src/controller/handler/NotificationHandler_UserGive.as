@@ -1,5 +1,7 @@
 package controller.handler
 {
+	import flash.utils.ByteArray;
+	
 	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
@@ -27,15 +29,16 @@ package controller.handler
 		{
 			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
 			
-			var selectedVec:Vector.<int> = notification.getData() as Vector.<int>;
+			var selectedArr:ByteArray = notification.getData() as ByteArray;
 			
 			var _factory:NiuObjectFactory = NiuObjectFactory.instance();
 			
-			var givePref:RequestGive = _factory.createInstance(RequestGive);
-			givePref.tiles_num = selectedVec.length;
-			for (var i:int = 0; i < selectedVec.length; ++i)
+			var givePref:RequestGive = _factory.createInstance(RequestGive);			
+			
+			givePref.tiles_num = selectedArr.length;
+			for (var i:int = 0; i < givePref.tiles_num; ++i)
 			{
-				givePref.tiles.writeByte(selectedVec[i]);
+				givePref.tiles.writeByte(selectedArr[i]);
 			}
 			
 			var requestPlay:Request_Play = _factory.createInstance(Request_Play);
