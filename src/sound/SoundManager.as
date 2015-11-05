@@ -75,19 +75,16 @@ package sound
 				
 		public function playBgMusic() : void
 		{
-			if (_isBgMusicMute)
+			if (_isBgMusicMute || _bgMusicSdc)
 			{
 				return;
 			}
 			
-			if (!_bgMusicSdc)
+			var sd:Sound = ResManager.instance().getResource("sound.bgsound");
+			if (sd)
 			{
-				var sd:Sound = ResManager.instance().getResource("sound.bgsound");
-				if (sd)
-				{
-					_bgMusicSdc = sd.play(_bgMusicPlayPostion, 1, new SoundTransform(_bgMusicVolume));
-				}
-			}		
+				_bgMusicSdc = sd.play(_bgMusicPlayPostion, 1, new SoundTransform(_bgMusicVolume));
+			}
 		}
 		
 		public function stopBgMusic() : void
@@ -105,7 +102,9 @@ package sound
 		{
 			if (_bgMusicSdc)
 			{
-				_bgMusicSdc.soundTransform.volume = _bgMusicVolume;
+				var st:SoundTransform = _bgMusicSdc.soundTransform;
+				st.volume = _bgMusicVolume;
+				_bgMusicSdc.soundTransform = st;
 			}
 		}
 

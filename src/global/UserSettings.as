@@ -39,10 +39,10 @@ package global
 		private function defaultSettings() : void
 		{
 			_bgMute = false;
-			_bgVolume = 10;
+			_bgVolume = 5;
 			
 			_effMute = false;
-			_effVolume = 10;
+			_effVolume = 6;
 		}
 		
 		public function set backgroundMusicMute(value:Boolean) : void
@@ -66,11 +66,6 @@ package global
 			{
 				throw new UpperBoundError();
 			}
-			
-			if (value == 0)
-			{
-				throw new LowerBoundError();
-			}			
 			
 			if (_bgVolume != value)
 			{
@@ -106,12 +101,7 @@ package global
 			{
 				throw new UpperBoundError();
 			}
-			
-			if (value == 0)
-			{
-				throw new LowerBoundError();
-			}			
-			
+						
 			if (_effVolume != value)
 			{
 				_effVolume = value;

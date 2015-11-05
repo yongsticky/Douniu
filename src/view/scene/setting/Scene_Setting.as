@@ -1,19 +1,22 @@
 package view.scene.setting
 {	
+	import resource.ResManager;
+	
 	import starling.display.Button;
-	import starling.events.Event;
-	import starling.textures.Texture;
+	import starling.events.Event;	
 	
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExScene;
-	import resource.ResManager;
+	import view.scene.setting.layer.Layer_SettingMain;
 	
 	
 	public class Scene_Setting extends ExScene
 	{	
 		private var _bg:ExImage;
 		private var _close:Button;
+		
+		public static const LAYER_MAIN:String = "layer.setting.main";
 		
 		public function Scene_Setting(name:String = null)
 		{
@@ -30,6 +33,8 @@ package view.scene.setting
 			_close = new Button(resManager.getResource("ui.button_close"));
 			_close.addEventListener(Event.TRIGGERED, onClose);
 			addChild(_close);
+			
+			addChild(new Layer_SettingMain(LAYER_MAIN));
 		}
 		
 		override protected function layoutChildren():void
