@@ -3,8 +3,6 @@ package view.scene.table.cell
 	import flash.geom.Point;
 	import flash.utils.ByteArray;
 	
-	import douniu.NiuType;
-	
 	import facade.NiuNotificationHandlerConstant;
 	
 	import resource.ResManager;
@@ -19,7 +17,6 @@ package view.scene.table.cell
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	import starling.filters.BlurFilter;
 	import starling.text.TextField;
 	import starling.utils.HAlign;
 	
@@ -148,11 +145,11 @@ package view.scene.table.cell
 			_flowMoneyChangeText.hAlign = HAlign.LEFT;
 			_flowMoneyChangeText.x = 200;
 			_flowMoneyChangeText.y = 20;			
-			_flowMoneyChangeText.filter = BlurFilter.createDropShadow();
-			_flowMoneyChangeText.visible = false;
+			_flowMoneyChangeText.visible = false;				
+
 			addChild(_flowMoneyChangeText);
-		}
-				
+		}		
+
 		protected function onTouch(event:TouchEvent) : void
 		{			
 			var touchObj:Touch = event.getTouch(_playerCards);
@@ -201,11 +198,12 @@ package view.scene.table.cell
 			(getOwnerLayer() as Layer_TableMain).showWaitOtherGiveTimer();			
 		}
 		
-		public function show(nickName:String, coin:int, headerIcon:int) : void
+		public function show(nickName:String, coin:int, uin:uint) : void
 		{
-			visible = true;
-			
+			visible = true;			
 			_playerHeader.visible = true;
+			
+			var headerIcon:int = 1 + (uin % 6);
 			_playerHeader.setPlayerInfo(nickName, coin, headerIcon);
 		}
 		
@@ -382,7 +380,7 @@ package view.scene.table.cell
 			tn.fadeTo(0);
 			tn.onComplete = onFlowAnimationComplete;
 			
-			getOwnerLayer().juggler.add(tn);
+			//getOwnerLayer().juggler.add(tn);
 			
 		}
 		

@@ -1,20 +1,16 @@
 package view.scene.huanle
 {
-	import facade.NiuNotificationHandlerConstant;
-	
-	import resource.ResManager;
-	
-	import sound.SoundManager;
-	
 	import starling.display.Button;
 	import starling.events.Event;
-	import starling.textures.Texture;
-	
+
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExScene;
 	import view.scene.huanle.layer.Layer_HuanleMain;
 	import view.scene.table.layer.Layer_TableBottom;
+	import facade.NiuNotificationHandlerConstant;
+	import resource.ResManager;
+	import sound.SoundManager;
 	
 	public class Scene_HuanLeTable extends ExScene
 	{

@@ -9,6 +9,7 @@ package controller.handler
 	import factory.NiuObjectFactory;
 	
 	import global.RuntimeExchangeData;
+	import global.structs.REDPlayerData;
 	
 	import packet.game.message.Play.Request_Play;
 	import packet.game.tv.TVType;
@@ -36,8 +37,9 @@ package controller.handler
 			
 			var requestPlay:Request_Play = _factory.createInstance(Request_Play);
 			
-			requestPlay.csHeader.uin = requestPlay.uin = RuntimeExchangeData.instance().redPlayerData.uin; 
-			requestPlay.csHeader.dialog_id = RuntimeExchangeData.instance().redPlayerData.player_id;
+			var redp:REDPlayerData = RuntimeExchangeData.instance().redPlayerData;
+			requestPlay.csHeader.uin = requestPlay.uin = redp.uin; 
+			requestPlay.csHeader.dialog_id = redp.player_id;
 			
 			requestPlay.time = (new Date()).getTime();
 			

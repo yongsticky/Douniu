@@ -6,6 +6,7 @@ package view.scene.table.layer
 	
 	import starling.display.Button;
 	import starling.events.Event;
+	import starling.text.TextField;
 	import starling.textures.Texture;
 	
 	import view.NiuDirector;
@@ -16,7 +17,7 @@ package view.scene.table.layer
 	public class Layer_TableTop extends ExLayer
 	{
 		private var _bg:ExImage;
-				
+		private var _title:TextField;
 		private var _setting:Button;
 		
 		public function Layer_TableTop(name:String = null)
@@ -32,6 +33,10 @@ package view.scene.table.layer
 			_bg.x = _bg.y = 0;
 			addChild(_bg);
 			
+			_title = new TextField(100, 40, "");
+			_title.color = 0xFFFFFF;
+			addChild(_title);
+			
 			_setting = new Button(resManager.getResource("ui.setting"));
 			_setting.y = 4;
 			addChild(_setting);
@@ -46,6 +51,11 @@ package view.scene.table.layer
 			_setting.x = _bg.width - _setting.width - 10;
 			
 			super.layoutChildren();
+		}
+		
+		public function setTitle(title:String) : void
+		{
+			_title.text = title;
 		}
 		
 		private function onSetting(event:Event) : void

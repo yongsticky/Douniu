@@ -11,6 +11,7 @@ package controller.handler
 	import douniu.NiuType;
 	
 	import global.RuntimeExchangeData;
+	import global.structs.REDPlayerData;
 	
 	import packet.game.message.Notify.Notify_DouniuEvent;
 	import packet.game.tlv.TLVType;
@@ -117,16 +118,18 @@ package controller.handler
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;			
 			if (layer)
 			{
+				var red:RuntimeExchangeData = RuntimeExchangeData.instance();
+				var redp:REDPlayerData = red.redPlayerData;
 				var dealerInfo:TDealerInfo = v.getTLVValue(TLVType.SO_UP_TLV_DEALER_KEY) as TDealerInfo;
 				if (dealerInfo)
 				{
-					RuntimeExchangeData.instance().redTableData.dealer_seat_id = dealerInfo.dealer;
+					red.redTableData.dealer_seat_id = dealerInfo.dealer;
 					
 					layer.hideTimer();				
 					layer.getPlayer().hideRobDealerButtonGroup();			
 					
 					
-					if (dealerInfo.dealer == RuntimeExchangeData.instance().redPlayerData.seat_id)
+					if (dealerInfo.dealer == redp.seat_id)
 					{
 						layer.getPlayer().setAsDealer();
 					}
@@ -139,7 +142,7 @@ package controller.handler
 				}
 				else
 				{				
-					if (v.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
+					if (v.seat_id ==redp.seat_id)
 					{
 						layer.showWaitOtherRobDealerTimer();
 						layer.getPlayer().showRobDealerNotify(v.multiple>0);
@@ -260,13 +263,14 @@ package controller.handler
 						
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			if (layer)
-			{					
+			{		
+				var red:RuntimeExchangeData = RuntimeExchangeData.instance();
 				for (var i:int = 0; i < v.finish_info_num; ++i)
 				{
 					var info:FinishInfo = v.finish_info_vec[i];
 					if (info)
 					{							
-						if (info.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
+						if (info.seat_id == red.redPlayerData.seat_id)
 						{	
 							layer.getPlayer().showNiuResult(NiuSuggest.getSuggestObject(info.tiles)["niuType"]);
 							
@@ -296,7 +300,7 @@ package controller.handler
 				layer.unsetAllAsDealer();					
 				layer.hideTimer();			
 					
-				RuntimeExchangeData.instance().redTableData.dealer_seat_id = -1;					
+				red.redTableData.dealer_seat_id = -1;					
 			}
 			else
 			{				

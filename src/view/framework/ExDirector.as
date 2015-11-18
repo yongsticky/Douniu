@@ -30,14 +30,11 @@ package view.framework
 			var newHeight:int = event.height;
 
 			
-			Starling.all[0].viewPort = new Rectangle(0, 0, newWidth, newHeight);
+			Starling.current.viewPort = new Rectangle(0, 0, newWidth, newHeight);
 			
 			stage.stageWidth = newWidth;
-			stage.stageHeight = newHeight;
+			stage.stageHeight = newHeight;			
 			
-			//_logger.log(this, "newWidth:",newWidth, "newHeight:",newHeight,LEVEL.DEBUG);
-			//_logger.log(this, "stageWidth:",stage.stageWidth, "stageHeight:",stage.stageHeight, LEVEL.DEBUG);			
-			//_logger.log(this, "width:",stage.width, "height:",stage.height, LEVEL.DEBUG);
 			
 			layoutChildren();
 		}

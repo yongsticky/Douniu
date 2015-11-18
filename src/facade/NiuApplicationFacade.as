@@ -3,18 +3,19 @@ package facade
 	import camu.mvc.Facade;
 	
 	import controller.NiuControllerMediator;
-	import controller.handler.NotificationHandler_SwitchDesk;
 	import controller.handler.NotificationHandler_DouniuEventNotify;
 	import controller.handler.NotificationHandler_HuanleBet;
+	import controller.handler.NotificationHandler_LoginFailed;
 	import controller.handler.NotificationHandler_LoginSuccess;
 	import controller.handler.NotificationHandler_RoomEventNotify;
 	import controller.handler.NotificationHandler_SelectBetX;
 	import controller.handler.NotificationHandler_SelectRobDealerX;
-	import controller.handler.NotificationHandler_SelectRoom;
+	import controller.handler.NotificationHandler_EnterRoom;
 	import controller.handler.NotificationHandler_SelectUser;
 	import controller.handler.NotificationHandler_ServerConnected;
 	import controller.handler.NotificationHandler_SitdownSuccess;
 	import controller.handler.NotificationHandler_Startup;
+	import controller.handler.NotificationHandler_SwitchDesk;
 	import controller.handler.NotificationHandler_TestUI;
 	import controller.handler.NotificationHandler_UserGive;
 	import controller.handler.NotificationHandler_UserLogout;
@@ -48,7 +49,8 @@ package facade
 			registerHandler(NiuNotificationHandlerConstant.SERVER_CONNECTED, new NotificationHandler_ServerConnected(_mediator));	
 			registerHandler(NiuNotificationHandlerConstant.SELECT_USER, new NotificationHandler_SelectUser(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.LOGIN_SUCCESS, new NotificationHandler_LoginSuccess(_mediator));
-			registerHandler(NiuNotificationHandlerConstant.SELECT_ROOM, new NotificationHandler_SelectRoom(_mediator));
+			registerHandler(NiuNotificationHandlerConstant.LOGIN_FAILED, new NotificationHandler_LoginFailed(_mediator));
+			registerHandler(NiuNotificationHandlerConstant.ENTER_ROOM, new NotificationHandler_EnterRoom(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.SITDOWN_SUCCESS, new NotificationHandler_SitdownSuccess(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.ROOM_EVENT, new NotificationHandler_RoomEventNotify(_mediator));
 			registerHandler(NiuNotificationHandlerConstant.DOUNIU_EVENT, new NotificationHandler_DouniuEventNotify(_mediator));

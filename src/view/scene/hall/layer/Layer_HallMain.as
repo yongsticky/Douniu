@@ -1,19 +1,14 @@
 package view.scene.hall.layer
 {	
-	import facade.NiuNotificationHandlerConstant;
-	
-	import resource.ResManager;
-	
-	import sound.SoundManager;
-	
-	import starling.display.Sprite;
 	import starling.events.Event;
-	import starling.textures.Texture;
 	
 	import view.NiuDirector;
 	import view.framework.ExImage;
 	import view.framework.ExLayer;
 	import view.scene.hall.cell.RoomItem;
+	import facade.NiuNotificationHandlerConstant;
+	import resource.ResManager;
+	import sound.SoundManager;
 	
 	public class Layer_HallMain extends ExLayer
 	{			
@@ -92,7 +87,7 @@ package view.scene.hall.layer
 			SoundManager.instance().playButtonClick();
 			
 			var room:RoomItem = event.target as RoomItem;				
-			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.SELECT_ROOM, room.roomId);			
+			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.ENTER_ROOM, room.roomId);			
 		}
 	}
 }

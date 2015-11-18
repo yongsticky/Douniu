@@ -1,23 +1,18 @@
 package controller.handler
 {	
-	import flash.events.Event;
-	import flash.net.Socket;
+	import flash.events.Event;	
 	
 	import camu.logger.LEVEL;
 	import camu.mvc.Mediator;
 	import camu.mvc.Notification;
 	import camu.net.ConnectorEvent;
 	
-	import controller.NiuNotificationHandler;
-	
-	import facade.NiuNotificationHandlerConstant;
-	
-	import global.ProgramConfiguration;
-	
+	import controller.NiuNotificationHandler;	
+	import facade.NiuNotificationHandlerConstant;	
+	import global.ProgramConfiguration;	
 	import server.NiuResponseReceiver;
 	import server.NiuServerConnector;
 	
-	import sound.SoundManager;
 	
 	public class NotificationHandler_Startup extends NiuNotificationHandler
 	{	

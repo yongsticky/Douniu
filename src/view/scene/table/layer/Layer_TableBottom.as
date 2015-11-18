@@ -31,8 +31,7 @@ package view.scene.table.layer
 			addChild(_bg);
 			
 			_playerInfo = new PlayerInfo();
-			addChild(_playerInfo);
-			
+			addChild(_playerInfo);			
 			
 			_mall = new Button(resManager.getResource("ui.button_vip_mall"));		
 			addChild(_mall);

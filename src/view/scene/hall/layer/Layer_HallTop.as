@@ -38,8 +38,7 @@ package view.scene.hall.layer
 			
 			
 			_playerInfo = new PlayerInfo();
-			_playerInfo.x = 10;
-			_playerInfo.y = 8;
+			_playerInfo.x = 4;			
 			addChild(_playerInfo);
 			
 			_notice_bg = new ExImage(resManager.getResource("ui.notice_bg"));			

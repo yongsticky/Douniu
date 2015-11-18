@@ -5,13 +5,14 @@ package view.scene.table
 	import view.framework.ExImage;
 	import view.framework.ExScene;
 	import view.scene.table.layer.Layer_TableBottom;
-	import view.scene.table.layer.Layer_TableMask;
 	import view.scene.table.layer.Layer_TableMain;
+	import view.scene.table.layer.Layer_TableMask;
 	import view.scene.table.layer.Layer_TableTop;
 	
 	public class Scene_Table extends ExScene
 	{	
 		public static const LAYER_MAIN:String = "layer.table.main"; 
+		public static const LAYER_TOP:String = "layer.table.top";
 		
 		private var _bg:ExImage;
 		private var _mask:Layer_TableMask;
@@ -30,15 +31,11 @@ package view.scene.table
 			_bg = new ExImage(resManager.getResource("ui.table_bg"));
 			addChild(_bg);
 			
-			addChild(new Layer_TableTop());
+			addChild(new Layer_TableTop(LAYER_TOP));
 			addChild(new Layer_TableBottom());
 			
 			_tableMain = new Layer_TableMain(LAYER_MAIN); 
-			addChild(_tableMain);		
-			
-			//_mask = new Layer_Mask();
-			//_mask.visible = false;
-			//addChild(_mask);
+			addChild(_tableMain);
 		}
 		
 		override protected function layoutChildren() : void

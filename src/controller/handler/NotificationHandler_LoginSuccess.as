@@ -9,6 +9,7 @@ package controller.handler
 	import factory.NiuObjectFactory;
 	
 	import global.RuntimeExchangeData;
+	import global.structs.REDPlayerData;
 	
 	import packet.game.message.Login.Response_Login;
 	import packet.game.message.Sitdown.Request_Sitdown;
@@ -35,22 +36,32 @@ package controller.handler
 			_logger.log(this, "execute Enter.", LEVEL.DEBUG);			
 						
 			var resp:Response_Login = notification.getData() as Response_Login;
-			var rsd:RuntimeExchangeData = RuntimeExchangeData.instance();
-			rsd.redRoomData.room_id = resp.room_id;
-			rsd.redPlayerData.player_id = resp.player_id;			
-			for each(var tlv:UnionTLV in resp.tlv_vec)
-			{				
+			
+			var red:RuntimeExchangeData = RuntimeExchangeData.instance();			
+			red.redRoomData.room_id = resp.room_id;
+			
+			var redp:REDPlayerData = red.redPlayerData;
+			redp.player_id = resp.player_id;
+			
+			//for each(var tlv:UnionTLV in resp.tlv_vec)
+			for (var i:int = 0; i < resp.tlv_num; ++i)
+			{
+				var tlv:UnionTLV = resp.tlv_vec[i];
+				
 				if (tlv.valueType == TLVType.DN_TLV_PLAYERDETAIL)
 				{
 					var plInfo:PlayerDetailInfo = tlv.value as PlayerDetailInfo;
 					if (plInfo)
-					{
-						rsd.redPlayerData.nick = plInfo.nick;
-						rsd.redPlayerData.gender = plInfo.gender;
-						rsd.redPlayerData.money = plInfo.money.lowPart;						
+					{						
+						redp.gender = plInfo.gender;
+						redp.money = plInfo.money.lowPart;						
 					}
 				}
 			}
+			
+			// 更新sid
+			redp.sid = resp.rresult.result_str;
+			_logger.log(this, "get new sid:", redp.sid, LEVEL.INFO);
 			
 			
 			// 开始心跳

@@ -8,15 +8,20 @@ package controller.handler
 	
 	import controller.NiuNotificationHandler;
 	
+	import facade.NiuNotificationHandlerConstant;
+	
+	import global.RuntimeExchangeData;
+	import global.UserSettings;
 	
 	import resource.ResManager;
 	
+	import sound.SoundManager;
+	
 	import view.NiuDirector;
+	import view.scene.hall.Scene_Hall;
 	import view.scene.loading.Scene_Loading;
 	import view.scene.loading.layer.Layer_LoadingMain;
 	import view.scene.selectuser.Scene_SelectUser;
-	
-	import facade.NiuNotificationHandlerConstant;
 	
 	public class NotificationHandler_ServerConnected extends NiuNotificationHandler
 	{
@@ -28,16 +33,17 @@ package controller.handler
 		override public function execute(notification:Notification):void
 		{
 			_logger.log(this, "execute Enter.", LEVEL.DEBUG);
+						
 			
-			NiuDirector.instance().switchToScene(new Scene_Loading());
+			NiuDirector.instance().switchToScene(new Scene_Loading());		
+			
 					
 			var resManager:ResManager = ResManager.instance();
 			
 			resManager.addEventListener(BulkProgressEvent.PROGRESS, onProgress);
 			resManager.addEventListener(BulkProgressEvent.COMPLETE, onComplete);
 			
-			resManager.loadResources();
-			
+			resManager.loadResources();						
 			
 		}
 		
@@ -47,7 +53,21 @@ package controller.handler
 			
 			//sendNotification(NiuNotificationHandlerConstant.TEST_UI);
 			
-			NiuDirector.instance().switchToScene(new Scene_SelectUser());
+			
+			if (!UserSettings.instance().backgroundMusicMute)
+			{
+				SoundManager.instance().playBgMusic();
+			}
+			
+			var roomId:int = RuntimeExchangeData.instance().redPlayerData.locked_room; 
+			if (roomId > 0)
+			{
+				sendNotification(NiuNotificationHandlerConstant.ENTER_ROOM, roomId);		
+			}
+			else
+			{
+				NiuDirector.instance().switchToScene(new Scene_Hall());	
+			}					
 		}
 		
 		protected function onProgress(event:BulkProgressEvent):void

@@ -63,7 +63,7 @@ package view
 		override protected function initialize() : void
 		{	
 			super.initialize();
-			
+						
 			_logger.log(this, "initialize called.", LEVEL.INFO);
 			
 			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);			
@@ -71,8 +71,9 @@ package view
 			sendNotification(NiuNotificationHandlerConstant.STARTUP);				
 		}
 		
-		override protected function createChildren() : void
+		override protected function createChildren():void
 		{
+			
 		}
 		
 		private function onEnterFrame(event:EnterFrameEvent):void

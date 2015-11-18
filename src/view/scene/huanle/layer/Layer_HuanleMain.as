@@ -1,10 +1,12 @@
 package view.scene.huanle.layer
-{
-	import flash.net.sendToURL;
+{	
+	import douniu.NiuSuggest;
 	
 	import facade.NiuNotificationHandlerConstant;
 	
 	import packet.game.tv.value.FinishInfo;
+	
+	import resource.ResManager;
 	
 	import starling.display.Button;
 	import starling.events.Event;
@@ -17,8 +19,10 @@ package view.scene.huanle.layer
 	public class Layer_HuanleMain extends ExLayer
 	{
 		private var _dealer:Robot;		
-		private var _players:Vector.<Robot>;
+		private var _robots:Vector.<Robot>;
 		private var _timer:Widget_Timer;
+		
+		private var _continue:Button;
 		
 		private var _selectedSeatId:int;
 		
@@ -34,30 +38,26 @@ package view.scene.huanle.layer
 			addChild(_dealer);
 			_dealer.betButton.visible = false;
 			
-			_players = new Vector.<Robot>(4);
+			_robots = new Vector.<Robot>(4);
 			for (var i:int = 0; i < 4; ++i)
 			{
-				_players[i] = new Robot(i);	
-				_players[i].addEventListener(Event.TRIGGERED, onTriggered);
-				addChild(_players[i]);
+				_robots[i] = new Robot(i);	
+				_robots[i].addEventListener(Event.TRIGGERED, onBet);
+				addChild(_robots[i]);
 			}	
 			
 			_timer = new Widget_Timer();
 			_timer.visible = false;
 			addChild(_timer);
-		}
-		
-		private function onTriggered(event:Event) : void
-		{			
-			var robot:Robot =  event.target["parent"] as Robot;
-			if (robot)
-			{
-				_selectedSeatId = robot.seatId;								
-			}
 			
-			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.HUANLE_BET);
-			
-			event.stopImmediatePropagation();
+			_continue = new Button(ResManager.instance().getResource("ui.button_bg_blue"), "继续");
+			_continue.fontBold = true;
+			_continue.fontColor = 0xFFFFFF;
+			_continue.fontSize = 16;
+			_continue.fontName = "Microsoft YaHei";
+			_continue.addEventListener(Event.TRIGGERED, onConinue);
+			_continue.visible = false;
+			addChild(_continue);
 		}
 		
 		override protected function layoutChildren():void
@@ -69,17 +69,42 @@ package view.scene.huanle.layer
 			var startX:int = w;
 			for (var i:int = 0; i < 4; ++i)
 			{
-				_players[i].x = startX;
-				_players[i].y = stage.stageHeight - 300;
+				_robots[i].x = startX;
+				_robots[i].y = stage.stageHeight - 300;
 				
-				startX += _players[i].width + w;
+				startX += _robots[i].width + w;
 			}
 			
 			_timer.x = (stage.stageWidth-_timer.width)>>1;
 			_timer.y = -160 + (stage.stageHeight-_timer.height)>>1;
 			
+			_continue.x = _timer.x;
+			_continue.y = _timer.y;
+			
 			super.layoutChildren();
 		}	
+		
+		private function onConinue(event:Event):void
+		{
+			reset();
+			
+			event.stopImmediatePropagation();
+		}
+		
+		private function onBet(event:Event) : void
+		{			
+			var robot:Robot =  event.currentTarget as Robot;
+			if (robot)
+			{
+				_selectedSeatId = robot.seatId;								
+			}
+			
+			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.HUANLE_BET);
+			
+			event.stopImmediatePropagation();
+		}
+		
+		
 		
 		public function showTimer(time:int) : void
 		{				
@@ -95,7 +120,7 @@ package view.scene.huanle.layer
 		{
 			for (var i:int = 0; i < 4; ++i)
 			{
-				_players[i].betButton.visible = false;
+				_robots[i].betButton.visible = false;
 			}
 		}
 		
@@ -106,20 +131,17 @@ package view.scene.huanle.layer
 			for each(var info:FinishInfo in v)
 			{
 				if (info)
-				{
-					var vec:Vector.<int> = new Vector.<int>(5);
-					for (var i:int = 0; i < 5; ++i)
-					{
-						vec[i] = int(info.tiles[i]);	
-					}
-															
+				{															
 					if (info.seat_id == 4)
 					{						
-						_dealer.setPokers(vec);
+						_dealer.setPokers(info.tiles);
+						_dealer.showNiuResult(NiuSuggest.getSuggestObject(info.tiles)["niuType"]);
 					}
 					else if (info.seat_id == 0)
 					{
-						_players[_selectedSeatId].setPokers(vec);
+						_robots[_selectedSeatId].setPokers(info.tiles);
+						_robots[_selectedSeatId].showNiuResult(NiuSuggest.getSuggestObject(info.tiles)["niuType"]);
+						_robots[_selectedSeatId].showResult(info.money.highPart, info.money.lowPart);
 					}
 					else
 					{
@@ -128,7 +150,9 @@ package view.scene.huanle.layer
 							++ seatIndex;
 						}
 						
-						_players[seatIndex].setPokers(vec);
+						_robots[seatIndex].setPokers(info.tiles);
+						_robots[seatIndex].showNiuResult(NiuSuggest.getSuggestObject(info.tiles)["niuType"]);
+						_robots[seatIndex].showResult(info.money.highPart, info.money.lowPart);
 						
 						++seatIndex;
 					}					
@@ -138,17 +162,28 @@ package view.scene.huanle.layer
 		
 		public function startNewGame() : void
 		{
-			juggler.delayCall(reset, 6);
+			juggler.delayCall(showContinue, 3);				
+		}
+		
+		private function showContinue() : void
+		{
+			_continue.visible = true;			
 		}
 		
 		public function reset() : void
-		{		
-			_dealer.setPokers([0, 0, 0, 0, 0]);
+		{	
+			_dealer.setPokers(null);
+			_dealer.hideNiuResult();
+						
 			for (var i:int = 0; i < 4; ++i)
 			{				
-				_players[i].setPokers([0, 0, 0, 0, 0]);
-				_players[i].betButton.visible = true;
+				_robots[i].setPokers(null);
+				_robots[i].betButton.visible = true;
+				_robots[i].hideNiuResult();
+				_robots[i].hideResult();
 			}
+			
+			_continue.visible = false;
 		}
 	}
 }

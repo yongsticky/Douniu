@@ -12,7 +12,6 @@ package controller.handler
 	import packet.game.message.Notify.ROOM_EVENT_ID;
 	import packet.game.message.Notify.TRoomEvent;
 	import packet.game.tlv.TLVType;
-	import packet.game.tlv.UnionTLV;
 	import packet.game.tlv.value.ExitPlayerInfo;
 	import packet.game.tlv.value.PlayerDetailInfo;
 	import packet.game.tlv.value.PlayerMoneyChangeInfo;
@@ -81,15 +80,16 @@ package controller.handler
 		
 		private function checkRoomAndTable(event:TRoomEvent) : Boolean
 		{
-			if (event.room_id != RuntimeExchangeData.instance().redRoomData.room_id)
+			var red:RuntimeExchangeData = RuntimeExchangeData.instance();
+			if (event.room_id != red.redRoomData.room_id)
 			{
-				_logger.log(this, "NOT my ROOM event. my room id:[", RuntimeExchangeData.instance().redRoomData.room_id, "], event room id:[", event.room_id, "].", LEVEL.WARNING);
+				_logger.log(this, "NOT my ROOM event. my room id:[",red.redRoomData.room_id, "], event room id:[", event.room_id, "].", LEVEL.WARNING);
 				return false;
 			}
 			
-			if (event.table_id != RuntimeExchangeData.instance().redTableData.table_id)
+			if (event.table_id != red.redTableData.table_id)
 			{
-				_logger.log(this, "NOT my TABLE event. my table id:[", RuntimeExchangeData.instance().redTableData.table_id, "], event table id:[", event.table_id, "].", LEVEL.WARNING);
+				_logger.log(this, "NOT my TABLE event. my table id:[", red.redTableData.table_id, "], event table id:[", event.table_id, "].", LEVEL.WARNING);
 				return false;
 			}
 			
@@ -100,7 +100,9 @@ package controller.handler
 		{	
 			_logger.log(this, "onEvent_OtherPlayerSitdown", LEVEL.INFO);
 			
-			if (event.seat_id == RuntimeExchangeData.instance().redPlayerData.seat_id)
+			var red:RuntimeExchangeData = RuntimeExchangeData.instance();
+			
+			if (event.seat_id == red.redPlayerData.seat_id)
 			{
 				_logger.log(this, "it's not other player, but myself!", LEVEL.ERROR);
 				return;
@@ -109,7 +111,7 @@ package controller.handler
 			var playerDetail:PlayerDetailInfo = event.getTLVValue(TLVType.DN_TLV_PLAYERDETAIL) as PlayerDetailInfo;						
 			if (playerDetail)
 			{	
-				++ RuntimeExchangeData.instance().redTableData.player_num; 
+				++ red.redTableData.player_num; 
 				
 				var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 				if (layer)
@@ -131,13 +133,16 @@ package controller.handler
 		{
 			_logger.log(this, "onEvent_OtherPlayerStandup", LEVEL.INFO);
 			
+			
 			var exitPlayerInfo:ExitPlayerInfo = event.getTLVValue(TLVType.DN_TLV_EXIT_PLAYER_INFO) as ExitPlayerInfo;
 			if (exitPlayerInfo)
 			{
 				_logger.log(this, "Player Standup, Reason:[",exitPlayerInfo.standup_reason,"]",  LEVEL.INFO);
 			}
 			
-			-- RuntimeExchangeData.instance().redTableData.player_num;			
+			var red:RuntimeExchangeData = RuntimeExchangeData.instance();
+			
+			-- red.redTableData.player_num;			
 			
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			if (layer)

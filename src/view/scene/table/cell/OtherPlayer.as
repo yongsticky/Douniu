@@ -112,10 +112,11 @@ package view.scene.table.cell
 			}			
 		}	
 				
-		public function show(nickName:String, money:int, headerIcon:int) : void
+		public function show(nickName:String, money:int, uin:uint) : void
 		{
 			visible = true;
-			
+		
+			var headerIcon:int = 1 + (uin % 6);
 			_playerHeader.setPlayerInfo(nickName, money, headerIcon);
 		}
 		

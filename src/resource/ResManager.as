@@ -148,7 +148,7 @@ package resource
 					}
 					
 				}				
-			}			
+			}		
 		}
 		
 		protected function onResLoadProgress(event:BulkProgressEvent):void

@@ -14,20 +14,22 @@ package view.scene.table.cell
 		private var _coin:ExImage;
 		private var _coinNum:TextField;
 		
-		private var _useName:Boolean;
 		
-		public function PlayerHeader(name:String = null, useName:Boolean = true)
+		private var _showName:Boolean;
+		private var _headerIcon:int = 1;
+		
+		public function PlayerHeader(name:String = null, showName:Boolean = true)
 		{
 			super(name);
 			
-			_useName = useName;
+			_showName = showName;
 		}
 		
 		override protected function createChildren() : void
 		{
 			var resManager:ResManager = ResManager.instance();
 			
-			if (_useName)
+			if (_showName)
 			{			
 				_name = new TextField(60, 28, "");
 				_name.x = 4;
@@ -36,8 +38,8 @@ package view.scene.table.cell
 				_name.color = 0xFFFFFF;
 				addChild(_name);
 			}
-			
-			_header = new ExImage(resManager.getResource("ui.player_header_icon"));					
+						
+			_header = new ExImage(resManager.getResource("ui.header_"+_headerIcon.toString()));					
 			addChild(_header);
 						
 			_coin = new ExImage(resManager.getResource("ui.coin_with_bg"));
@@ -59,13 +61,14 @@ package view.scene.table.cell
 			
 			if (money)
 			{
-				_coinNum.text = money.toString();
-		
+				_coinNum.text = money.toString();		
 			}
 			
 			if (headerIcon)
 			{
+				_headerIcon = headerIcon;
 				
+				_header.res = ResManager.instance().getResource("ui.header_"+ _headerIcon.toString());
 			}
 		}
 	}

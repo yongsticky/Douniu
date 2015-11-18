@@ -1,24 +1,26 @@
 package view.scene.huanle.cell
 {
-	import facade.NiuNotificationHandlerConstant;
+	import flash.utils.ByteArray;
 	
 	import resource.ResManager;
+	import resource.font.FontColor;
 	
 	import starling.display.Button;
-	import starling.events.Event;
-	import starling.textures.Texture;
+	import starling.display.Quad;
+	import starling.text.TextField;
 	
-	import view.NiuDirector;
+	import view.framework.ExImage;
 	import view.framework.ExSprite;
-	
+
 	public class Robot extends ExSprite
 	{
-		protected var _pokers:Vector.<PokerImage>;
-		protected var _betButton:Button;
+		private var _pokers:Vector.<PokerImage>;
+		private var _betButton:Button;
+		private var _niuResult:ExImage;
+		private var _result:TextField;
 		
-		protected var _sepWidth:int = 20;
-		
-		protected var _seatId:int;
+		private var _sepWidth:int = 20;
+		private var _seatId:int;
 		
 		private static const MAX_POKER_NUM:int = 5;
 		
@@ -26,7 +28,7 @@ package view.scene.huanle.cell
 		{	
 			_seatId = seatId;
 			
-			super(name);		
+			super(name);
 		}
 		
 		override protected function createChildren():void
@@ -52,13 +54,27 @@ package view.scene.huanle.cell
 			_betButton.x = (width - _betButton.width)>>1;
 			_betButton.y = 120;			
 			addChild(_betButton);
+			
+			
+			_niuResult = new ExImage();
+			_niuResult.x = (_sepWidth*4 + 61 - 66) / 2;
+			_niuResult.y = -40;
+			_niuResult.visible = false;
+			addChild(_niuResult);
+			
+			_result = new TextField(140, 40, "");
+			_result.fontSize = 12;
+			_result.bold = true;
+			_result.x = 0;
+			_result.y = 30;
+			_result.visible = false;
+			
+			
+			_result.addChild(new Quad(140, 40, 0x222222));
+			
+			addChild(_result);
 		}
-		
-		private function onTriggered(event:Event):void
-		{				
-			NiuDirector.instance().sendNotification(NiuNotificationHandlerConstant.HUANLE_BET);
-		}
-		
+
 		public function get seatId() : int
 		{
 			return _seatId;
@@ -74,12 +90,46 @@ package view.scene.huanle.cell
 			return _betButton;
 		}
 		
-		public function setPokers(v:vector.<int>) : void
+		public function setPokers(v:ByteArray) : void
 		{
-			for (var i:int = 0; i < MAX_POKER_NUM; ++i)
+			if (v)
 			{
-				_pokers[i].card = v[i];
+				for (var i:int = 0; i < MAX_POKER_NUM; ++i)
+				{
+					_pokers[i].card = int(v[i]);
+				}
 			}
+			else
+			{
+				for (var j:int = 0; j < MAX_POKER_NUM; ++j)
+				{
+					_pokers[j].card = 0;
+				}	
+			}
+		}
+		
+		public function showNiuResult(type:int) : void
+		{				
+			_niuResult.res = ResManager.instance().getResource("ui.niu_"+type);
+			_niuResult.visible = true;
+		}	
+		
+		public function hideNiuResult() : void
+		{
+			_niuResult.visible = false;	
+		}
+		
+		public function showResult(winOrLose:int, item:int) : void
+		{
+			_result.visible = true;
+			
+			_result.color = FontColor.BEIGE;
+			_result.text = "<" + winOrLose.toString() + "> - <" + item.toString() + ">";			
+		}
+		
+		public function hideResult() : void
+		{
+			_result.visible = false;
 		}
 	}
 }

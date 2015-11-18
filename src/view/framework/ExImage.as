@@ -1,13 +1,12 @@
 package view.framework
 {	
 	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.geom.Point;
-	
-	import camu.errors.UnhandledBranchError;
+	import flash.display.BitmapData;	
 	
 	import starling.display.Image;
 	import starling.textures.Texture;
+	
+	import camu.errors.UnhandledBranchError;
 	
 	public class ExImage extends ExSprite
 	{

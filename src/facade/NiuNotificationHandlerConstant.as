@@ -8,7 +8,8 @@ package facade
 		public static const SERVER_CONNECTED:String = "handler.server_connected";
 		public static const SELECT_USER:String = "handler.select_user";		
 		public static const LOGIN_SUCCESS:String = "handler.login_success";
-		public static const SELECT_ROOM:String = "handler.select_room";
+		public static const LOGIN_FAILED:String = "handler.login_failed";
+		public static const ENTER_ROOM:String = "handler.select_room";
 		public static const SITDOWN_SUCCESS:String = "handler.sitdown_success";
 		public static const ROOM_EVENT:String = "handler.room_event";
 		public static const DOUNIU_EVENT:String = "handler.douniu_event";

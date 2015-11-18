@@ -6,9 +6,12 @@ package server
 	import camu.net.PacketEvent;
 	import camu.net.PacketEventTypeUtil;
 	
-	import controller.NiuNotification;	
-	import facade.NiuNotificationHandlerConstant;	
-	import factory.NiuObjectFactory;	
+	import controller.NiuNotification;
+	
+	import facade.NiuNotificationHandlerConstant;
+	
+	import factory.NiuObjectFactory;
+	
 	import packet.game.message.Login.Response_Login;
 	import packet.game.message.Logout.Request_Logout;
 	import packet.game.message.Logout.Response_Logout;
@@ -78,7 +81,18 @@ package server
 		{
 			_logger.log(this, "onReceive_Login Enter.", LEVEL.INFO);			
 			
-			sendNotification(NiuNotificationHandlerConstant.LOGIN_SUCCESS, event.packet);
+			var resp:Response_Login = event.packet as Response_Login;
+			
+			if (resp.rresult.result_id == 0)
+			{
+				sendNotification(NiuNotificationHandlerConstant.LOGIN_SUCCESS, resp);	
+			}
+			else
+			{
+				_logger.log(this, "onReceive_Login: Login Failed.", LEVEL.WARNING);
+				
+				sendNotification(NiuNotificationHandlerConstant.LOGIN_FAILED, resp);
+			}			
 		}
 		
 		protected function onReceive_WrapperMessage(event:PacketEvent) : void

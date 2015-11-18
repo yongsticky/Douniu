@@ -19,6 +19,7 @@ package controller.handler
 	import view.scene.table.Scene_Table;
 	import view.scene.table.cell.OtherPlayer;
 	import view.scene.table.layer.Layer_TableMain;
+	import view.scene.table.layer.Layer_TableTop;
 	
 	public class NotificationHandler_SitdownSuccess extends NiuNotificationHandler
 	{
@@ -39,13 +40,28 @@ package controller.handler
 				return;
 			}
 			
+			var red:RuntimeExchangeData = RuntimeExchangeData.instance();
+			red.redTableData.table_id = resp.table_id;
+			red.redPlayerData.seat_id = resp.seat_id;
+			red.redRoomData.room_id = resp.room_id;
+			
 			var layer:Layer_TableMain = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_MAIN) as Layer_TableMain;
 			if (layer)
 			{
-				RuntimeExchangeData.instance().redTableData.table_id = resp.table_id;
-				RuntimeExchangeData.instance().redPlayerData.seat_id = resp.seat_id;
+				var layerTop:Layer_TableTop = NiuDirector.instance().getLayerInCurrentTopScene(Scene_Table.LAYER_TOP) as Layer_TableTop;
+				if (layerTop)
+				{
+					if (resp.room_id == 76)
+					{
+						layerTop.setTitle("经典场");	
+					}
+					else if (resp.room_id == 81)
+					{
+						layerTop.setTitle("看牌场");
+					}					
+				}
 				
-				layer.getPlayer().show(resp.csHeader.uin.toString(), RuntimeExchangeData.instance().redPlayerData.money, 0);				
+				layer.getPlayer().show(red.redPlayerData.nick, red.redPlayerData.money, red.redPlayerData.uin);				
 		
 				layer.getPlayer().showReadyButtonGoroup();
 				layer.showWaitOtherEnter();	
@@ -59,7 +75,7 @@ package controller.handler
 						var op:OtherPlayer = layer.getOtherPlayer(v.seat_id);
 						if (op)
 						{
-							op.show(v.player_uin.toString(), v.money.lowPart, 0);
+							op.show(v.nick, v.money.lowPart, v.player_uin);
 						}
 					}
 					else if (tlv.valueType == TLVType.DN_TLV_TABLE_SIMPLE_INFO)
@@ -67,7 +83,7 @@ package controller.handler
 						var tsInfo:TableSimpleInfo = tlv.value as TableSimpleInfo;
 						if (tsInfo)
 						{
-							RuntimeExchangeData.instance().redTableData.player_num = tsInfo.cur_player_num;
+							red.redTableData.player_num = tsInfo.cur_player_num;
 						}
 					}
 					else
